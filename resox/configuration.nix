@@ -93,7 +93,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (import /home/wsh/.emacs.d/emacs.nix { inherit pkgs; })
+    (import ./emacs.nix { inherit pkgs; })
 	  home-manager
     firefox-wayland
     gitAndTools.gitAnnex lsof
@@ -155,8 +155,8 @@
   services.printing.enable = true;
   services.printing.drivers = (
     let
-      mfcl2700dwlpr = pkgs.callPackage ./mfcl2700dwlpr.nix {};
-      mfcl2700dwcupswrapper = pkgs.callPackage ./mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
+      mfcl2700dwlpr = pkgs.callPackage ./../pkgs/mfcl2700dwlpr.nix {};
+      mfcl2700dwcupswrapper = pkgs.callPackage ./../pkgs/mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
     in [
       mfcl2700dwlpr
       mfcl2700dwcupswrapper
