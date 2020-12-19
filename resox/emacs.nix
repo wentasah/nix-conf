@@ -33,7 +33,7 @@ in
     smartparens
     nix-mode
   ]) ++ (with epkgs.elpaPackages; [
-    auctex         # ; LaTeX mode
+    #auctex         # ; LaTeX mode
   ]) ++ [
     pkgs.notmuch   # From main packages set
   ])
