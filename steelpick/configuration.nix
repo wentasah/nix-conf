@@ -13,8 +13,8 @@ let myOverlay = self: super:
 #             mv $out/opt/teams/resources/app.asar.unpacked/node_modules/slimcore/bin/rect-overlay{,.bak}
 #           '';
 #        });
-        mfcl2700dwlpr = super.callPackage ./mfcl2700dwlpr.nix {};
-        mfcl2700dwcupswrapper = super.callPackage ./mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
+        mfcl2700dwlpr = super.callPackage ../pkgs/mfcl2700dwlpr.nix {};
+        mfcl2700dwcupswrapper = super.callPackage ../pkgs/mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
       };
 in
 {

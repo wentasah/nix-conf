@@ -20,10 +20,10 @@ let
         !builtins.elem pkg.pname [ "dvipdfmx" "texlive-scripts" ]
       ));
   };
-  julia = import "${config.home.homeDirectory}/src/nix/julia-bin.nix" { pkgs = pkgs; };
-  lexicon = import "${config.home.homeDirectory}/src/nix/lexicon.nix" { pkgs = pkgs; };
-  cppreference = import "${config.home.homeDirectory}/src/nix/cppreference.nix" { pkgs = pkgs; };
-  pod-mode = import "${config.home.homeDirectory}/src/nix/pod-mode.nix" { pkgs = pkgs; };
+  julia = import ../pkgs/julia-bin.nix { pkgs = pkgs; };
+  lexicon = import ../pkgs/lexicon.nix { pkgs = pkgs; };
+  cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
+  pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
 in
 {
   nixpkgs = {
@@ -320,7 +320,7 @@ in
     plugins = [
       {
         name = "zsh-bash-completions-fallback";
-        src = ./../../src/zsh-bash-completions-fallback;
+        src = ./../../../src/zsh-bash-completions-fallback;
 #         src = pkgs.fetchFromGitHub {
 #           owner = "3v1n0";
 #           repo = "zsh-bash-completions-fallback";
