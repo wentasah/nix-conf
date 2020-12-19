@@ -53,6 +53,7 @@ in
       "skypeforlinux" "faac"
       "zoom-us"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "mfcl2700dwlpr"
     ];
   };
 
@@ -105,7 +106,19 @@ in
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
+  services.printing.drivers = (
+    let
+      mfcl2700dwlpr = pkgs.callPackage ./../pkgs/mfcl2700dwlpr.nix {};
+      mfcl2700dwcupswrapper = pkgs.callPackage ./../pkgs/mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
+    in [
+      mfcl2700dwlpr
+      mfcl2700dwcupswrapper
+    ]);
+  services.avahi.enable = true;
+  # Important to resolve .local domains of printers, otherwise you get an error
+  # like  "Impossible to connect to XXX.local: Name or service not known"
+  services.avahi.nssmdns = true;
 
   # Enable sound.
   sound.enable = true;
