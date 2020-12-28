@@ -42,7 +42,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   boot.extraModprobeConfig = ''
@@ -129,6 +129,7 @@ in
     wget
     elinks
     stlink
+    glibcInfo
   ];
 
   environment.homeBinInPath = true;
@@ -156,7 +157,18 @@ in
     };
   };
 
-  programs.sway.enable = true;
+  programs.sway = {
+    enable = true;
+    extraSessionCommands = ''
+      PATH=$HOME/bin:$PATH
+    '';
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
+  };
+
+  programs.adb.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
 
@@ -276,7 +288,7 @@ in
 
   users.users.wsh = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" ];
     uid = 1000;
     group = "wsh";
     shell = pkgs.zsh;
@@ -320,5 +332,5 @@ in
 }
 
 # Local Variables:
-# compile-command: "nixos-rebuild switch"
+# compile-command: "sudo -A nixos-rebuild switch"
 # End:

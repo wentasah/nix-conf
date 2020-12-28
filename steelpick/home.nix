@@ -91,7 +91,7 @@ in
     gitAndTools.git-annex
     gitAndTools.git-subtrac
     gitAndTools.tig
-    glibcInfo
+    glibcInfo                   # Not visible in emacs :-(
     global
     gnome3.devhelp
     gnome3.libsecret
@@ -125,6 +125,7 @@ in
     ncdu
     ninja
     niv
+    nix-prefetch-scripts
     nix-review
     notmuch
     notmuch.emacs
@@ -135,6 +136,7 @@ in
     parcellite
     pavucontrol
     perlPackages.AppClusterSSH
+    pidgin
     pkg-config
     pod-mode
     poppler_utils
@@ -165,6 +167,7 @@ in
     xclip
     xdotool
     xf86_input_wacom
+    xorg.xev
     xorg.xkbcomp
     xorg.xkill
     xournal
@@ -176,6 +179,18 @@ in
     zsh-completions
     zsh-syntax-highlighting
 
+    (swaylock.overrideAttrs(old: {
+      src = fetchFromGitHub {
+        owner = "swaywm";
+        repo = "swayidle";
+        rev = "068942751ba459ef3b9ba0ec8eddf9f6f212c4d7";
+        # date = 2020-11-06T11:38:15+01:00;
+        sha256 = "1ml2n1rp8simpd2y4ff1anx2vj89f3a6dhfz8m2hdan749vwnxvk";
+      };
+      buildInputs = old.buildInputs ++ [ systemd ];
+    }))
+
+
   ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
   home.file = {
@@ -186,6 +201,10 @@ in
         exec ${config.programs.emacs.package}/bin/emacsclient -t "$@"
       '';
     };
+    "bin/ssh-askpass" = { executable = true; text = ''
+      #!${pkgs.runtimeShell}
+      exec ${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass
+    ''; };
   };
 
   # I have a problem with zsh when EDITOR is "vim". Pressing "delete"
