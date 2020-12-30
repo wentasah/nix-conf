@@ -72,6 +72,7 @@ in
     audacity
     autorandr
     bbe
+    brightnessctl
     cachix
     ccls
     chromium
