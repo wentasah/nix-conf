@@ -147,7 +147,6 @@ in
     radare2 radare2-cutter
     redo-apenwarr
     ripgrep
-    roboto                      # font
     roboto-slab
     rofi
     rsync
@@ -190,6 +189,9 @@ in
       buildInputs = old.buildInputs ++ [ systemd ];
     }))
 
+    # Fonts
+    roboto
+    source-sans-pro
 
   ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
