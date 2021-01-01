@@ -123,6 +123,7 @@ in
     mosh
     mtr
     mytexlive
+    nasm
     ncdu
     ninja
     niv
@@ -147,6 +148,7 @@ in
     qemu
     radare2 radare2-cutter
     redo-apenwarr
+    restic
     ripgrep
     roboto-slab
     rofi
@@ -178,7 +180,6 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
-    nasm
 
     (swaylock.overrideAttrs(old: {
       src = fetchFromGitHub {
