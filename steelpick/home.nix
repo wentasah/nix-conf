@@ -178,6 +178,7 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
+    nasm
 
     (swaylock.overrideAttrs(old: {
       src = fetchFromGitHub {
