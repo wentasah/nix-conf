@@ -43,6 +43,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_9;
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   boot.extraModprobeConfig = ''
@@ -206,6 +207,8 @@ in
     mfcl2700dwlpr
     mfcl2700dwcupswrapper
   ];
+
+  services.flatpak.enable = true;
 
   services.avahi.enable = true;
   # Important to resolve .local domains of printers, otherwise you get an error

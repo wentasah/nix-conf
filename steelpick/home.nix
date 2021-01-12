@@ -287,6 +287,10 @@ in
         cd $dir
       }
 
+      # Rebind fzf-cd to a sane key
+      bindkey '\eC' fzf-cd-widget
+      bindkey '\ec' capitalize-word
+
       source ${pkgs.mc}/libexec/mc/mc.sh
       # if [[ -f /usr/share/mc/bin/mc.sh ]]; then
       #     source /usr/share/mc/bin/mc.sh
