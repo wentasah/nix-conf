@@ -24,6 +24,7 @@ let
   lexicon = import ../pkgs/lexicon.nix { pkgs = pkgs; };
   cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
   pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
+  gtkterm = import ../pkgs/gtkterm.nix { pkgs = pkgs; };
 in
 {
   nixpkgs = {
@@ -46,7 +47,7 @@ in
   home.username = "wsh";
   home.homeDirectory = "/home/wsh";
 
-  #home.extraOutputsToInstall = [ "devman" ];
+  #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
   home.packages = with pkgs; [
 
@@ -54,6 +55,7 @@ in
     #firejail
     #gnome3.nautilus
     #gtkterm
+    #jupyter
     #slack
     #teams
     (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
@@ -99,6 +101,7 @@ in
     gnumake
     gnupg
     gnuplot_qt
+    gtkterm
     htop
     hugo
     i3status-rust font-awesome_4 powerline-fonts
@@ -122,6 +125,7 @@ in
     moreutils
     mosh
     mtr
+    musescore
     mytexlive
     nasm
     ncdu
@@ -135,16 +139,22 @@ in
     okteta
     okular
     openssl
+    pandoc
     parcellite
     pavucontrol
+    pdf2svg
     perlPackages.AppClusterSSH
+    perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
     pkg-config
+    playerctl
     pod-mode
     poppler_utils
     psmisc                      # killall, fuser, ...
     pv
     python3
+    python3Packages.jupyter_core
+    python3Packages.notebook
     qemu
     radare2 radare2-cutter
     redo-apenwarr
@@ -157,6 +167,7 @@ in
     shotcut
     smplayer mpv mplayer
     socat
+    solvespace
     sshuttle
     thunderbird
     tmux

@@ -29,7 +29,7 @@ in
         "skypeforlinux"
         "slack"
         "teams"
-        "zoom-us" "faac"
+        "zoom-us" "faac" "zoom" # zoom-us is now just zoom
         "teamviewer"
         "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
         "mfcl2700dwlpr"
@@ -43,7 +43,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages_5_9;
+  #boot.kernelPackages = pkgs.linuxPackages_5_9;
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   boot.extraModprobeConfig = ''
@@ -131,6 +131,7 @@ in
     elinks
     stlink
     glibcInfo
+    ddrescue
   ];
 
   environment.homeBinInPath = true;
@@ -200,6 +201,8 @@ in
   networking.firewall.interfaces.enp0s31f6.allowedUDPPorts = [ 69 ]; # TFTP
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  networking.wireguard.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -289,12 +292,26 @@ in
   #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   # };
 
-  users.users.wsh = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" ];
-    uid = 1000;
-    group = "wsh";
-    shell = pkgs.zsh;
+  users.users = {
+    wsh = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" ];
+      uid = 1000;
+      group = "wsh";
+      shell = pkgs.zsh;
+    };
+    novaboot-test = {
+      isNormalUser = true;
+      uid = 1003;
+      shell = "/home/wsh/src/novaboot/server/novaboot-shell";
+    };
+  };
+
+  security.sudo = {
+    enable = true;
+    extraConfig = ''
+    wsh  ALL=(novaboot-test) NOPASSWD: ALL
+    '';
   };
 
   users.groups = { wsh = { gid = 1000; }; };
