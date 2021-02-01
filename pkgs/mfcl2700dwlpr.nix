@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchurl, dpkg, makeWrapper, coreutils, ghostscript, gnugrep, gnused, which, perl }:
+{ pkgs, stdenv, fetchurl, dpkg, makeWrapper, coreutils, ghostscript, gnugrep, gnused, which, perl, lib }:
 
 stdenv.mkDerivation rec {
   pname = "mfcl2700dwlpr";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
       --replace "PRINTER =~" "PRINTER = \"MFCL2700DW\"; #"
 
     wrapProgram $dir/lpd/filter_MFCL2700DW \
-      --prefix PATH : ${stdenv.lib.makeBinPath [
+      --prefix PATH : ${lib.makeBinPath [
         coreutils ghostscript gnugrep gnused which
       ]}
 
@@ -38,10 +38,10 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Brother MFC-L2700DW lpr driver";
     homepage = "http://www.brother.com/";
-    license = stdenv.lib.licenses.unfree;
+    license = lib.licenses.unfree;
     platforms = [ "x86_64-linux" "i686-linux" ];
     maintainers = [
-      #stdenv.lib.maintainers.wentasah
+      #lib.maintainers.wentasah
     ];
   };
 }

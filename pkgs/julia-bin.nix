@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     grep '&& ftime != 1.0$' $out/share/julia/base/loading.jl > /dev/null || exit 1
   '';
 
-  meta = with stdenv.lib; {
+  meta = with pkgs.lib; {
     description =
       "High-level performance-oriented dynamical language for technical computing";
     homepage = "https://julialang.org";
