@@ -10,7 +10,7 @@ let
   mytexlive = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic scheme-medium collection-langczechslovak
       collection-xetex latexmk collection-latexextra
-      collection-mathscience chktex roboto;
+      collection-mathscience chktex roboto cbfonts;
     pkgFilter = (pkg:
       pkg.tlType == "run"
       || pkg.tlType == "bin"
@@ -80,6 +80,7 @@ in
     chromium
     clang
     clang-tools
+    clementine
     cmake
     colordiff
     cppreference
@@ -518,6 +519,12 @@ in
         # Handle crashes after xrandr or i3 restarts: https://github.com/NixOS/nixpkgs/issues/99197
         Restart = "on-failure";
         RestartSec = 5;
+      };
+    };
+
+    ncdu-save = {
+      Service = {
+        ExecStart = "${pkgs.gnumake}/bin/make -C %h/srv/steelpick/ncdu save";
       };
     };
   };

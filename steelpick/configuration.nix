@@ -33,6 +33,7 @@ in
         "teamviewer"
         "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
         "mfcl2700dwlpr"
+        "Oracle_VM_VirtualBox_Extension_Pack"
       ];
     };
     overlays = [ myOverlay ];
@@ -173,6 +174,7 @@ in
   programs.adb.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # List services that you want to enable:
 
@@ -295,7 +297,7 @@ in
   users.users = {
     wsh = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" ];
+      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" "vboxusers" ];
       uid = 1000;
       group = "wsh";
       shell = pkgs.zsh;
@@ -311,6 +313,7 @@ in
     enable = true;
     extraConfig = ''
     wsh  ALL=(novaboot-test) NOPASSWD: ALL
+    wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe/modprobe vboxdrv
     '';
   };
 
