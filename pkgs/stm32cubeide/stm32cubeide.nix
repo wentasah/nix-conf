@@ -1,52 +1,71 @@
-{ stdenv, lib, buildFHSUserEnv, unzip, dpkg, gtk3, cairo, glib, webkitgtk, libusb1, bash }:
-let
-  debs = stdenv.mkDerivation {
-    name = "stm32cubeide_debs";
+{ stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
+  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib,
+  bzip2, openssl, libudev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27
+}:
+let makeself-pkg =
+stdenv.mkDerivation { name = "stm32cubeide-makeself-pkg";
     # Direct download URL is probably not available, because one has
     # to agree to the license.
-    src = ./en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.deb_bundle.sh.zip;
-    unpackCmd = "mkdir tmp && ${unzip}/bin/unzip $curSrc -d tmp";
+    src = ./en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip;
+    unpackCmd = "mkdir tmp && ${unzip}/bin/unzip -d tmp $curSrc";
     installPhase = ''
-      s=$(echo *.sh)
-      sh "$s" --target ''${s%.sh} --noexec
-      mkdir -p $out
-      mv -v ''${s%.sh}/* $out
+      sh st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh --target $out --noexec
     '';
   };
   stm32cubeide = stdenv.mkDerivation {
     name = "stm32cubeide";
     version = "1.5.1";
-    src = "${debs}/st-stm32cubeide-1.5.1-9029-20201210-1234_amd64.deb";
-
-    nativeBuildInputs = [ dpkg ];
-
-    unpackCmd = "mkdir unpacked && dpkg -x $curSrc unpacked";
-
-    dontAutoPatchelf = true;
-
+    src = "${makeself-pkg}/st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.tar.gz";
+    dontUnpack = true;
+    nativeBuildInputs = [ autoPatchelfHook ];
+    buildInputs = [
+      stdenv.cc.cc.lib # libstdc++.so.6
+      libsecret
+      alsaLib
+      bzip2
+      openssl
+      libudev
+      ncurses5
+      tlf
+      fontconfig
+      pcsclite
+      python27
+    ] ++ (with xorg; [
+      libX11
+      libSM
+      libICE
+      libXrender
+      libXrandr
+      libXfixes
+      libXcursor
+      libXext
+      libXtst
+      libXi
+    ]);
+    autoPatchelfIgnoreMissingDeps = true; # libcrypto.so.1.0.0
     installPhase = ''
-      mkdir -p $out/opt
-      mv opt/* $out/opt
-      mv usr/* $out
+      mkdir -p $out
+      tar zxf $src -C $out
 #       mkdir -p $out/bin
 #       ln -s $out/opt/st/stm32cubeide_1.5.1/stm32cubeide $out/bin
     '';
   };
   stlink-server = stdenv.mkDerivation {
     name = "stlink-server-2.0.2-1";
-    src = "${debs}/st-stlink-server-2.0.2-1-linux-amd64.deb";
-    nativeBuildInputs = [ dpkg ];
-
-    unpackCmd = "mkdir unpacked && dpkg -x $curSrc unpacked";
+    src = "${makeself-pkg}/st-stlink-server.2.0.2-1-linux-amd64.install.sh";
+    nativeBuildInputs = [ autoPatchelfHook ];
+    buildInputs = [ libusb1 ];
+    unpackCmd = "sh $src --target dir --noexec";
 
     installPhase = ''
-      mkdir -p $out
-      mv usr/* $out
+      ls -lR
+      mkdir -p $out/bin
+      cp stlink-server $out/bin
     '';
   };
 in
 # We use FHS environment because we want to run the compilers
-# downloaded from the IDE.
+# downloaded from the IDE and it is also needed by bundled SWT libraries.
 buildFHSUserEnv {
   name = "stm32cubeide";
 
@@ -54,11 +73,26 @@ buildFHSUserEnv {
     stm32cubeide
     gtk3 cairo glib webkitgtk
 
+    # These libraries are also needed in the FHS environment for
+    # flashing/debugging to work. Having them as dependencies in
+    # stm32cubeide is not sufficient.
+    stdenv.cc.cc.lib # libstdc++.so.6
+    libsecret
+    alsaLib
+    bzip2
+    openssl
+    libudev
+    ncurses5
+    tlf
+    fontconfig
+    pcsclite
+    python27
+
     stlink-server
-    libusb1 ncurses5
+    ncurses5
   ];
 
   runScript = ''
-    ${stm32cubeide}/opt/st/stm32cubeide_1.5.1/stm32cubeide
+    ${stm32cubeide}/stm32cubeide
   '';
 }
