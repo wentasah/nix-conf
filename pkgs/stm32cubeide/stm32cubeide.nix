@@ -1,4 +1,4 @@
-{ stdenv, lib, buildFHSUserEnv, unzip, dpkg, gtk3, cairo, glib, webkitgtk }:
+{ stdenv, lib, buildFHSUserEnv, unzip, dpkg, gtk3, cairo, glib, webkitgtk, libusb1, bash }:
 let
   debs = stdenv.mkDerivation {
     name = "stm32cubeide_debs";
@@ -25,20 +25,40 @@ let
     dontAutoPatchelf = true;
 
     installPhase = ''
+      mkdir -p $out/opt
+      mv opt/* $out/opt
+      mv usr/* $out
+#       mkdir -p $out/bin
+#       ln -s $out/opt/st/stm32cubeide_1.5.1/stm32cubeide $out/bin
+    '';
+  };
+  stlink-server = stdenv.mkDerivation {
+    name = "stlink-server-2.0.2-1";
+    src = "${debs}/st-stlink-server-2.0.2-1-linux-amd64.deb";
+    nativeBuildInputs = [ dpkg ];
+
+    unpackCmd = "mkdir unpacked && dpkg -x $curSrc unpacked";
+
+    installPhase = ''
       mkdir -p $out
-      mv * $out
+      mv usr/* $out
     '';
   };
 in
+# We use FHS environment because we want to run the compilers
+# downloaded from the IDE.
 buildFHSUserEnv {
   name = "stm32cubeide";
 
   targetPkgs = pkgs: with pkgs; [
     stm32cubeide
     gtk3 cairo glib webkitgtk
+
+    stlink-server
+    libusb1 ncurses5
   ];
 
   runScript = ''
-    ${stm32cubeide.outPath}/opt/st/stm32cubeide_1.5.1/stm32cubeide
+    ${stm32cubeide}/opt/st/stm32cubeide_1.5.1/stm32cubeide
   '';
 }
