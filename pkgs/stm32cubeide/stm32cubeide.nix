@@ -2,11 +2,14 @@
   cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib,
   bzip2, openssl, libudev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27
 }:
-let makeself-pkg =
-stdenv.mkDerivation { name = "stm32cubeide-makeself-pkg";
+let
+  makeself-pkg = stdenv.mkDerivation {
+    name = "stm32cubeide-makeself-pkg";
     # Direct download URL is probably not available, because one has
     # to agree to the license.
     src = ./en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip;
+    ## The result of: nix-store --add-fixed sha256 en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip
+    #src = "/nix/store/am5arjrqy41i3kvp2bb9qm2hkcwpmis2-en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip";
     unpackCmd = "mkdir tmp && ${unzip}/bin/unzip -d tmp $curSrc";
     installPhase = ''
       sh st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh --target $out --noexec

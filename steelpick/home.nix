@@ -25,6 +25,7 @@ let
   cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
   pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
   gtkterm = import ../pkgs/gtkterm.nix { pkgs = pkgs; };
+  stm32cubeide = import ../pkgs/stm32cubeide { pkgs = pkgs; };
 in
 {
   nixpkgs = {
@@ -170,6 +171,7 @@ in
     socat
     solvespace
     sshuttle
+    stm32cubeide
     thunderbird
     tmux
     unzip
