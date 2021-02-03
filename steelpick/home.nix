@@ -410,7 +410,7 @@ in
 
   programs.obs-studio.enable = true;
   programs.obs-studio.plugins = with pkgs; [
-    obs-v4l2sink
+    #obs-v4l2sink # built into OBS since 26.1
     #(callPackage ./obs-shaderfilter-plus.nix {})
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
