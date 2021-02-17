@@ -26,6 +26,7 @@ let
   pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
   gtkterm = import ../pkgs/gtkterm.nix { pkgs = pkgs; };
   stm32cubeide = import ../pkgs/stm32cubeide { pkgs = pkgs; };
+  licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
 in
 {
   nixpkgs = {
@@ -118,6 +119,7 @@ in
     lexicon
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
+    licenseutils
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     ltrace
