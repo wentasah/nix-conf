@@ -83,6 +83,7 @@ in
     clang
     clang-tools
     clementine
+    clinfo
     cmake
     colordiff
     cppreference
@@ -160,7 +161,9 @@ in
     python3Packages.jupyter_core
     python3Packages.notebook
     qemu
+    qt5.full            # To make qtcreator find the qt automatically
     radare2 radare2-cutter
+    ranger
     redo-apenwarr
     restic
     ripgrep
@@ -280,6 +283,7 @@ in
       mkdir = "nocorrect mkdir"; # no spelling correction on mkdir
       mv    = "nocorrect mv"; # no spelling correction on mv
       o     = "octave -f --no-gui";
+      r     = "ranger";
       sc    = "systemctl";
       scp   = "${pkgs.rsync}/bin/rsync -aP --inplace";
       scs   = "systemctl status";
