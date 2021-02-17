@@ -1,15 +1,18 @@
 { stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
   cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib,
-  bzip2, openssl, libudev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27
+  bzip2, openssl, libudev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
+  requireFile
 }:
 let
   makeself-pkg = stdenv.mkDerivation {
     name = "stm32cubeide-makeself-pkg";
     # Direct download URL is probably not available, because one has
     # to agree to the license.
-    src = ./en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip;
-    ## The result of: nix-store --add-fixed sha256 en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip
-    #src = "/nix/store/am5arjrqy41i3kvp2bb9qm2hkcwpmis2-en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip";
+    src = requireFile rec {
+      name = "en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip";
+      sha256 = "9b7edb4c93be799aa8bca643cb93befc6393fcd60f705c9f630da13860cef207";
+      url = "https://www.st.com/en/development-tools/stm32cubeide.html";
+    };
     unpackCmd = "mkdir tmp && ${unzip}/bin/unzip -d tmp $curSrc";
     installPhase = ''
       sh st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh --target $out --noexec
