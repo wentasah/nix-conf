@@ -199,6 +199,7 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
+    (import ../pkgs/unfs3 { pkgs = pkgs; })
 
     (swaylock.overrideAttrs(old: {
       src = fetchFromGitHub {
