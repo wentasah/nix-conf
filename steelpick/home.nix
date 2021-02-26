@@ -222,7 +222,7 @@ in
   ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
   home.file = {
-    "bin/ect" = {
+    "bin/emacsclient-tty" = {
       executable = true;
       text = ''
         #!${pkgs.runtimeShell}
@@ -243,7 +243,7 @@ in
   #     diff -u --color key.vi key.em
   # The result should be same, but it isn't.
   home.sessionVariables = {
-    EDITOR = "ect";
+    EDITOR = "emacsclient-tty";
     GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
     NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
   };
