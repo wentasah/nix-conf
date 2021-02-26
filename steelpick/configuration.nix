@@ -41,6 +41,7 @@ in
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -78,6 +79,7 @@ in
   '';
 
   systemd = {
+    enableUnifiedCgroupHierarchy = false; # breaks DEmOS
     extraConfig = ''
       DefaultTimeoutStopSec=30  # Don't block reboot for too long
     '';
@@ -178,7 +180,7 @@ in
   programs.adb.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  #virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # List services that you want to enable:
 
