@@ -10,7 +10,7 @@ let
   mytexlive = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic scheme-medium collection-langczechslovak
       collection-xetex latexmk collection-latexextra
-      collection-mathscience chktex roboto cbfonts;
+      collection-mathscience chktex roboto cbfonts IEEEconf;
     pkgFilter = (pkg:
       pkg.tlType == "run"
       || pkg.tlType == "bin"
@@ -72,6 +72,7 @@ in
     aspellDicts.en
     aspellDicts.en-computers
     aspellDicts.en-science
+    atool
     audacity
     audacity
     autorandr
@@ -88,6 +89,7 @@ in
     colordiff
     cppreference
     dpkg
+    dragon-drop
     dunst
     exif
     fd
@@ -144,6 +146,7 @@ in
     okteta
     okular
     openssl
+    p7zip
     pandoc
     parcellite
     pavucontrol
