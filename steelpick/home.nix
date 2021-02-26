@@ -287,7 +287,7 @@ in
       mkdir = "nocorrect mkdir"; # no spelling correction on mkdir
       mv    = "nocorrect mv"; # no spelling correction on mv
       o     = "octave -f --no-gui";
-      r     = "ranger";
+      r     = "ranger_cd";
       sc    = "systemctl";
       scp   = "${pkgs.rsync}/bin/rsync -aP --inplace";
       scs   = "systemctl status";
@@ -366,6 +366,15 @@ in
 
       ZSH_BASH_COMPLETIONS_FALLBACK_PATH=${pkgs.bash-completion}/share/bash-completion
       #ZSH_BASH_COMPLETIONS_FALLBACK_WHITELIST=(openssl)
+
+      ranger_cd() {
+          temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+          ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
+          if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+              cd -- "$chosen_dir"
+          fi
+          rm -f -- "$temp_file"
+      }
 
       # Hostnames in K23 lab
       k23="k23-177 k23-178 k23-179 k23-180 k23-181 k23-182 k23-183 k23-184 k23-185 k23-186 k23-187 k23-189 k23-190 k23-192 k23-193 k23-195 k23-196 k23-197 k23-198"
