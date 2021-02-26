@@ -51,7 +51,7 @@ in
   nixpkgs.config = {
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
       "skypeforlinux" "faac"
-      "zoom-us"
+      "zoom"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
       "mfcl2700dwlpr"
     ];
@@ -62,6 +62,7 @@ in
   environment.systemPackages = with pkgs; [
     (emacsWithPackages (epkgs: (with epkgs.melpaPackages; [ nix-mode ])))
     firefox-wayland
+    chromium
     gitAndTools.git-annex lsof git
     gnomeExtensions.appindicator
     libreoffice-fresh
