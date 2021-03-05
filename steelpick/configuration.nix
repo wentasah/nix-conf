@@ -114,6 +114,7 @@ in
   environment.variables.EDITOR = "vim";
 
   documentation.dev.enable = true;
+  documentation.man.generateCaches = true;
 
   environment.extraOutputsToInstall = [ "man" "info" ];
 
@@ -303,7 +304,7 @@ in
   users.users = {
     wsh = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "jackaudio" "adbusers" "vboxusers" ];
+      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "lp" "jackaudio" "adbusers" "vboxusers" ];
       uid = 1000;
       group = "wsh";
       shell = pkgs.zsh;
