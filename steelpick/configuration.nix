@@ -140,6 +140,8 @@ in
     stlink
     glibcInfo
     ddrescue
+    zoom-us
+    cntr
   ];
 
   environment.homeBinInPath = true;
@@ -162,7 +164,7 @@ in
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
       teams = "${pkgs.teams}/bin/teams";
-      zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
+      #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
       skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };
   };
@@ -338,7 +340,7 @@ in
     # if the builder supports building for multiple architectures,
     # replace the previous line by, e.g.,
     # systems = ["x86_64-linux" "aarch64-linux"];
-    maxJobs = 1;
+    maxJobs = 10;
     speedFactor = 2;
     supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
     mandatoryFeatures = [ ];

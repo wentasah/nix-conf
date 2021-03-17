@@ -10,7 +10,7 @@ let
   mytexlive = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic scheme-medium collection-langczechslovak
       collection-xetex latexmk collection-latexextra
-      collection-mathscience chktex roboto cbfonts IEEEconf;
+      collection-mathscience chktex roboto cbfonts IEEEconf fontawesome5;
     pkgFilter = (pkg:
       pkg.tlType == "run"
       || pkg.tlType == "bin"
@@ -54,7 +54,8 @@ in
 
   home.packages = with pkgs; [
 
-    # pdfpc                       # using my custom modified version
+        # pdfpc                       # using my custom modified version
+    #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
     #firejail
     #gnome3.nautilus
     #gtkterm
@@ -64,7 +65,7 @@ in
     (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
-    (qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
+    (import ../pkgs/unfs3 { pkgs = pkgs; })
     afew
     arandr
     ardour jack2 x42-plugins gxplugins-lv2 qjackctl
@@ -80,11 +81,12 @@ in
     bbe
     brightnessctl
     cachix
+    can-utils
     ccls
     chromium
     clang
     clang-tools
-    clementine
+    #clementine # broken in current unstable
     clinfo
     cmake
     colordiff
@@ -98,6 +100,7 @@ in
     firefox
     gdb
     gimp
+    gitAndTools.delta
     gitAndTools.git-annex
     gitAndTools.git-subtrac
     gitAndTools.tig
@@ -119,6 +122,7 @@ in
     julia
     kdiff3
     keepassxc
+    kernelshark
     kicad-small
     lexicon
     libnotify # for notify-send (for mailsync)
@@ -130,6 +134,7 @@ in
     manpages
     mc
     meson
+    ministat
     moreutils
     mosh
     mtr
@@ -159,6 +164,7 @@ in
     playerctl
     pod-mode
     poppler_utils
+    posix_man_pages
     psmisc                      # killall, fuser, ...
     pv
     python3
@@ -166,6 +172,7 @@ in
     python3Packages.notebook
     qemu
     qt5.full            # To make qtcreator find the qt automatically
+    qtcreator
     radare2 radare2-cutter
     ranger
     redo-apenwarr
@@ -183,6 +190,7 @@ in
     stm32cubeide
     thunderbird
     tmux
+    trace-cmd
     unzip
     usbutils
     v4l-utils # for qv4l2
@@ -192,6 +200,7 @@ in
     xclip
     xdotool
     xf86_input_wacom
+    xlibs.xorgdocs
     xorg.xev
     xorg.xkbcomp
     xorg.xkill
@@ -203,18 +212,18 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
-    (import ../pkgs/unfs3 { pkgs = pkgs; })
 
-    (swaylock.overrideAttrs(old: {
-      src = fetchFromGitHub {
-        owner = "swaywm";
-        repo = "swayidle";
-        rev = "068942751ba459ef3b9ba0ec8eddf9f6f212c4d7";
-        # date = 2020-11-06T11:38:15+01:00;
-        sha256 = "1ml2n1rp8simpd2y4ff1anx2vj89f3a6dhfz8m2hdan749vwnxvk";
-      };
-      buildInputs = old.buildInputs ++ [ systemd ];
-    }))
+    swaylock
+#     (swaylock.overrideAttrs(old: {
+#       src = fetchFromGitHub {
+#         owner = "swaywm";
+#         repo = "swayidle";
+#         rev = "068942751ba459ef3b9ba0ec8eddf9f6f212c4d7";
+#         # date = 2020-11-06T11:38:15+01:00;
+#         sha256 = "1ml2n1rp8simpd2y4ff1anx2vj89f3a6dhfz8m2hdan749vwnxvk";
+#       };
+#       buildInputs = old.buildInputs ++ [ systemd ];
+#     }))
 
     # Fonts
     roboto
@@ -261,6 +270,7 @@ in
   };
 
   programs.man.enable = true;
+  programs.man.generateCaches = true;
   programs.info.enable = true;
 
   programs.zsh = {
@@ -397,17 +407,11 @@ in
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: with epkgs; [
-      edit-server
-      helm
-      magit
-      forge
-      nix-mode
-      eglot
-      direnv
-      vterm
-      pod-mode
-    ];
+
+#     # Not used since switch to straight
+#     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
+    extraPackages = epkgs: with epkgs; [ vterm ];
+
     package = (pkgs.emacs.override {
       withGTK2 = false;
       withGTK3 = false;
@@ -506,12 +510,14 @@ in
       };
 
       Service = {
+        Environment = "PATH=${pkgs.git}/bin:%h/.nix-profile/bin";
         ExecStart = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostart --startdelay 60 --notify-start --notify-finish --foreground";
         ExecStop = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostop";
         #LimitCPU = "10m";
         CPUAccounting = true;
         CPUQuota = "20%";
         Restart = "on-failure";
+        RestartSec = "5s";
       };
 
       Install = { WantedBy = [ "default.target" ]; };
@@ -547,6 +553,11 @@ in
     ncdu-save = {
       Service = {
         ExecStart = "${pkgs.gnumake}/bin/make -C %h/srv/steelpick/ncdu save";
+      };
+    };
+    notmuch-dump-tags = {
+      Service = {
+        ExecStart = "${pkgs.gnumake}/bin/make -C %h/repos/notmuch-tags";
       };
     };
   };
