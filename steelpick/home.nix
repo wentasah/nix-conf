@@ -27,6 +27,7 @@ let
   gtkterm = import ../pkgs/gtkterm.nix { pkgs = pkgs; };
   stm32cubeide = import ../pkgs/stm32cubeide { pkgs = pkgs; };
   licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
+  kernelshark = import ../pkgs/kernelshark { pkgs = pkgs; };
 in
 {
   nixpkgs = {
