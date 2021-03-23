@@ -52,8 +52,9 @@ in
 
   home.packages = with pkgs; [
 
-        # pdfpc                       # using my custom modified version
+    # pdfpc                       # using my custom modified version
     #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
+    #clementine # broken in current unstable
     #firejail
     #gnome3.nautilus
     #gtkterm
@@ -84,7 +85,6 @@ in
     chromium
     clang
     clang-tools
-    #clementine # broken in current unstable
     clinfo
     cmake
     colordiff
@@ -184,6 +184,7 @@ in
     smplayer mpv mplayer
     socat
     solvespace
+    sqlitebrowser
     sshuttle
     stm32cubeide
     thunderbird

@@ -311,6 +311,11 @@ in
       group = "wsh";
       shell = pkgs.zsh;
     };
+    gitea = {
+      isNormalUser = true;
+      uid = 1002;
+      packages = [ pkgs.gitea ];
+    };
     novaboot-test = {
       isNormalUser = true;
       uid = 1003;
