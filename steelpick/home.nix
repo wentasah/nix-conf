@@ -65,6 +65,7 @@ in
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
     (import ../pkgs/unfs3 { pkgs = pkgs; })
+    adoptopenjdk-icedtea-web
     afew
     arandr
     ardour jack2 x42-plugins gxplugins-lv2 qjackctl
