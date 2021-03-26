@@ -4,12 +4,12 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "julia-bin";
-  version = "1.5.3";
+  version = "1.6.0";
 
   src = fetchurl {
-    url = "https://julialang-s3.julialang.org/bin/linux/x64/1.5/julia-${version}-linux-x86_64.tar.gz";
+    url = "https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-${version}-linux-x86_64.tar.gz";
     # Use `nix-prefetch-url` to get the hash.
-    sha256 = "1w8masmj96afzm55f2vnlv08wi6vr4iha92k3419gvbgvlwck47i";
+    sha256 = "11c5pp8mfb00sr2fpifyx00pj6h5638mavgxw3098w6af3f72fs6";
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
