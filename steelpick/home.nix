@@ -54,7 +54,6 @@ in
 
     # pdfpc                       # using my custom modified version
     #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
-    #clementine # broken in current unstable
     #firejail
     #gnome3.nautilus
     #gtkterm
@@ -86,6 +85,7 @@ in
     chromium
     clang
     clang-tools
+    clementine
     clinfo
     cmake
     colordiff
