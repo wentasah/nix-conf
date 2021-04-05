@@ -12,6 +12,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../modules/home-printer.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -106,32 +107,9 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = (
-    let
-      mfcl2700dwlpr = pkgs.callPackage ./../pkgs/mfcl2700dwlpr.nix {};
-      mfcl2700dwcupswrapper = pkgs.callPackage ./../pkgs/mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
-    in [
-      mfcl2700dwlpr
-      mfcl2700dwcupswrapper
-    ]);
-  services.avahi.enable = true;
-  # Important to resolve .local domains of printers, otherwise you get an error
-  # like  "Impossible to connect to XXX.local: Name or service not known"
-  services.avahi.nssmdns = true;
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  hardware.sane.enable = true;
-  hardware.sane.brscan4 = {
-    enable = true;
-    netDevices = {
-      home = { model = "MFC-L2700DW"; ip = "192.168.1.10"; };
-    };
-  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

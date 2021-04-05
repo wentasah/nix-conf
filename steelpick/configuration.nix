@@ -13,14 +13,13 @@ let myOverlay = self: super:
 #             mv $out/opt/teams/resources/app.asar.unpacked/node_modules/slimcore/bin/rect-overlay{,.bak}
 #           '';
 #        });
-        mfcl2700dwlpr = super.callPackage ../pkgs/mfcl2700dwlpr.nix {};
-        mfcl2700dwcupswrapper = super.callPackage ../pkgs/mfcl2700dwcupswrapper.nix { inherit mfcl2700dwlpr; };
       };
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../modules/home-printer.nix
     ];
 
   nixpkgs = {
@@ -215,31 +214,11 @@ in
 
   networking.wireguard.enable = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [
-    mfcl2700dwlpr
-    mfcl2700dwcupswrapper
-  ];
-
   services.flatpak.enable = true;
-
-  services.avahi.enable = true;
-  # Important to resolve .local domains of printers, otherwise you get an error
-  # like  "Impossible to connect to XXX.local: Name or service not known"
-  services.avahi.nssmdns = true;
 
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
-
-  hardware.sane.enable = true;
-  hardware.sane.brscan4 = {
-    enable = true;
-    netDevices = {
-      home = { model = "MFC-L2700DW"; ip = "192.168.1.10"; };
-    };
-  };
 
   hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
 
