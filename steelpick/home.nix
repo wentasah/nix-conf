@@ -81,6 +81,7 @@ in
     brightnessctl
     cachix
     can-utils
+    cask
     ccls
     chromium
     clang
@@ -90,6 +91,7 @@ in
     cmake
     colordiff
     cppreference
+    cura
     dpkg
     dragon-drop
     dunst
@@ -208,10 +210,12 @@ in
     xournalpp
     xpra
     xss-lock
+    yamllint
     zip
     zotero
     zsh-completions
     zsh-syntax-highlighting
+    (feedgnuplot.override { gnuplot = gnuplot_qt; })
 
     swaylock
 #     (swaylock.overrideAttrs(old: {
