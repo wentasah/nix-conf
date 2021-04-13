@@ -15,7 +15,7 @@ let
       || (
         pkg.tlType == "doc" &&
         # Prevent collisions
-        !builtins.elem pkg.pname [ "dvipdfmx" "texlive-scripts" ]
+        !builtins.elem pkg.pname [ "core" ]
       ));
   };
   julia = import ../pkgs/julia-bin.nix { pkgs = pkgs; };
