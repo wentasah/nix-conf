@@ -221,6 +221,10 @@ in
       sha256 = "0z8m48hq27mx2gm9s7p5ii79wp5asabgc67q8s90y6jirfh1y1vm";
     }) {})
 
+    rustup
+    # rustc cargo rls clippy
+    rust-analyzer cargo-edit
+
     swaylock
 #     (swaylock.overrideAttrs(old: {
 #       src = fetchFromGitHub {
@@ -439,6 +443,8 @@ in
   programs.dircolors.enable = true;
 
   programs.direnv.enable = true;
+
+  programs.go.enable = true;
 
   programs.obs-studio.enable = true;
   programs.obs-studio.plugins = with pkgs; [
