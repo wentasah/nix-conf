@@ -216,6 +216,10 @@ in
     zsh-completions
     zsh-syntax-highlighting
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
+    (import (fetchTarball {
+      url = "https://gitlab.com/khumba/nvd/-/archive/master/nvd-master.tar.gz";
+      sha256 = "0z8m48hq27mx2gm9s7p5ii79wp5asabgc67q8s90y6jirfh1y1vm";
+    }) {})
 
     swaylock
 #     (swaylock.overrideAttrs(old: {
