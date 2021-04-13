@@ -333,7 +333,11 @@ in
   nix.extraOptions = ''
     builders-use-substitutes = true
   '';
-  nix.gc.automatic = true;
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 7d";
+    persistent = true;
+  };
 
   virtualisation.docker.enable = true;
 
