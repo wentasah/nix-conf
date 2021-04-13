@@ -45,8 +45,12 @@ in
   time.timeZone = "Europe/Prague";
 
   nix = {
-    gc.automatic = true;
-    gc.dates = "weekly";
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+      #persistent = true; # Enable for 21.05
+    };
   };
 
   nixpkgs.config = {
