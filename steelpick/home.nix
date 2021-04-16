@@ -147,6 +147,7 @@ in
     niv
     nix-prefetch-scripts
     nix-review
+    nix-tree
     notmuch
     notmuch.emacs
     odt2txt
