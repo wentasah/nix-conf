@@ -328,6 +328,15 @@ in
       setopt notify interactivecomments recexact longlistjobs
       setopt autoresume pushdsilent autopushd pushdminus
 
+      whix() {
+        realpath $(command which "$1")
+      }
+
+      whixd() {
+        local bin=$(whix "$1")
+        [[ $bin =~ ^/nix/store/[^/]* ]] && echo "$MATCH"
+      }
+
       d() {
         local dir
         dir=$(dirs -l -p | fzf +m) &&
