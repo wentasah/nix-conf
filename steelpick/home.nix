@@ -241,6 +241,7 @@ in
     # Fonts
     roboto
     source-sans-pro
+    lato
 
   ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
