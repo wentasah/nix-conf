@@ -74,6 +74,7 @@ in
     aspellDicts.en-computers
     aspellDicts.en-science
     atool
+    atop
     audacity
     audacity
     autorandr
@@ -125,6 +126,7 @@ in
     keepassxc
     kernelshark
     kicad-small
+    krita
     lexicon
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
@@ -586,6 +588,10 @@ in
       };
     };
   };
+
+#   xdg.mimeApps = {
+#     enable = true;
+#   };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
