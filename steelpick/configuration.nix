@@ -243,10 +243,11 @@ in
     virtualHosts.localhost = {
       listen = [{ addr = "127.0.0.1"; }];
       locations."/~wsh/" = {
-        alias = "/home/wsh/public_html/";
+        alias = "/srv/www/wsh/";
       };
     };
   };
+  fileSystems."/srv/www/wsh" = { options = [ "bind" ]; device = "/home/wsh/public_html"; };
 
   systemd.services.nginx.serviceConfig.ProtectHome = false;
 
