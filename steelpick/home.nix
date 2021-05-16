@@ -150,6 +150,9 @@ in
     nix-prefetch-scripts
     nix-review
     nix-tree
+    nixfmt
+    nixpkgs-fmt
+    nodePackages.typescript-language-server
     notmuch
     notmuch.emacs
     odt2txt
@@ -182,6 +185,7 @@ in
     redo-apenwarr
     restic
     ripgrep
+    rnix-lsp
     roboto-slab
     rofi
     rsync
@@ -201,6 +205,7 @@ in
     v4l-utils # for qv4l2
     valgrind
     vlc
+    websocat
     wmctrl
     xclip
     xdotool
@@ -243,7 +248,10 @@ in
     # Fonts
     roboto
     source-sans-pro
+    source-serif-pro
     lato
+    open-sans
+
 
   ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
