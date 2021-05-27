@@ -110,6 +110,8 @@ in
   # Set your time zone.
   time.timeZone = "Europe/Prague";
 
+  fonts.enableGhostscriptFonts = true;
+
   environment.variables.EDITOR = "vim";
 
   documentation.dev.enable = true;
