@@ -89,7 +89,7 @@ in
     clang-tools
     clementine
     clinfo
-    cmake
+    cmakeWithGui
     colordiff
     cppreference
     cura
