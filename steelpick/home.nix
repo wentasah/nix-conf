@@ -226,7 +226,7 @@ in
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (import (fetchTarball {
       url = "https://gitlab.com/khumba/nvd/-/archive/master/nvd-master.tar.gz";
-      sha256 = "0z8m48hq27mx2gm9s7p5ii79wp5asabgc67q8s90y6jirfh1y1vm";
+      sha256 = "19kx4xzy9a4hfhmjxy6g5b8ql9vvwivd6sfhk4x64m88i7banz73";
     }) {})
 
     rustup
