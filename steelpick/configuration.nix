@@ -33,6 +33,7 @@ in
         "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
         "mfcl2700dwlpr"
         "Oracle_VM_VirtualBox_Extension_Pack"
+        "kyocera-phase5"
       ];
     };
     overlays = [ myOverlay ];
@@ -187,6 +188,9 @@ in
   #virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # List services that you want to enable:
+
+  services.printing.enable = true;
+  services.printing.drivers = [ (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {}) ];
 
   #services.teamviewer.enable = true;
 
