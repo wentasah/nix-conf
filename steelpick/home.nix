@@ -79,6 +79,8 @@ in
     audacity
     autorandr
     bbe
+    bc                          # For linux kernel compilation
+    bison
     brightnessctl
     cachix
     can-utils
@@ -98,8 +100,10 @@ in
     dunst
     exif
     fd
+    fdupes
     ffmpeg
     firefox
+    flex
     gdb
     gimp
     gitAndTools.delta
@@ -130,6 +134,7 @@ in
     lexicon
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
+    libxml2 # for xmllint
     licenseutils
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
@@ -145,6 +150,7 @@ in
     mytexlive
     nasm
     ncdu
+    ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
     nix-prefetch-scripts
@@ -159,14 +165,17 @@ in
     okteta
     okular
     openssl
+    openssl.dev                 # For linux kernel compilation
     p7zip
     pandoc
     parcellite
     pavucontrol
     pdf2svg
+    pdftk
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
+    pkg-config
     pkg-config
     playerctl
     pod-mode
@@ -251,9 +260,15 @@ in
     source-serif-pro
     lato
     open-sans
+    libertine # For images consistency with ACM latex template
+
+  ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
+  ++ (with pkgsCross.aarch64-multiplatform; [
+    buildPackages.gcc
+    (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+  ]);
 
 
-  ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs;
 
   home.file = {
     "bin/emacsclient-tty" = {
