@@ -161,6 +161,7 @@ in
     nodePackages.typescript-language-server
     notmuch
     notmuch.emacs
+    nvd
     odt2txt
     okteta
     okular
@@ -234,10 +235,6 @@ in
     zsh-completions
     zsh-syntax-highlighting
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    (import (fetchTarball {
-      url = "https://gitlab.com/khumba/nvd/-/archive/master/nvd-master.tar.gz";
-      sha256 = "19kx4xzy9a4hfhmjxy6g5b8ql9vvwivd6sfhk4x64m88i7banz73";
-    }) {})
 
     rustup
     # rustc cargo rls clippy
