@@ -180,7 +180,7 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
 #  services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
 
   # Enable touchpad support.
