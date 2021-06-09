@@ -221,6 +221,7 @@ in
     xf86_input_wacom
     xlibs.xorgdocs
     xorg.xev
+    xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
     xorg.xkill
     xournal
