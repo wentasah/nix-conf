@@ -91,6 +91,7 @@ in
     clang-tools
     clementine
     clinfo
+    cloc
     cmakeWithGui
     colordiff
     cppreference
@@ -228,6 +229,7 @@ in
     xournal
     xournalpp
     xpra
+    xrectsel
     xss-lock
     yamllint
     zip
