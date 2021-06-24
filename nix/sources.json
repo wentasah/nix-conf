@@ -1,4 +1,16 @@
 {
+    "envfs": {
+        "branch": "main",
+        "description": "Fuse filesystem that returns symlinks to executables based on the PATH of the requesting process.",
+        "homepage": "",
+        "owner": "Mic92",
+        "repo": "envfs",
+        "rev": "42bed8a2959aea39ced7b117614f7d5e5126db51",
+        "sha256": "0ifyfk4cc5qx3i9315v6mw4fk38gskj8mm7r8sgr99p1ngh2lwjr",
+        "type": "tarball",
+        "url": "https://github.com/Mic92/envfs/archive/42bed8a2959aea39ced7b117614f7d5e5126db51.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
