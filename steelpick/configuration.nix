@@ -20,7 +20,8 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../modules/home-printer.nix
-      "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
+      # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
+      /home/wsh/src/envfs/modules/envfs.nix
     ];
 
   nixpkgs = {
@@ -190,6 +191,8 @@ in
 
   # List services that you want to enable:
 
+  services.fwupd.enable = true;
+
   services.printing.enable = true;
   services.printing.drivers = [ (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {}) ];
 
@@ -218,6 +221,7 @@ in
   networking.firewall.interfaces.enp0s31f6.allowedUDPPorts = [ 69 ]; # TFTP
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  # networking.firewall.logRefusedPackets = true;
 
   networking.wireguard.enable = true;
 
@@ -313,8 +317,19 @@ in
   security.sudo = {
     enable = true;
     extraConfig = ''
-    wsh  ALL=(novaboot-test) NOPASSWD: ALL
-    wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe/modprobe vboxdrv
+      wsh  ALL=(novaboot-test) NOPASSWD: ALL
+      wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe/modprobe vboxdrv
+
+      # Recommended sudo configuration for novaboot
+
+      # Uncomment the following lines to enable --dhcp-tftp option
+      Cmnd_Alias NOVABOOT_DHCP = ${pkgs.iproute2}/bin/ip a add 10.23.23.1/24 dev enp0s31f6, ${pkgs.iproute2}/ip l set dev enp0s31f6 up, ${pkgs.dhcp}/bin/dhcpd -d -cf dhcpd.conf -lf dhcpd.leases -pf dhcpd.pid, ${pkgs.coreutils}/bin/touch dhcpd.leases, ${pkgs.procps}/bin/pkill --pidfile=dhcpd.pid
+      wsh ALL=NOPASSWD: NOVABOOT_DHCP
+
+      # Uncomment the following lines to enable --dhcp-tftp and --tftp options
+      Cmnd_Alias NOVABOOT_TFTP = ${pkgs.tftp-hpa}/bin/in.tftpd --listen --secure -v -v -v --pidfile tftpd.pid *, ${pkgs.procps}/bin/pkill --pidfile=*/tftpd.pid
+      wsh ALL=NOPASSWD: NOVABOOT_TFTP
+
     '';
   };
 
@@ -348,6 +363,12 @@ in
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.enableOnBoot = false; # use socket activation
+
+  # For novaboot testing
+  environment.etc."qemu/bridge.conf".text = "allow br0";
+
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

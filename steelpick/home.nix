@@ -98,6 +98,7 @@ in
     cura
     dpkg
     dragon-drop
+    dua
     dunst
     exif
     fd
@@ -111,6 +112,7 @@ in
     gitAndTools.git-annex
     gitAndTools.git-subtrac
     gitAndTools.tig
+    gitui
     glibcInfo                   # Not visible in emacs :-(
     global
     gnome3.devhelp
@@ -228,6 +230,7 @@ in
     xorg.xkill
     xournal
     xournalpp
+    xplr
     xpra
     xrectsel
     xss-lock
