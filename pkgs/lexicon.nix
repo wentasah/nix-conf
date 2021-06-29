@@ -7,7 +7,7 @@ let
     exec /mnt/debian/opt/Lingea/Lexicon5/Lexicon "$@"
   '';
 in
-pkgs.buildFHSUserEnv {
+pkgs.buildFHSUserEnvBubblewrap {
     name = "lexicon";
     multiPkgs = pkgs: (with pkgs;
       [
