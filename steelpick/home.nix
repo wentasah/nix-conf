@@ -95,6 +95,8 @@ in
     cmakeWithGui
     colordiff
     cppreference
+    csv2latex
+    csvtool
     cura
     dpkg
     dragon-drop
@@ -107,6 +109,7 @@ in
     firefox
     flex
     gdb
+    gh
     gimp
     gitAndTools.delta
     gitAndTools.git-annex
@@ -156,10 +159,13 @@ in
     ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
+    nix-doc
+    nix-prefetch
     nix-prefetch-scripts
     nix-review
     nix-tree
     nixfmt
+    nixos-shell
     nixpkgs-fmt
     nodePackages.typescript-language-server
     notmuch
@@ -190,6 +196,7 @@ in
     python3
     python3Packages.jupyter_core
     python3Packages.notebook
+    python3Packages.python-language-server
     qemu
     qt5.full            # To make qtcreator find the qt automatically
     qtcreator
