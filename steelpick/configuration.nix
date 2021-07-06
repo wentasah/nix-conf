@@ -336,11 +336,12 @@ in
   users.groups = { wsh = { gid = 1000; }; };
 
   nix.trustedUsers = [ "root" "@wheel" ];
-#   nix.nixPath = [
-#     "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-#     "nixos-config=/etc/nixos/configuration.nix"
-#     "/nix/var/nix/profiles/per-user/root/channels"
-  #   ];
+  nix.nixPath = [
+    #"nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+    "nixpkgs=/home/wsh/nix/nixpkgs"
+    "nixos-config=/etc/nixos/configuration.nix"
+    "/nix/var/nix/profiles/per-user/root/channels"
+    ];
   nix.buildMachines = [ {
     hostName = "ritchie";
     system = "x86_64-linux";
