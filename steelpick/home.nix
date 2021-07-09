@@ -64,6 +64,7 @@ in
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
     (import ../pkgs/unfs3 { pkgs = pkgs; })
+    (pkgs.callPackage ../pkgs/enumerate-markdown {})
     adoptopenjdk-icedtea-web
     afew
     arandr
