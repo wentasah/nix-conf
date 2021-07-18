@@ -164,6 +164,7 @@ in
     nix-prefetch
     nix-prefetch-scripts
     nix-review
+    nix-template
     nix-tree
     nixfmt
     nixos-shell
