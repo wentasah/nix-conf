@@ -17,6 +17,8 @@ stdenv.mkDerivation rec {
   # Stripping the shared libraries breaks dynamic loading.
   dontStrip = true;
 
+  preferLocalBuild = true;
+
   installPhase = ''
     mkdir -p $out
     tar -x -C $out -f $src --strip-components 1
