@@ -262,6 +262,20 @@ in
 
   systemd.services.nginx.serviceConfig.ProtectHome = false;
 
+  systemd.nspawn.ros-melodic = {
+    enable = true;
+    execConfig = {
+      ResolvConf = "bind-host";
+    };
+    filesConfig = {
+      Bind = "/home/wsh";
+      BindReadOnly = "/tmp/.X11-unix";
+    };
+    networkConfig = {
+      VirtualEthernet = false;  # Use host networking
+    };
+  };
+
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
   '';
