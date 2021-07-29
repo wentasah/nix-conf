@@ -307,6 +307,7 @@ in
   # The result should be same, but it isn't.
   home.sessionVariables = {
     EDITOR = "emacsclient-tty";
+    JULIA_EDITOR = "emacsclient";
     GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
     NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
   };
