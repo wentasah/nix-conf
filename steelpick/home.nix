@@ -53,6 +53,7 @@ in
   home.packages = with pkgs; [
 
     # pdfpc                       # using my custom modified version
+    #(pkgs.callPackage ../pkgs/diffsitter {})
     #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
     #firejail
     #gnome3.nautilus
@@ -64,7 +65,6 @@ in
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
     (import ../pkgs/unfs3 { pkgs = pkgs; })
-    #(pkgs.callPackage ../pkgs/diffsitter {})
     (pkgs.callPackage ../pkgs/difftastic {})
     (pkgs.callPackage ../pkgs/enumerate-markdown {})
     adoptopenjdk-icedtea-web
@@ -126,6 +126,7 @@ in
     gnumake
     gnupg
     gnuplot_qt
+    gpg-tui
     gtkterm
     htop
     hugo
@@ -160,9 +161,11 @@ in
     nasm
     ncdu
     ncurses6.dev                # for Linux's make manuconfig
+    #python3Packages.python-language-server # broken with python 3.9
     ninja
     niv
     nix-doc
+    nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
     nix-review
@@ -200,7 +203,6 @@ in
     python3
     python3Packages.jupyter_core
     python3Packages.notebook
-    python3Packages.python-language-server
     qemu
     qt5.full            # To make qtcreator find the qt automatically
     qtcreator
