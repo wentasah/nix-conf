@@ -49,6 +49,7 @@ let
       libXi
     ]);
     autoPatchelfIgnoreMissingDeps = true; # libcrypto.so.1.0.0
+    preferLocalBuild = true;
     installPhase = ''
       mkdir -p $out
       tar zxf $src -C $out
