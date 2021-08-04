@@ -298,6 +298,20 @@ in
       #!${pkgs.runtimeShell}
       exec ${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass
     ''; };
+    "bin/whix" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        realpath $(command which "$1")
+      '';
+    };
+    "bin/whixd" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        [[ $(whix "$1") =~ ^/nix/store/[^/]* ]] && echo "''${BASH_REMATCH[0]}"
+      '';
+    };
   };
 
   # I have a problem with zsh when EDITOR is "vim". Pressing "delete"
@@ -371,15 +385,6 @@ in
 
       setopt notify interactivecomments recexact longlistjobs
       setopt autoresume pushdsilent autopushd pushdminus
-
-      whix() {
-        realpath $(command which "$1")
-      }
-
-      whixd() {
-        local bin=$(whix "$1")
-        [[ $bin =~ ^/nix/store/[^/]* ]] && echo "$MATCH"
-      }
 
       d() {
         local dir
