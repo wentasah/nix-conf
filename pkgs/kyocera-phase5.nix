@@ -17,7 +17,10 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook ];
-  buildInputs = [ cups ];
+  buildInputs = [
+    cups
+    #(python2.withPackages (ps: with ps; [ pypdf2 reportlab ]))
+  ];
 
   installPhase = ''
     tar xf KyoceraLinux-Phase5-${version}.tar.gz
@@ -25,11 +28,19 @@ stdenv.mkDerivation {
 
     install -D -t $out/lib/cups/filter deb/usr/lib/cups/filter/*
 
+    # Don't include kyofilter_pre_F. Its purpose seems to be to just
+    # add watermarks. It's python2 only and depends on insecure
+    # python2 packages.
+    rm $out/lib/cups/filter/kyofilter_pre_F
+
     mkdir -p $out/share/cups/model/Kyocera
     cd deb/usr/share/kyocera5/ppd5
     for i in *.ppd; do
-      sed -i $i -e \
-        "s,/usr/lib/cups/filter/,$out/lib/cups/filter/,g"
+      #sed -i $i -e "s,/usr/lib/cups/filter/,$out/lib/cups/filter/,g"
+      # Do not use absolute paths in PPDs - when PPD is copied (by cups) to /etc, the path gets stale
+      sed -i $i -e "s,/usr/lib/cups/filter/,,g"
+      # Remove all references to the excluded filter (typically: *cupsPreFilter: "application/pdf 0 kyofilter_pre_F")
+      sed -i $i -e "/kyofilter_pre_F/d"
       cp $i $out/share/cups/model/Kyocera
     done;
   '';
