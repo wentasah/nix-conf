@@ -146,6 +146,7 @@ in
     ddrescue
     zoom-us
     cntr
+    ripgrep
   ];
 
   environment.homeBinInPath = true;
@@ -190,6 +191,13 @@ in
   #virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # List services that you want to enable:
+
+  services.syncthing = {
+    enable = true;
+    user = "wsh";
+    dataDir = "/home/wsh/sync";
+    configDir = "/home/wsh/.config/syncthing";
+  };
 
   services.fwupd.enable = true;
 
@@ -379,6 +387,7 @@ in
     options = "--delete-older-than 7d";
     persistent = true;
   };
+  nix.autoOptimiseStore = true;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation

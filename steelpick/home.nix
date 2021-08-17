@@ -79,7 +79,7 @@ in
     atool
     atop
     audacity
-    audacity
+    automake
     autorandr
     bbe
     bc                          # For linux kernel compilation
