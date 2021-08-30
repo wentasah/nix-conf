@@ -367,17 +367,27 @@ in
     "nixos-config=/etc/nixos/configuration.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
     ];
-  nix.buildMachines = [ {
-    hostName = "ritchie";
-    system = "x86_64-linux";
-    # if the builder supports building for multiple architectures,
-    # replace the previous line by, e.g.,
-    # systems = ["x86_64-linux" "aarch64-linux"];
-    maxJobs = 10;
-    speedFactor = 2;
-    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-    mandatoryFeatures = [ ];
-  } ];
+  nix.buildMachines = [
+    {
+      hostName = "ritchie";
+      system = "x86_64-linux";
+      # if the builder supports building for multiple architectures,
+      # replace the previous line by, e.g.,
+      # systems = ["x86_64-linux" "aarch64-linux"];
+      maxJobs = 16;
+      speedFactor = 2;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      mandatoryFeatures = [ ];
+    }
+#     {
+#       hostName = "optim";
+#       system = "x86_64-linux";
+#       maxJobs = 16;
+#       speedFactor = 1;
+#       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+#       mandatoryFeatures = [ ];
+#     }
+  ];
   nix.distributedBuilds = true;
   nix.extraOptions = ''
     builders-use-substitutes = true
