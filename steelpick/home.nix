@@ -63,6 +63,7 @@ in
     #gnome3.nautilus
     #gtkterm
     #jupyter
+    #python3Packages.python-language-server # broken with python 3.9
     #slack
     #teams
     (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
@@ -114,6 +115,7 @@ in
     firefox
     flex
     gdb
+    gdu
     gh
     gimp
     gitAndTools.delta
@@ -130,6 +132,7 @@ in
     gnuplot_qt
     gpg-tui
     gtkterm
+    hdf5
     htop
     hugo
     imagemagick
@@ -162,7 +165,6 @@ in
     nasm
     ncdu
     ncurses6.dev                # for Linux's make manuconfig
-    #python3Packages.python-language-server # broken with python 3.9
     ninja
     niv
     nix-doc
@@ -192,7 +194,6 @@ in
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
-    pkg-config
     pkg-config
     playerctl
     pod-mode
@@ -250,6 +251,7 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
+    zulip zulip-term
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
 
     rustup
