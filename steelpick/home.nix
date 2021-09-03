@@ -30,6 +30,7 @@ in
 {
   imports = [
     ../modules/i3.nix
+    ../modules/gdu.nix
   ];
 
   nixpkgs = {
@@ -115,7 +116,6 @@ in
     firefox
     flex
     gdb
-    gdu
     gh
     gimp
     gitAndTools.delta
@@ -533,11 +533,6 @@ in
       };
     };
 
-    ncdu-save = {
-      Service = {
-        ExecStart = "${pkgs.gnumake}/bin/make -C %h/srv/steelpick/ncdu save";
-      };
-    };
     notmuch-dump-tags = {
       Service = {
         ExecStart = "${pkgs.gnumake}/bin/make -C %h/repos/notmuch-tags";
