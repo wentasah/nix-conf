@@ -13,6 +13,10 @@
       OnCalendar = "weekly";
     };
   };
+
+  # TODO: This this work?
+  systemd.user.tmpfiles.rules = [ "d %h/srv/%H/gdu 0700 - - 6w" ];
+
   systemd.user.services.gdu-save = {
     Service = {
       ExecStart = toString (pkgs.writeShellScript "gdu-home" ''
