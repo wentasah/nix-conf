@@ -86,6 +86,7 @@ in
     atop
     audacity
     automake
+    avidemux
     bbe
     bc                          # For linux kernel compilation
     bison
