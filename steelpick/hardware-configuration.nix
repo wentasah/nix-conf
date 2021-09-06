@@ -38,6 +38,10 @@
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  environment.systemPackages = with pkgs; [
+    intel-gpu-tools
+  ];
 }
 
 # Local Variables:
