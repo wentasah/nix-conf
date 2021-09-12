@@ -36,6 +36,7 @@ in
   nixpkgs = {
     config = {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "unrar"
 #         "skypeforlinux"
 #         "slack"
 #         "teams"
@@ -130,7 +131,7 @@ in
     gnome3.libsecret
     gnumake
     gnupg
-    gnuplot_qt
+    (gnuplot_qt.override { withCaca = true; })
     gpg-tui
     gtkterm
     hdf5
