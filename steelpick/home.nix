@@ -132,6 +132,7 @@ in
     gnome3.libsecret
     gnumake
     gnupg
+    gopls
     gpg-tui
     gtkterm
     hdf5
@@ -329,6 +330,10 @@ in
     GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
     NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
   };
+
+  home.sessionPath = [
+    "~/go/bin"
+  ];
 
   programs.man.enable = true;
   programs.man.generateCaches = true;
