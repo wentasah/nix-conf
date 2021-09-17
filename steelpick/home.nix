@@ -118,6 +118,7 @@ in
     ffmpeg
     firefox
     flex
+    freecad
     gdb
     gh
     gimp
