@@ -113,6 +113,7 @@ in
     dragon-drop
     dua
     dunst
+    entr
     exif
     fd
     fdupes
@@ -125,6 +126,7 @@ in
     gimp
     gitAndTools.delta
     gitAndTools.git-annex
+    gitAndTools.git-lfs
     gitAndTools.git-subtrac
     gitAndTools.tig
     gitui
@@ -224,6 +226,7 @@ in
     smplayer mpv mplayer
     socat
     solvespace
+    sqlite-interactive
     sqlitebrowser
     sshuttle
     stm32cubeide
@@ -253,6 +256,7 @@ in
     yamllint
     zip
     zotero
+    pdfpc
     zsh-completions
     zsh-syntax-highlighting
     zulip zulip-term
@@ -282,11 +286,17 @@ in
     open-sans
     libertine # For images consistency with ACM latex template
 
-  ] ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
+  ]
+  ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [
     buildPackages.gcc
     (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
-  ]);
+  ])
+#   ++ (with pkgsCross.raspberryPi; [
+#     buildPackages.gcc
+#     (lib.setPrio 20 buildPackages.bintools-unwrapped)
+#   ])
+  ;
 
 
 
@@ -502,7 +512,7 @@ in
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
 
-  services.gpg-agent.enable = true;
+  services.xsettingsd.enable = true;  services.gpg-agent.enable = true;
   services.lorri.enable = true;
 
   systemd.user.services = {
