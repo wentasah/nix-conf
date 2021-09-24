@@ -31,6 +31,7 @@ in
   imports = [
     ../modules/i3.nix
     ../modules/gdu.nix
+    ../modules/go.nix
   ];
 
   nixpkgs = {
@@ -133,7 +134,6 @@ in
     gnome3.libsecret
     gnumake
     gnupg
-    gopls
     gpg-tui
     gtkterm
     hdf5
@@ -332,10 +332,6 @@ in
     NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
   };
 
-  home.sessionPath = [
-    "~/go/bin"
-  ];
-
   programs.man.enable = true;
   programs.man.generateCaches = true;
   programs.info.enable = true;
@@ -498,8 +494,6 @@ in
   programs.dircolors.enable = true;
 
   programs.direnv.enable = true;
-
-  programs.go.enable = true;
 
   programs.obs-studio.enable = true;
   programs.obs-studio.plugins = with pkgs; [
