@@ -120,6 +120,7 @@ in
     ffmpeg
     firefox
     flex
+    flowblade
     freecad
     gdb
     gh
