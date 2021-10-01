@@ -10,7 +10,7 @@ let
     # to agree to the license.
     src = requireFile rec {
       name = "en.st-stm32cubeide_1.5.1_9029_20201210_1234_amd64.sh.zip";
-      sha256 = "9b7edb4c93be799aa8bca643cb93befc6393fcd60f705c9f630da13860cef207";
+      sha256 = "01zjrrh3i88dcfgmqw0gsvy96qzwps9wnhx6pjl9lydyjd6dnzlv";
       url = "https://www.st.com/en/development-tools/stm32cubeide.html";
     };
     unpackCmd = "mkdir tmp && ${unzip}/bin/unzip -d tmp $curSrc";
