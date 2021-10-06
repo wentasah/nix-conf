@@ -6,13 +6,6 @@
 
 let myOverlay = self: super:
       rec {
-        # Fix Teams screen sharing on i3wm
-        # https://docs.microsoft.com/en-us/answers/questions/42095/sharing-screen-not-working-anymore-bug.html
-#        teams = super.teams.overrideAttrs (attr: {
-#           postFixup = attr.postFixup + ''
-#             mv $out/opt/teams/resources/app.asar.unpacked/node_modules/slimcore/bin/rect-overlay{,.bak}
-#           '';
-#        });
       };
 in
 {
