@@ -140,6 +140,7 @@ in
     zoom-us
     cntr
     ripgrep
+    ntfs3g
   ];
 
   environment.homeBinInPath = true;
