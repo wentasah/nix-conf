@@ -4,11 +4,12 @@
     enable = true;
     scriptPath = ".xsession-hm";
     numlock.enable = true;
-    windowManager.i3 = {
-      enable = true;
-      config = null; # Do not generate config with home-manager
-      extraConfig = "${builtins.readFile "${config.home.homeDirectory}/.i3/config"}";
-    };
+    windowManager.command = "${pkgs.i3}/bin/i3";
+#     windowManager.i3 = {
+#       enable = true;
+#       config = null; # Do not generate config with home-manager
+#       extraConfig = "${builtins.readFile "${config.home.homeDirectory}/.i3/config"}";
+#     };
   };
 
   services.network-manager-applet.enable = true;
