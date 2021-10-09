@@ -175,6 +175,7 @@ in
     ninja
     niv
     nix-doc
+    nix-index
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
@@ -208,7 +209,9 @@ in
     posix_man_pages
     psmisc                      # killall, fuser, ...
     pv
-    python3
+    (python3.withPackages (pp: with pp; [
+      requests urllib3 # for filesender.py
+    ]))
     python3Packages.jupyter_core
     python3Packages.notebook
     qemu
@@ -266,18 +269,6 @@ in
     rustup
     # rustc cargo rls clippy
     rust-analyzer cargo-edit
-
-    swaylock
-#     (swaylock.overrideAttrs(old: {
-#       src = fetchFromGitHub {
-#         owner = "swaywm";
-#         repo = "swayidle";
-#         rev = "068942751ba459ef3b9ba0ec8eddf9f6f212c4d7";
-#         # date = 2020-11-06T11:38:15+01:00;
-#         sha256 = "1ml2n1rp8simpd2y4ff1anx2vj89f3a6dhfz8m2hdan749vwnxvk";
-#       };
-#       buildInputs = old.buildInputs ++ [ systemd ];
-#     }))
 
     # Fonts
     roboto
