@@ -14,7 +14,7 @@ in
       ./hardware-configuration.nix
       ../modules/home-printer.nix
       # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
-      /home/wsh/src/envfs/modules/envfs.nix
+#      /home/wsh/src/envfs/modules/envfs.nix
     ];
 
   nixpkgs = {
