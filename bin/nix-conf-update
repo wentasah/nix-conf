@@ -9,7 +9,7 @@ set -x
 
 was_head_changed() {
     local old_head=$(git rev-parse HEAD^{tree})
-    "$@"
+    "$@" || exit 1
     local new_head=$(git rev-parse HEAD^{tree})
     [[ $old_head != $new_head ]]
 }
@@ -23,7 +23,6 @@ exit_if_dirty() {
 
 update_nix_conf() {
     cd ~/nix/conf
-    exit_if_dirty
     if was_head_changed git pull https://github.com/wentasah/nix-conf.git; then
         cp bin/nix-conf-update ~/bin && RERUN=1 exec ~/bin/nix-conf-update
         return 0
