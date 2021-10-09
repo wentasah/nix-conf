@@ -455,18 +455,18 @@ in
       # Hostnames in K23 lab
       k23="k23-177 k23-178 k23-179 k23-180 k23-181 k23-182 k23-183 k23-184 k23-185 k23-186 k23-187 k23-189 k23-190 k23-192 k23-193 k23-195 k23-196 k23-197 k23-198"
     '';
-    plugins = [
-      {
-        name = "zsh-bash-completions-fallback";
-        src = ./../../../src/zsh-bash-completions-fallback;
+#     plugins = [
+#       {
+#         name = "zsh-bash-completions-fallback";
+#         src = ./../../../src/zsh-bash-completions-fallback;
 #         src = pkgs.fetchFromGitHub {
 #           owner = "3v1n0";
 #           repo = "zsh-bash-completions-fallback";
 #           rev = "fa70a4382cae49aebe9e888315d40b0f26aab42b";
 #           sha256 = "0247zz6qd43j981vcz40xvaj0na83wzznfrl4i1plbalvpczkkz3";
 #         };
-      }
-    ];
+#       }
+#     ];
 
   };
 
