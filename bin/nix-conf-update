@@ -29,6 +29,9 @@ update_nix_conf() {
         return 0
     else
         [[ ${RERUN:-0} -eq 1 ]]
+        local ret=$?
+        unset RERUN
+        return "$ret"
     fi
 }
 
