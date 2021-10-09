@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# Script to rebuild my system(s) when something changes. I'm running
+# this from a cron job on a server.
+
+set -euo pipefail
+
+set -x
+
+was_head_changed() {
+    local old_head=$(git rev-parse HEAD^{tree})
+    "$@"
+    local new_head=$(git rev-parse HEAD^{tree})
+    [[ $old_head != $new_head ]]
+}
+
+exit_if_dirty() {
+    if ! git diff-index --quiet HEAD --; then
+        echo "dirty!"
+        exit 1
+    fi
+}
+
+update_nix_conf() {
+    cd ~/nix/conf
+    exit_if_dirty
+    if was_head_changed git pull https://github.com/wentasah/nix-conf.git; then
+        cp bin/nix-conf-update ~/bin && RERUN=1 exec ~/bin/nix-conf-update
+        return 0
+    else
+        [[ ${RERUN:-0} -eq 1 ]]
+    fi
+}
+
+update_nixpkgs() {
+    cd ~/nix/nixpkgs
+    exit_if_dirty
+
+    rebase_nixpkgs() {
+        git fetch origin
+        git fetch https://github.com/wentasah/nixpkgs.git
+        git checkout master
+        git reset --hard FETCH_HEAD
+        git rebase origin/nixos-unstable
+    }
+
+    was_head_changed rebase_nixpkgs
+}
+
+update_home_manager() {
+    cd ~/nix/home-manager
+    was_head_changed git pull
+}
+
+while update_nix_conf || update_home_manager || update_nixpkgs; do
+    cd ~/nix
+
+    PATH=/nix/var/nix/profiles/default/bin:$PATH
+    export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
+    export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
+
+    mkdir -p out/steelpick/nixos
+    (
+        cd out/steelpick/nixos
+        nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
+    )
+
+    mkdir -p out/steelpick/home
+    (
+        cd out/steelpick/home
+        nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
+                  --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
+    )
+done
