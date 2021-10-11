@@ -105,11 +105,11 @@
     gitAndTools.gitFull
     libreoffice-fresh
     mc
+    ncdu
+    skypeforlinux
+    tree
     vim
     wget
-    tree
-    skypeforlinux
-    ncdu
   ];
 
   environment.homeBinInPath = true;
