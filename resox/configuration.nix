@@ -31,6 +31,17 @@
       }
       '';
   };
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 card_label="OBS Cam" exclusive_caps=1
+    # video_nr=10 (breaks visibility in MS Teams)
+  '';
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
+
   networking.hostName = "resox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -100,12 +111,15 @@
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
 	  home-manager
+    chromium
     firefox-wayland
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
+    krita
     libreoffice-fresh
     mc
     ncdu
+    obs-studio
     skypeforlinux
     tree
     vim
@@ -204,6 +218,12 @@
     isNormalUser = true;
     extraGroups = [ "scanner" ];
     uid = 1001;
+  };
+
+  users.users.tom = {
+    description = "Tomáš";
+    isNormalUser = true;
+    extraGroups = [ "scanner" ];
   };
 
   # This value determines the NixOS release from which the default
