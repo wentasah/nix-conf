@@ -8,7 +8,7 @@ set -euo pipefail
 set -x
 
 FORCE=
-if [[ $1 = --force ]]; then
+if [[ ${1:-""} = --force ]]; then
     FORCE=1
 fi
 
