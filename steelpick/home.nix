@@ -78,6 +78,7 @@ in
     (pkgs.callPackage ../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../pkgs/difftastic {})
     (pkgs.callPackage ../pkgs/enumerate-markdown {})
+    (python3.withPackages (pp: with pp; [ requests urllib3 ])) # for filesender.py
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -211,9 +212,6 @@ in
     posix_man_pages
     psmisc                      # killall, fuser, ...
     pv
-    (python3.withPackages (pp: with pp; [
-      requests urllib3 # for filesender.py
-    ]))
     python3Packages.jupyter_core
     python3Packages.notebook
     qemu
