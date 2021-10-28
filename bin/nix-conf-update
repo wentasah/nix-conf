@@ -5,30 +5,32 @@
 
 set -euo pipefail
 
-set -x
-
 FORCE=
 if [[ ${1:-""} = --force ]]; then
     FORCE=1
 fi
 
 was_head_changed() {
-    local old_head=$(git rev-parse HEAD^{tree})
+    local old_tree=$(git rev-parse HEAD^{tree})
     "$@" || exit 1
-    local new_head=$(git rev-parse HEAD^{tree})
-    [[ $old_head != $new_head ]]
+    local new_tree=$(git rev-parse HEAD^{tree})
+    if [[ $old_tree != $new_tree ]]; then
+        echo "!!! Tree hash in $PWD changed from $old_tree to $new_tree"
+        return 0
+    fi
+    return 1
 }
 
 exit_if_dirty() {
     if ! git diff-index --quiet HEAD --; then
-        echo "dirty!"
+        echo >&2 "$PWD dirty!"
         exit 1
     fi
 }
 
 update_nix_conf() {
     cd ~/nix/conf
-    if was_head_changed git pull https://github.com/wentasah/nix-conf.git; then
+    if was_head_changed git pull --quiet https://github.com/wentasah/nix-conf.git; then
         cp bin/nix-conf-update ~/bin && RERUN=1 exec ~/bin/nix-conf-update
         return 0
     else
@@ -44,11 +46,11 @@ update_nixpkgs() {
     exit_if_dirty
 
     rebase_nixpkgs() {
-        git fetch origin
-        git fetch https://github.com/wentasah/nixpkgs.git
-        git checkout master
-        git reset --hard FETCH_HEAD
-        git rebase origin/nixos-unstable
+        git fetch --quiet origin
+        git fetch --quiet https://github.com/wentasah/nixpkgs.git
+        git checkout --quiet master
+        git reset --quiet --hard FETCH_HEAD
+        git rebase --quiet origin/nixos-unstable
     }
 
     was_head_changed rebase_nixpkgs
@@ -56,7 +58,7 @@ update_nixpkgs() {
 
 update_home_manager() {
     cd ~/nix/home-manager
-    was_head_changed git pull
+    was_head_changed git pull --quiet
 }
 
 while update_nix_conf || update_home_manager || update_nixpkgs || [[ $FORCE -eq 1 ]]; do
