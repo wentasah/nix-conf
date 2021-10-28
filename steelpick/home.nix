@@ -145,6 +145,10 @@ in
     hdf5
     htop
     hugo
+    (ikiwiki.override {
+      #gitSupport = true;
+      docutilsSupport = true;
+    })
     imagemagick
     inkscape
     isync
