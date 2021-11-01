@@ -35,12 +35,6 @@
         dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p Dunst";
         browser = "${pkgs.firefox}/bin/firefox";
       };
-      # TODO: Replace with dunstctl
-      shortcuts = {
-        close = "mod4+Escape";
-        history = "mod4+shift+Escape";
-        context = "mod4+shift+period";
-      };
 
       urgency_low = {
         background = "#222222";
