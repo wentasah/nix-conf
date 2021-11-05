@@ -71,6 +71,7 @@ in
     #slack
     #teams
     (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
+    (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
@@ -205,6 +206,7 @@ in
     pandoc
     pavucontrol
     pdf2svg
+    pdfpc
     pdftk
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
@@ -265,11 +267,9 @@ in
     yamllint
     zip
     zotero
-    pdfpc
     zsh-completions
     zsh-syntax-highlighting
     zulip zulip-term
-    (feedgnuplot.override { gnuplot = gnuplot_qt; })
 
     rustup
     # rustc cargo rls clippy
