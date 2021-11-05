@@ -242,6 +242,7 @@ in
     thunderbird
     tmux
     trace-cmd
+    unrar
     unzip
     usbutils
     v4l-utils # for qv4l2
