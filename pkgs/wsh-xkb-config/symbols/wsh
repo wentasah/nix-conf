@@ -1,0 +1,7 @@
+hidden partial keypad_keys
+xkb_symbols "caps_arrows" {
+    key   <UP> {         [              Up ], [ KP_Up    ] };
+    key <LEFT> {         [            Left ], [ KP_Left  ] };
+    key <RGHT> {         [           Right ], [ KP_Right ] };
+    key <DOWN> {         [            Down ], [ KP_Down  ] };
+};

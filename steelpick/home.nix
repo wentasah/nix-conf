@@ -95,6 +95,7 @@ in
     avidemux
     bbe
     bc                          # For linux kernel compilation
+    bear
     bison
     cachix
     can-utils
