@@ -150,6 +150,8 @@ in
       #gitSupport = true;
       docutilsSupport = true;
     })
+    hunspellDicts.cs_CZ
+    hunspellDicts.en_US
     imagemagick
     inkscape
     isync
