@@ -74,6 +74,7 @@ in
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio parallel) # Prefer this over parallel from moreutils
+    (ikiwiki.override { docutilsSupport = true; })
     (import ../pkgs/unfs3 { pkgs = pkgs; })
     (pkgs.callPackage ../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../pkgs/difftastic {})
@@ -146,10 +147,6 @@ in
     hdf5
     htop
     hugo
-    (ikiwiki.override {
-      #gitSupport = true;
-      docutilsSupport = true;
-    })
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
     imagemagick
