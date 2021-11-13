@@ -393,6 +393,11 @@ in
         cd $dir
       }
 
+      gcd() {
+        local dir="$(git ls-tree -d -r --name-only --full-name HEAD $(git rev-parse --show-cdup) | fzf +m -0)" &&
+        cd "./$(git rev-parse --show-cdup)/$dir"
+      }
+
       # Rebind fzf-cd to a sane key
       bindkey '\eC' fzf-cd-widget
       bindkey '\ec' capitalize-word
