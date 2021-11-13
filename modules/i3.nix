@@ -94,5 +94,6 @@
     i3status-rust font-awesome_4 powerline-fonts
     rofi
     xss-lock
+    picom # for removal of tearing effects (https://github.com/NixOS/nixpkgs/issues/142225)
   ];
 }
