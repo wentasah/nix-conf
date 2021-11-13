@@ -231,6 +231,7 @@ in
     rnix-lsp
     roboto-slab
     rsync
+    screenkey
     shellcheck
     shotcut
     smplayer mpv mplayer
