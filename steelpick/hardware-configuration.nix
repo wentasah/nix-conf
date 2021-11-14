@@ -6,7 +6,7 @@
 {
   imports =
     [
-      <nixos-hardware/common/cpu/intel>
+      #<nixos-hardware/common/cpu/intel> # import moved to flake.nix
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
