@@ -293,7 +293,7 @@ in
     enable = true;
     wacom.enable = true;
 
-    xkbDir = (pkgs.callPackage ../pkgs/wsh-xkb-config {} ); # needed due to 'wsh:caps_arrows' below
+    #xkbDir = (pkgs.callPackage ../pkgs/wsh-xkb-config {} ); # needed due to 'wsh:caps_arrows' below
     layout = "us,cz";
     xkbVariant = ",ucw";
     xkbOptions = "compose:ralt,grp:caps_switch,terminate:ctrl_alt_bksp,wsh:caps_arrows";

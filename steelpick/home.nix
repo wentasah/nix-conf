@@ -63,6 +63,7 @@ in
     # pdfpc                       # using my custom modified version
     #(pkgs.callPackage ../pkgs/diffsitter {})
     #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
+    #emacs-all-the-icons-fonts
     #firejail
     #gnome3.nautilus
     #gtkterm
@@ -194,6 +195,7 @@ in
     nixos-shell
     nixpkgs-fmt
     nodePackages.typescript-language-server
+    nodePackages.markdownlint-cli
     notmuch
     notmuch.emacs
     nvd
