@@ -391,6 +391,7 @@ in
   nix.distributedBuilds = true;
   nix.extraOptions = ''
     builders-use-substitutes = true
+    experimental-features = nix-command flakes
   '';
   nix.gc = {
     automatic = true;
