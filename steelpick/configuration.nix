@@ -29,6 +29,7 @@ in
         "mfcl2700dwlpr"
         "Oracle_VM_VirtualBox_Extension_Pack"
         "kyocera-phase5"
+        "unrar"
       ];
     };
     overlays = [ myOverlay ];
