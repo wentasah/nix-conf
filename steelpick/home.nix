@@ -509,6 +509,7 @@ in
   programs.dircolors.enable = true;
 
   programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   programs.obs-studio.enable = true;
   programs.obs-studio.plugins = with pkgs; [
