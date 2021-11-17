@@ -120,6 +120,7 @@ in
     dragon-drop
     dua
     dunst
+    easyeffects
     entr
     exif
     fd
