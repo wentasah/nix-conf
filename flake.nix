@@ -20,6 +20,9 @@
             home-manager.useUserPackages = true;
             home-manager.users.wsh = import ./steelpick/home.nix;
           }
+          {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          }
         ];
     };
   };
