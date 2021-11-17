@@ -219,6 +219,7 @@ in
     poppler_utils
     posix_man_pages
     psmisc                      # killall, fuser, ...
+    pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     pv
     python3Packages.jupyter_core
     python3Packages.notebook
