@@ -194,8 +194,8 @@ in
     nixfmt
     nixos-shell
     nixpkgs-fmt
-    nodePackages.typescript-language-server
     nodePackages.markdownlint-cli
+    nodePackages.typescript-language-server
     notmuch
     notmuch.emacs
     nvd
