@@ -236,6 +236,7 @@ in
     roboto-slab
     rsync
     screenkey
+    sequoia
     shellcheck
     shotcut
     smplayer mpv mplayer
