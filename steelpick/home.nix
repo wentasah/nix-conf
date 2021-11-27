@@ -244,6 +244,7 @@ in
     sqlite-interactive
     sqlitebrowser
     sshuttle
+    sterm
     stm32cubeide
     thunderbird
     tmux

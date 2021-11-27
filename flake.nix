@@ -4,9 +4,12 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager";
+    sterm.url = "github:wentasah/sterm";
+    # For development:
+    # sterm.url = "/home/wsh/src/sterm";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager }: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm }: {
 
     nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -17,11 +20,14 @@
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+            # home-manager.useUserPackages = true;
             home-manager.users.wsh = import ./steelpick/home.nix;
           }
           {
+            # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs;
+
+            nixpkgs.overlays = [ sterm.overlay ];
           }
         ];
     };
