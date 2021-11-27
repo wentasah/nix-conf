@@ -366,7 +366,7 @@ in
     enable = true;
     extraConfig = ''
       wsh  ALL=(novaboot-test) NOPASSWD: ALL
-      wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe/modprobe vboxdrv
+      wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe vboxdrv
 
       # Recommended sudo configuration for novaboot
 
