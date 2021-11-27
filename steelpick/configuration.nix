@@ -125,7 +125,6 @@ in
     file
     gitAndTools.gitFull
     gnumake
-    home-manager
     htop
     lsof
     mc
