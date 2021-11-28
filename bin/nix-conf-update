@@ -64,22 +64,29 @@ update_home_manager() {
 while update_nix_conf || update_home_manager || update_nixpkgs || [[ $FORCE -eq 1 ]]; do
     cd ~/nix
 
-    PATH=/nix/var/nix/profiles/default/bin:$PATH
-    export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
-    export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
+    if [[ -f conf/flake.nix ]]; then
+        nix build \
+            --out-link out/steelpick/flake \
+            --override-input nixpkgs ./nixpkgs \
+            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
+    else
+        PATH=/nix/var/nix/profiles/default/bin:$PATH
+        export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
+        export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
 
-    mkdir -p out/steelpick/nixos
-    (
-        cd out/steelpick/nixos
-        nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
-    )
+        mkdir -p out/steelpick/nixos
+        (
+            cd out/steelpick/nixos
+            nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
+        )
 
-    mkdir -p out/steelpick/home
-    (
-        cd out/steelpick/home
-        nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
-                  --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
-    )
+        mkdir -p out/steelpick/home
+        (
+            cd out/steelpick/home
+            nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
+                      --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
+        )
+    fi
 
     FORCE=0
 done
