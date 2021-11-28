@@ -78,11 +78,28 @@
         "type": "indirect"
       }
     },
+    "notify-while-running": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1638137949,
+        "narHash": "sha256-ir0EEiHiHtUOUZY4Ix4YYsS31rbFPYhCDuiSNlQgztw=",
+        "owner": "wentasah",
+        "repo": "notify-while-running",
+        "rev": "254b87a5801b4ff5f57d16abc019d92e63edcdac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wentasah",
+        "repo": "notify-while-running",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
+        "notify-while-running": "notify-while-running",
         "sterm": "sterm"
       }
     },
@@ -91,14 +108,17 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1606292077,
+        "lastModified": 1638021696,
         "narHash": "sha256-DtuUSFhM36eYh+g34K2qyUUWspRXYmnOlvrTvtAxuRM=",
-        "type": "git",
-        "url": "file:///home/wsh/src/sterm"
+        "owner": "wentasah",
+        "repo": "sterm",
+        "rev": "303737eb4e9ef57b6e4e79f3257b37e360b61c9b",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/wsh/src/sterm"
+        "owner": "wentasah",
+        "repo": "sterm",
+        "type": "github"
       }
     }
   },

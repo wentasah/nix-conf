@@ -7,9 +7,10 @@
     sterm.url = "github:wentasah/sterm";
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
+    notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm }: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm, notify-while-running }: {
 
     nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -27,7 +28,10 @@
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs;
 
-            nixpkgs.overlays = [ sterm.overlay ];
+            nixpkgs.overlays = [
+              sterm.overlay
+              ( final: prev: { notify-while-running = import notify-while-running { pkgs = final; }; } )
+            ];
           }
         ];
     };

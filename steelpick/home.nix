@@ -197,6 +197,7 @@ in
     nixpkgs-fmt
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
+    notify-while-running
     notmuch
     notmuch.emacs
     nvd
