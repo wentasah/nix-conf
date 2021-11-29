@@ -64,13 +64,13 @@ update_home_manager() {
 while update_nix_conf || update_home_manager || update_nixpkgs || [[ $FORCE -eq 1 ]]; do
     cd ~/nix
 
+    PATH=/nix/var/nix/profiles/default/bin:$PATH
     if [[ -f conf/flake.nix ]]; then
         nix build \
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
             ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
     else
-        PATH=/nix/var/nix/profiles/default/bin:$PATH
         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
         export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
 
