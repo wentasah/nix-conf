@@ -95,5 +95,6 @@
     rofi
     xss-lock
     picom # for removal of tearing effects (https://github.com/NixOS/nixpkgs/issues/142225)
+    hsetroot # for setting background under picom (https://wiki.archlinux.org/title/Picom#Unable_to_change_the_background_color_with_xsetroot)
   ];
 }
