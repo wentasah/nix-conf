@@ -8,6 +8,7 @@ set -euo pipefail
 FORCE=
 if [[ ${1:-""} = --force ]]; then
     FORCE=1
+    shift
 fi
 
 was_head_changed() {
@@ -74,6 +75,7 @@ while updated; do
     PATH=/nix/var/nix/profiles/default/bin:$PATH
     if [[ -f conf/flake.nix ]]; then
         nix build \
+            "$@" \
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
             ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
