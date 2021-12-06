@@ -49,7 +49,7 @@ update_nixpkgs() {
         git fetch --quiet https://github.com/wentasah/nixpkgs.git
         git checkout --quiet master
         git reset --quiet --hard FETCH_HEAD
-        git rebase --quiet origin/nixos-unstable
+        git rebase --quiet --committer-date-is-author-date origin/nixos-unstable
     }
 
     was_head_changed rebase_nixpkgs
