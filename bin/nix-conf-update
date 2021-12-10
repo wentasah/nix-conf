@@ -79,6 +79,13 @@ while updated; do
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
             ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
+        if [[ $(hostname) = "steelpick" ]]; then
+            echo "Diff from current configuration:"
+            nix store diff-closures /nix/var/nix/profiles/system/ ~/nix/out/steelpick/flake
+            echo
+            echo "Run the following to switch the configuration:"
+            echo "sudo nixos-rebuild switch --override-input nixpkgs ~/nix/nixpkgs"
+        fi
     else
         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
         export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
