@@ -319,9 +319,16 @@ in
     ''; };
     "bin/whix" = {
       executable = true;
+      # Find first link target in /nix. Note that $(whix ls) differs
+      # from $(readlink -f $(which ls)). The former is
+      # /nix/store/py4fwm34anmxg3vr6832cv2mil70hy9f-coreutils-9.0/bin/ls
+      # while the later (becase ls is symlink to coreutils)
+      # /nix/store/py4fwm34anmxg3vr6832cv2mil70hy9f-coreutils-9.0/bin/coreutils
       text = ''
         #!${pkgs.runtimeShell}
-        realpath $(command which "$1")
+        target=$(command which "$1")
+        while ! [[ $target =~ ^/nix/ ]]; do target=$(readlink "$target"); done
+        echo "$target"
       '';
     };
     "bin/whixd" = {
