@@ -100,6 +100,7 @@ in
     bc                          # For linux kernel compilation
     bear
     bison
+    bubblewrap
     cachix
     can-utils
     cask
