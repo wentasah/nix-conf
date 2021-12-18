@@ -249,6 +249,7 @@ in
     sshuttle
     sterm
     stm32cubeide
+    tcpreplay
     thunderbird
     tmux
     trace-cmd
@@ -259,6 +260,7 @@ in
     valgrind
     vlc
     websocat
+    wireshark
     wmctrl
     xclip
     xdotool
