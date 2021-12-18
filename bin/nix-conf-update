@@ -48,7 +48,9 @@ update_nixpkgs() {
         git fetch --quiet origin
         git fetch --quiet https://github.com/wentasah/nixpkgs.git
         git checkout --quiet master
-        git reset --quiet --hard FETCH_HEAD
+        # Rebase local changes onto my remote repo
+        git rebase --quiet --committer-date-is-author-date --onto FETCH_HEAD origin/nixos-unstable
+        # Rebase all my changes (local and remote) onto current nixpkgs
         git rebase --quiet --committer-date-is-author-date origin/nixos-unstable
     }
 
@@ -65,11 +67,10 @@ updated() {
     update_nix_conf && result=0
     update_home_manager && result=0
     update_nixpkgs && result=0
-    [[ $FORCE -eq 1 ]] && result=0
     return $result
 }
 
-while updated; do
+build() {
     cd ~/nix
 
     PATH=/nix/var/nix/profiles/default/bin:$PATH
@@ -103,6 +104,8 @@ while updated; do
                       --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
         )
     fi
+}
 
-    FORCE=0
-done
+if updated || [[ $FORCE -eq 1 ]]; then
+    build "$@"
+fi
