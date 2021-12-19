@@ -5,12 +5,6 @@
 
 set -euo pipefail
 
-FORCE=
-if [[ ${1:-""} = --force ]]; then
-    FORCE=1
-    shift
-fi
-
 was_head_changed() {
     local old_tree=$(git rev-parse HEAD^{tree})
     "$@" || exit 1
@@ -106,6 +100,13 @@ build() {
     fi
 }
 
-if updated || [[ $FORCE -eq 1 ]]; then
-    build "$@"
-fi
+cmd="${1:-update}"
+shift || :
+case "$cmd" in
+    "update")
+        updated && build "$@";;
+    "build")
+        build "$@";;
+    *)
+        echo >&2 "Unknown command: $cmd"
+esac
