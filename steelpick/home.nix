@@ -332,7 +332,7 @@ in
       text = ''
         #!${pkgs.runtimeShell}
         target=$(command which "$1")
-        while ! [[ $target =~ ^/nix/ ]]; do target=$(readlink "$target"); done
+        while [[ -L $target ]] && ! [[ $target =~ ^/nix/ ]]; do target=$(readlink "$target"); done
         echo "$target"
       '';
     };
