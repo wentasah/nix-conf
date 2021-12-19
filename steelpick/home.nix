@@ -149,6 +149,7 @@ in
     gpg-tui
     gtkterm
     hdf5
+    help2man
     htop
     hugo
     hunspellDicts.cs_CZ
