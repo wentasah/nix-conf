@@ -82,7 +82,7 @@ build() {
             ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
         if [[ $(hostname) = "steelpick" ]]; then
             echo "Diff from current configuration:"
-            nix store diff-closures /nix/var/nix/profiles/system/ ~/nix/out/steelpick/flake
+            nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
             echo
             echo "Run the following to switch the configuration:"
             echo "sudo ~/nix/out/steelpick/flake/bin/switch-to-configuration switch"
