@@ -262,6 +262,7 @@ in
     websocat
     wireshark
     wmctrl
+    x11docker
     xclip
     xdotool
     xf86_input_wacom
