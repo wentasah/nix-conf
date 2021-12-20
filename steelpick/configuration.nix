@@ -141,6 +141,7 @@ in
     cntr
     ripgrep
     ntfs3g
+    tcpdump
   ];
 
   environment.homeBinInPath = true;
@@ -344,7 +345,7 @@ in
   users.users = {
     wsh = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "lp" "jackaudio" "adbusers" "vboxusers" ];
+      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "lp" "jackaudio" "adbusers" "vboxusers" "lxd" ];
       uid = 1000;
       group = "wsh";
       shell = pkgs.zsh;
@@ -424,6 +425,9 @@ in
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation
+
+  virtualisation.lxd.enable = true;
+  virtualisation.lxc.lxcfs.enable = true;
 
   # For novaboot testing
   environment.etc."qemu/bridge.conf".text = "allow br0";
