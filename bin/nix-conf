@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+# Script to rebuild my system(s) when something changes. I'm running
+# this from a cron job on a server.
+
+set -euo pipefail
+
+was_head_changed() {
+    local old_tree=$(git rev-parse HEAD^{tree})
+    "$@" || exit 1
+    local new_tree=$(git rev-parse HEAD^{tree})
+    if [[ $old_tree != $new_tree ]]; then
+        echo "!!! Tree hash in $PWD changed from $old_tree to $new_tree"
+        return 0
+    fi
+    return 1
+}
+
+exit_if_dirty() {
+    if ! git diff-index --quiet HEAD --; then
+        echo >&2 "$PWD dirty!"
+        exit 1
+    fi
+}
+
+update_nix_conf() {
+    cd ~/nix/conf
+    # The following must be on a single line so that update of the script via git pull works.
+    was_head_changed git pull --quiet https://github.com/wentasah/nix-conf.git && WAS_RERUN=0 exec ~/bin/nix-conf-update || :
+
+    # Git repo was not changed - report the result based on the value of RERUN variable.
+    local ret=${WAS_RERUN:-1}
+    unset WAS_RERUN
+    return "$ret"
+}
+
+update_nixpkgs() {
+    cd ~/nix/nixpkgs
+    exit_if_dirty
+
+    rebase_nixpkgs() {
+        git fetch --quiet origin
+        git fetch --quiet https://github.com/wentasah/nixpkgs.git
+        git checkout --quiet master
+        # Rebase local changes onto my remote repo
+        git rebase --quiet --committer-date-is-author-date --onto FETCH_HEAD origin/nixos-unstable
+        # Rebase all my changes (local and remote) onto current nixpkgs
+        git rebase --quiet --committer-date-is-author-date origin/nixos-unstable
+    }
+
+    was_head_changed rebase_nixpkgs
+}
+
+update_home_manager() {
+    cd ~/nix/home-manager
+    was_head_changed git pull --quiet
+}
+
+updated() {
+    local result=1
+    update_nix_conf && result=0
+    update_home_manager && result=0
+    update_nixpkgs && result=0
+    return $result
+}
+
+build() {
+    cd ~/nix
+
+    PATH=/nix/var/nix/profiles/default/bin:$PATH
+    if [[ -f conf/flake.nix ]]; then
+        nix build \
+            "$@" \
+            --out-link out/steelpick/flake \
+            --override-input nixpkgs ./nixpkgs \
+            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
+        if [[ $(hostname) = "steelpick" ]]; then
+            echo "Diff from current configuration:"
+            nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
+            echo
+            echo "Run the following to switch the configuration:"
+            echo "sudo ~/nix/out/steelpick/flake/bin/switch-to-configuration switch"
+        fi
+    else
+        export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
+        export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
+
+        mkdir -p out/steelpick/nixos
+        (
+            cd out/steelpick/nixos
+            nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
+        )
+
+        mkdir -p out/steelpick/home
+        (
+            cd out/steelpick/home
+            nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
+                      --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
+        )
+    fi
+}
+
+cmd="${1:-update}"
+shift || :
+case "$cmd" in
+    "update")
+        updated && build "$@";;
+    "build")
+        build "$@";;
+    *)
+        echo >&2 "Unknown command: $cmd"
+esac
