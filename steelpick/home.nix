@@ -68,7 +68,6 @@ in
     #gnome3.nautilus
     #gtkterm
     #jupyter
-    #python3Packages.python-language-server # broken with python 3.9
     #slack
     #teams
     (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
@@ -227,6 +226,7 @@ in
     pv
     python3Packages.jupyter_core
     python3Packages.notebook
+    python3Packages.python-lsp-server
     qemu
     qt5.full            # To make qtcreator find the qt automatically
     qtcreator
