@@ -104,7 +104,7 @@ cmd="${1:-update}"
 shift || :
 case "$cmd" in
     "update")
-        updated && build "$@";;
+        if updated; then build "$@"; fi;;
     "build")
         build "$@";;
     *)
