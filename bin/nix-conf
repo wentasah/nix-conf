@@ -2,6 +2,12 @@
 
 # Script to rebuild my system(s) when something changes. I'm running
 # this from a cron job on a server.
+#
+# Usage: nix-conf [update|build] [nix build options]
+#
+# With no sub-command, update is implied.
+#
+# Example: nix-conf build --log-format raw
 
 set -euo pipefail
 
