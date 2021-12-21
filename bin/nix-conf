@@ -100,8 +100,13 @@ build() {
     fi
 }
 
-cmd="${1:-update}"
-shift || :
+if [[ ${1:-} ]] && [[ $1 != -* ]]; then
+    cmd=$1
+    shift
+else
+    cmd=update
+fi
+
 case "$cmd" in
     "update")
         if updated; then build "$@"; fi;;
