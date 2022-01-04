@@ -568,6 +568,16 @@ in
       };
     };
 
+    backup-overleaf = {
+      Unit = {
+        Description = "Backup overleaf";
+      };
+      Service = {
+        ExecStart = "${pkgs.git}/bin/git --git-dir=%h/thermac/D5.3-overleaf fetch --all";
+        Environment = "SSH_ASKPASS=";
+      };
+    };
+
     notmuch-dump-tags = {
       Service = {
         ExecStart = "${pkgs.gnumake}/bin/make -C %h/repos/notmuch-tags";
