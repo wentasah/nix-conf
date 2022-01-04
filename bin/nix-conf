@@ -84,8 +84,9 @@ build() {
             echo "Diff from current configuration:"
             nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
             echo
-            echo "Run the following to switch the configuration:"
-            echo "sudo ~/nix/out/steelpick/flake/bin/switch-to-configuration switch"
+            echo "Run one of the following to switch the configuration:"
+            echo "  sudo ~/nix/out/steelpick/flake/bin/switch-to-configuration switch"
+            echo "  sudo nixos-rebuild switch --override-input nixpkgs ~/nix/nixpkgs"
         fi
     else
         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
