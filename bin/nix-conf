@@ -75,11 +75,15 @@ build() {
 
     PATH=/nix/var/nix/profiles/default/bin:$PATH
     if [[ -f conf/flake.nix ]]; then
+        local status=0
         nix build \
             "$@" \
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
-            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
+            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel || status=$?
+        echo $status > out/steelpick/flake.status
+        [[ $status -eq 0 ]] || exit $status
+
         if [[ $(hostname) = "steelpick" ]]; then
             echo "Diff from current configuration:"
             nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
