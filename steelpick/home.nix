@@ -93,6 +93,7 @@ in
     atool
     atop
     audacity
+    auto-multiple-choice
     automake
     avidemux
     bbe
@@ -133,6 +134,7 @@ in
     gdb
     gh
     gimp
+    git-machete
     gitAndTools.delta
     gitAndTools.git-annex
     gitAndTools.git-lfs
