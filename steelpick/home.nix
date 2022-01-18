@@ -375,6 +375,7 @@ in
     shellAliases = {
       ag    = "ag --color-line-number='0;33' --color-path='0;32'";
       cp    = "nocorrect cp"; # no spelling correction on cp
+      gm    = "git machete";
       grep  = "grep --color";
       gst   = "git status";
       h     = "history";
