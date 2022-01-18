@@ -32,7 +32,9 @@ exit_if_dirty() {
 update_nix_conf() {
     cd ~/nix/conf
     # The following must be on a single line so that update of the script via git pull works.
-    was_head_changed git pull --quiet https://github.com/wentasah/nix-conf.git && WAS_RERUN=0 exec ~/bin/nix-conf-update || :
+    if was_head_changed git pull --quiet https://github.com/wentasah/nix-conf.git; then
+        WAS_RERUN=0 exec ~/bin/nix-conf-update
+    fi
 
     # Git repo was not changed - report the result based on the value of RERUN variable.
     local ret=${WAS_RERUN:-1}
