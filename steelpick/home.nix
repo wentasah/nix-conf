@@ -128,6 +128,7 @@ in
     fdupes
     ffmpeg
     firefox
+    flameshot
     flex
     flowblade
     freecad
