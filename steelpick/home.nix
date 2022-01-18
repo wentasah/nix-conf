@@ -145,7 +145,6 @@ in
     glibcInfo                   # Not visible in emacs :-(
     global
     gnome3.devhelp
-    gnome3.libsecret
     gnumake
     gnupg
     gpg-tui
@@ -169,6 +168,7 @@ in
     lexicon
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
+    libsecret
     libxml2 # for xmllint
     licenseutils
     linuxPackages.perf
