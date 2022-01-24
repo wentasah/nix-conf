@@ -141,6 +141,7 @@ in
     gitAndTools.git-lfs
     gitAndTools.git-subtrac
     gitAndTools.tig
+    gitbatch
     gitui
     glibcInfo                   # Not visible in emacs :-(
     global
