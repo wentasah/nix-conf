@@ -29,6 +29,7 @@ in
         "mfcl2700dwlpr"
         "Oracle_VM_VirtualBox_Extension_Pack"
         "kyocera-phase5"
+        "konica-minolta-bizhub"
         "unrar"
       ];
     };
@@ -209,7 +210,10 @@ in
   services.fwupd.enable = true;
 
   services.printing.enable = true;
-  services.printing.drivers = [ (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {}) ];
+  services.printing.drivers = [
+    (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {})
+    (pkgs.callPackage ./../pkgs/kmbeu.nix {})
+  ];
 
   #services.teamviewer.enable = true;
 
