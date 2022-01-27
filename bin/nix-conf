@@ -46,17 +46,29 @@ update_nixpkgs() {
     cd ~/nix/nixpkgs
     exit_if_dirty
 
-    rebase_nixpkgs() {
+    update_nixpkgs_and_merge_topics() {
         git fetch --quiet origin
         git fetch --quiet https://github.com/wentasah/nixpkgs.git
         git checkout --quiet master
-        # Rebase local changes onto my remote repo
-        git rebase --quiet --committer-date-is-author-date --onto FETCH_HEAD origin/nixos-unstable
-        # Rebase all my changes (local and remote) onto current nixpkgs
-        git rebase --quiet --committer-date-is-author-date origin/nixos-unstable
+        git reset --keep origin/nixos-unstable
+        local commit_msg='automatic merge by nix-conf update'
+        if [[ -f .git/machete ]]; then
+            # On my laptop - merge all non-root branches managed by git-machete
+            local to_merge=$(echo $(cat .git/machete|grep -v '^[^[:space:]]'))
+        else
+            # CI: Recreate the merge from HEAD of my repo
+            ## git fetch . test
+            if git show FETCH_HEAD|grep -q -F "$commit_msg"; then
+                local to_merge=$(git cat-file -p FETCH_HEAD | sed -ne '/^parent / s///p')
+            else
+                echo >&2 "HEAD of https://github.com/wentasah/nixpkgs.git is not a merge commit created by nix-conf"
+                exit 1
+            fi
+        fi
+        git merge --quiet --no-ff -m "$commit_msg" $to_merge
     }
 
-    was_head_changed rebase_nixpkgs
+    was_head_changed update_nixpkgs_and_merge_topics
 }
 
 update_home_manager() {
