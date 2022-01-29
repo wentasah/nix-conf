@@ -391,7 +391,8 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
-  nix.trustedUsers = [ "root" "@wheel" ];
+  nix.settings.trusted-users = [ "root" "@wheel" ];
+  nix.settings.auto-optimise-store = true;
   nix.nixPath = [
     #"nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "nixpkgs=/home/wsh/nix/nixpkgs"
@@ -429,7 +430,6 @@ in
     options = "--delete-older-than 7d";
     persistent = true;
   };
-  nix.autoOptimiseStore = true;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation
