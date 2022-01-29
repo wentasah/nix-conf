@@ -55,8 +55,8 @@ merge_nixpkgs_topics() {
         # CI: Recreate the merge from HEAD of my repo
         ## git fetch . test
         if git show wentasah/master|grep -q -F "$commit_msg"; then
-            local to_merge=$(git cat-file -p wentasah/master | sed -ne '/^parent / s///p')
-            commit_msg=$(git show --format='%B' wentasah/master)
+            readarray -t to_merge < <(git cat-file -p wentasah/master | sed -ne '/^parent / s///p')
+            commit_msg=$(git show --format='%B' wentasah/master) # Use the same commit message
         else
             echo >&2 "HEAD of https://github.com/wentasah/nixpkgs.git is not a merge commit created by nix-conf"
             exit 1
