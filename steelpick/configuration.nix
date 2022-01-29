@@ -212,7 +212,7 @@ in
   services.printing.enable = true;
   services.printing.drivers = [
     (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {})
-    (pkgs.callPackage ./../pkgs/kmbeu.nix {})
+    (pkgs.callPackage ./../pkgs/kmbeu {})
   ];
 
   #services.teamviewer.enable = true;
