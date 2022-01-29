@@ -60,7 +60,14 @@ merge_nixpkgs_topics() {
             exit 1
         fi
     fi
-    git merge --quiet --no-ff -m "$commit_msg" $to_merge
+    git merge --quiet --no-ff --no-commit $to_merge
+    GIT_AUTHOR_NAME=nix-conf \
+    GIT_AUTHOR_EMAIL=nix-conf@localhost \
+    GIT_AUTHOR_DATE=$(git show origin/nixos-unstable --format='%aD') \
+    GIT_COMMITTER_NAME=nix-conf \
+    GIT_COMMITTER_EMAIL=nix-conf@localhost \
+    GIT_COMMITTER_DATE=$(git show origin/nixos-unstable --format='%cD') \
+    git commit -m "$commit_msg"
 }
 
 update_nixpkgs() {
