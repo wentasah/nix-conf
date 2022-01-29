@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+set -x
+
+nix_store_path="$(nix-prefetch-url --print-path --type sha256 file://"$PWD/$1" | tail -n 1)"
+nix-store --add-root "./$1.gcroot" --indirect --realise "$nix_store_path"
