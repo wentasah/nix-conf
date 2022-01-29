@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
     owner = "unfs3";
     repo = "unfs3";
     #rev = "unfs3-${version}";
-    rev = "tirpc";
-    sha256 = "0gs4h9z67lic5fvr8pjnycgszh98ark5fhwn6fwf331yvx3w8s2j";
+    rev = "363d54ce3dbbed70225263d12f0e01646a0df93c"; # tirpc branch;
+    sha256 = "sha256-iqRERT6/kZue6WX+hxXW4f+NUqQZUFh1r8GUmKfnDZc=";
   };
 
   nativeBuildInputs = [ autoconf automake yacc flex pkg-config ];
