@@ -46,21 +46,23 @@ merge_nixpkgs_topics() {
     cd ~/nix/nixpkgs
     git checkout --quiet master
     git reset --keep origin/nixos-unstable
-    local commit_msg='automatic merge by nix-conf update'
+    local commit_msg='automatic merge by nix-conf'
     if [[ -f .git/machete ]]; then
         # On my laptop - merge all non-root branches managed by git-machete
-        local to_merge=$(echo $(cat .git/machete|grep -v '^[^[:space:]]'))
+        readarray -t to_merge < <(sed -nE '/^[[:space:]]+/ s///p' .git/machete)
+        commit_msg+=$'\n'$'\n'"Merged branches:${to_merge[@]/#/$'\n'- }"
     else
         # CI: Recreate the merge from HEAD of my repo
         ## git fetch . test
         if git show wentasah/master|grep -q -F "$commit_msg"; then
             local to_merge=$(git cat-file -p wentasah/master | sed -ne '/^parent / s///p')
+            commit_msg=$(git show --format='%B' wentasah/master)
         else
             echo >&2 "HEAD of https://github.com/wentasah/nixpkgs.git is not a merge commit created by nix-conf"
             exit 1
         fi
     fi
-    git merge --quiet --no-ff --no-commit $to_merge
+    git merge --quiet --no-ff --no-commit "${to_merge[@]}"
     GIT_AUTHOR_NAME=nix-conf \
     GIT_AUTHOR_EMAIL=nix-conf@localhost \
     GIT_AUTHOR_DATE=$(git show origin/nixos-unstable --format='%aD') \
