@@ -189,7 +189,7 @@ in
     ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
-    nix-doc
+    #nix-doc # currently broken (https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.nix-doc.x86_64-linux) - reenable when fixed
     nix-index
     nix-output-monitor
     nix-prefetch
