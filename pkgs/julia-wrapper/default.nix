@@ -14,5 +14,5 @@ writeShellScriptBin "julia" ''
   # Set variables for nix-ld
   export NIX_LD_LIBRARY_PATH=${lib.makeLibraryPath libs}
   export NIX_LD=${stdenv.cc.libc}/lib/ld-linux-x86-64.so.2
-  ${julia}/bin/julia
+  ${julia}/bin/julia "$@"
 ''
