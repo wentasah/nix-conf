@@ -8,9 +8,10 @@
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
+    nix-ld.url = "github:Mic92/nix-ld"; nix-ld.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm, notify-while-running }: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm, notify-while-running, nix-ld }: {
 
     nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -18,6 +19,7 @@
         [
           nixos-hardware.nixosModules.common-cpu-intel
           ./steelpick/configuration.nix
+          nix-ld.nixosModules.nix-ld
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

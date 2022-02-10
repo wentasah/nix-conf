@@ -26,6 +26,7 @@ let
   stm32cubeide = import ../pkgs/stm32cubeide { pkgs = pkgs; };
   licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
   #kernelshark = import ../pkgs/kernelshark { pkgs = pkgs; };
+  julia-wrapper = pkgs.callPackage ../pkgs/julia-wrapper { inherit julia; };
 in
 {
   imports = [
@@ -160,7 +161,7 @@ in
     inkscape
     isync
     jq
-    julia
+    julia-wrapper
     kdiff3
     keepassxc
     kernelshark
