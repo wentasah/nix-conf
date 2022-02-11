@@ -7,7 +7,8 @@ let
 #     teams = "${pkgs.teams}/bin/teams";
 #     skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
   };
-  mytexlive = pkgs.texlive.combine {
+  texlive = pkgs.texlive.override { python3 = (pkgs.python3.withPackages (ps: [ ps.pygments ])); };
+  mytexlive = texlive.combine {
     inherit (pkgs.texlive) scheme-full;
     pkgFilter = (pkg:
       pkg.tlType == "run"
