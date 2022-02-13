@@ -154,6 +154,7 @@ in
     gtkterm
     hdf5
     help2man
+    hotspot
     htop
     hugo
     hunspellDicts.cs_CZ
