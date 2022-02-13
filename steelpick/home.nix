@@ -133,7 +133,7 @@ in
     flameshot
     flex
     flowblade
-    freecad
+    # freecad # currently broken due to pivy failure (https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.freecad.x86_64-linux) reenable when fixed
     gdb
     gh
     gimp
