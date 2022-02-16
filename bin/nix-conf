@@ -156,7 +156,11 @@ fi
 
 case "$cmd" in
     "update")
-        if updated; then build "$@"; fi;;
+        if updated; then
+            build "$@"
+        else
+            echo "No input has changed. Exiting."
+        fi;;
     "build")
         build "$@";;
     "merge")
