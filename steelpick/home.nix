@@ -408,6 +408,10 @@ in
     };
     oh-my-zsh.enable = true;
     oh-my-zsh.plugins = [ "systemd" ];
+    initExtraBeforeCompInit = ''
+      # Where to look for autoloaded function definitions
+      fpath=(~/.zfunc $fpath)
+    '';
     initExtra = ''
       DIRSTACKSIZE=100
 
@@ -437,9 +441,6 @@ in
       #         alias mc='. /usr/libexec/mc/mc-wrapper.sh'
       #     fi
       # fi
-
-      # Where to look for autoloaded function definitions
-      fpath=(~/.zfunc $fpath)
 
       # # Autoload all shell functions from all directories in $fpath (following
       # # symlinks) that have the executable bit on (the executable bit is not
