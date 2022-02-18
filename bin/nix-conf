@@ -123,9 +123,11 @@ build() {
             (
                 cd nixpkgs
                 git push --force wentasah HEAD:ci
-                git merge -s ours history
+
+	        local old_commit=$(git rev-parse history)
+	        local new_commit=$(git commit-tree -p "$old_commit" -p HEAD "HEAD^{tree}" -m "update history branch")
+	        git update-ref refs/heads/history "$new_commit" "$old_commit"
                 git push wentasah history
-                git reset --keep HEAD^
             )
         fi
     else
