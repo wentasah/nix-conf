@@ -118,6 +118,9 @@ build() {
         else
             (
                 cd nixpkgs
+                if git diff --quiet wentasah/ci; then
+                    return
+                fi
                 git push --force wentasah HEAD:ci
 
 	        local old_commit=$(git rev-parse history)
