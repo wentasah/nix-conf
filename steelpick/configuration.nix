@@ -340,6 +340,13 @@ in
 
   services.autorandr.enable = true;
 
+  services.grafana = {
+    enable = true;
+    port = 3000;
+    addr = "127.0.0.1";
+    analytics.reporting.enable = false;
+  };
+
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
