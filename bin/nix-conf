@@ -78,7 +78,8 @@ update_nixpkgs() {
         merge_nixpkgs_topics
     }
 
-    was_head_changed update_nixpkgs_and_merge_topics
+    was_head_changed update_nixpkgs_and_merge_topics \
+        && echo "nixpkgs upstream commit: $(git rev-parse origin/nixos-unstable)"
 }
 
 update_home_manager() {
