@@ -114,7 +114,7 @@ build() {
             nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
             echo
             echo "Run one of the following to switch the configuration:"
-            echo "  sudo ~/nix/out/steelpick/flake/bin/switch-to-configuration switch"
+            echo "  sudo nix-conf switch"
             echo "  sudo nixos-rebuild switch --override-input nixpkgs ~/nix/nixpkgs"
         else
             (
@@ -149,6 +149,12 @@ build() {
     fi
 }
 
+switch() {
+    local O="/home/${SUDO_USER:-$USER}/nix/out/steelpick/flake"
+    nix-env -p /nix/var/nix/profiles/system --set "$O"
+    "$O"/bin/switch-to-configuration switch
+}
+
 if [[ ${1:-} ]] && [[ $1 != -* ]]; then
     cmd=$1
     shift
@@ -172,6 +178,8 @@ case "$cmd" in
         build "$@";;
     "merge")
         merge_nixpkgs_topics;;
+    "switch")
+        switch;;
     *)
         echo >&2 "Unknown command: $cmd"
 esac
