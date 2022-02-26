@@ -431,6 +431,7 @@ in
   nix.extraOptions = ''
     builders-use-substitutes = true
     experimental-features = nix-command flakes
+    keep-derivations = true     # Allow building off-line
   '';
   nix.gc = {
     automatic = true;
