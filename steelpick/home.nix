@@ -516,12 +516,17 @@ in
 #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
     extraPackages = epkgs: with epkgs; [ vterm ];
 
-    package = (pkgs.emacs.override {
-      withGTK2 = false;
-      withGTK3 = false;
-      Xaw3d = pkgs.xorg.libXaw3d;
-      # lucid -> lucid
-    }).overrideAttrs(old: {
+    package = (
+      if false then
+        pkgs.emacs.override {
+          withGTK2 = false;
+          withGTK3 = false;
+          Xaw3d = pkgs.xorg.libXaw3d;
+          # lucid -> lucid
+        }
+      else
+        pkgs.emacsPgtkGcc
+    ).overrideAttrs(old: {
       dontStrip = true;
       #separateDebugInfo = true;
     });

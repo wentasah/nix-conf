@@ -9,9 +9,10 @@
     # sterm.url = "/home/wsh/src/sterm";
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     nix-ld.url = "github:Mic92/nix-ld"; nix-ld.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm, notify-while-running, nix-ld }: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, sterm, notify-while-running, nix-ld, emacs-overlay }: {
 
     nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -33,6 +34,7 @@
             nixpkgs.overlays = [
               sterm.overlay
               ( final: prev: { notify-while-running = import notify-while-running { pkgs = final; }; } )
+              emacs-overlay.overlay
             ];
           }
         ];
