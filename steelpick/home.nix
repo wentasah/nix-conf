@@ -243,7 +243,6 @@ in
     restic
     ripgrep
     rnix-lsp
-    roboto-slab
     rsync
     screenkey
     sequoia
@@ -296,6 +295,7 @@ in
     rust-analyzer cargo-edit
 
     # Fonts
+    roboto-slab
     roboto
     source-sans-pro
     source-serif-pro
