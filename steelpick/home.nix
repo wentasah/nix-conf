@@ -273,7 +273,7 @@ in
     xclip
     xdotool
     xf86_input_wacom
-    xlibs.xorgdocs
+    xorg.xorgdocs
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
