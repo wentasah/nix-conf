@@ -178,7 +178,7 @@ in
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     ltrace
-    manpages
+    man-pages
     mc
     meson
     ministat
