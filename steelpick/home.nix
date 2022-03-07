@@ -129,7 +129,7 @@ in
     fd
     fdupes
     ffmpeg
-    firefox
+    firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     flameshot
     flex
     flowblade
@@ -290,6 +290,11 @@ in
     zsh-syntax-highlighting
     zulip zulip-term
 
+    # Emacs versions from emacs-overlay
+    (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
+    (pkgs.writeShellScriptBin "emacs-gcc"      ''exec ${emacsGcc}/bin/emacs "$@"'')
+    (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkGcc}/bin/emacs "$@"'')
+
     rustup
     # rustc cargo rls clippy
     rust-analyzer cargo-edit
@@ -297,7 +302,9 @@ in
     # Fonts
     roboto-slab
     roboto
+    source-sans
     source-sans-pro
+    source-serif
     source-serif-pro
     lato
     open-sans
@@ -517,13 +524,14 @@ in
     extraPackages = epkgs: with epkgs; [ vterm ];
 
     package = (
-      if false then
-        pkgs.emacs.override {
-          withGTK2 = false;
-          withGTK3 = false;
-          Xaw3d = pkgs.xorg.libXaw3d;
-          # lucid -> lucid
-        }
+      if true then
+        pkgs.emacs
+        # pkgs.emacs.override {
+#           withGTK2 = false;
+#           withGTK3 = false;
+#           Xaw3d = pkgs.xorg.libXaw3d;
+#           # lucid -> lucid
+#         }
       else
         pkgs.emacsPgtkGcc
     ).overrideAttrs(old: {
