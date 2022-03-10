@@ -52,7 +52,7 @@ merge_nixpkgs_topics() {
     else
         # CI: Recreate the merge from HEAD of my repo
         ## git fetch . test
-        if git show --no-patch wentasah/master|grep -q -F "$commit_msg"; then
+        if [[ $(git show wentasah/master) == *"$commit_msg"* ]]; then
             readarray -t to_merge < <(git cat-file -p wentasah/master | sed -ne '/^parent / s///p')
             commit_msg=$(git show --format='%B' --no-patch wentasah/master) # Use the same commit message
         else
