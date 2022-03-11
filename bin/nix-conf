@@ -42,8 +42,12 @@ update_nix_conf() {
     return "$ret"
 }
 
-merge_nixpkgs_topics() {
+merge_nixpkgs_topics_in_master() {
     cd ~/nix/nixpkgs
+
+    git checkout --quiet master
+    git reset --keep origin/nixos-unstable
+
     local commit_msg='automatic merge by nix-conf'
     if [[ -f .git/machete ]]; then
         # On my laptop - merge all non-root branches managed by git-machete
@@ -73,9 +77,7 @@ update_nixpkgs() {
     update_nixpkgs_and_merge_topics() {
         git fetch --quiet origin
         git fetch --quiet wentasah
-        git checkout --quiet master
-        git reset --keep origin/nixos-unstable
-        merge_nixpkgs_topics
+        merge_nixpkgs_topics_into_master
     }
 
     was_head_changed update_nixpkgs_and_merge_topics \
@@ -186,7 +188,7 @@ case "$cmd" in
     "build")
         build "$@";;
     "merge")
-        merge_nixpkgs_topics;;
+        merge_nixpkgs_topics_into_master;;
     "switch")
         switch;;
     "push")
