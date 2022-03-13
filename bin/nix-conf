@@ -42,7 +42,7 @@ update_nix_conf() {
     return "$ret"
 }
 
-merge_nixpkgs_topics_in_master() {
+merge_nixpkgs_topics_into_master() {
     cd ~/nix/nixpkgs
 
     git checkout --quiet master
