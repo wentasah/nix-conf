@@ -68,6 +68,7 @@ merge_nixpkgs_topics_into_master() {
     GIT_AUTHOR_DATE=$(git show origin/nixos-unstable --format='%aD') \
     GIT_COMMITTER_DATE=$(git show origin/nixos-unstable --format='%cD') \
     git commit -m "$commit_msg"
+    git update-ref refs/heads/nixos-unstable origin/nixos-unstable
 }
 
 update_nixpkgs() {
@@ -166,6 +167,16 @@ push() {
     git push
 }
 
+add_pr() {
+    local pr="${1:?no PR number given}";
+    local branch="${2:?no branch given}";
+    git fetch origin refs/pull/"$pr"/head
+    git checkout -B "$branch" nixos-unstable
+    git cherry-pick ..FETCH_HEAD
+    git-machete add
+    merge_nixpkgs_topics_into_master
+}
+
 if [[ ${1:-} ]] && [[ $1 != -* ]]; then
     cmd=$1
     shift
@@ -193,6 +204,8 @@ case "$cmd" in
         switch;;
     "push")
         push;;
+    "add-pr")
+        add_pr "$@";;
     *)
         echo >&2 "Unknown command: $cmd"
 esac
