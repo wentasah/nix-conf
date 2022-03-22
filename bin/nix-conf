@@ -102,6 +102,7 @@ build() {
     cd ~/nix
 
     PATH=/nix/var/nix/profiles/default/bin:$PATH
+    local old_version=$(readlink out/steelpick/flake || :)
     if [[ -f conf/flake.nix ]]; then
         local status=0
         nix build \
@@ -131,6 +132,11 @@ build() {
 	        local new_commit=$(git commit-tree -p "$old_commit" -p HEAD "HEAD^{tree}" -m "update history branch")
 	        git update-ref refs/heads/history "$new_commit" "$old_commit"
                 git push wentasah history
+                matrix-commander --markdown -m "New update
+```
+$(nix store diff-closures "$old_version" ~/nix/out/steelpick/flake)
+```
+"
             )
         fi
     else
