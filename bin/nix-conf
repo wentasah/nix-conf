@@ -132,12 +132,13 @@ build() {
 	        local new_commit=$(git commit-tree -p "$old_commit" -p HEAD "HEAD^{tree}" -m "update history branch")
 	        git update-ref refs/heads/history "$new_commit" "$old_commit"
                 git push wentasah history
-                matrix-commander --markdown -m "New update
-```
-$(nix store diff-closures '$old_version' ~/nix/out/steelpick/flake)
-```
-"
             )
+            if [[ $old_version != $(readlink out/steelpick/flake) ]]; then
+                matrix-commander --markdown -m "nix-conf CI update:
+
+$(nix store diff-closures $old_version out/steelpick/flake | ansifilter | sed -e 's/^/    /')
+"
+            fi
         fi
     else
         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
