@@ -134,7 +134,7 @@ build() {
                 git push wentasah history
                 matrix-commander --markdown -m "New update
 ```
-$(nix store diff-closures "$old_version" ~/nix/out/steelpick/flake)
+$(nix store diff-closures '$old_version' ~/nix/out/steelpick/flake)
 ```
 "
             )
