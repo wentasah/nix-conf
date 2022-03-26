@@ -134,10 +134,9 @@ build() {
                 git push wentasah history
             )
             if [[ $old_version != $(readlink out/steelpick/flake) ]]; then
-                matrix-commander --markdown -m "nix-conf CI update:
+                matrix-commander --markdown -m "nix-conf CI update completed
 
-$(nix store diff-closures $old_version out/steelpick/flake | ansifilter | sed -e 's/^/    /')
-"
+$(nix store diff-closures $old_version out/steelpick/flake | ansifilter | sed -e 's/^/    /')" || :
             fi
         fi
     else
