@@ -154,6 +154,13 @@
 
   # List services that you want to enable:
 
+  services.avahi = {
+    publish = {
+      enable = true;
+      addresses = true; # Enable finding this computer via <hostname>.local
+    };
+  };
+
   services.fwupd.enable = true;
 
   # Enable the OpenSSH daemon.
