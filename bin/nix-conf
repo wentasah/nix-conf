@@ -179,7 +179,7 @@ add_pr() {
     local branch="${2:?no branch given}";
     git fetch origin refs/pull/"$pr"/head
     git checkout -B "$branch" nixos-unstable
-    git cherry-pick ..FETCH_HEAD
+    git cherry-pick FETCH_HEAD ^origin/master ^origin/staging
     git-machete add
     merge_nixpkgs_topics_into_master
 }
