@@ -316,6 +316,10 @@ in
     buildPackages.gcc
     (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
   ])
+  ++ (with pkgsCross.mingwW64; [
+    buildPackages.gcc
+    #(lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+  ])
 #   ++ (with pkgsCross.raspberryPi; [
 #     buildPackages.gcc
 #     (lib.setPrio 20 buildPackages.bintools-unwrapped)
