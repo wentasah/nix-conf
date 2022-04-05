@@ -261,6 +261,7 @@ in
     trace-cmd
     unrar
     unzip
+    usbrelay
     usbutils
     v4l-utils # for qv4l2
     valgrind
