@@ -173,14 +173,20 @@ push() {
     git push
 }
 
+add_commits() {
+    local branch="${1:?no branch given}";
+    shift
+    git checkout -B "$branch" nixos-unstable
+    git cherry-pick "${@:?no commits specified}"
+    git-machete add
+    merge_nixpkgs_topics_into_master
+}
+
 add_pr() {
     local pr="${1:?no PR number given}";
     local branch="${2:?no branch given}";
     git fetch origin refs/pull/"$pr"/head
-    git checkout -B "$branch" nixos-unstable
-    git cherry-pick FETCH_HEAD ^origin/master ^origin/staging
-    git-machete add
-    merge_nixpkgs_topics_into_master
+    add_commits "$branch" FETCH_HEAD ^origin/master ^origin/staging
 }
 
 if [[ ${1:-} ]] && [[ $1 != -* ]]; then
@@ -212,6 +218,8 @@ case "$cmd" in
         push;;
     "add-pr")
         add_pr "$@";;
+    "add-commits")
+        add_commits "$@";;
     *)
         echo >&2 "Unknown command: $cmd"
 esac
