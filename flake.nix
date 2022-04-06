@@ -3,7 +3,7 @@
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows  = "nixpkgs"; };
+    home-manager = { url = "github:wentasah/home-manager"; inputs.nixpkgs.follows  = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows  = "nixpkgs"; };
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
