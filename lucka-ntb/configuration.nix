@@ -33,6 +33,7 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   
   networking.networkmanager.logLevel = "INFO";
+  networking.networkmanager.unmanaged = [ "wlp2s0" ]; # USB wifi is more reliable and having both enabled has problems.
 
   # Select internationalisation properties.
   i18n.defaultLocale = "cs_CZ.UTF-8";
@@ -128,6 +129,7 @@ in
     scrapeConfigs = [
       {
         job_name = "lucka";
+	scrape_interval = "15s";
         static_configs = [{
           targets = [
             "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
@@ -168,7 +170,7 @@ in
   users.users.lucka = {
     isNormalUser = true;
     description = "Lucka";
-    extraGroups = [ "scanner" ];
+    extraGroups = [ "scanner" "networkmanager" ];
   };
   users.users.wsh = {
     isNormalUser = true;
