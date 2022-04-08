@@ -132,7 +132,7 @@ in
     flameshot
     flex
     flowblade
-    # freecad # currently broken due to pivy failure (https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.freecad.x86_64-linux) reenable when fixed
+    freecad
     gdb
     gh
     gimp
@@ -191,7 +191,7 @@ in
     ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
-    #nix-doc # currently broken (https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.nix-doc.x86_64-linux) - reenable when fixed
+    nix-doc
     nix-index
     nix-output-monitor
     nix-prefetch
