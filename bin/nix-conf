@@ -93,7 +93,7 @@ update_home_manager() {
 updated() {
     local result=1
     update_nix_conf && result=0
-    update_home_manager && result=0
+    #update_home_manager && result=0
     update_nixpkgs && result=0
     return $result
 }
