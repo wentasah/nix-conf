@@ -274,11 +274,11 @@ in
     xclip
     xdotool
     xf86_input_wacom
-    xorg.xorgdocs
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
     xorg.xkill
+    xorg.xorgdocs
     xournal
     xournalpp
     xplr
