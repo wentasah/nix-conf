@@ -243,6 +243,7 @@ in
     ripgrep
     rnix-lsp
     rsync
+    saleae-logic-2
     screenkey
     sequoia
     shellcheck

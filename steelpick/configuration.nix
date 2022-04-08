@@ -31,6 +31,7 @@ in
         "kyocera-phase5"
         "konica-minolta-bizhub"
         "unrar"
+        "saleae-logic"
       ];
     };
     overlays = [ myOverlay ];
