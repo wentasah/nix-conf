@@ -5,12 +5,13 @@
 { config, pkgs, ... }:
 
 let
-  myEmacs = pkgs.emacs-nox; 
-  emacsWithPackages = (pkgs.emacsPackagesGen myEmacs).emacsWithPackages; 
+  myEmacs = pkgs.emacs-nox;
+  emacsWithPackages = (pkgs.emacsPackagesGen myEmacs).emacsWithPackages;
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../modules/home-printer.nix
     ];
@@ -31,7 +32,7 @@ in
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
   networking.networkmanager.logLevel = "INFO";
   networking.networkmanager.unmanaged = [ "wlp2s0" ]; # USB wifi is more reliable and having both enabled has problems.
 
@@ -56,9 +57,12 @@ in
 
   nixpkgs.config = {
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "skypeforlinux" "faac"
+      "skypeforlinux"
+      "faac"
       "zoom"
-      "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "brscan4"
+      "brscan4-etc-files"
+      "brother-udev-rule-type1"
       "mfcl2700dwlpr"
     ];
   };
@@ -69,13 +73,16 @@ in
     (emacsWithPackages (epkgs: (with epkgs.melpaPackages; [ nix-mode ])))
     firefox-wayland
     chromium
-    gitAndTools.git-annex lsof git
+    gitAndTools.git-annex
+    lsof
+    git
     gnomeExtensions.appindicator
     libreoffice-fresh
     links2
     mc
     skypeforlinux
-    wget vim
+    wget
+    vim
     zoom-us
   ];
 
@@ -129,7 +136,7 @@ in
     scrapeConfigs = [
       {
         job_name = "lucka";
-	scrape_interval = "15s";
+        scrape_interval = "15s";
         static_configs = [{
           targets = [
             "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
@@ -141,9 +148,9 @@ in
   };
 
   # Open ports in the firewall.
-#   networking.firewall.allowedTCPPorts = [
-#     2342  # grafana
-#   ];
+  #   networking.firewall.allowedTCPPorts = [
+  #     2342  # grafana
+  #   ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
