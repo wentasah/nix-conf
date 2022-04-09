@@ -51,7 +51,7 @@ in
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
-      #persistent = true; # Enable for 21.05
+      persistent = true;
     };
   };
 
