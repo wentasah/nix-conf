@@ -4,12 +4,12 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    home-manager = { url = "github:wentasah/home-manager"; inputs.nixpkgs.follows  = "nixpkgs"; };
-    sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows  = "nixpkgs"; };
+    home-manager = { url = "github:wentasah/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
-    nix-ld.url = "github:Mic92/nix-ld"; nix-ld.inputs.nixpkgs.follows = "nixpkgs";
+    nix-ld = { url = "github:Mic92/nix-ld"; inputs.nixpkgs.follows = "nixpkgs"; };
     emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
@@ -34,10 +34,10 @@
 
             nixpkgs.overlays = [
               sterm.overlay
-              ( final: prev: {
+              (final: prev: {
                 notify-while-running = import notify-while-running { pkgs = final; };
                 inherit (nixpkgs-stable.legacyPackages.x86_64-linux) firefox; # workaround https://github.com/NixOS/nixpkgs/issues/167785
-              } )
+              })
               emacs-overlay.overlay
             ];
           }
