@@ -196,6 +196,8 @@ in
 
   programs.adb.enable = true;
 
+  programs.nix-ld.enable = true;
+
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
