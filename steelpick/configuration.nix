@@ -242,7 +242,6 @@ in
 
   services.gpm.enable = true;
 
-  services.udev.packages = [ pkgs.stlink ];
   services.udev = {
     packages = [ pkgs.stlink ];
     extraRules = builtins.concatStringsSep "\n" [
