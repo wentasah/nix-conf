@@ -27,6 +27,10 @@ let
   licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
   #kernelshark = import ../pkgs/kernelshark { pkgs = pkgs; };
   julia-wrapper = pkgs.callPackage ../pkgs/julia-wrapper { inherit julia; };
+  globalPythonPackages = (pp: with pp; [
+    requests urllib3 # for filesender.py
+    matplotlib
+  ]);
 in
 {
   imports = [
@@ -81,7 +85,7 @@ in
     (pkgs.callPackage ../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../pkgs/difftastic {})
     (pkgs.callPackage ../pkgs/enumerate-markdown {})
-    (python3.withPackages (pp: with pp; [ requests urllib3 ])) # for filesender.py
+    (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
     afew
     arandr
