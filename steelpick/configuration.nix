@@ -241,6 +241,14 @@ in
   services.gpm.enable = true;
 
   services.udev.packages = [ pkgs.stlink ];
+  services.udev = {
+    packages = [ pkgs.stlink ];
+    extraRules = builtins.concatStringsSep "\n" [
+      # USB relays
+      ''SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05df", MODE="0600", OWNER="wsh"''
+    ];
+  };
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
