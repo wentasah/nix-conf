@@ -87,6 +87,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1649537291,
+        "narHash": "sha256-V6VYIwTeI5BCfYK9f5EsMbjsjsis1rUDHMsaDbTvt+A=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "715dc137b08213aabbbe0965b78ab938e5d8d3b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-21.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "notify-while-running": {
       "flake": false,
       "locked": {
@@ -110,6 +126,7 @@
         "nix-ld": "nix-ld",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
         "notify-while-running": "notify-while-running",
         "sterm": "sterm"
       }
