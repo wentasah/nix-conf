@@ -123,7 +123,6 @@ in
     csvtool
     cura
     dpkg
-    xdragon
     dua
     dunst
     easyeffects
@@ -277,6 +276,7 @@ in
     x11docker
     xclip
     xdotool
+    xdragon
     xf86_input_wacom
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
