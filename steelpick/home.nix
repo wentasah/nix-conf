@@ -75,7 +75,6 @@ in
     #jupyter
     #slack
     #teams
-    (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
@@ -104,6 +103,7 @@ in
     bbe
     bc                          # For linux kernel compilation
     bear
+    binutils-unwrapped-all-targets
     bison
     bubblewrap
     cachix
