@@ -123,7 +123,7 @@ in
     csvtool
     cura
     dpkg
-    dragon-drop
+    xdragon
     dua
     dunst
     easyeffects
