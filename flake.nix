@@ -34,7 +34,6 @@
               sterm.overlay
               (final: prev: {
                 notify-while-running = import notify-while-running { pkgs = final; };
-                inherit (nixpkgs-stable.legacyPackages.x86_64-linux) firefox; # workaround https://github.com/NixOS/nixpkgs/issues/167785
               })
               emacs-overlay.overlay
             ];
