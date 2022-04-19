@@ -446,9 +446,6 @@ in
   virtualisation.lxd.enable = true;
   virtualisation.lxc.lxcfs.enable = true;
 
-  # For novaboot testing
-  environment.etc."qemu/bridge.conf".text = "allow br0";
-
 
 
   # This value determines the NixOS release from which the default

@@ -30,4 +30,8 @@
 
     '';
   };
+
+  # For novaboot testing (TODO: Why I needed this?)
+  environment.etc."qemu/bridge.conf".text = "allow br0";
+
 }
