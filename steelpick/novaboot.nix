@@ -5,13 +5,13 @@
     novaboot-test = {
       isNormalUser = true;
       uid = 1003;
-      shell = "/home/novaboot-test/bin/novaboot-shell";
+      shell = "/home/novaboot-test/src/server/novaboot-shell";
     };
   };
-  # Make novaboot shell accessible to novaboot-test user
-  fileSystems."/home/novaboot-test/bin/novaboot-shell" = {
+  # Make novaboot sources accessible to novaboot-test user
+  fileSystems."/home/novaboot-test/src" = {
     options = [ "bind" ];
-    device = "/home/wsh/src/novaboot/server/novaboot-shell";
+    device = "/home/wsh/src/novaboot";
   };
   security.sudo = {
     extraConfig = ''
