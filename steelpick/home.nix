@@ -254,6 +254,7 @@ in
     smplayer mpv mplayer
     socat
     solvespace
+    sops
     sqlite-interactive
     sqlitebrowser
     sshuttle
@@ -289,6 +290,7 @@ in
     xpra
     xrectsel
     yamllint
+    yq
     zip
     zotero
     zsh-completions
