@@ -1,11 +1,20 @@
 # Configuration for novaboot testing
 { config, lib, pkgs, modulesPath, ... }:
+let
+  novaboot-unfsd-override = pkgs.writeText "novaboot-unfsd@.service.override.conf" ''
+    [Service]
+    ExecSearchPath=/run/current-system/sw/bin
+    ExecSearchPath=/etc/profiles/per-user/novaboot-test/bin
+    ExecSearchPath=/home/novaboot-test/.nix-profile/bin
+  '';
+in
 {
   users.users = {
     novaboot-test = {
       isNormalUser = true;
       uid = 1003;
       shell = "/home/novaboot-test/src/server/novaboot-shell";
+      packages = [ pkgs.unfs3 ];
     };
   };
   # Make novaboot sources accessible to novaboot-test user
@@ -34,4 +43,9 @@
   # For novaboot testing (TODO: Why I needed this?)
   environment.etc."qemu/bridge.conf".text = "allow br0";
 
+  system.activationScripts.novaboot-test = ''
+    mkdir -p /home/novaboot-test/.config/systemd/user
+    ln -sf /home/novaboot-test/{src/server/systemd,.config/systemd/user}/novaboot-unfsd@.service
+    ln -sf ${novaboot-unfsd-override} /home/novaboot-test/.config/systemd/user/novaboot-unfsd@.service.d/override.conf
+  '';
 }

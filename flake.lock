@@ -15,6 +15,21 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1648297722,
+        "narHash": "sha256-W+qlPsiZd8F3XkzXOzAoR+mpFqzm3ekQkJNa+PIh1BQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "0f8662f1319ad6abf89b3380dd2722369fc51ade",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -98,6 +113,28 @@
         "type": "github"
       }
     },
+    "novaboot": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1651013166,
+        "narHash": "sha256-wwUdD0Eru/2aG9rVqyy5iF157EOMYpF8KU8EtGGFqjU=",
+        "owner": "wentasah",
+        "repo": "novaboot",
+        "rev": "c146c6310da4c14f2e5daf52d2e1b609f25b14f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wentasah",
+        "ref": "nfs",
+        "repo": "novaboot",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "emacs-overlay": "emacs-overlay",
@@ -106,6 +143,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "notify-while-running": "notify-while-running",
+        "novaboot": "novaboot",
         "sterm": "sterm"
       }
     },
