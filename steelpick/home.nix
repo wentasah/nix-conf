@@ -136,7 +136,7 @@ in
     flameshot
     flex
     flowblade
-    freecad
+    #freecad # broken
     gdb
     gh
     gimp
