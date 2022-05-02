@@ -569,7 +569,9 @@ in
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
 
-  services.xsettingsd.enable = true;  services.gpg-agent.enable = true;
+  services.xsettingsd.enable = true;
+  services.gpg-agent.enable = true;
+  services.gpg-agent.enableExtraSocket = true;
   services.lorri.enable = true;
 
   systemd.user.services = {
