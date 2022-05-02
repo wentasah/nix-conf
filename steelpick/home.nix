@@ -222,6 +222,7 @@ in
     pdf2svg
     pdfpc
     pdftk
+    perl.devdoc
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
