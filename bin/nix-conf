@@ -105,15 +105,17 @@ build() {
     local old_version=$(readlink out/steelpick/flake || :)
     if [[ -f conf/flake.nix ]]; then
         local status=0
-        log=$(nix build \
+        nix build \
             "$@" \
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
-            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel 2>&1 | tee /dev/stderr) || status=$?
+            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel 2>&1 \
+            | tee out/steelpick/flake.log || status=$?
         if [[ $status -eq 0 ]]; then
             : > out/steelpick/flake.error
         else
-            echo "$log" > out/steelpick/flake.error
+            # we use cat instead of mv to not break hardlinks to the flake.error
+            cat out/steelpick/flake.log > out/steelpick/flake.error
             exit $status
         fi
 
