@@ -105,13 +105,17 @@ build() {
     local old_version=$(readlink out/steelpick/flake || :)
     if [[ -f conf/flake.nix ]]; then
         local status=0
-        nix build \
+        log=$(nix build \
             "$@" \
             --out-link out/steelpick/flake \
             --override-input nixpkgs ./nixpkgs \
-            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel || status=$?
-        echo $status > out/steelpick/flake.status
-        [[ $status -eq 0 ]] || exit $status
+            ./conf#nixosConfigurations.steelpick.config.system.build.toplevel 2>&1 | tee /dev/stderr) || status=$?
+        if [[ $status -eq 0 ]]; then
+            : > out/steelpick/flake.error
+        else
+            echo "$log" > out/steelpick/flake.error
+            exit $status
+        fi
 
         if [[ $(hostname) = "steelpick" ]]; then
             echo "Diff from current configuration:"
