@@ -182,6 +182,7 @@ in
     ltrace
     man-pages
     mc
+    meld
     meson
     ministat
     moreutils
