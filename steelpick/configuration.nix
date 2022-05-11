@@ -283,7 +283,7 @@ in
   };
 
   # broken: https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.intel-compute-runtime.x86_64-linux
-  # hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
+  hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
 
   services.locate = {
     enable = true;

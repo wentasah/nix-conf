@@ -122,8 +122,9 @@ in
     cppreference
     csv2latex
     csvtool
-    cura
+    #cura # currently broken
     dpkg
+    drawio
     dua
     dunst
     easyeffects
