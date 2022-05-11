@@ -46,7 +46,7 @@ merge_nixpkgs_topics_into_master() {
     cd ~/nix/nixpkgs
 
     git checkout --quiet master
-    git reset --keep origin/nixos-unstable
+    git reset --keep nixos-unstable
 
     local commit_msg='automatic merge by nix-conf'
     if [[ -f .git/machete ]]; then
@@ -65,10 +65,9 @@ merge_nixpkgs_topics_into_master() {
         fi
     fi
     git merge --quiet --no-ff --no-commit "${to_merge[@]}"
-    GIT_AUTHOR_DATE=$(git show origin/nixos-unstable --format='%aD') \
-    GIT_COMMITTER_DATE=$(git show origin/nixos-unstable --format='%cD') \
+    GIT_AUTHOR_DATE=$(git show nixos-unstable --format='%aD') \
+    GIT_COMMITTER_DATE=$(git show nixos-unstable --format='%cD') \
     git commit -m "$commit_msg"
-    git update-ref refs/heads/nixos-unstable origin/nixos-unstable
 }
 
 update_nixpkgs() {
@@ -78,6 +77,7 @@ update_nixpkgs() {
     update_nixpkgs_and_merge_topics() {
         git fetch --quiet origin
         git fetch --quiet wentasah
+        git update-ref refs/heads/nixos-unstable origin/nixos-unstable
         merge_nixpkgs_topics_into_master
     }
 
