@@ -214,6 +214,7 @@ in
     notmuch.emacs
     nvd
     odt2txt
+    oil
     okteta
     okular
     openssl
