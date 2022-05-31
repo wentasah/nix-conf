@@ -122,7 +122,7 @@ in
     cppreference
     csv2latex
     csvtool
-    #cura # currently broken
+    cura
     dpkg
     drawio
     dua
