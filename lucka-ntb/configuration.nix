@@ -6,7 +6,7 @@
 
 let
   myEmacs = pkgs.emacs-nox;
-  emacsWithPackages = (pkgs.emacsPackagesGen myEmacs).emacsWithPackages;
+  emacsWithPackages = (pkgs.emacsPackagesFor myEmacs).emacsWithPackages;
 in
 {
   imports =
@@ -19,6 +19,8 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_17;
 
   networking.hostName = "lucka-ntb"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -34,7 +36,7 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   networking.networkmanager.logLevel = "INFO";
-  networking.networkmanager.unmanaged = [ "wlp2s0" ]; # USB wifi is more reliable and having both enabled has problems.
+  #networking.networkmanager.unmanaged = [ "wlp2s0" ]; # USB wifi is more reliable and having both enabled has problems.
 
   # Select internationalisation properties.
   i18n.defaultLocale = "cs_CZ.UTF-8";
@@ -115,6 +117,7 @@ in
 
   services.grafana = {
     enable = true;
+    addr = "";
     port = 2342;
   };
 
@@ -148,9 +151,9 @@ in
   };
 
   # Open ports in the firewall.
-  #   networking.firewall.allowedTCPPorts = [
-  #     2342  # grafana
-  #   ];
+  networking.firewall.allowedTCPPorts = [
+    2342  # grafana
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
