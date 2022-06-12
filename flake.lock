@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1639928987,
-        "narHash": "sha256-AsHOMB3oBa0Pwk2NYL0EaA/jpq5pnISsj7b8LWXaCOA=",
+        "lastModified": 1654787204,
+        "narHash": "sha256-SFzlL4FxwazJqzMPvLPT0IVWaYqV+NMdHxOEOawZ9Z8=",
         "owner": "wentasah",
         "repo": "sterm",
-        "rev": "d1897056462fce2133e341565fb0c4572d919e09",
+        "rev": "aec0022e09119ec4e0cf8ba85515cbde907384b6",
         "type": "github"
       },
       "original": {
