@@ -538,7 +538,11 @@ in
 
 #     # Not used since switch to straight
 #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
-    extraPackages = epkgs: with epkgs; [ vterm ];
+    extraPackages = epkgs: with epkgs; [
+      vterm
+      pdf-tools
+      melpaPackages.julia-mode # for ikiwiki-org-plugin in my blog
+    ];
 
     package = (
       if true then
