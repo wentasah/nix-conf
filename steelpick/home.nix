@@ -205,6 +205,7 @@ in
     nix-template
     nix-tree
     nixfmt
+    nixos-generators
     nixos-shell
     nixpkgs-fmt
     nodePackages.markdownlint-cli
@@ -320,6 +321,7 @@ in
     lato
     open-sans
     libertine # For images consistency with ACM latex template
+    iosevka
 
   ]
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
