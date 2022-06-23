@@ -173,6 +173,7 @@ in
     kicad-small
     krita
     lexicon
+    libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
     libsecret
