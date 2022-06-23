@@ -123,6 +123,7 @@ in
     csv2latex
     csvtool
     cura
+    #cutter # currently broken
     dpkg
     drawio
     dua
@@ -245,7 +246,7 @@ in
     qemu
     qt5.full            # To make qtcreator find the qt automatically
     qtcreator
-    radare2 radare2-cutter
+    radare2
     ranger
     redo-apenwarr
     restic
