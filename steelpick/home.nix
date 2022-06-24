@@ -302,7 +302,8 @@ in
     zotero
     zsh-completions
     zsh-syntax-highlighting
-    zulip zulip-term
+    zulip
+    #zulip-term #broken
 
     # Emacs versions from emacs-overlay
     (pkgs.writeShellScriptBin "emacs-27"       ''exec ${emacs}/bin/emacs "$@"'')
