@@ -173,6 +173,7 @@ in
     kernelshark
     kicad-small
     krita
+    lazydocker
     lexicon
     libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
