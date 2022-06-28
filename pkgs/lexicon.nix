@@ -3,7 +3,7 @@
 let
   lexicon-wrapper = pkgs.writeScript "lexicon-wrapper" ''
     #! ${pkgs.stdenv.shell}
-    export LD_LIBRARY_PATH=/opt/Lingea/Lexicon5/syst/lib0:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/opt/Lingea/Lexicon5/syst:$LD_LIBRARY_PATH
     exec /opt/Lingea/Lexicon5/Lexicon "$@"
   '';
 in
@@ -20,6 +20,7 @@ pkgs.buildFHSUserEnvBubblewrap {
         xorg.libXft
         xorg.libXmu
         xorg.libXt
+        zlib
       ]);
     runScript = "${lexicon-wrapper}";
 }
