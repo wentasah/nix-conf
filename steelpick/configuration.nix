@@ -14,6 +14,7 @@ in
       ./hardware-configuration.nix
       ../modules/home-printer.nix
       ./novaboot.nix
+      ../modules/tftpd-hpa.nix
       # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];
@@ -92,16 +93,6 @@ in
 #       listenDatagrams = [ "69" ];
 #       wantedBy = [ "sockets.target" ];
 #     };
-    services.tftpd = {
-      description = "TFTP server";
-      #requires = [ "tftpd.socket" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.tftp-hpa}/bin/in.tftpd --listen --foreground --secure --verbose /srv/tftp";
-        #StandardInput = "socket";
-      };
-    };
-
   };
 
   # Select internationalisation properties.
@@ -240,6 +231,13 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.tftpd-hpa = {
+    enable = true;
+    extraOptions = [
+      "--verbose"
+    ];
+  };
 
   services.gpm.enable = true;
 
