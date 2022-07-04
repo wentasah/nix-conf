@@ -199,6 +199,7 @@ in
     ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
+    nix-autobahn
     nix-doc
     nix-index
     nix-output-monitor
