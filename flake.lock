@@ -33,6 +33,21 @@
     },
     "flake-utils": {
       "locked": {
+        "lastModified": 1649676176,
+        "narHash": "sha256-OWKJratjt2RW151VUlJPRALb7OU2S5s+f0vLj4o1bHM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "a4b154ebbdc88c8498a5c7b01589addc9e9cb678",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "locked": {
         "lastModified": 1648297722,
         "narHash": "sha256-W+qlPsiZd8F3XkzXOzAoR+mpFqzm3ekQkJNa+PIh1BQ=",
         "owner": "numtide",
@@ -70,6 +85,27 @@
         "type": "github"
       }
     },
+    "nix-autobahn": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1650132562,
+        "narHash": "sha256-h51KOeqabmr6Ug7Cj8mO/EyMo/0wiTb5R364ovh2dp0=",
+        "owner": "Lassulus",
+        "repo": "nix-autobahn",
+        "rev": "9122088c5d58ca86b26ee4eda9ce6745f2c9555e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lassulus",
+        "repo": "nix-autobahn",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1643980037,
@@ -87,11 +123,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1655306633,
-        "narHash": "sha256-aKHdq9di2+cBejTPXi1po7FXf7rqkNvY0CStDjj2FEY=",
+        "lastModified": 1656753965,
+        "narHash": "sha256-kzX2zqkYKOfRXAdQ+nljm+ckKc3KiCieogwPWpzIbds=",
         "owner": "wentasah",
         "repo": "nixpkgs",
-        "rev": "f6386418dfc84f37be787ea78ae96f63876987fa",
+        "rev": "ddf0b61585043bd24a59b4237a7abda9a4978c97",
         "type": "github"
       },
       "original": {
@@ -167,7 +203,7 @@
     },
     "novaboot": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -191,6 +227,7 @@
       "inputs": {
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
+        "nix-autobahn": "nix-autobahn",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
