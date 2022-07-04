@@ -20,6 +20,7 @@ pkgs.buildFHSUserEnvBubblewrap {
         xorg.libXft
         xorg.libXmu
         xorg.libXt
+        libxml2
         zlib
       ]);
     runScript = "${lexicon-wrapper}";
