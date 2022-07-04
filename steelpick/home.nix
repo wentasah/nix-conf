@@ -214,6 +214,7 @@ in
     nixpkgs-fmt
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
+    novaboot                    # from novaboot overlay
     notify-while-running
     notmuch
     notmuch.emacs
