@@ -130,6 +130,7 @@ in
     dunst
     easyeffects
     entr
+    exa
     exif
     fd
     fdupes
@@ -415,7 +416,7 @@ in
       h     = "history";
       j     = "julia --project";
       jc    = "journalctl";
-      l     = "ls -lAh";
+      l     = "exa -la --group --git --header";
       la    = "ls -a";
       ll    = "ls -l";
       ln    = "nocorrect ln"; # no spelling correction on ln
