@@ -55,5 +55,12 @@
             }
           ];
       };
+      nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./turbot/configuration.nix
+          ./turbot/hardware-configuration.nix
+        ];
+      };
     };
 }
