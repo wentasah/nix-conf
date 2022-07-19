@@ -15,6 +15,7 @@ in
       ../modules/home-printer.nix
       ./novaboot.nix
       ../modules/tftpd-hpa.nix
+      ../modules/fastdds.nix
       # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];

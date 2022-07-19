@@ -27,7 +27,6 @@ let
   licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
   #kernelshark = import ../pkgs/kernelshark { pkgs = pkgs; };
   julia-wrapper = pkgs.callPackage ../pkgs/julia-wrapper { inherit julia; };
-  fastdds = pkgs.callPackage ../pkgs/fastdds { };
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
     matplotlib
@@ -133,7 +132,6 @@ in
     entr
     exa
     exif
-    fastdds fastdds.fastcdr fastdds.foonathan-memory # fixme: include directory is not accessible this way
     fd
     fdupes
     ffmpeg
