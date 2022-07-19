@@ -133,7 +133,7 @@ in
     entr
     exa
     exif
-    fastdds fastdds.fastcdr fastdds.foonathan-memory
+    fastdds fastdds.fastcdr fastdds.foonathan-memory # fixme: include directory is not accessible this way
     fd
     fdupes
     ffmpeg
