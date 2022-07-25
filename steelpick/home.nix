@@ -124,6 +124,7 @@ in
     csvtool
     cura
     #cutter # currently broken
+    daemontools
     dpkg
     drawio
     dua
