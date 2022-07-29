@@ -98,6 +98,10 @@ updated() {
     return $result
 }
 
+failed() {
+    test -s ~/nix/out/steelpick/flake.error
+}
+
 build() {
     cd ~/nix
 
@@ -215,7 +219,7 @@ export GIT_COMMITTER_EMAIL=nix-conf@localhost
 
 case "$cmd" in
     "update")
-        if updated; then
+        if updated || failed; then
             build "$@"
         else
             echo "No input has changed. Exiting."
