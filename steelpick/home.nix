@@ -19,7 +19,7 @@ let
         !builtins.elem pkg.pname [ "core" ]
       ));
   };
-  julia = pkgs.julia_17-bin; # import ../pkgs/julia-bin.nix { pkgs = pkgs; };
+  julia = pkgs.julia-stable-bin; # import ../pkgs/julia-bin.nix { pkgs = pkgs; };
   lexicon = import ../pkgs/lexicon.nix { pkgs = pkgs; };
   cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
   pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
