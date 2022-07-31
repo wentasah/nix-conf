@@ -14,5 +14,6 @@ writeShellScriptBin "julia" ''
   # Set variables for nix-ld
   #export NIX_LD_LIBRARY_PATH=${lib.makeLibraryPath libs}
   export NIX_LD=${stdenv.cc.libc}/lib/ld-linux-x86-64.so.2
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}/run/opengl-driver/lib"
   exec ${julia}/bin/julia "$@"
 ''
