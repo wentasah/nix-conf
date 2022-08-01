@@ -99,7 +99,11 @@ updated() {
 }
 
 failed() {
-    test -s ~/nix/out/steelpick/flake.error
+    if [[ -s ~/nix/out/steelpick/flake.error ]]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 build() {
