@@ -256,6 +256,9 @@ in
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   networking.firewall.interfaces.enp0s31f6.allowedUDPPorts = [ 69 ]; # TFTP
+  networking.firewall.extraCommands = ''
+    iptables -A INPUT -i wg-ipa2x -j ACCEPT
+  '';
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # networking.firewall.logRefusedPackets = true;
