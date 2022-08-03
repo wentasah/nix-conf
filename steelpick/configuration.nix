@@ -437,6 +437,7 @@ in
     builders-use-substitutes = true
     experimental-features = nix-command flakes
     keep-derivations = true     # Allow building off-line
+    keep-outputs = true         # Recommended by nix-direnv
   '';
   nix.gc = {
     automatic = true;

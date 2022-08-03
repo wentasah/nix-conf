@@ -523,6 +523,8 @@ in
           rm -f -- "$temp_file"
       }
 
+      source ${../pkgs/zsh-config/nix-direnv}
+
       # Integrate run-nix-help (https://github.com/NixOS/nix/blob/master/misc/zsh/run-help-nix#L14)
       (( $+aliases[run-help] )) && unalias run-help
       autoload -Uz run-help run-help-nix
