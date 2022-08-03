@@ -6,8 +6,6 @@
 
 let myOverlay = self: super:
       rec {
-        # needed due to 'wsh:caps_arrows' in xkbOptions below
-        xkeyboard_config = import ../pkgs/wsh-xkb-config { inherit (super) xkeyboard_config; };
       };
 in
 {
@@ -18,6 +16,7 @@ in
       ./novaboot.nix
       ../modules/tftpd-hpa.nix
       ../modules/fastdds.nix
+      ../modules/xkb-wsh.nix
       # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];
