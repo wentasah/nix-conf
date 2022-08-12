@@ -329,7 +329,7 @@ in
     lato
     open-sans
     libertine # For images consistency with ACM latex template
-    iosevka
+    #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
 
   ]
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
