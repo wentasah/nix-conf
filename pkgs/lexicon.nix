@@ -3,8 +3,9 @@
 let
   lexicon-wrapper = pkgs.writeScript "lexicon-wrapper" ''
     #! ${pkgs.stdenv.shell}
-    export LD_LIBRARY_PATH=/mnt/debian/opt/Lingea/Lexicon5/syst/lib0:$LD_LIBRARY_PATH
-    exec /mnt/debian/opt/Lingea/Lexicon5/Lexicon "$@"
+    export LD_LIBRARY_PATH=/opt/Lingea/Lexicon5/syst:$LD_LIBRARY_PATH
+    exec /opt/Lingea/Lexicon5/Lexicon "$@"
+    #/opt/Lingea/Lexicon5/LucGUI "$@"
   '';
 in
 pkgs.buildFHSUserEnvBubblewrap {
@@ -20,6 +21,11 @@ pkgs.buildFHSUserEnvBubblewrap {
         xorg.libXft
         xorg.libXmu
         xorg.libXt
+        libxml2
+        zlib
+
+        # for LucGUI (dictionary activation, commented above)
+        xorg.libXrender
       ]);
     runScript = "${lexicon-wrapper}";
 }

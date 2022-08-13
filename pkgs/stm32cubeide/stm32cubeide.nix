@@ -1,6 +1,5 @@
 { stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
-  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib,
-  bzip2, openssl, libudev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
+  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
   requireFile
 }:
 let
@@ -30,7 +29,7 @@ let
       alsaLib
       bzip2
       openssl
-      libudev
+      udev
       ncurses5
       tlf
       fontconfig
@@ -88,7 +87,7 @@ buildFHSUserEnv {
     alsaLib
     bzip2
     openssl
-    libudev
+    udev
     ncurses5
     tlf
     fontconfig

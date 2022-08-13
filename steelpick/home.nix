@@ -19,21 +19,26 @@ let
         !builtins.elem pkg.pname [ "core" ]
       ));
   };
-  julia = pkgs.julia_17-bin; # import ../pkgs/julia-bin.nix { pkgs = pkgs; };
+  carla = pkgs.callPackage ../pkgs/carla { };
+  julia = pkgs.julia-stable-bin; # import ../pkgs/julia-bin.nix { pkgs = pkgs; };
   lexicon = import ../pkgs/lexicon.nix { pkgs = pkgs; };
   cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
   pod-mode = import ../pkgs/pod-mode.nix { pkgs = pkgs; };
-  gtkterm = import ../pkgs/gtkterm.nix { pkgs = pkgs; };
   stm32cubeide = import ../pkgs/stm32cubeide { pkgs = pkgs; };
   licenseutils = import ../pkgs/licenseutils { pkgs = pkgs; };
   #kernelshark = import ../pkgs/kernelshark { pkgs = pkgs; };
   julia-wrapper = pkgs.callPackage ../pkgs/julia-wrapper { inherit julia; };
+  globalPythonPackages = (pp: with pp; [
+    requests urllib3 # for filesender.py
+    matplotlib
+  ]);
 in
 {
   imports = [
     ../modules/i3.nix
     ../modules/gdu.nix
     ../modules/go.nix
+    ../modules/git-annex.nix
   ];
 
   nixpkgs = {
@@ -72,7 +77,6 @@ in
     #jupyter
     #slack
     #teams
-    (binutils-unwrapped.override { withAllTargets = true; enableShared = false; }) # https://github.com/NixOS/nixpkgs/issues/82792
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
@@ -82,7 +86,7 @@ in
     (pkgs.callPackage ../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../pkgs/difftastic {})
     (pkgs.callPackage ../pkgs/enumerate-markdown {})
-    (python3.withPackages (pp: with pp; [ requests urllib3 ])) # for filesender.py
+    (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -101,10 +105,12 @@ in
     bbe
     bc                          # For linux kernel compilation
     bear
+    binutils-unwrapped-all-targets
     bison
     bubblewrap
     cachix
     can-utils
+    carla
     cask
     ccls
     chromium
@@ -119,27 +125,29 @@ in
     csv2latex
     csvtool
     cura
+    #cutter # currently broken
+    daemontools
     dpkg
-    dragon-drop
+    drawio
     dua
     dunst
     easyeffects
     entr
+    exa
     exif
     fd
     fdupes
     ffmpeg
-    firefox
+    firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     flameshot
     flex
     flowblade
-    freecad
+    #freecad # broken
     gdb
     gh
     gimp
     git-machete
     gitAndTools.delta
-    gitAndTools.git-annex
     gitAndTools.git-lfs
     gitAndTools.git-subtrac
     gitAndTools.tig
@@ -154,6 +162,7 @@ in
     gtkterm
     hdf5
     help2man
+    hotspot
     htop
     hugo
     hunspellDicts.cs_CZ
@@ -168,7 +177,9 @@ in
     kernelshark
     kicad-small
     krita
+    lazydocker
     lexicon
+    libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
     libsecret
@@ -177,8 +188,9 @@ in
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     ltrace
-    manpages
+    man-pages
     mc
+    meld
     meson
     ministat
     moreutils
@@ -191,7 +203,8 @@ in
     ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
-    #nix-doc # currently broken (https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.nix-doc.x86_64-linux) - reenable when fixed
+    nix-autobahn
+    nix-doc
     nix-index
     nix-output-monitor
     nix-prefetch
@@ -200,15 +213,18 @@ in
     nix-template
     nix-tree
     nixfmt
+    nixos-generators
     nixos-shell
     nixpkgs-fmt
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
+    novaboot                    # from novaboot overlay
     notify-while-running
     notmuch
     notmuch.emacs
     nvd
     odt2txt
+    oil
     okteta
     okular
     openssl
@@ -219,6 +235,7 @@ in
     pdf2svg
     pdfpc
     pdftk
+    perl.devdoc
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
@@ -231,19 +248,19 @@ in
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     pv
     python3Packages.jupyter_core
-    python3Packages.notebook
+    # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
     python3Packages.python-lsp-server
     qemu
     qt5.full            # To make qtcreator find the qt automatically
     qtcreator
-    radare2 radare2-cutter
+    radare2
     ranger
     redo-apenwarr
     restic
     ripgrep
     rnix-lsp
-    roboto-slab
     rsync
+    saleae-logic-2
     screenkey
     sequoia
     shellcheck
@@ -251,6 +268,7 @@ in
     smplayer mpv mplayer
     socat
     solvespace
+    sops
     sqlite-interactive
     sqlitebrowser
     sshuttle
@@ -262,6 +280,7 @@ in
     trace-cmd
     unrar
     unzip
+    usbrelay
     usbutils
     v4l-utils # for qv4l2
     valgrind
@@ -272,41 +291,57 @@ in
     x11docker
     xclip
     xdotool
+    xdragon
     xf86_input_wacom
-    xlibs.xorgdocs
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
     xorg.xkill
+    xorg.xorgdocs
     xournal
     xournalpp
     xplr
     xpra
     xrectsel
     yamllint
+    yq
     zip
     zotero
     zsh-completions
     zsh-syntax-highlighting
-    zulip zulip-term
+    zulip
+    #zulip-term #broken
+
+    # Emacs versions from emacs-overlay
+    (pkgs.writeShellScriptBin "emacs-27"       ''exec ${emacs}/bin/emacs "$@"'')
+    (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
+    (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkGcc}/bin/emacs "$@"'')
 
     rustup
     # rustc cargo rls clippy
     rust-analyzer cargo-edit
 
     # Fonts
+    roboto-slab
     roboto
+    source-sans
     source-sans-pro
+    source-serif
     source-serif-pro
     lato
     open-sans
     libertine # For images consistency with ACM latex template
+    #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
 
   ]
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [
     buildPackages.gcc
     (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+  ])
+  ++ (with pkgsCross.mingwW64; [
+    buildPackages.gcc
+    #(lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
   ])
 #   ++ (with pkgsCross.raspberryPi; [
 #     buildPackages.gcc
@@ -330,7 +365,7 @@ in
     ''; };
     "bin/whix" = {
       executable = true;
-      # Find first link target in /nix. Note that $(whix ls) differs
+      # Find the link target recursively. Note that $(whix ls) differs
       # from $(readlink -f $(which ls)). The former is
       # /nix/store/py4fwm34anmxg3vr6832cv2mil70hy9f-coreutils-9.0/bin/ls
       # while the later (becase ls is symlink to coreutils)
@@ -338,7 +373,7 @@ in
       text = ''
         #!${pkgs.runtimeShell}
         target=$(command which "$1")
-        while [[ -L $target ]] && ! [[ $target =~ ^/nix/ ]]; do target=$(readlink "$target"); done
+        while [[ -L $target ]]; do target=$(readlink -f "$target"); done
         echo "$target"
       '';
     };
@@ -384,7 +419,7 @@ in
       h     = "history";
       j     = "julia --project";
       jc    = "journalctl";
-      l     = "ls -lAh";
+      l     = "exa -la --group --git --header";
       la    = "ls -a";
       ll    = "ls -l";
       ln    = "nocorrect ln"; # no spelling correction on ln
@@ -407,6 +442,10 @@ in
     };
     oh-my-zsh.enable = true;
     oh-my-zsh.plugins = [ "systemd" ];
+    initExtraBeforeCompInit = ''
+      # Where to look for autoloaded function definitions
+      fpath=(~/.zfunc $fpath)
+    '';
     initExtra = ''
       DIRSTACKSIZE=100
 
@@ -436,9 +475,6 @@ in
       #         alias mc='. /usr/libexec/mc/mc-wrapper.sh'
       #     fi
       # fi
-
-      # Where to look for autoloaded function definitions
-      fpath=(~/.zfunc $fpath)
 
       # # Autoload all shell functions from all directories in $fpath (following
       # # symlinks) that have the executable bit on (the executable bit is not
@@ -489,6 +525,12 @@ in
           rm -f -- "$temp_file"
       }
 
+      source ${../pkgs/zsh-config/nix-direnv}
+
+      # Integrate run-nix-help (https://github.com/NixOS/nix/blob/master/misc/zsh/run-help-nix#L14)
+      (( $+aliases[run-help] )) && unalias run-help
+      autoload -Uz run-help run-help-nix
+
       # Hostnames in K23 lab
       k23="k23-177 k23-178 k23-179 k23-180 k23-181 k23-182 k23-183 k23-184 k23-185 k23-186 k23-187 k23-189 k23-190 k23-192 k23-193 k23-195 k23-196 k23-197 k23-198"
     '';
@@ -512,14 +554,24 @@ in
 
 #     # Not used since switch to straight
 #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
-    extraPackages = epkgs: with epkgs; [ vterm ];
+    extraPackages = epkgs: with epkgs; [
+      vterm
+      pdf-tools
+      melpaPackages.julia-mode # for ikiwiki-org-plugin in my blog
+    ];
 
-    package = (pkgs.emacs.override {
-      withGTK2 = false;
-      withGTK3 = false;
-      Xaw3d = pkgs.xorg.libXaw3d;
-      # lucid -> lucid
-    }).overrideAttrs(old: {
+    package = (
+      if true then
+        pkgs.emacsNativeComp
+        # pkgs.emacs.override {
+#           withGTK2 = false;
+#           withGTK3 = false;
+#           Xaw3d = pkgs.xorg.libXaw3d;
+#           # lucid -> lucid
+#         }
+      else
+        pkgs.emacsPgtkGcc
+    ).overrideAttrs(old: {
       dontStrip = true;
       #separateDebugInfo = true;
     });
@@ -542,28 +594,12 @@ in
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
 
-  services.xsettingsd.enable = true;  services.gpg-agent.enable = true;
+  services.xsettingsd.enable = true;
+  services.gpg-agent.enable = true;
+  services.gpg-agent.enableExtraSocket = true;
   services.lorri.enable = true;
 
   systemd.user.services = {
-    git-annex-assistant = {
-      Unit = {
-        Description = "Git Annex Assistant";
-      };
-
-      Service = {
-        Environment = "PATH=${pkgs.git}/bin:%h/.nix-profile/bin";
-        ExecStart = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostart --startdelay 60 --notify-start --notify-finish --foreground";
-        ExecStop = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostop";
-        #LimitCPU = "10m";
-        CPUAccounting = true;
-        CPUQuota = "20%";
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-
-      Install = { WantedBy = [ "default.target" ]; };
-    };
 
     backup-etc-git = {
       Unit = {

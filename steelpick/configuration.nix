@@ -6,6 +6,7 @@
 
 let myOverlay = self: super:
       rec {
+        i3 = import ../pkgs/i3 { pkgs = super; };
       };
 in
 {
@@ -13,6 +14,10 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../modules/home-printer.nix
+      ./novaboot.nix
+      ../modules/tftpd-hpa.nix
+      ../modules/fastdds.nix
+      ../modules/xkb-wsh.nix
       # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];
@@ -31,6 +36,7 @@ in
         "kyocera-phase5"
         "konica-minolta-bizhub"
         "unrar"
+        "saleae-logic"
       ];
     };
     overlays = [ myOverlay ];
@@ -90,20 +96,11 @@ in
 #       listenDatagrams = [ "69" ];
 #       wantedBy = [ "sockets.target" ];
 #     };
-    services.tftpd = {
-      description = "TFTP server";
-      #requires = [ "tftpd.socket" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.tftp-hpa}/bin/in.tftpd --listen --foreground --secure --verbose /srv/tftp";
-        #StandardInput = "socket";
-      };
-    };
-
   };
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales =  [ "en_US.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "cs_CZ.UTF-8/UTF-8" ];
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -195,10 +192,19 @@ in
 
   programs.adb.enable = true;
 
+  programs.nix-ld.enable = true;
+
   virtualisation.virtualbox.host.enable = true;
-  #virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
+
+  services.avahi = {
+    publish = {
+      enable = true;
+      addresses = true; # Enable finding this computer via <hostname>.local
+    };
+  };
 
   services.syncthing = {
     enable = true;
@@ -230,14 +236,31 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.tftpd-hpa = {
+    enable = true;
+    extraOptions = [
+      "--verbose"
+    ];
+  };
+
   services.gpm.enable = true;
 
-  services.udev.packages = [ pkgs.stlink ];
+  services.udev = {
+    packages = [ pkgs.stlink ];
+    extraRules = builtins.concatStringsSep "\n" [
+      # USB relays
+      ''SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05df", MODE="0600", OWNER="wsh"''
+    ];
+  };
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   networking.firewall.interfaces.enp0s31f6.allowedUDPPorts = [ 69 ]; # TFTP
+  networking.firewall.extraCommands = ''
+    iptables -A INPUT -i wg-ipa2x -j ACCEPT
+  '';
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # networking.firewall.logRefusedPackets = true;
@@ -324,7 +347,6 @@ in
     enable = true;
     wacom.enable = true;
 
-    #xkbDir = (pkgs.callPackage ../pkgs/wsh-xkb-config {} ); # needed due to 'wsh:caps_arrows' below
     layout = "us,cz";
     xkbVariant = ",ucw";
     xkbOptions = "compose:ralt,grp:caps_switch,terminate:ctrl_alt_bksp,wsh:caps_arrows";
@@ -339,6 +361,13 @@ in
   services.xserver.desktopManager.gnome.enable = true;
 
   services.autorandr.enable = true;
+
+  services.grafana = {
+    enable = true;
+    port = 3000;
+    addr = "127.0.0.1";
+    analytics.reporting.enable = false;
+  };
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
@@ -363,29 +392,12 @@ in
       uid = 1002;
       packages = [ pkgs.gitea ];
     };
-    novaboot-test = {
-      isNormalUser = true;
-      uid = 1003;
-      shell = "/home/wsh/src/novaboot/server/novaboot-shell";
-    };
   };
 
   security.sudo = {
     enable = true;
     extraConfig = ''
-      wsh  ALL=(novaboot-test) NOPASSWD: ALL
       wsh  ALL=NOPASSWD: /run/current-system/sw/bin/modprobe vboxdrv
-
-      # Recommended sudo configuration for novaboot
-
-      # Uncomment the following lines to enable --dhcp-tftp option
-      Cmnd_Alias NOVABOOT_DHCP = ${pkgs.iproute2}/bin/ip a add 10.23.23.1/24 dev enp0s31f6, ${pkgs.iproute2}/ip l set dev enp0s31f6 up, ${pkgs.dhcp}/bin/dhcpd -d -cf dhcpd.conf -lf dhcpd.leases -pf dhcpd.pid, ${pkgs.coreutils}/bin/touch dhcpd.leases, ${pkgs.procps}/bin/pkill --pidfile=dhcpd.pid
-      wsh ALL=NOPASSWD: NOVABOOT_DHCP
-
-      # Uncomment the following lines to enable --dhcp-tftp and --tftp options
-      Cmnd_Alias NOVABOOT_TFTP = ${pkgs.tftp-hpa}/bin/in.tftpd --listen --secure -v -v -v --pidfile tftpd.pid *, ${pkgs.procps}/bin/pkill --pidfile=*/tftpd.pid
-      wsh ALL=NOPASSWD: NOVABOOT_TFTP
-
     '';
   };
 
@@ -402,10 +414,11 @@ in
   nix.buildMachines = [
     {
       hostName = "ritchie";
-      system = "x86_64-linux";
+      #system = "x86_64-linux";
       # if the builder supports building for multiple architectures,
       # replace the previous line by, e.g.,
       # systems = ["x86_64-linux" "aarch64-linux"];
+      systems = ["x86_64-linux" "i686-linux"];
       maxJobs = 16;
       speedFactor = 2;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
@@ -424,6 +437,8 @@ in
   nix.extraOptions = ''
     builders-use-substitutes = true
     experimental-features = nix-command flakes
+    keep-derivations = true     # Allow building off-line
+    keep-outputs = true         # Recommended by nix-direnv
   '';
   nix.gc = {
     automatic = true;
@@ -436,9 +451,6 @@ in
 
   virtualisation.lxd.enable = true;
   virtualisation.lxc.lxcfs.enable = true;
-
-  # For novaboot testing
-  environment.etc."qemu/bridge.conf".text = "allow br0";
 
 
 
