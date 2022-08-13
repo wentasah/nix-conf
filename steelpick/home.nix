@@ -19,6 +19,7 @@ let
         !builtins.elem pkg.pname [ "core" ]
       ));
   };
+  carla = pkgs.callPackage ../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../pkgs/julia-bin.nix { pkgs = pkgs; };
   lexicon = import ../pkgs/lexicon.nix { pkgs = pkgs; };
   cppreference = import ../pkgs/cppreference.nix { pkgs = pkgs; };
@@ -109,6 +110,7 @@ in
     bubblewrap
     cachix
     can-utils
+    carla
     cask
     ccls
     chromium
