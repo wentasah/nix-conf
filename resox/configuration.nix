@@ -11,6 +11,14 @@
       ../modules/home-printer.nix
     ];
 
+  #services.emacs.package = pkgs.emacsGcc;
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
+
   # # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   # boot.loader.grub.enable = false;
   # # Enables the generation of /boot/extlinux/extlinux.conf
@@ -82,15 +90,16 @@
     };
 
     distributedBuilds = true;
-    buildMachines = [ {
-      hostName = "ritchie";
-      system = "x86_64-linux";
-      sshKey = "/root/.ssh/nix_remote";
-      sshUser = "sojka";
-	    speedFactor = 2;
-	    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-	    mandatoryFeatures = [ ];
-    } ];
+#    buildMachines = [ {
+#      hostName = "ritchie";
+#      system = "x86_64-linux";
+#      sshKey = "/root/.ssh/nix_remote";
+#      sshUser = "sojka";
+#      maxJobs = 10;
+#	    speedFactor = 2;
+#	    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+#	    mandatoryFeatures = [ ];
+#    } ];
 	  # optional, useful when the builder has a faster internet connection than yours
 	  extraOptions = ''
       builders-use-substitutes = true
@@ -103,8 +112,13 @@
       "skypeforlinux"
       "mfcl2700dwlpr"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "steam"
+      "steam-original"
+      "steam-runtime"
     ];
   };
+
+  programs.steam.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -116,10 +130,15 @@
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
     krita
+    gwenview
+    shotwell
     libreoffice-fresh
     mc
     ncdu
     obs-studio
+#    (shotcut.overrideAttrs ({ patches ? [], ...}: {
+#      patches = patches ++ [ ../../nixpkgs/pkgs/applications/video/shotcut/0001-Don-t-use-connection_type-x11-for-VAAPI-HW-accelerat.patch ];
+ #   }))
     skypeforlinux
     tree
     vim
