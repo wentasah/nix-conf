@@ -6,19 +6,19 @@
 
 let myOverlay = self: super:
       rec {
-        i3 = import ../pkgs/i3 { pkgs = super; };
+        i3 = import ../../pkgs/i3 { pkgs = super; };
       };
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../modules/home-printer.nix
+      ../../modules/home-printer.nix
       ./novaboot.nix
-      ../modules/tftpd-hpa.nix
-      ../modules/fastdds.nix
-      ../modules/xkb-wsh.nix
-      # "${(import ../nix/sources.nix).envfs}/modules/envfs.nix"
+      ../../modules/tftpd-hpa.nix
+      ../../modules/fastdds.nix
+      ../../modules/xkb-wsh.nix
+      # "${(import ../../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];
 
@@ -217,8 +217,8 @@ in
 
   services.printing.enable = true;
   services.printing.drivers = [
-    (pkgs.callPackage ./../pkgs/kyocera-phase5.nix {})
-    (pkgs.callPackage ./../pkgs/kmbeu {})
+    (pkgs.callPackage ./../../pkgs/kyocera-phase5.nix {})
+    (pkgs.callPackage ./../../pkgs/kmbeu {})
   ];
 
   #services.teamviewer.enable = true;
@@ -452,6 +452,8 @@ in
   virtualisation.lxd.enable = true;
   virtualisation.lxc.lxcfs.enable = true;
 
+  # Default theme "gnome" doesn't work well under i3
+  qt5.platformTheme = "qt5ct";
 
 
   # This value determines the NixOS release from which the default
