@@ -39,6 +39,7 @@ in
     ../modules/gdu.nix
     ../modules/go.nix
     ../modules/git-annex.nix
+    ../modules/linux-build.nix
   ];
 
   nixpkgs = {
@@ -102,7 +103,6 @@ in
     automake
     avidemux
     bbe
-    bc                          # For linux kernel compilation
     bear
     binutils-unwrapped-all-targets
     bison
@@ -200,7 +200,6 @@ in
     mytexlive
     nasm
     ncdu
-    ncurses6.dev                # for Linux's make manuconfig
     ninja
     niv
     nix-autobahn
@@ -228,7 +227,6 @@ in
     okteta
     okular
     openssl
-    openssl.dev                 # For linux kernel compilation
     p7zip
     pandoc
     pavucontrol
