@@ -84,7 +84,6 @@ in
     (ikiwiki.override { docutilsSupport = true; })
     (import ../pkgs/unfs3 { pkgs = pkgs; })
     (pkgs.callPackage ../pkgs/cargo-prefetch {})
-    (pkgs.callPackage ../pkgs/difftastic {})
     (pkgs.callPackage ../pkgs/enumerate-markdown {})
     (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
@@ -127,6 +126,7 @@ in
     cura
     #cutter # currently broken
     daemontools
+    difftastic
     dpkg
     drawio
     dua
