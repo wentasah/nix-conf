@@ -134,8 +134,10 @@
     shotwell
     libreoffice-fresh
     mc
+    nix-output-monitor
     ncdu
     obs-studio
+    pciutils
 #    (shotcut.overrideAttrs ({ patches ? [], ...}: {
 #      patches = patches ++ [ ../../nixpkgs/pkgs/applications/video/shotcut/0001-Don-t-use-connection_type-x11-for-VAAPI-HW-accelerat.patch ];
  #   }))
@@ -207,6 +209,7 @@
     extraPackages = with pkgs; [
       rocm-opencl-icd
       rocm-opencl-runtime
+      amdvlk
     ];
     driSupport = true;
   };
