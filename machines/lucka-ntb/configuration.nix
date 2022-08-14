@@ -13,7 +13,7 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../modules/home-printer.nix
+      ../../modules/home-printer.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
