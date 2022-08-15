@@ -32,12 +32,12 @@
         modules =
           [
             nixos-hardware.nixosModules.common-cpu-intel
-            ./steelpick/configuration.nix
+            ./machines/steelpick/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.wsh = import ./steelpick/home.nix;
+              home-manager.users.wsh = import ./machines/steelpick/home.nix;
             }
             {
               # pin nixpkgs in the system-wide flake registry
@@ -58,8 +58,8 @@
       nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./turbot/configuration.nix
-          ./turbot/hardware-configuration.nix
+          ./machines/turbot/configuration.nix
+          ./machines/turbot/hardware-configuration.nix
         ];
       };
     };
