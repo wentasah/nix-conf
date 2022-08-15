@@ -453,7 +453,8 @@ in
   virtualisation.lxc.lxcfs.enable = true;
 
   # Default theme "gnome" doesn't work well under i3
-  qt5.platformTheme = "qt5ct";
+  qt5.platformTheme = "gtk2";
+  qt5.style = "gtk2";
 
 
   # This value determines the NixOS release from which the default
