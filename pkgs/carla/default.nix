@@ -16,10 +16,10 @@
 let
   carla = stdenv.mkDerivation rec {
     pname = "carla-bin";
-    version = "0.9.12";
+    version = "0.9.13";
     src = fetchurl {
       url = "https://carla-releases.s3.eu-west-3.amazonaws.com/Linux/CARLA_${version}.tar.gz";
-      sha256 = "04vgcsmai9bhq8bpzmaq1jcmqk7w42irkwi2x457vf266hy1ha8x";
+      sha256 = "aac2147197d69fa76abc3c74f9db3e293ceb5e031b795eba509e26d954d6e97d";
     };
 
     nativeBuildInputs = [
