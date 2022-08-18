@@ -8,20 +8,27 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ata_piix" "ahci" "pata_jmicron" "xhci_pci" "firewire_ohci" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d14e491e-4f2e-4617-8963-9cd76c555d66";
-      fsType = "ext4";
+    
+    { device = "/dev/disk/by-uuid/14d3bba4-f618-4d7c-a3f8-ee1c8719c5f5";
+      fsType = "btrfs";
     };
 
   fileSystems."/mnt/data" =
     { device = "/dev/disk/by-uuid/a8561e54-d8a9-41ce-a1e0-dc933b63d41b";
       fsType = "ext4";
     };
+
+  fileSystems."/mnt/old-root" =
+    { device = "/dev/disk/by-uuid/d14e491e-4f2e-4617-8963-9cd76c555d66";
+      fsType = "ext4";
+    };
+
 
   fileSystems."/home" =
     { device = "/mnt/data/home";
@@ -30,6 +37,6 @@
 
   swapDevices = [ ];
 
-  nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

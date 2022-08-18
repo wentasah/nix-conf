@@ -13,32 +13,13 @@
 
   #services.emacs.package = pkgs.emacsGcc;
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
   ];
 
 
-  # # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  # boot.loader.grub.enable = false;
-  # # Enables the generation of /boot/extlinux/extlinux.conf
-  # boot.loader.generic-extlinux-compatible.enable = true;
-  boot.loader.grub = {
-    gfxmodeBios= "auto";
-    gfxpayloadBios="keep";
-    devices = [
-      "/dev/disk/by-id/wwn-0x5000c5001eb74fa9"
-      "/dev/disk/by-id/wwn-0x50015179594cb6d4"
-    ];
-    #default = 1; # Debian
-    extraEntries = ''
-      menuentry "Debian" {
-	        insmod part_gpt
-          search --set=debian --fs-uuid d14e491e-4f2e-4617-8963-9cd76c555d66
-          configfile "($debian)/boot/grub/grub.cfg"
-      }
-      '';
-  };
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
@@ -73,15 +54,21 @@
   # Set your time zone.
   time.timeZone = "Europe/Prague";
 
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.randomizedDelaySec = "30min";
-  systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
+  system.autoUpgrade = {
+    enable = true;
+    randomizedDelaySec = "30min";
+    persistent = true;
+  };
   systemd.services.nixos-upgrade.serviceConfig = {
     Restart = "on-failure";
     RestartSec = "1min";
   };
 
   nix = {
+    package = pkgs.nixVersions.nix_2_9;
+    settings = {
+      max-jobs = 16;
+    };
     gc = {
       automatic = true;
       dates = "weekly";
@@ -125,6 +112,7 @@
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
 	  home-manager
+    btrfs-progs
     chromium
     firefox-wayland
     gitAndTools.gitAnnex lsof
