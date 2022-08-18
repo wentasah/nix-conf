@@ -17,21 +17,21 @@ $ ./result/bin/emacs
 
 
 let
-  myEmacs = pkgs.emacs.override {
-    withGTK2 = false;
-    withGTK3 = false;
-    Xaw3d = pkgs.xorg.libXaw3d;
-    # lucid -> lucid
-  };
+  myEmacs = pkgs.emacs; # pkgs.emacs.override {
+#     withGTK2 = false;
+#     withGTK3 = false;
+#     Xaw3d = pkgs.xorg.libXaw3d;
+#     # lucid -> lucid
+#   };
 
   emacsWithPackages = (pkgs.emacsPackagesFor myEmacs).emacsWithPackages;
 in
   emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
     magit          # ; Integrate git <C-x g>
-    helm
   ]) ++ (with epkgs.melpaPackages; [
     smartparens
     nix-mode
+    vterm
   ]) ++ (with epkgs.elpaPackages; [
     #auctex         # ; LaTeX mode
   ]) ++ [

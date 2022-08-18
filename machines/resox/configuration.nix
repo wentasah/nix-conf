@@ -87,9 +87,9 @@
 #	    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 #	    mandatoryFeatures = [ ];
 #    } ];
-	  # optional, useful when the builder has a faster internet connection than yours
 	  extraOptions = ''
       builders-use-substitutes = true
+      experimental-features = nix-command flakes
     '';
   };
 

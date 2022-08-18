@@ -5,6 +5,7 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    home-manager-stable = { url = "github:nix-community/home-manager/release-22.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
@@ -16,10 +17,9 @@
 
   outputs =
     { self
-    , nixpkgs
-    , nixpkgs-stable
+    , nixpkgs, nixpkgs-stable
     , nixos-hardware
-    , home-manager
+    , home-manager, home-manager-stable
     , sterm
     , notify-while-running
     , emacs-overlay
@@ -52,6 +52,22 @@
             ];
           }
         ];
+      };
+
+      nixosConfigurations.resox = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+            ./machines/resox/configuration.nix
+            home-manager-stable.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.wsh = import ./machines/resox/home.nix;
+            }
+            {
+              # pin nixpkgs in the system-wide flake registry
+              nix.registry.nixpkgs.flake = nixpkgs;
+            }
+          ];
       };
       nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";

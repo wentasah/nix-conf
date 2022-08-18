@@ -190,6 +190,7 @@ in
     stm32cubeide
     tcpreplay
     thunderbird
+    unrar
     usbrelay
     usbutils
     v4l-utils # for qv4l2
