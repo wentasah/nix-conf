@@ -29,31 +29,29 @@
 
       nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules =
-          [
-            nixos-hardware.nixosModules.common-cpu-intel
-            ./machines/steelpick/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.wsh = import ./machines/steelpick/home.nix;
-            }
-            {
-              # pin nixpkgs in the system-wide flake registry
-              nix.registry.nixpkgs.flake = nixpkgs;
+        modules = [
+          nixos-hardware.nixosModules.common-cpu-intel
+          ./machines/steelpick/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.wsh = import ./machines/steelpick/home.nix;
+          }
+          {
+            # pin nixpkgs in the system-wide flake registry
+            nix.registry.nixpkgs.flake = nixpkgs;
 
-              nixpkgs.overlays = [
-                sterm.overlay
-                (final: prev: {
-                  notify-while-running = import notify-while-running { pkgs = final; };
-                  inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
-                })
-                emacs-overlay.overlay
-                novaboot.overlays.x86_64-linux
-              ];
-            }
-          ];
+            nixpkgs.overlays = [
+              sterm.overlay
+              (final: prev: {
+                notify-while-running = import notify-while-running { pkgs = final; };
+                inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
+              })
+              emacs-overlay.overlay
+              novaboot.overlays.x86_64-linux
+            ];
+          }
+        ];
       };
       nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
