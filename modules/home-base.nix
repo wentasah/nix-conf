@@ -54,7 +54,6 @@
     ncdu
     ninja
     niv
-    nix-autobahn
     nix-doc
     nix-output-monitor
     nix-prefetch
@@ -92,7 +91,6 @@
     sshuttle
     tmux
     trace-cmd
-    unrar
     unzip
     valgrind
     websocat
