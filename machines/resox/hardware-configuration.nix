@@ -29,12 +29,6 @@
       fsType = "ext4";
     };
 
-
-  fileSystems."/home" =
-    { device = "/mnt/data/home";
-      options = [ "bind" ];
-    };
-
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

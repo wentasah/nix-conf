@@ -20,6 +20,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 2;
+
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_19;
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
@@ -133,6 +136,7 @@
     tree
     vim
     wget
+    gnome.gnome-tweaks
   ];
 
   environment.homeBinInPath = true;
