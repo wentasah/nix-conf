@@ -113,6 +113,7 @@ in
     cura
     #cutter # currently broken
     difftastic
+    dnsmasq                     # for documentation
     dpkg
     drawio
     dunst
