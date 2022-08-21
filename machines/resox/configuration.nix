@@ -61,6 +61,8 @@
 
   system.autoUpgrade = {
     enable = true;
+    flake = "/home/wsh/nix/conf";
+    flags = [ "--update-input" "nixpkgs-stable" ];
     randomizedDelaySec = "30min";
   };
   systemd.services.nixos-upgrade.serviceConfig = {
