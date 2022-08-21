@@ -46,7 +46,11 @@ let
     stdenv.cc.cc.lib
     (libjpeg.override { enableJpeg8 = true; })
   ];
-  python-env = python37.withPackages (p: with p; [ pygame numpy setuptools ]); # For PythonAPI/examples
+  python-env = python37.withPackages (p: with p; [  # For PythonAPI/examples
+    pygame
+    numpy
+    setuptools # Requires nixpkgs-22.05
+  ]);
   python4carla = runCommandLocal "python4carla" { nativeBuildInputs = [ makeWrapper ]; } ''
       mkdir -p $out/bin
       makeWrapper "${python-env}/bin/python" $out/bin/python \
