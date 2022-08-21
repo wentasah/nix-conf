@@ -54,7 +54,7 @@
         ];
       };
 
-      nixosConfigurations.resox = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.resox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
             ./machines/resox/configuration.nix
