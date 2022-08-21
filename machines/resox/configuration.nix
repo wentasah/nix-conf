@@ -62,7 +62,6 @@
   system.autoUpgrade = {
     enable = true;
     randomizedDelaySec = "30min";
-    persistent = true;
   };
   systemd.services.nixos-upgrade.serviceConfig = {
     Restart = "on-failure";
@@ -78,7 +77,6 @@
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
-      #persistent = true; # Enable for 21.05
     };
 
     distributedBuilds = true;
