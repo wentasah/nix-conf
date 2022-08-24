@@ -229,6 +229,17 @@
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
 
+  # This prevents immediate wakeup after suspend
+  systemd.services.disable-wakeup = {
+    script = ''
+      grep enabled /proc/acpi/wakeup | \
+        while read dev rest; do
+          echo $dev > /proc/acpi/wakeup
+        done
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
