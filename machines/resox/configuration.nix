@@ -141,6 +141,11 @@
     gnome.gnome-tweaks
   ];
 
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    liberation_ttf
+  ];
+
   environment.homeBinInPath = true;
 
   documentation = {
