@@ -242,6 +242,8 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+ networking.interfaces.eno1.wakeOnLan.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
