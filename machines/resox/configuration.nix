@@ -141,6 +141,7 @@
     gnome.gnome-tweaks
   ];
 
+  fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
     noto-fonts
     liberation_ttf
