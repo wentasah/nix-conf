@@ -57,17 +57,17 @@
       nixosConfigurations.resox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-            ./machines/resox/configuration.nix
-            home-manager-stable.nixosModules.home-manager {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.wsh = import ./machines/resox/home.nix;
-            }
-            {
-              # pin nixpkgs in the system-wide flake registry
-              nix.registry.nixpkgs.flake = nixpkgs;
-            }
-          ];
+          ./machines/resox/configuration.nix
+          home-manager-stable.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.wsh = import ./machines/resox/home.nix;
+          }
+          {
+            # pin nixpkgs in the system-wide flake registry
+            nix.registry.nixpkgs.flake = nixpkgs;
+          }
+        ];
       };
       nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
