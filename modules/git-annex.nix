@@ -8,7 +8,7 @@
       };
 
       Service = {
-        Environment = with pkgs; "PATH=${lib.makeBinPath [ git lsof rsync ]}";
+        Environment = with pkgs; "PATH=${lib.makeBinPath [ git openssh lsof rsync ]}";
         ExecStart = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostart --startdelay 60 --notify-start --notify-finish --foreground";
         ExecStop = "${pkgs.gitAndTools.git-annex}/bin/git-annex assistant --autostop";
         #LimitCPU = "10m";
