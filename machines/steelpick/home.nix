@@ -20,14 +20,14 @@ let
       ));
   };
   #carla = pkgs.callPackage ../../pkgs/carla { };
-  julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { pkgs = pkgs; };
-  lexicon = import ../../pkgs/lexicon.nix { pkgs = pkgs; };
-  wrwb = import ../../pkgs/wrwb.nix { pkgs = pkgs; };
-  cppreference = import ../../pkgs/cppreference.nix { pkgs = pkgs; };
-  pod-mode = import ../../pkgs/pod-mode.nix { pkgs = pkgs; };
-  stm32cubeide = import ../../pkgs/stm32cubeide { pkgs = pkgs; };
-  licenseutils = import ../../pkgs/licenseutils { pkgs = pkgs; };
-  #kernelshark = import ../../pkgs/kernelshark { pkgs = pkgs; };
+  julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
+  lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
+  wrwb = import ../../pkgs/wrwb.nix { inherit pkgs; };
+  cppreference = import ../../pkgs/cppreference.nix { inherit pkgs; };
+  pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
+  stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
+  licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
+  #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
@@ -84,7 +84,7 @@ in
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
     (ikiwiki.override { docutilsSupport = true; })
-    (import ../../pkgs/unfs3 { pkgs = pkgs; })
+    (import ../../pkgs/unfs3 { inherit pkgs; })
     (pkgs.callPackage ../../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     (python3.withPackages globalPythonPackages)
