@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     (hiPrio parallel) # Prefer this over parallel from moreutils
+    alejandra
     aspell
     aspellDicts.cs
     aspellDicts.en
