@@ -22,6 +22,7 @@ let
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { pkgs = pkgs; };
   lexicon = import ../../pkgs/lexicon.nix { pkgs = pkgs; };
+  wrwb = import ../../pkgs/wrwb.nix { pkgs = pkgs; };
   cppreference = import ../../pkgs/cppreference.nix { pkgs = pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { pkgs = pkgs; };
   stm32cubeide = import ../../pkgs/stm32cubeide { pkgs = pkgs; };
@@ -198,6 +199,7 @@ in
     vlc
     wireshark
     wmctrl
+    wrwb
     x11docker
     xclip
     xdotool
