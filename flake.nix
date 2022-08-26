@@ -10,7 +10,7 @@
     # For development:
     # sterm.url = "/home/wsh/src/sterm";
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
