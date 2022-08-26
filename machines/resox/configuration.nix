@@ -205,15 +205,6 @@
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
 
-  hardware.opengl = {
-    extraPackages = with pkgs; [
-      rocm-opencl-icd
-      rocm-opencl-runtime
-      amdvlk
-    ];
-    driSupport = true;
-  };
-
   services.gpm.enable = true;
 
   # Enable the X11 windowing system.
@@ -222,8 +213,6 @@
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "eurosign:e";
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
-#  services.xserver.videoDrivers = [ "amdgpu-pro" ];
   services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 

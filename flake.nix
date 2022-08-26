@@ -57,6 +57,8 @@
       nixosConfigurations.resox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-gpu-amd
           ./machines/resox/configuration.nix
           home-manager-stable.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
