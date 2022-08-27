@@ -211,6 +211,7 @@ in
     user = "wsh";
     dataDir = "/home/wsh/sync";
     configDir = "/home/wsh/.config/syncthing";
+    openDefaultPorts = true;
   };
 
   services.fwupd.enable = true;
