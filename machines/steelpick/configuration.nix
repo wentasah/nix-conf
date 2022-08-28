@@ -458,6 +458,24 @@ in
 #   qt5.platformTheme = "gtk2";
 #   qt5.style = "gtk2";
 
+  specialisation = {
+#     test = {
+#       inheritParentConfig = false;
+#       configuration = {
+#         imports = [ # Include the results of the hardware scan.
+#           ./hardware-configuration.nix
+#         ];
+#         services.xserver.enable = true;
+#         services.xserver.windowManager.dwm.enable = true;
+#         environment.systemPackages = with pkgs; [kitty dmenu];
+
+#         boot.kernelPackages = pkgs.linuxPackages_5_19;
+
+#         documentation.nixos.enable = false;
+#       };
+#     };
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
