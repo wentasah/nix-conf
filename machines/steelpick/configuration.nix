@@ -88,7 +88,8 @@ in
   systemd = {
     enableUnifiedCgroupHierarchy = false; # breaks DEmOS
     extraConfig = ''
-      DefaultTimeoutStopSec=30  # Don't block reboot for too long
+      # Don't block reboot for too long
+      DefaultTimeoutStopSec=30
     '';
 
 #     sockets.tftpd = {
