@@ -111,6 +111,7 @@
   };
 
   programs.steam.enable = true;
+  programs.firejail.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
