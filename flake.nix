@@ -69,6 +69,14 @@
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs-stable;
 
+            nixpkgs.overlays = [
+              sterm.overlay
+              (final: prev: {
+                notify-while-running = import notify-while-running { pkgs = final; };
+                inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
+              })
+              novaboot.overlays.x86_64-linux
+            ];
           }
         ];
       };

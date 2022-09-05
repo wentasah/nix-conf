@@ -148,6 +148,7 @@ in
     nix-index
     #nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
+    notify-while-running
     notmuch
     notmuch.emacs
     okteta
@@ -173,6 +174,7 @@ in
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
+    sterm
     tcpreplay
     thunderbird
     usbrelay
