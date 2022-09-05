@@ -67,7 +67,8 @@
           }
           {
             # pin nixpkgs in the system-wide flake registry
-            nix.registry.nixpkgs.flake = nixpkgs;
+            nix.registry.nixpkgs.flake = nixpkgs-stable;
+
           }
         ];
       };
