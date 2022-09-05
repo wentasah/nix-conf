@@ -228,7 +228,11 @@
   # This prevents immediate wakeup after suspend
   systemd.services.disable-wakeup = {
     script = ''
-      for dev in GPP0 SWUS; do echo $dev > /proc/acpi/wakeup; done
+      for dev in GPP0 SWUS; do
+        if grep -q "^$dev\>.*enabled" /proc/acpi/wakeup; then
+          echo $dev > /proc/acpi/wakeup
+        fi
+      done
     '';
     wantedBy = [ "multi-user.target" ];
   };
