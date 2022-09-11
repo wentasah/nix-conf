@@ -186,7 +186,11 @@
   services.fwupd.enable = true;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    forwardX11 = true;
+  };
+
   programs.ssh = {
     startAgent = true;
     agentTimeout = "24h";
@@ -200,7 +204,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Enable sound.
   # sound.enable = true;
