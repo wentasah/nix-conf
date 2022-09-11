@@ -11,6 +11,7 @@
     aspellDicts.en-computers
     aspellDicts.en-science
     atop
+    bat
     bbe
     bc                          # For linux kernel compilation
     cachix
@@ -107,6 +108,9 @@
   ];
 
   home.file = {
+    ".config/bat/config".text = ''
+        --theme=gruvbox-light
+    '';
     "bin/emacsclient-tty" = {
       executable = true;
       text = ''
