@@ -47,6 +47,7 @@
     jq
     libxml2 # for xmllint
     ltrace
+    mailutils
     mc
     meson
     ministat
