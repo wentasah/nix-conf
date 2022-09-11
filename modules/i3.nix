@@ -97,4 +97,15 @@
     picom # for removal of tearing effects (https://github.com/NixOS/nixpkgs/issues/142225)
     hsetroot # for setting background under picom (https://wiki.archlinux.org/title/Picom#Unable_to_change_the_background_color_with_xsetroot)
   ];
+
+  home.keyboard = {
+    layout = "us,cz";
+    variant = ",ucw";
+    options = [
+      "compose:ralt"
+      "grp:caps_switch"
+      "terminate:ctrl_alt_bksp"
+      "wsh:caps_arrows"
+    ];
+  };
 }

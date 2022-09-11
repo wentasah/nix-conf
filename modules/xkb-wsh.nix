@@ -15,4 +15,17 @@ in
     exportConfiguration = config.services.xserver.displayManager.startx.enable
                           || config.services.xserver.displayManager.sx.enable;
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      xorg = prev.xorg // {
+        setxkbmap = prev.xorg.setxkbmap.overrideAttrs (attrs: {
+          postInstall = attrs.postInstall + ''
+            ln -sfn ${xkb_patched}/etc/X11 $out/share/X11
+            ln -sfn ${xkb_patched}/share/man/man7/xkeyboard-config.7.gz $out/share/man/man7
+          '';
+        });
+      };
+    })
+  ];
 }
