@@ -35,8 +35,9 @@ in
         "Oracle_VM_VirtualBox_Extension_Pack"
         "kyocera-phase5"
         "konica-minolta-bizhub"
-        "unrar"
         "saleae-logic"
+        "unrar"
+        "xkcd-font-unstable"
       ];
     };
     overlays = [ myOverlay ];

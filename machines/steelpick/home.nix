@@ -234,6 +234,7 @@ in
     lato
     open-sans
     libertine # For images consistency with ACM latex template
+    xkcd-font
     #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
 
   ]
