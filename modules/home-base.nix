@@ -165,7 +165,6 @@
       gm    = "git machete";
       grep  = "grep --color";
       gst   = "git status";
-      h     = "history";
       j     = "julia --project";
       jc    = "journalctl";
       l     = "exa -la --group --git --header";
