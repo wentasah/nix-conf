@@ -85,7 +85,7 @@ in
     (hiPrio gcc) # Prio over clang's c++ etc
     (ikiwiki.override { docutilsSupport = true; })
     (import ../../pkgs/unfs3 { inherit pkgs; })
-    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
+    #(pkgs.callPackage ../../pkgs/cargo-prefetch {}) # broken. see https://github.com/sfackler/rust-openssl/issues/1663
     (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
