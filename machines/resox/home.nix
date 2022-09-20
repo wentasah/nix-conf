@@ -225,13 +225,6 @@ in
     ''; };
   };
 
-  # I have a problem with zsh when EDITOR is "vim". Pressing "delete"
-  # prints "~" instead of deleting a char. For details why see:
-  #
-  #     EDITOR=vi zsh -i -c 'bindkey -e; bindkey' > key.vi
-  #     EDITOR=em zsh -i -c 'bindkey -e; bindkey' > key.em
-  #     diff -u --color key.vi key.em
-  # The result should be same, but it isn't.
   home.sessionVariables = {
     JULIA_EDITOR = "emacsclient";
     GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
