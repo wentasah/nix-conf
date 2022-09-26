@@ -1,5 +1,5 @@
 { stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
-  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsaLib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
+  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
   requireFile
 }:
 let
@@ -26,7 +26,7 @@ let
     buildInputs = [
       stdenv.cc.cc.lib # libstdc++.so.6
       libsecret
-      alsaLib
+      alsa-lib
       bzip2
       openssl
       udev
@@ -84,7 +84,7 @@ buildFHSUserEnv {
     # stm32cubeide is not sufficient.
     stdenv.cc.cc.lib # libstdc++.so.6
     libsecret
-    alsaLib
+    alsa-lib
     bzip2
     openssl
     udev

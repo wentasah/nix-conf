@@ -12,7 +12,7 @@ pkgs.buildFHSUserEnvBubblewrap {
     name = "lexicon";
     multiPkgs = pkgs: (with pkgs;
       [
-        alsaLib
+        alsa-lib
         fontconfig
         freetype
         udev
