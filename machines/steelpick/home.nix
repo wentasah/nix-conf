@@ -129,7 +129,7 @@ in
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
-    gnome3.devhelp
+    gnome.devhelp
     gtkterm
     hdf5
     hotspot
