@@ -61,13 +61,13 @@
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
-    nix-review
     nix-template
     nix-tree
     nixfmt
     nixos-generators
     nixos-shell
     nixpkgs-fmt
+    nixpkgs-review
     nvd
     odt2txt
     oil
