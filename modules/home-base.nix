@@ -48,6 +48,7 @@
     libxml2 # for xmllint
     ltrace
     mailutils
+    man-pages-posix
     mc
     meson
     ministat
@@ -77,7 +78,6 @@
     pdftk
     pkg-config
     poppler_utils
-    posix_man_pages
     psmisc                      # killall, fuser, ...
     pv
     ranger
