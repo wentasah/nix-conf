@@ -91,6 +91,7 @@
     socat
     sops
     sqlite-interactive
+    sshfs
     sshuttle
     tmux
     trace-cmd
