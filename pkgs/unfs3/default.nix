@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-iqRERT6/kZue6WX+hxXW4f+NUqQZUFh1r8GUmKfnDZc=";
   };
 
-  nativeBuildInputs = [ autoconf automake yacc flex pkg-config ];
+  nativeBuildInputs = [ autoconf automake bison flex pkg-config ];
   buildInputs = [ libtirpc ];
 
   preConfigure = "./bootstrap";
