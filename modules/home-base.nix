@@ -153,7 +153,7 @@
     EDITOR = "emacsclient-tty";
   };
 
-    programs.zsh = {
+  programs.zsh = {
     enable = true;
     enableVteIntegration = true;
     history.path = "$HOME/.history";
