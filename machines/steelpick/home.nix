@@ -115,6 +115,7 @@ in
     #cutter # currently broken
     difftastic
     dnsmasq                     # for documentation
+    docker-compose
     dpkg
     drawio
     dunst
@@ -141,6 +142,7 @@ in
     keepassxc
     kernelshark
     kicad-small
+    kitty
     krita
     lazydocker
     lexicon
