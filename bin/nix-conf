@@ -98,8 +98,11 @@ updated() {
     return $result
 }
 
-failed() {
-    if [[ -s ~/nix/out/steelpick/flake.error ]]; then
+failed_recently() {
+    cnt=~/nix/out/steelpick/flake.retry.cnt
+    if [[ -s ~/nix/out/steelpick/flake.error ]] &&
+       [[ $(cat $cnt) -lt 2 ]]; then
+        echo $(( $(cat $cnt) + 1 )) > $cnt
         return 0
     else
         return 1
@@ -127,9 +130,11 @@ build() {
         ) || status=$?
         if [[ $status -eq 0 ]]; then
             : > out/steelpick/flake.error
+            rm -f out/steelpick/flake.retry.cnt
         else
             # we use cat instead of mv to not break hardlinks to the flake.error
             cat out/steelpick/flake.log > out/steelpick/flake.error
+            touch out/steelpick/flake.retry.cnt
             exit $status
         fi
 
@@ -223,7 +228,7 @@ export GIT_COMMITTER_EMAIL=nix-conf@localhost
 
 case "$cmd" in
     "update")
-        if updated || failed; then
+        if updated || failed_recently; then
             build "$@"
         else
             echo "No input has changed. Exiting."
