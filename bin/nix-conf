@@ -95,6 +95,10 @@ updated() {
     update_nix_conf && result=0
     #update_home_manager && result=0
     update_nixpkgs && result=0
+    if [[ $result = 0 ]]; then
+        # Reset failed build counter
+        rm -f out/steelpick/flake.retry.cnt
+    fi
     return $result
 }
 
@@ -130,6 +134,7 @@ build() {
         ) || status=$?
         if [[ $status -eq 0 ]]; then
             : > out/steelpick/flake.error
+            # Reset failed build counter
             rm -f out/steelpick/flake.retry.cnt
         else
             # we use cat instead of mv to not break hardlinks to the flake.error
