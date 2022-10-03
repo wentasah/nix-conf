@@ -124,7 +124,7 @@ build() {
             if ! tty -s; then
                 exec > out/steelpick/flake.log
             else
-                : > out/steelpick/flake.log
+                echo "No log from interactive session" > out/steelpick/flake.log
             fi
             nix build \
                 "$@" \
