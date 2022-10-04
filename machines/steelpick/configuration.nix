@@ -18,6 +18,7 @@ in
       ../../modules/tftpd-hpa.nix
       ../../modules/fastdds.nix
       ../../modules/xkb-wsh.nix
+      ../../modules/qt5.nix
       # "${(import ../../nix/sources.nix).envfs}/modules/envfs.nix"
 #      /home/wsh/src/envfs/modules/envfs.nix
     ];
@@ -454,10 +455,6 @@ in
 
   virtualisation.lxd.enable = true;
   virtualisation.lxc.lxcfs.enable = true;
-
-  # Default theme "gnome" doesn't work well under i3
-#   qt5.platformTheme = "gtk2";
-#   qt5.style = "gtk2";
 
   specialisation = {
 #     test = {
