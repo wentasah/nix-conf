@@ -4,6 +4,7 @@ with pkgs; (buildFHSUserEnvBubblewrap {
   name = "wrwb";
   targetPkgs = pkgs: (with pkgs; [
     bash # lot of scripts has /bin/bash shebang
+    webkitgtk
   ]);
   multiPkgs = pkgs: (with pkgs; [
     glib
