@@ -88,7 +88,7 @@ in
   '';
 
   systemd = {
-    enableUnifiedCgroupHierarchy = false; # breaks DEmOS
+    #enableUnifiedCgroupHierarchy = false; # breaks DEmOS
     extraConfig = ''
       # Don't block reboot for too long
       DefaultTimeoutStopSec=30
