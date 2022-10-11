@@ -336,4 +336,22 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
+  programs.nnn = {
+    enable = true;
+    extraPackages = with pkgs; [
+      ffmpegthumbnailer
+      mediainfo
+      mpv
+      nsxiv
+      zathura
+    ];
+    plugins = {
+      src = pkgs.nnn.src  + "/plugins";
+      mappings = {
+        i = "imgview";
+        n = "nmount";
+        p = "preview-tui";
+      };
+    };
+  };
 }
