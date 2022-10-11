@@ -6,7 +6,7 @@
 
 let myOverlay = self: super:
       rec {
-        i3 = import ../../pkgs/i3 { pkgs = super; };
+        #i3 = import ../../pkgs/i3 { pkgs = super; };
       };
 in
 {
