@@ -86,7 +86,7 @@
     ripgrep
     rnix-lsp
     rsync
-    sequoia
+    #sequoia # currently broken: https://hydra.nixos.org/job/nixpkgs/trunk/sequoia.x86_64-linux
     shellcheck
     socat
     sops
