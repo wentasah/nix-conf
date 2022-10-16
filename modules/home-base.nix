@@ -44,6 +44,7 @@
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
     imagemagick
+    jo
     jq
     libxml2 # for xmllint
     ltrace
