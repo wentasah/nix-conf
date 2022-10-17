@@ -446,7 +446,7 @@ in
   '';
   nix.gc = {
     automatic = true;
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 4d";
     persistent = true;
   };
 
