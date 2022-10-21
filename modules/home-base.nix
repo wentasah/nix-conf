@@ -51,6 +51,7 @@
     mailutils
     man-pages-posix
     mc
+    mdsh
     meson
     ministat
     moreutils
