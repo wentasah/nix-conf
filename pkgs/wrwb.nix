@@ -1,4 +1,7 @@
 # Environment for running WindRiver Workbench via Nix
+
+# You can use this without installing by: nix-shell -E '(import ./wrwb.nix {}).env
+
 {pkgs ? import <nixpkgs> {}}:
 with pkgs; (buildFHSUserEnvBubblewrap {
   name = "wrwb";
