@@ -72,6 +72,8 @@
             nixpkgs.overlays = [
               sterm.overlay
               (final: prev: {
+                # Julia from unstable
+                julia-stable-bin = nixpkgs.outputs.legacyPackages.x86_64-linux.julia-stable-bin;
                 notify-while-running = import notify-while-running { pkgs = final; };
                 inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
               })

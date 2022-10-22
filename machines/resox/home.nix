@@ -128,6 +128,7 @@ in
     hugo
     inkscape
     isync
+    julia-wrapper
     kdiff3
     keepassxc
     kernelshark

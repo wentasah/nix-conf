@@ -35,6 +35,8 @@
     "v4l2loopback"
   ];
 
+  boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
+
   networking.hostName = "resox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -113,6 +115,8 @@
 
   programs.steam.enable = true;
   programs.firejail.enable = true;
+
+  programs.nix-ld.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
