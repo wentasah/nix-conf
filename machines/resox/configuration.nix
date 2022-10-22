@@ -121,9 +121,12 @@
 	  home-manager
     btrfs-progs
     chromium
+    file
     firefox-wayland
+    gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
+    htop
     krita
     gwenview
     shotwell
