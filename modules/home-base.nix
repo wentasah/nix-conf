@@ -170,9 +170,8 @@
       gst   = "git status";
       j     = "julia --project --thread=auto";
       jc    = "journalctl";
-      l     = "exa -la --group --git --header";
-      la    = "ls -a";
-      ll    = "ls -l";
+      l     = "exa -la --group --header";
+      lg    = "exa -la --group --header --git";
       ln    = "nocorrect ln"; # no spelling correction on ln
       lnr   = "nocorrect ln -s --relative";
       ls    = "ls --color=auto";
