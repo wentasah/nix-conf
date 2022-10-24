@@ -216,9 +216,18 @@ add_commits() {
 
 add_pr() {
     local pr="${1:?no PR number given}";
-    local branch="${2:?no branch given}";
+    local branch="${2:?no branch given}-pr-$pr";
+    git fetch origin master staging
     git fetch origin refs/pull/"$pr"/head
-    add_commits "$branch" FETCH_HEAD ^origin/master ^origin/staging
+    if git merge-base --is-ancestor nixos-unstable FETCH_HEAD; then
+        # Rebase PR's commits on nixos-unstable
+        add_commits "$branch" FETCH_HEAD ^origin/master ^origin/staging
+    else
+        # Merge PR's commits
+        git branch "$branch" FETCH_HEAD
+        git-machete add "$branch"
+        merge_nixpkgs_topics_into_master
+    fi
 }
 
 if [[ ${1:-} ]] && [[ $1 != -* ]]; then
