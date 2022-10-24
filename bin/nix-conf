@@ -121,12 +121,14 @@ build() {
     if [[ -f conf/flake.nix ]]; then
         local status=0
         (
+            local nix=nix
             if ! tty -s; then
                 exec > out/steelpick/flake.log
             else
                 echo "No log from interactive session" > out/steelpick/flake.log
+                command -v nom &> /dev/null && nix=nom
             fi
-            nix build \
+            $nix build \
                 "$@" \
                 --out-link out/steelpick/flake \
                 --override-input nixpkgs ./nixpkgs \
