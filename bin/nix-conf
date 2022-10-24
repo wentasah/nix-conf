@@ -123,7 +123,7 @@ build() {
         (
             local nix=nix
             if ! tty -s; then
-                exec > out/steelpick/flake.log
+                exec > out/steelpick/flake.log 2>&1
             else
                 echo "No log from interactive session" > out/steelpick/flake.log
                 command -v nom &> /dev/null && nix=nom
@@ -132,7 +132,7 @@ build() {
                 "$@" \
                 --out-link out/steelpick/flake \
                 --override-input nixpkgs ./nixpkgs \
-                ./conf#nixosConfigurations.steelpick.config.system.build.toplevel 2>&1
+                ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
         ) || status=$?
         if [[ $status -eq 0 ]]; then
             : > out/steelpick/flake.error
