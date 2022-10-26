@@ -25,9 +25,6 @@
     device = "/dev/disk/by-uuid/cb76e15c-a0d0-4b3e-983c-48fe2babc765";
   };
 
-  fileSystems."/home" = { options = [ "bind" ]; device = "/mnt/debian/home"; };
-
-
   # fileSystems."/mnt/debian/dev"  = { options = [ "bind" ]; device = "/dev"; };
   # fileSystems."/mnt/debian/sys"  = { options = [ "bind" ]; device = "/sys"; };
   # fileSystems."/mnt/debian/proc" = { options = [ "bind" ]; device = "/proc"; };
