@@ -141,6 +141,7 @@ in
     elinks
     stlink
     glibcInfo
+    psmisc
     ddrescue
     zoom-us
     cntr
