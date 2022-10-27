@@ -250,6 +250,15 @@
   };
 
  networking.interfaces.eno1.wakeOnLan.enable = true;
+  services.nullmailer = {
+    enable = true;
+
+    config = {
+      adminaddr = "ms@2x.cz";
+      defaultdomain = "2x.cz";
+      me = "resox.2x.cz";
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
