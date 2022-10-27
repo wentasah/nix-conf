@@ -261,11 +261,14 @@
     };
   };
 
+  virtualisation.docker.enable = true;
+  virtualisation.docker.enableOnBoot = false; # use socket activation
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "scanner" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
