@@ -43,9 +43,15 @@ in
   # For novaboot testing (TODO: Why I needed this?)
   environment.etc."qemu/bridge.conf".text = "allow br0";
 
-  system.activationScripts.novaboot-test = ''
-    mkdir -p /home/novaboot-test/.config/systemd/user
-    ln -sf /home/novaboot-test/{src/server/systemd,.config/systemd/user}/novaboot-unfsd@.service
-    ln -sf ${novaboot-unfsd-override} /home/novaboot-test/.config/systemd/user/novaboot-unfsd@.service.d/override.conf
-  '';
+  systemd.services.novaboot-test-setup = {
+    wantedBy = [ "default.target" ];
+    unitConfig =  {
+      RequiresMountsFor = "/home/novaboot-test/src";
+    };
+    script = ''
+      mkdir -p /home/novaboot-test/.config/systemd/user/novaboot-unfsd@.service.d
+      ln -sf /home/novaboot-test/{src/server/systemd,.config/systemd/user}/novaboot-unfsd@.service
+      ln -sf ${novaboot-unfsd-override} /home/novaboot-test/.config/systemd/user/novaboot-unfsd@.service.d/override.conf
+    '';
+  };
 }
