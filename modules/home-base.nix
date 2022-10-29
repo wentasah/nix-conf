@@ -108,7 +108,7 @@
 
     rustup
     # rustc cargo rls clippy
-    rust-analyzer cargo-edit
+    rust-analyzer cargo-edit cargo-expand
   ];
 
   home.file = {
