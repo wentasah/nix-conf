@@ -22,6 +22,7 @@
     csvtool
     daemontools
     dua
+    shdw
     entr
     exa
     fd
