@@ -42,6 +42,7 @@ in
     ../../modules/go.nix
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
+    ../../modules/mail.nix
   ];
 
   nixpkgs = {
@@ -136,7 +137,6 @@ in
     hotspot
     hugo
     inkscape
-    isync
     julia-wrapper
     kdiff3
     keepassxc
