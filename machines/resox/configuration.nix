@@ -138,6 +138,7 @@
     mc
     nix-output-monitor
     ncdu
+    nvtop
     obs-studio
     pciutils
 #    (shotcut.overrideAttrs ({ patches ? [], ...}: {
