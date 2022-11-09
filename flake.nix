@@ -74,6 +74,7 @@
 
             nixpkgs.overlays = [
               sterm.overlay
+              shdw.overlays.default
               (final: prev: {
                 # Julia from unstable
                 julia-stable-bin = nixpkgs.outputs.legacyPackages.x86_64-linux.julia-stable-bin;
