@@ -77,6 +77,7 @@
     oil
     p7zip
     pandoc
+    pdfgrep
     pdf2svg
     pdftk
     pkg-config
