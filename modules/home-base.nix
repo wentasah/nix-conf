@@ -23,7 +23,6 @@
     daemontools
     devenv
     dua
-    shdw
     entr
     exa
     fd
@@ -78,8 +77,8 @@
     oil
     p7zip
     pandoc
-    pdfgrep
     pdf2svg
+    pdfgrep
     pdftk
     pkg-config
     poppler_utils
@@ -91,7 +90,8 @@
     ripgrep
     rnix-lsp
     rsync
-    #sequoia # currently broken: https://hydra.nixos.org/job/nixpkgs/trunk/sequoia.x86_64-linux
+    sequoia
+    shdw
     shellcheck
     socat
     sops
