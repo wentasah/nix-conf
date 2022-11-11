@@ -21,6 +21,7 @@
     csv2latex
     csvtool
     daemontools
+    devenv
     dua
     shdw
     entr

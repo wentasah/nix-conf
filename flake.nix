@@ -14,6 +14,7 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
+    devenv = { url = github:cachix/devenv/v0.1; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -27,6 +28,7 @@
     , novaboot
     , nix-autobahn
     , shdw
+    , devenv
     }: {
 
       nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
@@ -49,6 +51,7 @@
               (final: prev: {
                 notify-while-running = import notify-while-running { pkgs = final; };
                 inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
+                inherit (devenv.packages.x86_64-linux) devenv;
               })
               emacs-overlay.overlay
               novaboot.overlays.x86_64-linux
