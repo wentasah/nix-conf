@@ -14,6 +14,7 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
+    envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     devenv = { url = github:cachix/devenv/v0.1; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
@@ -28,6 +29,7 @@
     , novaboot
     , nix-autobahn
     , shdw
+    , envfs
     , devenv
     }: {
 
@@ -41,6 +43,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.wsh = import ./machines/steelpick/home.nix;
           }
+          envfs.nixosModules.envfs
           {
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs;

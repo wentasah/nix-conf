@@ -19,8 +19,6 @@ in
       ../../modules/fastdds.nix
       ../../modules/xkb-wsh.nix
       ../../modules/qt5.nix
-      # "${(import ../../nix/sources.nix).envfs}/modules/envfs.nix"
-#      /home/wsh/src/envfs/modules/envfs.nix
     ];
 
   nixpkgs = {
