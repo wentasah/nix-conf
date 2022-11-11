@@ -3,19 +3,18 @@
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.05";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    devenv = { url = github:cachix/devenv/v0.1; inputs.nixpkgs.follows = "nixpkgs"; };
+    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
+    envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-22.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
-    sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
-    # For development:
-    # sterm.url = "/home/wsh/src/sterm";
-    notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
-    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
-    novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
+    notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
+    novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
-    envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
-    devenv = { url = github:cachix/devenv/v0.1; inputs.nixpkgs.follows = "nixpkgs"; };
+    sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
