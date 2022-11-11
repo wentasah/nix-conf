@@ -117,6 +117,14 @@ in
     };
   };
 
+  services.syncthing = {
+    enable = true;
+    user = "lucka";
+    dataDir = "/home/lucka/Sync";
+    configDir = "/home/lucka/.config/syncthing";
+    openDefaultPorts = true;
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
