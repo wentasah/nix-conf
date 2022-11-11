@@ -369,7 +369,7 @@ in
 
   services.autorandr.enable = true;
 
-  services.grafana = {
+  services.grafana.settings = {
     enable = true;
     port = 3000;
     addr = "127.0.0.1";
