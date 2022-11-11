@@ -150,6 +150,10 @@ in
 
   environment.homeBinInPath = true;
 
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.wsh = import ./machines/steelpick/home.nix;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

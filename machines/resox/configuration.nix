@@ -122,7 +122,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
-	  home-manager
     btrfs-progs
     chromium
     file
@@ -158,6 +157,10 @@
   ];
 
   environment.homeBinInPath = true;
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.wsh = import ./home.nix;
 
   documentation = {
     enable = true;

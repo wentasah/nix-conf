@@ -31,34 +31,32 @@
     , shdw
     , envfs
     , devenv
-    }: {
+    }:
+    let
+      common-overlays = [
+        emacs-overlay.overlay
+        novaboot.overlays.x86_64-linux
+        shdw.overlays.default
+        sterm.overlay
+        (final: prev: {
+          notify-while-running = import notify-while-running { pkgs = final; };
+          inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
+          inherit (devenv.packages.x86_64-linux) devenv;
+        })
+      ];
+    in {
 
       nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          nixos-hardware.nixosModules.common-cpu-intel
           ./machines/steelpick/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.wsh = import ./machines/steelpick/home.nix;
-          }
+          nixos-hardware.nixosModules.common-cpu-intel
           envfs.nixosModules.envfs
+          home-manager.nixosModules.home-manager
           {
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs;
-
-            nixpkgs.overlays = [
-              sterm.overlay
-              shdw.overlays.default
-              (final: prev: {
-                notify-while-running = import notify-while-running { pkgs = final; };
-                inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
-                inherit (devenv.packages.x86_64-linux) devenv;
-              })
-              emacs-overlay.overlay
-              novaboot.overlays.x86_64-linux
-            ];
+            nixpkgs.overlays = common-overlays;
           }
         ];
       };
@@ -66,32 +64,23 @@
       nixosConfigurations.resox = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          ./machines/resox/configuration.nix
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
-          ./machines/resox/configuration.nix
-          home-manager-stable.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.wsh = import ./machines/resox/home.nix;
-          }
+          home-manager-stable.nixosModules.home-manager
           {
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs-stable;
-
-            nixpkgs.overlays = [
-              sterm.overlay
-              shdw.overlays.default
+            nixpkgs.overlays = common-overlays ++ [
               (final: prev: {
                 # Julia from unstable
                 julia-stable-bin = nixpkgs.outputs.legacyPackages.x86_64-linux.julia-stable-bin;
-                notify-while-running = import notify-while-running { pkgs = final; };
-                inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
               })
-              novaboot.overlays.x86_64-linux
             ];
           }
         ];
       };
+
       nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
