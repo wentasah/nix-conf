@@ -152,7 +152,7 @@ in
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.wsh = import ./machines/steelpick/home.nix;
+  home-manager.users.wsh = import ./home.nix;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
