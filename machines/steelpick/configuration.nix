@@ -369,11 +369,13 @@ in
 
   services.autorandr.enable = true;
 
-  services.grafana.settings = {
+  services.grafana = {
     enable = true;
-    port = 3000;
-    addr = "127.0.0.1";
-    analytics.reporting.enable = false;
+    settings = {
+      server.http_addr = "127.0.0.1";
+      server.http_port = 3000;
+      analytics.reporting_enabled = false;
+    };
   };
 
   # Enable the KDE Desktop Environment.
