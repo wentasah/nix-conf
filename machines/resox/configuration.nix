@@ -195,6 +195,12 @@
     };
   };
 
+  services.syncthing = {
+    enable = true;
+    dataDir = "/home/share/sync";
+    openDefaultPorts = true;
+  };
+
   services.fwupd.enable = true;
 
   # Enable the OpenSSH daemon.
