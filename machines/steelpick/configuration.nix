@@ -321,6 +321,8 @@ in
       };
     };
   };
+  systemd.services.nginx.serviceConfig.ProtectHome = false;
+
   # Make my public_html accessible by default. It's not accessible
   # directly from $HOME, because the $HOME has permissions 0700 and
   # nginx runs under a different user.
@@ -328,8 +330,6 @@ in
 
   # Make the authoritative version of NOVA available also from the internal repo
   fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = { options = [ "bind" ]; device = "/home/wsh/vyuka/osy/pages/nova"; };
-
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
 
   systemd.nspawn.ros-melodic = {
     enable = true;
