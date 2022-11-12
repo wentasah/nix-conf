@@ -132,6 +132,7 @@ in
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
     gnome.devhelp
+    gnome.gnome-tweaks
     gtkterm
     hdf5
     hotspot
@@ -238,7 +239,16 @@ in
     libertine # For images consistency with ACM latex template
     xkcd-font
     #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
-
+    (nerdfonts.override {
+      fonts = [
+        "DejaVuSansMono"
+        "DroidSansMono"
+        "Iosevka"
+        "Noto"
+        "RobotoMono"
+        "SourceCodePro"
+      ];
+    })
   ]
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [

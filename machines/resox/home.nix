@@ -122,6 +122,7 @@ in
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
     gnome3.devhelp
+    gnome.gnome-tweaks
     gtkterm
     hdf5
     hotspot
@@ -214,7 +215,16 @@ in
     open-sans
     libertine # For images consistency with ACM latex template
     #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
-
+    (nerdfonts.override {
+      fonts = [
+        "DejaVuSansMono"
+        "DroidSansMono"
+        "Iosevka"
+        "Noto"
+        "RobotoMono"
+        "SourceCodePro"
+      ];
+    })
   ];
 
 
