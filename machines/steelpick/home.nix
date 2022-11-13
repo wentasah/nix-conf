@@ -43,6 +43,7 @@ in
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
     ../../modules/mail.nix
+    ../../modules/fonts.nix
   ];
 
   nixpkgs = {
@@ -227,28 +228,8 @@ in
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
     (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkNativeComp}/bin/emacs "$@"'')
 
-    # Fonts
-    roboto-slab
-    roboto
-    source-sans
-    source-sans-pro
-    source-serif
-    source-serif-pro
-    lato
-    open-sans
-    libertine # For images consistency with ACM latex template
+    # Unfree fonts
     xkcd-font
-    #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "DroidSansMono"
-        "Iosevka"
-        "Noto"
-        "RobotoMono"
-        "SourceCodePro"
-      ];
-    })
   ]
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [

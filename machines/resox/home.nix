@@ -41,6 +41,7 @@ in
     ../../modules/go.nix
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
+    ../../modules/fonts.nix
   ];
 
   nixpkgs = {
@@ -203,28 +204,6 @@ in
     zotero
     zulip
     #zulip-term #broken
-
-    # Fonts
-    roboto-slab
-    roboto
-    source-sans
-    source-sans-pro
-    source-serif
-    source-serif-pro
-    lato
-    open-sans
-    libertine # For images consistency with ACM latex template
-    #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "DroidSansMono"
-        "Iosevka"
-        "Noto"
-        "RobotoMono"
-        "SourceCodePro"
-      ];
-    })
   ];
 
 
