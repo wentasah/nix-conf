@@ -19,9 +19,11 @@
 
   outputs =
     { self
-    , nixpkgs, nixpkgs-stable
+    , nixpkgs
+    , nixpkgs-stable
     , nixos-hardware
-    , home-manager, home-manager-stable
+    , home-manager
+    , home-manager-stable
     , sterm
     , notify-while-running
     , emacs-overlay
@@ -43,7 +45,8 @@
           inherit (devenv.packages.x86_64-linux) devenv;
         })
       ];
-    in {
+    in
+    {
 
       nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
