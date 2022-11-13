@@ -90,5 +90,21 @@
           ./machines/turbot/hardware-configuration.nix
         ];
       };
+
+      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration rec {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        modules = [
+          ./modules/home-base.nix
+          ./modules/fonts.nix
+          {
+            # https://nix-community.github.io/home-manager/index.html#sec-usage-configuration
+            home.username = "sojka";
+            home.homeDirectory = "/home/sojka";
+            home.stateVersion = "22.05";
+            programs.home-manager.enable = true;
+            nixpkgs.overlays = common-overlays;
+          }
+        ];
+      };
     };
 }
