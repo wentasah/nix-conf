@@ -10,7 +10,7 @@
     source-sans-pro
     source-serif
     source-serif-pro
-    #iosevka # broken https://github.com/NixOS/nixpkgs/issues/185633
+    iosevka
     (nerdfonts.override {
       fonts = [
         "DejaVuSansMono"
