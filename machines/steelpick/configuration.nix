@@ -172,6 +172,7 @@ in
   programs.bash.interactiveShellInit = ''
     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
   '';
+  programs.starship.enable = true;
 
   programs.ssh.startAgent = true;
 
