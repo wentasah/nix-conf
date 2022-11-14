@@ -90,6 +90,7 @@
     ripgrep
     rnix-lsp
     rsync
+    sd
     sequoia
     shdw
     shellcheck
