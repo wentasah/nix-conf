@@ -172,7 +172,14 @@ in
   programs.bash.interactiveShellInit = ''
     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
   '';
-  programs.starship.enable = true;
+  # Enable starship for other users
+  programs.bash.promptInit = ''
+    if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
+      export STARSHIP_CONFIG=/home/wsh/.config/starship.toml
+      eval "$(${pkgs.starship}/bin/starship init bash)"
+    fi
+  '';
+
 
   programs.ssh.startAgent = true;
 
