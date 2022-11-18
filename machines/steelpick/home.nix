@@ -23,6 +23,7 @@ let
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
   lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
   wrwb = import ../../pkgs/wrwb.nix { inherit pkgs; };
+  wrenv = import ../../pkgs/wrenv.nix { inherit pkgs; };
   cppreference = import ../../pkgs/cppreference.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
   stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
@@ -203,6 +204,7 @@ in
     vlc
     wireshark
     wmctrl
+    wrenv
     wrwb
     x11docker
     xclip
