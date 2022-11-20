@@ -184,7 +184,7 @@ in
     # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
     python3Packages.python-lsp-server
     qemu
-    qt5.full            # To make qtcreator find the qt automatically
+    # qt5.full # uses insecure qtwebkit            # To make qtcreator find the qt automatically
     qtcreator
     radare2
     saleae-logic-2
