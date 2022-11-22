@@ -42,6 +42,7 @@ in
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
     ../../modules/fonts.nix
+    ../../modules/qtcreator.nix
   ];
 
   nixpkgs = {
@@ -72,7 +73,6 @@ in
 
     # pdfpc                       # using my custom modified version
     #(pkgs.callPackage ../../pkgs/diffsitter {})
-    #(qtcreator.override { withClangPlugins = false; }) # too old in nixpkgs - patched in my local copy
     #emacs-all-the-icons-fonts
     #firejail
     #gnome3.nautilus
@@ -169,8 +169,6 @@ in
     # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
     python3Packages.python-lsp-server
     qemu
-    qt5.full            # To make qtcreator find the qt automatically
-    qtcreator
     radare2
     screenkey
     shotcut
