@@ -43,6 +43,8 @@
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
           inherit (devenv.packages.x86_64-linux) devenv;
+          # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
+          nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
         })
       ];
     in
