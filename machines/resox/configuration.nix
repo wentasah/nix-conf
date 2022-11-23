@@ -109,7 +109,7 @@
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
       "steam"
       "steam-original"
-      "steam-runtime"
+      "steam-run"
     ];
   };
 
