@@ -20,6 +20,7 @@
     colordiff
     csv2latex
     csvtool
+    d2
     daemontools
     devenv
     dua
