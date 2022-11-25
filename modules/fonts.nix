@@ -16,6 +16,7 @@
         "DejaVuSansMono"
         "Iosevka"
         "JetBrainsMono"
+        "NerdFontsSymbolsOnly"
         "Noto"
         "RobotoMono"
         "SourceCodePro"
