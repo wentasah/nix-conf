@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let myOverlay = self: super:
       rec {
@@ -23,7 +23,7 @@ in
 
   nixpkgs = {
     config = {
-      allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "skypeforlinux"
         "slack"
         "teams"
@@ -86,7 +86,7 @@ in
   '';
 
   systemd = {
-    #enableUnifiedCgroupHierarchy = false; # breaks DEmOS
+    enableUnifiedCgroupHierarchy = lib.mkForce true; # override LXD
     extraConfig = ''
       # Don't block reboot for too long
       DefaultTimeoutStopSec=30
