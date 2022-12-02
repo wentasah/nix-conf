@@ -130,45 +130,6 @@ in
 
   services.fwupd.enable = true;
 
-  services.grafana = {
-    enable = true;
-    addr = "";
-    port = 2342;
-  };
-
-  services.prometheus = {
-    enable = true;
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [ "wifi" "systemd" ];
-        port = 9002;
-      };
-      smokeping = {
-        enable = true;
-        hosts = [
-          "192.168.1.1"
-        ];
-      };
-    };
-    scrapeConfigs = [
-      {
-        job_name = "lucka";
-        scrape_interval = "15s";
-        static_configs = [{
-          targets = [
-            "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
-            "127.0.0.1:${toString config.services.prometheus.exporters.smokeping.port}"
-          ];
-        }];
-      }
-    ];
-  };
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [
-    2342  # grafana
-  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
