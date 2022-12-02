@@ -230,6 +230,14 @@ add_pr() {
     fi
 }
 
+update() {
+    if updated || failed_recently; then
+        build "$@"
+    else
+        echo "No input has changed. Exiting."
+    fi
+}
+
 if [[ ${1:-} ]] && [[ $1 != -* ]]; then
     cmd=$1
     shift
@@ -244,11 +252,10 @@ export GIT_COMMITTER_EMAIL=nix-conf@localhost
 
 case "$cmd" in
     "update")
-        if updated || failed_recently; then
-            build "$@"
-        else
-            echo "No input has changed. Exiting."
-        fi;;
+        update "$@";;
+    "ci")
+        update "$@"
+        nix flake check ~/nix/conf;;
     "build")
         build "$@";;
     "merge")
