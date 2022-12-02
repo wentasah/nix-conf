@@ -94,7 +94,7 @@
         ];
       };
 
-      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration rec {
+      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
           ./modules/home-base.nix
