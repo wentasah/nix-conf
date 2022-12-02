@@ -77,7 +77,8 @@
             nix.registry.nixpkgs.flake = nixpkgs-stable;
             nixpkgs.overlays = common-overlays ++ [
               (final: prev: {
-                # Julia from unstable
+                # Packages from unstable
+                d2 = nixpkgs.outputs.legacyPackages.x86_64-linux.d2;
                 julia-stable-bin = nixpkgs.outputs.legacyPackages.x86_64-linux.julia-stable-bin;
               })
             ];
@@ -107,6 +108,12 @@
             nixpkgs.overlays = common-overlays;
           }
         ];
+      };
+
+      checks.x86_64-linux = {
+        resox = self.nixosConfigurations.resox.config.system.build.toplevel;
+        ritchie = self.homeConfigurations.ritchie.activationPackage;
+        steelpick = self.nixosConfigurations.steelpick.config.system.build.toplevel;
       };
     };
 }
