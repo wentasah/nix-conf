@@ -74,9 +74,11 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.nix_2_9;
     settings = {
       max-jobs = 16;
+      trusted-public-keys = [
+        "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
+      ];
     };
     gc = {
       automatic = true;
