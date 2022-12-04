@@ -167,6 +167,7 @@
   documentation = {
     enable = true;
     man.enable = true;
+    man.generateCaches = true;
     info.enable = true;
     doc.enable = true;
     dev.enable = true;
