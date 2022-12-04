@@ -72,6 +72,7 @@
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-gpu-amd
           home-manager-stable.nixosModules.home-manager
+          envfs.nixosModules.envfs
           {
             # pin nixpkgs in the system-wide flake registry
             nix.registry.nixpkgs.flake = nixpkgs-stable;
