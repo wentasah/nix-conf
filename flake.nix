@@ -107,6 +107,12 @@
             home.stateVersion = "22.05";
             programs.home-manager.enable = true;
             nixpkgs.overlays = common-overlays;
+
+            programs.zsh.envExtra = ''
+              if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+                . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+              fi
+            '';
           }
         ];
       };
