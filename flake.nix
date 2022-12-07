@@ -95,7 +95,7 @@
         ];
       };
 
-      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration rec {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
           ./modules/home-base.nix
@@ -107,6 +107,11 @@
             home.stateVersion = "22.05";
             programs.home-manager.enable = true;
             nixpkgs.overlays = common-overlays;
+
+            home.sessionVariables = {
+              # Needed for mosh-server (see https://nixos.org/manual/nixpkgs/unstable/#locales)
+              LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+            };
           }
         ];
       };
