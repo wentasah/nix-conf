@@ -79,6 +79,7 @@
       trusted-public-keys = [
         "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
       ];
+      auto-optimise-store = true;
     };
     gc = {
       automatic = true;
