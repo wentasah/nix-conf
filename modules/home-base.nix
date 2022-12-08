@@ -161,6 +161,8 @@
     EDITOR = "emacsclient-tty";
   };
 
+  home.sessionPath = [ "$HOME/bin" ];
+
   programs.zsh = {
     enable = true;
     enableVteIntegration = true;
