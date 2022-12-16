@@ -16,7 +16,6 @@
   nixpkgs.overlays = [
   ];
 
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
@@ -113,12 +112,16 @@
       "steam"
       "steam-original"
       "steam-run"
+
+      "slack"
+      "teams"
+      "zoom-us" "faac" "zoom" # zoom-us is now just zoom
+      "saleae-logic"
+      "unrar"
     ];
   };
 
   programs.steam.enable = true;
-  programs.firejail.enable = true;
-
   programs.nix-ld.enable = true;
 
   # List packages installed in system profile. To search, run:
@@ -152,6 +155,16 @@
     wget
     gnome.gnome-tweaks
   ];
+
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      slack = "${pkgs.slack}/bin/slack";
+      teams = "${pkgs.teams}/bin/teams";
+      #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
+      skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
+    };
+  };
 
   fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
