@@ -97,14 +97,14 @@ updated() {
     update_nixpkgs && result=0
     if [[ $result = 0 ]]; then
         # Reset failed build counter
-        rm -f ~/nix/out/steelpick/flake.retry.cnt
+        rm -f ~/nix/out/"$HOST"/flake.retry.cnt
     fi
     return $result
 }
 
 failed_recently() {
-    cnt=~/nix/out/steelpick/flake.retry.cnt
-    if [[ -s ~/nix/out/steelpick/flake.error ]] &&
+    cnt=~/nix/out/$HOST/flake.retry.cnt
+    if [[ -s ~/nix/out/$HOST/flake.error ]] &&
        [[ $(cat $cnt) -lt 2 ]]; then
         echo $(( $(cat $cnt) + 1 )) > $cnt
         return 0
@@ -117,37 +117,41 @@ build() {
     cd ~/nix
 
     PATH=/nix/var/nix/profiles/default/bin:$PATH
-    local old_version=$(readlink out/steelpick/flake || :)
+    local old_version=$(readlink out/"$HOST"/flake || :)
     if [[ -f conf/flake.nix ]]; then
         local status=0
         (
+            mkdir -p out/"$HOST"
             local nix=nix
+            local override_input=
+            case "$HOST" in
+                steelpick) override_input="--override-input nixpkgs ./nixpkgs";;
+            esac
             if ! tty -s; then
-                exec > out/steelpick/flake.log 2>&1
+                exec > out/"$HOST"/flake.log 2>&1
             else
-                echo "No log from interactive session" > out/steelpick/flake.log
+                echo "No log from interactive session" > out/"$HOST"/flake.log
                 command -v nom &> /dev/null && nix=nom
             fi
             $nix build \
                 "$@" \
-                --out-link out/steelpick/flake \
-                --override-input nixpkgs ./nixpkgs \
-                ./conf#nixosConfigurations.steelpick.config.system.build.toplevel
+                --out-link out/"$HOST"/flake $override_input \
+                ./conf#nixosConfigurations."$HOST".config.system.build.toplevel
         ) || status=$?
         if [[ $status -eq 0 ]]; then
-            : > out/steelpick/flake.error
+            : > out/"$HOST"/flake.error
             # Reset failed build counter
-            rm -f out/steelpick/flake.retry.cnt
+            rm -f out/"$HOST"/flake.retry.cnt
         else
             # we use cat instead of mv to not break hardlinks to the flake.error
-            cat out/steelpick/flake.log > out/steelpick/flake.error
-            touch out/steelpick/flake.retry.cnt
+            cat out/"$HOST"/flake.log > out/"$HOST"/flake.error
+            touch out/"$HOST"/flake.retry.cnt
             exit $status
         fi
 
-        if [[ $(hostname) = "steelpick" ]]; then
+        if [[ $(hostname) = "$HOST" ]]; then
             echo "Diff from current configuration:"
-            nix store diff-closures /run/current-system ~/nix/out/steelpick/flake
+            nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
             echo
             echo "Run one of the following to switch the configuration:"
             echo "  sudo nix-conf switch"
@@ -165,33 +169,33 @@ build() {
 	        git update-ref refs/heads/history "$new_commit" "$old_commit"
                 git push wentasah history
             )
-            if [[ $old_version != $(readlink out/steelpick/flake) ]]; then
+            if [[ $old_version != $(readlink out/"$HOST"/flake) ]]; then
                 matrix-commander --markdown -m "nix-conf CI update completed
 
-$(nix store diff-closures $old_version out/steelpick/flake | ansifilter | sed -e 's/^/    /')" || :
+$(nix store diff-closures $old_version out/"$HOST"/flake | ansifilter | sed -e 's/^/    /')" || :
             fi
         fi
     else
         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
-        export NIXOS_CONFIG=$PWD/conf/steelpick/configuration.nix
+        export NIXOS_CONFIG=$PWD/conf/$HOST/configuration.nix
 
-        mkdir -p out/steelpick/nixos
+        mkdir -p out/"$HOST"/nixos
         (
-            cd out/steelpick/nixos
+            cd out/"$HOST"/nixos
             nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
         )
 
-        mkdir -p out/steelpick/home
+        mkdir -p out/"$HOST"/home
         (
-            cd out/steelpick/home
+            cd out/"$HOST"/home
             nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
-                      --run "home-manager build --keep-going -f ~/nix/conf/steelpick/home.nix"
+                      --run "home-manager build --keep-going -f ~/nix/conf/$HOST/home.nix"
         )
     fi
 }
 
 switch() {
-    local O="/home/${SUDO_USER:-$USER}/nix/out/steelpick/flake"
+    local O="/home/${SUDO_USER:-$USER}/nix/out/$HOST/flake"
     nix-env -p /nix/var/nix/profiles/system --set "$O"
     "$O"/bin/switch-to-configuration switch
 }
@@ -249,6 +253,9 @@ export GIT_AUTHOR_NAME=nix-conf
 export GIT_AUTHOR_EMAIL=nix-conf@localhost
 export GIT_COMMITTER_NAME=nix-conf
 export GIT_COMMITTER_EMAIL=nix-conf@localhost
+
+# For which host to build the configuration
+HOST=${HOST:-$(hostname)}
 
 case "$cmd" in
     "update")
