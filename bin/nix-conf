@@ -118,15 +118,15 @@ build() {
 
     PATH=/nix/var/nix/profiles/default/bin:$PATH
     local old_version=$(readlink out/"$HOST"/flake || :)
+    local override_input=
+    case "$HOST" in
+        steelpick) override_input="--override-input nixpkgs ~/nix/nixpkgs";;
+    esac
     if [[ -f conf/flake.nix ]]; then
         local status=0
         (
             mkdir -p out/"$HOST"
             local nix=nix
-            local override_input=
-            case "$HOST" in
-                steelpick) override_input="--override-input nixpkgs ./nixpkgs";;
-            esac
             if ! tty -s; then
                 exec > out/"$HOST"/flake.log 2>&1
             else
@@ -155,7 +155,7 @@ build() {
             echo
             echo "Run one of the following to switch the configuration:"
             echo "  sudo nix-conf switch"
-            echo "  sudo nixos-rebuild switch --override-input nixpkgs ~/nix/nixpkgs"
+            echo "  sudo nixos-rebuild switch $override_input"
         else
             (
                 cd nixpkgs
