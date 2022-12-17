@@ -120,7 +120,7 @@ build() {
     local old_version=$(readlink out/"$HOST"/flake || :)
     local override_input=
     case "$HOST" in
-        steelpick) override_input="--override-input nixpkgs ~/nix/nixpkgs";;
+        steelpick) override_input="--override-input nixpkgs $PWD/nixpkgs";;
     esac
     if [[ -f conf/flake.nix ]]; then
         local status=0
