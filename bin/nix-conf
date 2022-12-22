@@ -238,7 +238,7 @@ update() {
     if updated || failed_recently; then
         build "$@"
     else
-        echo "No input has changed. Exiting."
+        echo "Nothing to do for update."
     fi
 }
 
