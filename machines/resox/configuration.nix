@@ -81,6 +81,7 @@
       trusted-public-keys = [
         "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
       ];
+      trusted-users = [ "root" "wsh" ];
       auto-optimise-store = true;
     };
     gc = {
