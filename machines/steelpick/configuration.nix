@@ -122,6 +122,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     binutils-unwrapped # for strings etc.
+    compsize
     dash # TODO: Try is as /bin/sh (environment.binsh)
     emacs-nox
     file

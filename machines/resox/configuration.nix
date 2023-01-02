@@ -133,6 +133,7 @@
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
     btrfs-progs
+    compsize
     chromium
     file
     firefox-wayland
