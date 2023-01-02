@@ -79,8 +79,8 @@
             nixpkgs.overlays = common-overlays ++ [
               (final: prev: {
                 # Packages from unstable
-                d2 = nixpkgs.outputs.legacyPackages.x86_64-linux.d2;
-                julia-stable-bin = nixpkgs.outputs.legacyPackages.x86_64-linux.julia-stable-bin;
+                inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
+                  d2 julia-stable-bin nurl;
               })
             ];
           }

@@ -73,6 +73,7 @@
     nixos-shell
     nixpkgs-fmt
     nixpkgs-review
+    nurl
     nvd
     odt2txt
     oil
