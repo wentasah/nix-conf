@@ -262,7 +262,7 @@ case "$cmd" in
         update "$@";;
     "ci")
         update "$@"
-        nix flake check ~/nix/conf;;
+        nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs;;
     "build")
         build "$@";;
     "merge")
