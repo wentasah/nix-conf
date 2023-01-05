@@ -45,6 +45,7 @@
     htop
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
+    hyperfine
     imagemagick
     jo
     jq
