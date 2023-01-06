@@ -200,6 +200,7 @@ in
     usbutils
     v4l-utils # for qv4l2
     vlc
+    video-trimmer
     wireshark
     wmctrl
     wrenv
