@@ -14,6 +14,7 @@
     bat
     bbe
     bc                          # For linux kernel compilation
+    btop
     cachix
     ccls
     cloc
