@@ -1,5 +1,5 @@
 { stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
-  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python27,
+  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python3,
   requireFile
 }:
 let
@@ -34,7 +34,7 @@ let
       tlf
       fontconfig
       pcsclite
-      python27
+      python3
     ] ++ (with xorg; [
       libX11
       libSM
@@ -92,7 +92,7 @@ buildFHSUserEnv {
     tlf
     fontconfig
     pcsclite
-    python27
+    python3
 
     stlink-server
     ncurses5
