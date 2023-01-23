@@ -34,7 +34,7 @@
   #services.avahi.ipv6 = false;  # Does not help
 
   # settings from avahi-daemon.nix where mdns is replaced with mdns4
-  system.nssModules = with pkgs.lib; optional (!config.services.avahi.nssmdns) pkgs.nssmdns;
+  system.nssModules = pkgs.lib.optional (!config.services.avahi.nssmdns) pkgs.nssmdns;
   system.nssDatabases.hosts = with pkgs.lib; optionals (!config.services.avahi.nssmdns) (mkMerge [
     (mkBefore [ "mdns4_minimal [NOTFOUND=return]" ]) # before resolve
     (mkAfter [ "mdns4" ]) # after dns
