@@ -312,6 +312,8 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation
 
+  services.flatpak.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
