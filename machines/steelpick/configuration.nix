@@ -212,7 +212,9 @@ in
   programs.bcc.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
+
+  # Broken
+  # virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
 
