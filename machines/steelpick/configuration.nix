@@ -36,7 +36,7 @@ in
         "konica-minolta-bizhub"
         "saleae-logic"
         "unrar"
-        "xkcd-font-unstable"
+        "xkcd-font"
       ];
     };
     overlays = [ myOverlay ];
