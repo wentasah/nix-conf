@@ -55,7 +55,6 @@
         modules = [
           ./machines/steelpick/configuration.nix
           nixos-hardware.nixosModules.common-cpu-intel
-          envfs.nixosModules.envfs
           home-manager.nixosModules.home-manager
           {
             # pin nixpkgs in the system-wide flake registry

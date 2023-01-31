@@ -220,6 +220,8 @@ in
 
   services.nscd.enableNsncd = true; # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.11-highlights
 
+  services.envfs.enable = true;
+
   services.avahi = {
     publish = {
       enable = true;
