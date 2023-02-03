@@ -210,6 +210,8 @@
 
   # List services that you want to enable:
 
+  services.nixseparatedebuginfod.enable = true;
+
   services.avahi = {
     publish = {
       enable = true;

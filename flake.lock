@@ -47,17 +47,17 @@
     },
     "envfs": {
       "inputs": {
+        "flake-parts": "flake-parts",
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "utils": "utils"
+        ]
       },
       "locked": {
-        "lastModified": 1667491483,
-        "narHash": "sha256-+POEuXJED4t0Bq6X+ARXqCz3Y18PEHyhiWrXThkYulM=",
+        "lastModified": 1674551663,
+        "narHash": "sha256-l04zXq4Yy2DigJX79DXl/n+Rddiubxn7fdyfp0Os+Y0=",
         "owner": "Mic92",
         "repo": "envfs",
-        "rev": "42915a40433c1a5f828381f6767833189611eace",
+        "rev": "626d50378b087afff61a3f3382011f7857ca6e90",
         "type": "github"
       },
       "original": {
@@ -79,6 +79,27 @@
       "original": {
         "owner": "edolstra",
         "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "envfs",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1673362319,
+        "narHash": "sha256-Pjp45Vnj7S/b3BRpZEVfdu8sqqA6nvVjvYu59okhOyI=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "82c16f1682cf50c01cb0280b38a1eed202b3fe9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
         "type": "github"
       }
     },
@@ -162,7 +183,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils_2"
+        "utils": "utils"
       },
       "locked": {
         "lastModified": 1669071065,
@@ -183,7 +204,7 @@
         "nixpkgs": [
           "nixpkgs-stable"
         ],
-        "utils": "utils_3"
+        "utils": "utils_2"
       },
       "locked": {
         "lastModified": 1669071065,
@@ -337,17 +358,33 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1673796341,
-        "narHash": "sha256-TkG+EdZYHMUmHPFRAF0HCdXu7Up94EKyBYD2ZVP1pkY=",
+        "lastModified": 1675273418,
+        "narHash": "sha256-3B4czYNMWcgUa9HvWq2wqxZbg9G6GMzttFya5tANLA4=",
         "owner": "wentasah",
         "repo": "nixpkgs",
-        "rev": "a7b405a435837dd8c6eb83cf155f0b49ad1691b2",
+        "rev": "7b0062decb10ad16db378de8b491a4181750e4d3",
         "type": "github"
       },
       "original": {
         "owner": "wentasah",
         "ref": "master",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixseparatedebuginfod": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674993600,
+        "narHash": "sha256-nGYsSEDHpU63xut4m++pcZNXZWipjvDe6GyF8Grac8k=",
+        "owner": "symphorien",
+        "repo": "nixseparatedebuginfod",
+        "rev": "9b7a087a98095c26d1ad42a05102e0edfeb49b59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "symphorien",
+        "repo": "nixseparatedebuginfod",
         "type": "github"
       }
     },
@@ -419,6 +456,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixseparatedebuginfod": "nixseparatedebuginfod",
         "notify-while-running": "notify-while-running",
         "novaboot": "novaboot",
         "shdw": "shdw",
@@ -468,21 +506,6 @@
     },
     "utils": {
       "locked": {
-        "lastModified": 1659877975,
-        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "utils_2": {
-      "locked": {
         "lastModified": 1667395993,
         "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
         "owner": "numtide",
@@ -496,7 +519,7 @@
         "type": "github"
       }
     },
-    "utils_3": {
+    "utils_2": {
       "locked": {
         "lastModified": 1667395993,
         "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",

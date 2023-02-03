@@ -36,7 +36,7 @@ in
         "konica-minolta-bizhub"
         "saleae-logic"
         "unrar"
-        "xkcd-font-unstable"
+        "xkcd-font"
       ];
     };
     overlays = [ myOverlay ];
@@ -212,11 +212,17 @@ in
   programs.bcc.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
+
+  # Broken
+  # virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
 
+  services.nixseparatedebuginfod.enable = true;
+
   services.nscd.enableNsncd = true; # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.11-highlights
+
+  services.envfs.enable = true;
 
   services.avahi = {
     publish = {
