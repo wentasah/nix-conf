@@ -218,6 +218,8 @@ in
 
   # List services that you want to enable:
 
+  services.nixseparatedebuginfod.enable = true;
+
   services.nscd.enableNsncd = true; # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.11-highlights
 
   services.envfs.enable = true;

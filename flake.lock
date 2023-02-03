@@ -372,6 +372,22 @@
         "type": "github"
       }
     },
+    "nixseparatedebuginfod": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674993600,
+        "narHash": "sha256-nGYsSEDHpU63xut4m++pcZNXZWipjvDe6GyF8Grac8k=",
+        "owner": "symphorien",
+        "repo": "nixseparatedebuginfod",
+        "rev": "9b7a087a98095c26d1ad42a05102e0edfeb49b59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "symphorien",
+        "repo": "nixseparatedebuginfod",
+        "type": "github"
+      }
+    },
     "notify-while-running": {
       "flake": false,
       "locked": {
@@ -440,6 +456,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixseparatedebuginfod": "nixseparatedebuginfod",
         "notify-while-running": "notify-while-running",
         "novaboot": "novaboot",
         "shdw": "shdw",

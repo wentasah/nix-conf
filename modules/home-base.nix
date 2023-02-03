@@ -29,7 +29,7 @@
     exa
     fd
     ffmpeg
-    gdb
+    #gdb # we use gdb provided by nixseparatedebuginfod module
     gh
     git-machete
     gitAndTools.delta
