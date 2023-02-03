@@ -23,7 +23,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 2;
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_0;
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_0;
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
