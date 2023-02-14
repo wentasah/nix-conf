@@ -186,7 +186,7 @@ in
     qemu
     radare2
     saleae-logic-2
-    screenkey
+    # screenkey # broken
     shotcut
     smplayer mpv mplayer
     solvespace
