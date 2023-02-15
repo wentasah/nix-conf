@@ -225,7 +225,6 @@ in
     #zulip-term #broken
 
     # Emacs versions from emacs-overlay
-    (pkgs.writeShellScriptBin "emacs-27"       ''exec ${emacs}/bin/emacs "$@"'')
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
     (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkNativeComp}/bin/emacs "$@"'')
 
