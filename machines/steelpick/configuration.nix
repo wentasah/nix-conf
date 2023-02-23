@@ -386,6 +386,10 @@ in
   services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+#   services.xserver.desktopManager.plasma5.enable = true;
+#   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
+#   programs.ssh.askPassword = lib.mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
+
   services.autorandr.enable = true;
 
   services.grafana = {

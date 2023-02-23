@@ -146,6 +146,7 @@ in
     kernelshark
     kicad-small
     kitty
+    # korganizer akonadi
     krita
     lazydocker
     lexicon
