@@ -261,6 +261,7 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.AllowUsers = [ "wsh", "root", "novaboot-test" ];
 
   services.tftpd-hpa = {
     enable = true;
@@ -423,6 +424,9 @@ in
       isNormalUser = true;
       uid = 1002;
       packages = [ pkgs.gitea ];
+    };
+    test = {
+      isNormalUser = true;
     };
   };
 
