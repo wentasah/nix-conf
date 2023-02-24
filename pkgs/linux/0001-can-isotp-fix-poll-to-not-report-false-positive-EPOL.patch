@@ -1,0 +1,213 @@
+From bcdb9e04c130795931cdf3e7f92ab3da057aa1f8 Mon Sep 17 00:00:00 2001
+From: Michal Sojka <michal.sojka@cvut.cz>
+Date: Fri, 24 Feb 2023 01:02:57 +0100
+Subject: [PATCH] can: isotp: fix poll() to not report false positive EPOLLOUT
+ events
+
+When using select/poll/epoll() with a non-blocking ISOTP socket to
+wait for when non-blocking write is possible, false EPOLLOUT event is
+sometimes returned. This can happen at least after sending a message
+which must be split to multiple CAN frames.
+
+The reason is that isotp_sendmsg() returns -EAGAIN when tx.state is
+not equal to ISOTP_IDLE and this behavior is not reflected in
+datagram_poll(), which is used in isotp_ops.
+
+This is fixed by introducing ISOTP-specific poll function, which
+suppresses the EPOLLOUT events in that case.
+
+Below is a program that can trigger the problem on a vcan interface.
+When running the program as:
+
+    ./isotp-poll-test -s 123 -d 321 -o
+
+it starts sending ISOTP messages that include increasing ASCII
+numbers. poll() is used to wait before next transmission.
+
+With current mainline Linux, once the message length is greater than 7
+bytes, write() returns -EAGAIN and the program terminates. This should
+not happen, because the previous poll() reported that the write()
+would not block.
+
+After applying this patch, the above command doesn't fail - if one
+runs some ISOTP reader such as:
+
+    isotprecv -l -s 321 -d 123 vcan0
+
+This test program can also show another problem. When running:
+
+    ./isotp-poll-test -s 321 -d 123 -i -a
+
+and then in another terminal:
+
+    ./isotp-poll-test -s 123 -d 321 -o
+
+The first program receives the messages and uses the counter values to
+check for lost messages. After a random number of iterations a lost
+message is always detected. I believe that ISOTP should be reliable
+protocol, at least on vcan, shouldn't it?
+
+Anyway, this patch doesn't try to address this problem.
+
+ --8<---------------cut here---------------start------------->8---
+ #include <net/if.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+
+ #include <fcntl.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
+ #include <poll.h>
+ #include <stdbool.h>
+ #include <err.h>
+
+ #include <net/if.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+ #include <sys/types.h>
+
+ #include <linux/can.h>
+ #include <linux/can/isotp.h>
+
+ #define CHECK(expr) ({ int ret = (expr); if (ret == -1) err(EXIT_FAILURE, "%s", #expr); ret; })
+
+ int main(int argc, char *argv[])
+ {
+     int sock;
+     struct sockaddr_can addr;
+     char opt;
+     bool in = false, out = false;
+     bool validate_seq = false;
+     int buf_size = 0;
+     unsigned cnt = 1, max_msgs = 0;
+
+     /* These default can be overridden with -s and -d */
+     addr.can_addr.tp.tx_id = 0x123;
+     addr.can_addr.tp.rx_id = 0x321;
+
+     while ((opt = getopt(argc, argv, "ac:d:ios:")) != -1) {
+         switch (opt) {
+         case 'a':
+             validate_seq = true;
+             break;
+         case 'c':
+             max_msgs = atol(optarg);
+             break;
+         case 'i':
+             in = true;
+             break;
+         case 'o':
+             out = true;
+             break;
+         case 's':
+             addr.can_addr.tp.tx_id = strtoul(optarg, NULL, 16);
+             if (strlen(optarg) > 7)
+                 addr.can_addr.tp.tx_id |= CAN_EFF_FLAG;
+             break;
+         case 'd':
+             addr.can_addr.tp.rx_id = strtoul(optarg, NULL, 16);
+             if (strlen(optarg) > 7)
+                 addr.can_addr.tp.rx_id |= CAN_EFF_FLAG;
+             break;
+         default: /* '?' */
+             err(EXIT_FAILURE, "Usage: %s [-i] [-o]", argv[0]);
+         }
+     }
+
+     sock = CHECK(socket(PF_CAN, SOCK_DGRAM, CAN_ISOTP));
+
+     const char *ifname = "vcan0";
+     addr.can_family = AF_CAN;
+     addr.can_ifindex = if_nametoindex(ifname);
+     if (!addr.can_ifindex)
+         err(EXIT_FAILURE, "%s", ifname);
+
+     CHECK(bind(sock, (struct sockaddr *)&addr, sizeof(addr)));
+
+     int flags = CHECK(fcntl(sock, F_GETFL, 0));
+     CHECK(fcntl(sock, F_SETFL, flags | O_NONBLOCK));
+
+     struct pollfd pollfd = {
+         .fd = sock,
+         .events = ((in ? POLLIN : 0) | ((out & !in) ? POLLOUT : 0))
+     };
+
+     do {
+         char buf[100];
+         int ret;
+
+         CHECK(poll(&pollfd, 1, -1)); /* Wait with infinite timeout */
+
+         if (pollfd.revents & POLLIN) {
+             buf_size = CHECK(read(sock, buf, sizeof(buf) - 1));
+             printf("#%u: Read %d bytes\n", cnt, buf_size);
+             if (validate_seq) {
+                 unsigned cnt_rcvd = 0;
+                 buf[buf_size] = 0;
+                 sscanf(buf, "Hello%u", &cnt_rcvd);
+                 if (cnt != cnt_rcvd)
+                     errx(EXIT_FAILURE, "Lost messages. Expected: #%u, received #%u", cnt, cnt_rcvd);
+             }
+             if (out)
+                 pollfd.events |= POLLOUT; /* Start writing only after reception of data */
+         }
+         if (pollfd.revents & POLLOUT) {
+             if (!in) {
+                 char str[200];
+                 sprintf(str, "Hello%u", cnt);
+                 ret = CHECK(write(sock, str, strlen(str)));
+             } else {
+                 ret = CHECK(write(sock, buf, buf_size));
+             }
+             printf("#%u: Wrote %d bytes\n", cnt, ret);
+         }
+     } while (cnt++ < max_msgs || max_msgs == 0);
+
+     return 0;
+ }
+ --8<---------------cut here---------------end--------------->8---
+
+Signed-off-by: Michal Sojka <michal.sojka@cvut.cz>
+Reported-by: Jakub Jira <jirajak2@fel.cvut.cz>
+---
+ net/can/isotp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 9bc344851704..d205359eaabd 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1608,6 +1608,19 @@ static int isotp_init(struct sock *sk)
+ 	return 0;
+ }
+ 
++static __poll_t isotp_poll(struct file *file, struct socket *sock, poll_table *wait)
++{
++	__poll_t mask = datagram_poll(file, sock, wait);
++	struct sock *sk = sock->sk;
++	struct isotp_sock *so = isotp_sk(sk);
++
++	/* Check for false positives due to TX state */
++	if ((mask & EPOLLWRNORM) && (so->tx.state != ISOTP_IDLE))
++		mask &= ~(EPOLLOUT | EPOLLWRNORM);
++
++	return mask;
++}
++
+ static int isotp_sock_no_ioctlcmd(struct socket *sock, unsigned int cmd,
+ 				  unsigned long arg)
+ {
+@@ -1623,7 +1636,7 @@ static const struct proto_ops isotp_ops = {
+ 	.socketpair = sock_no_socketpair,
+ 	.accept = sock_no_accept,
+ 	.getname = isotp_getname,
+-	.poll = datagram_poll,
++	.poll = isotp_poll,
+ 	.ioctl = isotp_sock_no_ioctlcmd,
+ 	.gettstamp = sock_gettstamp,
+ 	.listen = sock_no_listen,
+-- 
+2.39.1
+
