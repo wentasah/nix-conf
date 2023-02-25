@@ -281,7 +281,21 @@ in
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
 
-  services.xsettingsd.enable = true;
+  #services.xsettingsd.enable = true;
+  systemd.user.services.gsd-xsettings = {
+    Unit = {
+      Description = "Gnome SettingsDaemon XSettings";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+
+    Service = {
+      ExecStart = "${pkgs.gnome.gnome-settings-daemon}/libexec/gsd-xsettings";
+    };
+  };
+
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
 
