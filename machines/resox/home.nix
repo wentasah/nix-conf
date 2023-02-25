@@ -233,7 +233,7 @@ in
   services.xsettingsd.enable = true;
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
-  services.lorri.enable = true;
+  #services.lorri.enable = true;
 
   systemd.user.services = {
 
