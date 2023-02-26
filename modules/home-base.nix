@@ -30,6 +30,7 @@
     fd
     ffmpeg
     #gdb # we use gdb provided by nixseparatedebuginfod module
+    gcalcli
     gh
     git-machete
     gitAndTools.delta
