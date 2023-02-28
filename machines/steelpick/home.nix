@@ -129,7 +129,7 @@ in
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
     flowblade
-    freecad
+    #freecad # broken
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
