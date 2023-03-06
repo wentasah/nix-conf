@@ -43,6 +43,7 @@ in
     ../../modules/linux-build.nix
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
+    ../../modules/msmtp.nix
   ];
 
   nixpkgs = {

@@ -325,16 +325,6 @@ in
     localuser = null;
   };
 
-  services.nullmailer = {
-    enable = true;
-
-    config = {
-      adminaddr = "ms@2x.cz";
-      defaultdomain = "2x.cz";
-      me = "steelpick.2x.cz";
-    };
-  };
-
   services.nginx = {
     enable = true;
     virtualHosts.localhost = {
