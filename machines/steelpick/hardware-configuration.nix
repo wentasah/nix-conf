@@ -18,7 +18,10 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/cb76e15c-a0d0-4b3e-983c-48fe2babc765";
       fsType = "btrfs";
-      options = [ "subvol=nixos" ];
+      options = [
+        "subvol=nixos"
+        "nodiscard" # work around https://trofi.github.io/posts/281-a-signal-from-the-stars.html
+      ];
     };
 
   swapDevices =
