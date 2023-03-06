@@ -21,15 +21,6 @@
       options = [ "subvol=nixos" ];
     };
 
-  fileSystems."/mnt/debian" = {
-    device = "/dev/disk/by-uuid/cb76e15c-a0d0-4b3e-983c-48fe2babc765";
-  };
-
-  # fileSystems."/mnt/debian/dev"  = { options = [ "bind" ]; device = "/dev"; };
-  # fileSystems."/mnt/debian/sys"  = { options = [ "bind" ]; device = "/sys"; };
-  # fileSystems."/mnt/debian/proc" = { options = [ "bind" ]; device = "/proc"; };
-  #fileSystems."/mnt/debian/tmp/.X11-unix" = { options = [ "bind" ]; device = "/tmp/.X11-unix"; };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/7a925611-876c-4a2d-98aa-ced6f63bcdf2"; }
     ];
