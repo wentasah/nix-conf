@@ -1,0 +1,71 @@
+From 451c4a090c35a2857bcdcb23413ffc8f906c665c Mon Sep 17 00:00:00 2001
+From: Michal Sojka <michal.sojka@cvut.cz>
+Date: Sat, 11 Mar 2023 01:02:46 +0100
+Subject: [PATCH] Don't clear subshell prompt during its reading
+
+When using zsh with starship.rs prompt generator, MC sometimes fails
+to show the subshell prompt. This is not deterministic. Sometimes the
+prompt is shown and sometimes it isn't.
+
+The reason is that the shell prints the prompt in multiple chunks. The
+first chunk contains the "real" prompt and the second is an escape
+sequence for enabling bracketed paste mode. If both chunks are read by
+MC in a single invocation of read_subshell_prompt(), the prompt is
+shown correctly. If, however, read_subshell_prompt() reads each chunk
+in separate invocations (because the second chunk is not ready during
+the first invocation), the prompt is not shown. More precisely, only
+the bracketed paste mode escape sequence is shown as a prompt in MC.
+
+This can be demonstrated with the following commands:
+
+    export SHELL=$(which zsh)
+    export ZDOTDIR=/tmp/zshdotdir
+    export STARSHIP_CONFIG=/tmp/starship-test.toml
+    mkdir -p "$ZDOTDIR"
+    echo 'eval "$(starship init zsh)"' > "$ZDOTDIR/.zshrc"
+    echo 'format = "XXXX: $directory$character"' > "$STARSHIP_CONFIG"
+    mc
+
+In my case, the prompt is usualy shown after mc start and it
+disappears after changing a directory in mc. In that case, the prompt
+is read() in the following two chunks:
+
+- 63 bytes: \xd\x1b[0m\x1b[27m\x1b[24m\x1b[J\xd\xaXXXX: \x1b[1;36mmc/.git\x1b[0m \x1b[1;32m\xe2\x9d\xaf\x1b[0m \x1b[K
+- 8 bytes: \x1b[?2004h
+
+To fix the problem, we remove clearing of the prompt string in
+read_subshell_prompt(). It is sufficient that the prompt is cleared
+when receiving '\n' and in feed_subshell().
+
+Signed-off-by: Michal Sojka <michal.sojka@cvut.cz>
+---
+ src/subshell/common.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/src/subshell/common.c b/src/subshell/common.c
+index 27d130508..d30457fef 100644
+--- a/src/subshell/common.c
++++ b/src/subshell/common.c
+@@ -1585,7 +1585,6 @@ read_subshell_prompt (void)
+     int rc = 0;
+     ssize_t bytes = 0;
+     struct timeval timeleft = { 0, 0 };
+-    gboolean should_reset_prompt = TRUE;
+     gboolean got_new_prompt = FALSE;
+ 
+     fd_set tmp;
+@@ -1611,11 +1610,6 @@ read_subshell_prompt (void)
+         }
+ 
+         bytes = read (mc_global.tty.subshell_pty, pty_buffer, sizeof (pty_buffer));
+-        if (should_reset_prompt)
+-        {
+-            should_reset_prompt = FALSE;
+-            clear_subshell_prompt_string ();
+-        }
+ 
+         parse_subshell_prompt_string (pty_buffer, bytes);
+         got_new_prompt = TRUE;
+-- 
+2.39.2
+
