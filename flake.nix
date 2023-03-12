@@ -52,6 +52,11 @@
             patches = (old.patches or []) ++ [
               ./pkgs/mc/0001-Don-t-clear-subshell-prompt-during-its-reading.patch
             ];
+            postPatch = ''
+              substituteInPlace contrib/mc-wrapper.sh.in \
+                  --replace '@bindir@/mc' \
+                            'STARSHIP_CONFIG=$HOME/.config/starship.mc.toml @bindir@/mc'
+            '';
           }));
 
         })
