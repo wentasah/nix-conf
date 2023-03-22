@@ -46,7 +46,7 @@ in
     ../../modules/mail.nix
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
-    ../../modules/msmtp.nix
+#    ../../modules/msmtp.nix
   ];
 
   nixpkgs = {
