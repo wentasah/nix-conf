@@ -32,7 +32,7 @@ let
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
-    matplotlib
+    matplotlib tkinter
   ]);
 in
 {
