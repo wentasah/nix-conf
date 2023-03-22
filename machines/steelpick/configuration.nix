@@ -475,7 +475,7 @@ in
   nix.distributedBuilds = true;
   nix.extraOptions = ''
     builders-use-substitutes = true
-    experimental-features = nix-command flakes
+    experimental-features = nix-command flakes repl-flake
     keep-derivations = true     # Allow building off-line
     keep-outputs = true         # Recommended by nix-direnv
   '';
