@@ -442,8 +442,13 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
-  nix.settings.trusted-users = [ "root" "@wheel" ];
-  nix.settings.auto-optimise-store = true;
+  nix.settings = {
+    trusted-users = [ "root" "@wheel" ];
+    auto-optimise-store = true;
+    trusted-public-keys = [
+      "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
+    ];
+  };
   nix.nixPath = [
     #"nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "nixpkgs=/home/wsh/nix/nixpkgs"
