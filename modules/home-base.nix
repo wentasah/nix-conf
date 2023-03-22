@@ -63,6 +63,7 @@
     mosh
     mtr
     ncdu
+    nil
     ninja
     niv
     nix-doc
