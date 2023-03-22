@@ -141,6 +141,7 @@
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
     htop
+    iftop
     krita
     gwenview
     shotwell
