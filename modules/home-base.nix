@@ -290,6 +290,13 @@
           rm -f -- "$temp_file"
       }
 
+      if test -n "$KITTY_INSTALLATION_DIR"; then
+          export KITTY_SHELL_INTEGRATION="enabled"
+          autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+          kitty-integration
+          unfunction kitty-integration
+      fi
+
       source ${../pkgs/zsh-config/nix-direnv}
 
       # Integrate run-nix-help (https://github.com/NixOS/nix/blob/master/misc/zsh/run-help-nix#L14)
@@ -317,6 +324,16 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      if test -n "$KITTY_INSTALLATION_DIR"; then
+          export KITTY_SHELL_INTEGRATION="enabled"
+          source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
+      fi
+    '';
   };
 
   programs.emacs = {
