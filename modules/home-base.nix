@@ -107,6 +107,7 @@
     sshuttle
     tmux
     trace-cmd
+    uncrustify
     unzip
     valgrind
     websocat
