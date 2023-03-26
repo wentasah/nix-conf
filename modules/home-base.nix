@@ -233,6 +233,9 @@
       bindkey '\eC' fzf-cd-widget
       bindkey '\ec' capitalize-word
 
+      # Restore Alt-L behaviour overridden by Oh-My-Zsh (https://github.com/ohmyzsh/ohmyzsh/issues/5071)
+      bindkey '^[l' down-case-word
+
       source ${pkgs.mc}/libexec/mc/mc.sh
       # if [[ -f /usr/share/mc/bin/mc.sh ]]; then
       #     source /usr/share/mc/bin/mc.sh
