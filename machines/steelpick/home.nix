@@ -266,8 +266,6 @@ in
   };
 
   home.sessionVariables = {
-    JULIA_EDITOR = "emacsclient";
-    GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
     NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
   };
 
