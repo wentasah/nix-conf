@@ -18,6 +18,7 @@
     cachix
     ccls
     cloc
+    cmake-language-server
     colordiff
     csv2latex
     csvtool
