@@ -64,72 +64,76 @@
     in
     {
 
-      nixosConfigurations.steelpick = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./machines/steelpick/configuration.nix
-          nixos-hardware.nixosModules.common-cpu-intel
-          home-manager.nixosModules.home-manager
-          (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
-          {
-            # pin nixpkgs in the system-wide flake registry
-            nix.registry.nixpkgs.flake = nixpkgs;
-            nixpkgs.overlays = common-overlays;
-          }
-        ];
+      nixosConfigurations = {
+        steelpick = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/steelpick/configuration.nix
+            nixos-hardware.nixosModules.common-cpu-intel
+            home-manager.nixosModules.home-manager
+            (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
+            {
+              # pin nixpkgs in the system-wide flake registry
+              nix.registry.nixpkgs.flake = nixpkgs;
+              nixpkgs.overlays = common-overlays;
+            }
+          ];
+        };
+
+        resox = nixpkgs-stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/resox/configuration.nix
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            nixos-hardware.nixosModules.common-gpu-amd
+            home-manager-stable.nixosModules.home-manager
+            envfs.nixosModules.envfs
+            (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
+            {
+              # pin nixpkgs in the system-wide flake registry
+              nix.registry.nixpkgs.flake = nixpkgs-stable;
+              nixpkgs.overlays = common-overlays ++ [
+                (final: prev: {
+                  # Packages from unstable
+                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
+                    d2 julia-stable-bin nurl;
+                })
+              ];
+            }
+          ];
+        };
+
+        turbot = nixpkgs-stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/turbot/configuration.nix
+            ./machines/turbot/hardware-configuration.nix
+          ];
+        };
       };
 
-      nixosConfigurations.resox = nixpkgs-stable.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./machines/resox/configuration.nix
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-gpu-amd
-          home-manager-stable.nixosModules.home-manager
-          envfs.nixosModules.envfs
-          (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
-          {
-            # pin nixpkgs in the system-wide flake registry
-            nix.registry.nixpkgs.flake = nixpkgs-stable;
-            nixpkgs.overlays = common-overlays ++ [
-              (final: prev: {
-                # Packages from unstable
-                inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                  d2 julia-stable-bin nurl;
-              })
-            ];
-          }
-        ];
-      };
+      homeConfigurations = {
+        ritchie = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          modules = [
+            ./modules/home-base.nix
+            ./modules/fonts.nix
+            {
+              # https://nix-community.github.io/home-manager/index.html#sec-usage-configuration
+              home.username = "sojka";
+              home.homeDirectory = "/home/sojka";
+              home.stateVersion = "22.05";
+              programs.home-manager.enable = true;
+              nixpkgs.overlays = common-overlays;
 
-      nixosConfigurations.turbot = nixpkgs-stable.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./machines/turbot/configuration.nix
-          ./machines/turbot/hardware-configuration.nix
-        ];
-      };
-
-      homeConfigurations.ritchie = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        modules = [
-          ./modules/home-base.nix
-          ./modules/fonts.nix
-          {
-            # https://nix-community.github.io/home-manager/index.html#sec-usage-configuration
-            home.username = "sojka";
-            home.homeDirectory = "/home/sojka";
-            home.stateVersion = "22.05";
-            programs.home-manager.enable = true;
-            nixpkgs.overlays = common-overlays;
-
-            programs.zsh.envExtra = ''
+              programs.zsh.envExtra = ''
               if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
                 . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
               fi
             '';
-          }
-        ];
+            }
+          ];
+        };
       };
 
       checks.x86_64-linux = {
