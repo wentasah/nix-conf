@@ -19,18 +19,20 @@ let
         !builtins.elem pkg.pname [ "core" ]
       ));
   };
-  carla = pkgs.callPackage ../../pkgs/carla { };
-  julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { pkgs = pkgs; };
-  lexicon = import ../../pkgs/lexicon.nix { pkgs = pkgs; };
-  cppreference = import ../../pkgs/cppreference.nix { pkgs = pkgs; };
-  pod-mode = import ../../pkgs/pod-mode.nix { pkgs = pkgs; };
-  stm32cubeide = import ../../pkgs/stm32cubeide { pkgs = pkgs; };
-  licenseutils = import ../../pkgs/licenseutils { pkgs = pkgs; };
-  #kernelshark = import ../../pkgs/kernelshark { pkgs = pkgs; };
+  #carla = pkgs.callPackage ../../pkgs/carla { };
+  julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
+  lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
+  wrwb = import ../../pkgs/wrwb.nix { inherit pkgs; };
+  wrenv = import ../../pkgs/wrenv.nix { inherit pkgs; };
+  cppreference = import ../../pkgs/cppreference.nix { inherit pkgs; };
+  pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
+  stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
+  licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
+  #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
-    matplotlib
+    matplotlib tkinter
   ]);
 in
 {
@@ -84,7 +86,10 @@ in
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
-    (ikiwiki.override { docutilsSupport = true; })
+    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
+    (import ../../pkgs/unfs3 { inherit pkgs; })
+    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
+    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
     afew
@@ -107,41 +112,47 @@ in
     clementine
     clinfo
     cmakeWithGui
+    cppreference
     cura
     #cutter # currently broken
     difftastic
+    dnsmasq                     # for documentation
+    docker-compose
     dpkg
     drawio
     dunst
     easyeffects
     exif
     fdupes
-    flameshot
+    firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
+    (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
     flowblade
     #freecad # broken
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
-    gnome3.devhelp
+    gnome.devhelp
     gnome.gnome-tweaks
     gtkterm
     hdf5
     hotspot
     hugo
     inkscape
-    isync
     julia-wrapper
     kdiff3
     keepassxc
     kernelshark
     kicad-small
+    kitty
+    # korganizer akonadi
     krita
     lazydocker
     libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
     libreoffice-fresh
     libsecret
+    licenseutils
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     man-pages
@@ -150,8 +161,9 @@ in
     mytexlive
     nasm
     nix-index
-    #nodePackages.markdownlint-cli
+    nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
+    novaboot                    # from novaboot overlay
     notify-while-running
     notmuch
     notmuch.emacs
@@ -165,24 +177,29 @@ in
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
     playerctl
+    pod-mode
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     python3Packages.jupyter_core
     # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
     python3Packages.python-lsp-server
     qemu
     radare2
+    saleae-logic-2
     screenkey
     shotcut
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
     sterm
+    #stm32cubeide
     tcpreplay
     thunderbird
+    unrar
     usbrelay
     usbutils
     v4l-utils # for qv4l2
     vlc
+    video-trimmer
     wireshark
     wmctrl
     x11docker
@@ -203,7 +220,36 @@ in
     zotero
     zulip
     #zulip-term #broken
-  ];
+
+    # Emacs versions from emacs-overlay
+#     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
+#     (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkNativeComp}/bin/emacs "$@"'')
+
+    # Unfree fonts
+    xkcd-font
+  ]
+  ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
+  ++ (with pkgsCross.aarch64-multiplatform; [
+    buildPackages.gcc
+    (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+  ])
+#   ++ (with pkgsCross.armhf-embedded; [
+#     buildPackages.gcc
+#     (lib.setPrio 21 buildPackages.bintools-unwrapped) # arm-none-eabihf-objdump etc.
+#   ])
+  ++ (with pkgsCross.armv7l-hf-multiplatform; [
+    buildPackages.gcc
+    (lib.setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
+  ])
+  ++ (with pkgsCross.mingwW64; [
+    buildPackages.gcc
+    #(lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+  ])
+#   ++ (with pkgsCross.raspberryPi; [
+#     buildPackages.gcc
+#     (lib.setPrio 20 buildPackages.bintools-unwrapped)
+#   ])
+  ;
 
 
 
@@ -231,9 +277,24 @@ in
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
 
-  services.xsettingsd.enable = true;
+  #services.xsettingsd.enable = true;
+  systemd.user.services.gsd-xsettings = {
+    Unit = {
+      Description = "Gnome SettingsDaemon XSettings";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
+
+    Service = {
+      ExecStart = "${pkgs.gnome.gnome-settings-daemon}/libexec/gsd-xsettings";
+    };
+  };
+
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
+
   #services.lorri.enable = true;
 
   systemd.user.services = {

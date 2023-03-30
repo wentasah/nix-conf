@@ -117,11 +117,12 @@
       "steam-original"
       "steam-run"
 
+      "saleae-logic"
       "slack"
       "teams"
-      "zoom-us" "faac" "zoom" # zoom-us is now just zoom
-      "saleae-logic"
       "unrar"
+      "xkcd-font-unstable"
+      "zoom-us" "faac" "zoom" # zoom-us is now just zoom
     ];
   };
 
