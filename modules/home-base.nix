@@ -54,7 +54,7 @@
     jq
     libxml2 # for xmllint
     ltrace
-    mailutils
+    #mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
     man-pages-posix
     mc
     mdsh
