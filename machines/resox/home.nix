@@ -108,7 +108,7 @@ in
     cask
     chromium
     clang
-    clang-tools
+    clang-tools_15
     clementine
     clinfo
     cmakeWithGui
