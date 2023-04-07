@@ -445,6 +445,7 @@ in
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
+    substituters = [ "https://nix-cache.iid.ciirc.cvut.cz/" ];
     trusted-public-keys = [
       "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
     ];
