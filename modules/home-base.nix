@@ -108,6 +108,7 @@
     sshuttle
     tmux
     trace-cmd
+    (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
     uncrustify
     unzip
     valgrind
@@ -360,7 +361,8 @@
 
     package = (
       if true then
-        pkgs.emacsNativeComp
+        #pkgs.emacsUnstable
+        pkgs.emacsGit
         # pkgs.emacs.override {
 #           withGTK2 = false;
 #           withGTK3 = false;
@@ -370,8 +372,8 @@
       else
         pkgs.emacsPgtkGcc
     ).overrideAttrs(old: {
-      dontStrip = true;
-      #separateDebugInfo = true;
+      #dontStrip = true;
+      separateDebugInfo = true;
     });
   };
 
