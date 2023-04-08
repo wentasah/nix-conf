@@ -445,10 +445,10 @@ in
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
-    substituters = [ "https://nix-cache.iid.ciirc.cvut.cz/" ];
-    trusted-public-keys = [
-      "wsh-ritchie-1:cf+FhlpvnmqrTWKrGMuQo6oQVKFHckDPAWt6oOms7kE="
-    ];
+    builders-use-substitutes = true;
+    experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+    keep-derivations = true;     # Allow building off-line
+    keep-outputs = true;         # Recommended by nix-direnv
   };
   nix.nixPath = [
     #"nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
@@ -456,35 +456,7 @@ in
     "nixos-config=/etc/nixos/configuration.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
     ];
-  nix.buildMachines = [
-    {
-      hostName = "ritchie";
-      #system = "x86_64-linux";
-      # if the builder supports building for multiple architectures,
-      # replace the previous line by, e.g.,
-      # systems = ["x86_64-linux" "aarch64-linux"];
-      systems = ["x86_64-linux" "i686-linux"];
-      maxJobs = 16;
-      speedFactor = 2;
-      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      mandatoryFeatures = [ ];
-    }
-#     {
-#       hostName = "optim";
-#       system = "x86_64-linux";
-#       maxJobs = 16;
-#       speedFactor = 1;
-#       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-#       mandatoryFeatures = [ ];
-#     }
-  ];
   nix.distributedBuilds = true;
-  nix.extraOptions = ''
-    builders-use-substitutes = true
-    experimental-features = nix-command flakes repl-flake
-    keep-derivations = true     # Allow building off-line
-    keep-outputs = true         # Recommended by nix-direnv
-  '';
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 4d";
