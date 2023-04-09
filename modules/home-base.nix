@@ -358,6 +358,7 @@
       pdf-tools
       melpaPackages.julia-mode # for ikiwiki-org-plugin in my blog
       jinx
+      all-the-icons
     ];
 
     package = (
