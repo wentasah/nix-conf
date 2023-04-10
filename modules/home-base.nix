@@ -354,29 +354,40 @@
 #     # Not used since switch to straight
 #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
     extraPackages = epkgs: with epkgs; [
-      vterm
-      pdf-tools
-      melpaPackages.julia-mode # for ikiwiki-org-plugin in my blog
-      jinx
-      all-the-icons
     ];
 
-    package = (
-      if true then
-        #pkgs.emacsUnstable
-        pkgs.emacsGit
-        # pkgs.emacs.override {
-#           withGTK2 = false;
-#           withGTK3 = false;
-#           Xaw3d = pkgs.xorg.libXaw3d;
-#           # lucid -> lucid
-#         }
-      else
-        pkgs.emacsPgtkGcc
-    ).overrideAttrs(old: {
-      #dontStrip = true;
-      separateDebugInfo = true;
-    });
+    package = let
+      emacsWithPackages = (pkgs.emacsPackagesFor ((
+        #pkgs.emacs
+        pkgs.emacsUnstable
+        #pkgs.emacsGit
+          .override {
+            # withGTK2 = false;
+            # withGTK3 = false;
+            # Xaw3d = pkgs.xorg.libXaw3d;
+            # # lucid -> lucid
+            withPgtk = true;
+          }
+      ).overrideAttrs(old: {
+        #dontStrip = true;
+        separateDebugInfo = true;
+      }))).emacsWithPackages;
+    in
+      emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+        all-the-icons
+        forge
+        magit
+        pdf-tools
+      ]) ++ (with epkgs.melpaPackages; [
+        direnv
+        julia-mode # for ikiwiki-org-plugin in my blog
+        nix-mode
+        vterm
+      ]) ++ (with epkgs.elpaPackages; [
+        jinx
+      ]) ++ [
+        pkgs.notmuch   # From main packages set
+      ]);
   };
 
   programs.fzf = {
