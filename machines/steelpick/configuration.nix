@@ -214,6 +214,8 @@ in
 
   programs.bcc.enable = true;
 
+  programs.wshowkeys.enable = true;
+
   virtualisation.virtualbox.host.enable = true;
 
   # Broken

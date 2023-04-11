@@ -19,6 +19,7 @@
     wdisplays
     wev
     wlr-randr
+    wofi
     xdg-desktop-portal-wlr
 #     (swaylock.overrideAttrs(old: {
 #       src = fetchFromGitHub {
@@ -31,4 +32,6 @@
 #       buildInputs = old.buildInputs ++ [ systemd ];
 #     }))
   ];
+
+  services.clipman.enable = true;
 }
