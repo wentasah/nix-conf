@@ -5,7 +5,7 @@
   };
 
   wayland.windowManager.sway = {
-    enable = true;
+    enable = false;             # true collides with hand-written config
     systemdIntegration = true;
   };
 
@@ -13,11 +13,13 @@
     brightnessctl
     cantarell-fonts
     i3status-rust font-awesome_4 powerline-fonts
-    swaylock
-    wev
-    waybar
     networkmanagerapplet # need for tray icons
+    swaylock
+    waybar
     wdisplays
+    wev
+    wlr-randr
+    xdg-desktop-portal-wlr
 #     (swaylock.overrideAttrs(old: {
 #       src = fetchFromGitHub {
 #         owner = "swaywm";
