@@ -124,7 +124,7 @@ in
     easyeffects
     exif
     fdupes
-    firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
+    firefox
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
     flowblade
