@@ -143,6 +143,7 @@ in
     hugo
     inkscape
     julia-wrapper
+    kdenlive
     kdiff3
     keepassxc
     kernelshark
@@ -165,6 +166,7 @@ in
     mytexlive
     nasm
     nix-index
+    nix-init
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
     novaboot                    # from novaboot overlay
