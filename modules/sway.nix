@@ -33,7 +33,6 @@
     powerline-fonts
     networkmanagerapplet # need for tray icons
     swaylock
-    waybar
     wdisplays
     wev
     wl-clipboard
@@ -41,6 +40,7 @@
     wofi
     rofi
     xdg-desktop-portal-wlr
+    ydotool
     #     (swaylock.overrideAttrs(old: {
     #       src = fetchFromGitHub {
     #         owner = "swaywm";
@@ -56,21 +56,11 @@
   services.clipman.enable = true;
   services.network-manager-applet.enable = true;
 
-  # Define the same systemd targets as home-manager, but without requiring managing
-  systemd.user.targets.sway-session = {
-    Unit = {
-      Description = "sway compositor session";
-      Documentation = [ "man:systemd.special(7)" ];
-      BindsTo = [ "graphical-session.target" ];
-      Wants = [ "graphical-session-pre.target" ];
-      After = [ "graphical-session-pre.target" ];
-    };
-  };
-
-  systemd.user.targets.tray = {
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
+  programs.waybar = {
+    enable = true;
+    systemd = {
+      enable = true;
+      target = "sway-session.target";
     };
   };
 }
