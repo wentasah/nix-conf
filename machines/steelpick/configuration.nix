@@ -396,7 +396,7 @@ in
 #   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
 #   programs.ssh.askPassword = lib.mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
 
-  services.autorandr.enable = true;
+  #services.autorandr.enable = true;
 
   services.grafana = {
     enable = true;
