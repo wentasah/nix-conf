@@ -9,8 +9,19 @@
   };
 
   wayland.windowManager.sway = {
-    enable = false; # true collides with hand-written config
+    enable = true;
+    config = null; # don't generate the config automatically
+    extraConfigEarly = ''
+      include config.local
+    '';
     systemdIntegration = true;
+    extraSessionCommands = ''
+      PATH=$HOME/bin:$PATH
+    '';
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
   };
 
   home.packages = with pkgs; [

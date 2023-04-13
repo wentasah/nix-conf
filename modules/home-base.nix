@@ -169,6 +169,7 @@
     EDITOR = "emacsclient-tty";
     JULIA_EDITOR = "emacsclient";
     GIT_PAGER = "less -FRX";    # overrides PAGER set by oh-my-zsh
+    SYSTEMD_COLORS = 16;        # don't use yellow color (from 256-color palette) on white background
   };
 
   home.sessionPath = [ "$HOME/bin" ];

@@ -207,6 +207,7 @@ in
       gtk = true;
     };
   };
+  xdg.portal.enable = true;     # Screen sharing under sway
 
   programs.adb.enable = true;
 
@@ -388,9 +389,18 @@ in
   services.xserver.libinput.enable = true;
 
   #services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.defaultSession = "sway";
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "''${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+      };
+    };
+  };
 
 #   services.xserver.desktopManager.plasma5.enable = true;
 #   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
