@@ -25,6 +25,7 @@
     waybar
     wdisplays
     wev
+    wl-clipboard
     wlr-randr
     wofi
     rofi
