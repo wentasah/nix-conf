@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     brightnessctl
     cantarell-fonts
+    swappy grim slurp
     i3status-rust
     font-awesome_4
     powerline-fonts
@@ -42,7 +43,6 @@
 
   services.clipman.enable = true;
   services.network-manager-applet.enable = true;
-
 
   # Define the same systemd targets as home-manager, but without requiring managing
   systemd.user.targets.sway-session = {

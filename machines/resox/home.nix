@@ -125,7 +125,8 @@ in
     exif
     fdupes
     firefox
-    (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
+    # (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
+    #flameshot # crashes under sway!
     flex
     flowblade
     #freecad # broken
