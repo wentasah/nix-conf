@@ -17,6 +17,8 @@
     systemdIntegration = true;
     extraSessionCommands = ''
       PATH=$HOME/bin:$PATH
+      # We want out services to have the same PATH as our session
+      systemctl --user set-environment PATH=$PATH
     '';
     wrapperFeatures = {
       base = true;

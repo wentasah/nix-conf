@@ -15,7 +15,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.sway}/bin/sway --config ${swayConfig}";
+        command = "dbus-run-session ${pkgs.sway}/bin/sway --config ${swayConfig}";
       };
     };
   };
