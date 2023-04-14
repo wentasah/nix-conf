@@ -27,7 +27,6 @@ in
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "skypeforlinux"
         "slack"
-        "teams"
         "zoom-us" "faac" "zoom" # zoom-us is now just zoom
         "teamviewer"
         "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
@@ -192,7 +191,6 @@ in
     enable = true;
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
-      teams = "${pkgs.teams}/bin/teams";
       #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
       skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };

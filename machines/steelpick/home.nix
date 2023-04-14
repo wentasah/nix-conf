@@ -4,7 +4,6 @@ let
   lib = pkgs.lib;
   firejailedBinaries = {        # TODO: create wrapper automatically
 #     slack = "${pkgs.slack}/bin/slack";
-#     teams = "${pkgs.teams}/bin/teams";
 #     skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
   };
   texlive = pkgs.texlive.override { python3 = (pkgs.python3.withPackages (ps: [ ps.pygments ])); };
@@ -56,7 +55,6 @@ in
         "unrar"
 #         "skypeforlinux"
 #         "slack"
-#         "teams"
       ];
       allowBroken = false;
       allowUnsupportedSystem = false;
@@ -84,7 +82,6 @@ in
     #gtkterm
     #jupyter
     #slack
-    #teams
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     (gnuplot_qt.override { withCaca = true; })
     (hiPrio gcc) # Prio over clang's c++ etc
@@ -109,7 +106,6 @@ in
     can-utils
     carla
     cask
-    chromium
     clang
     clang-tools_15
     clementine
@@ -282,6 +278,14 @@ in
     #(callPackage ./obs-shaderfilter-plus.nix {})
     #(callPackage ~/src/obs/obs-shaderfilter/obs-shaderfilter.nix {})
   ];
+
+  programs.chromium = {
+    enable = true;
+    commandLineArgs = [
+      "--ozone-platform-hint=auto"
+      "--enable-features=TouchpadOverscrollHistoryNavigation"
+    ];
+  };
 
   #services.xsettingsd.enable = true;
   systemd.user.services.gsd-xsettings = {
