@@ -16,7 +16,7 @@
     '';
     systemdIntegration = true;
     extraSessionCommands = ''
-      PATH=$HOME/bin:$PATH
+      . /etc/set-environment
       # We want out services to have the same PATH as our session
       systemctl --user set-environment PATH=$PATH
     '';
