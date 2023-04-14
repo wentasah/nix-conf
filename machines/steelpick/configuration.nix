@@ -211,7 +211,12 @@ in
   xdg.portal = {
     enable = true;     # Screen sharing under sway
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = lib.mkForce [ # override nixos/modules/services/x11/desktop-managers/gnome.nix
+      # gnome portal breaks things in sway (https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start)
+      # we still want gnome apps, but don't care about working gnome desktop
+      #pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
   security.polkit.enable = true; # Needed by sway
 
@@ -403,7 +408,7 @@ in
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.defaultSession = "sway";
   services.xserver.windowManager.i3.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true; # gnome collides with xdg-desktop-portal-gtk and it then breaks things in sway (https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start)
+  services.xserver.desktopManager.gnome.enable = true;
 
 #   services.xserver.desktopManager.plasma5.enable = true;
 #   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
