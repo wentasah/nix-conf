@@ -119,7 +119,7 @@ in
   environment.variables.EDITOR = "vim";
 
   documentation.dev.enable = true;
-  documentation.man.generateCaches = true;
+  #documentation.man.generateCaches = true;
 
   environment.extraOutputsToInstall = [ "man" "info" ];
 

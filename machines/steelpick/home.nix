@@ -273,7 +273,7 @@ in
   };
 
   programs.man.enable = true;
-  programs.man.generateCaches = true;
+  #programs.man.generateCaches = true;
   programs.info.enable = true;
 
   programs.obs-studio.enable = true;
