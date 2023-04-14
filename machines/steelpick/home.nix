@@ -203,6 +203,7 @@ in
     vlc
     video-trimmer
     wireshark
+    wol
     wmctrl
     wrenv
     wrwb
