@@ -403,7 +403,7 @@ in
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.defaultSession = "sway";
   services.xserver.windowManager.i3.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true; # gnome collides with xdg-desktop-portal-gtk and it then breaks things in sway (https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start)
 
 #   services.xserver.desktopManager.plasma5.enable = true;
 #   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
