@@ -474,11 +474,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1681655940,
-        "narHash": "sha256-v4PF6MUzacTmhO9ERsbnN+cybcwabpVlw6Gu/vi1qYM=",
+        "lastModified": 1681814843,
+        "narHash": "sha256-wUdOzIKNUYgLTu0BSwsED28dvEeXPHo8mgFufId1pf0=",
         "owner": "wentasah",
         "repo": "shdw",
-        "rev": "c01fa62a5a5fb961d266b509ea4453522685bfbc",
+        "rev": "115b6532ad227568265699bdaac7fda84f45ae3a",
         "type": "github"
       },
       "original": {
