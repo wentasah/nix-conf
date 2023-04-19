@@ -32,16 +32,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1681903817,
-        "narHash": "sha256-Qo3p5t/Vr0FkDdImSRDR/G46Kw/BSl3ew0ddcpQSdDY=",
-        "owner": "wentasah",
+        "lastModified": 1681123469,
+        "narHash": "sha256-8W+Eb7Zpo2+ngfSriLTPpN3ZYc0kSeT+ulvT5FErOco=",
+        "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "aa8db17df73e487444caf47b331b9215187859d3",
+        "rev": "42223accdafd3e9803e2ce955c85903c86ab2b1b",
         "type": "github"
       },
       "original": {
-        "owner": "wentasah",
-        "ref": "nativecomp-unstable-hack",
+        "owner": "nix-community",
         "repo": "emacs-overlay",
         "type": "github"
       }

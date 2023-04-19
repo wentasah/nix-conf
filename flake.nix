@@ -5,9 +5,7 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
     devenv = { url = github:cachix/devenv/v0.3; inputs.nixpkgs.follows = "nixpkgs"; };
-    emacs-overlay = { url = # "github:nix-community/emacs-overlay"
-      # See https://github.com/nix-community/emacs-overlay/issues/320
-      "github:wentasah/emacs-overlay/nativecomp-unstable-hack"; inputs.nixpkgs.follows = "nixpkgs"; };
+    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
     envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-22.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
