@@ -517,7 +517,3 @@ in
   system.stateVersion = "21.03"; # Did you read the comment?
 
 }
-
-# Local Variables:
-# compile-command: "sudo -A nixos-rebuild switch"
-# End:

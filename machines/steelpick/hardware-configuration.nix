@@ -34,7 +34,3 @@
     intel-gpu-tools
   ];
 }
-
-# Local Variables:
-# compile-command: "nixos-rebuild switch"
-# End:
