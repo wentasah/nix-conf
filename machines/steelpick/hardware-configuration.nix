@@ -16,7 +16,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/cb76e15c-a0d0-4b3e-983c-48fe2babc765";
+    { device = "/dev/disk/by-uuid/c108ef9c-475d-4ac9-9376-af0dd89be0ce";
       fsType = "btrfs";
       options = [
         "subvol=nixos"
@@ -25,7 +25,7 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/7a925611-876c-4a2d-98aa-ced6f63bcdf2"; }
+    [ { device = "/dev/disk/by-uuid/fc19d75e-e64e-4adf-a3e2-791f99ab889a"; }
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
