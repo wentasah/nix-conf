@@ -223,6 +223,7 @@ in
       # we still want gnome apps, but don't care about working gnome desktop
       #pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
     ];
   };
   security.polkit.enable = true; # Needed by sway
