@@ -4,14 +4,16 @@
 
 { config, pkgs, lib, ... }:
 
-let myOverlay = self: super:
-      rec {
-        #i3 = import ../../pkgs/i3 { pkgs = super; };
-      };
+let
+  myOverlay = self: super:
+    rec {
+      #i3 = import ../../pkgs/i3 { pkgs = super; };
+    };
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
       ./novaboot.nix
@@ -27,9 +29,13 @@ in
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "skypeforlinux"
         "slack"
-        "zoom-us" "faac" "zoom" # zoom-us is now just zoom
+        "zoom-us"
+        "faac"
+        "zoom" # zoom-us is now just zoom
         "teamviewer"
-        "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+        "brscan4"
+        "brscan4-etc-files"
+        "brother-udev-rule-type1"
         "mfcl2700dwlpr"
         "Oracle_VM_VirtualBox_Extension_Pack"
         "kyocera-phase5"
@@ -104,7 +110,7 @@ in
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
-  i18n.supportedLocales =  [ "en_US.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "cs_CZ.UTF-8/UTF-8" ];
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "cs_CZ.UTF-8/UTF-8" ];
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -209,9 +215,10 @@ in
     };
   };
   xdg.portal = {
-    enable = true;     # Screen sharing under sway
+    enable = true; # Screen sharing under sway
     # gtk portal needed to make gtk apps happy
-    extraPortals = lib.mkForce [ # override nixos/modules/services/x11/desktop-managers/gnome.nix
+    extraPortals = lib.mkForce [
+      # override nixos/modules/services/x11/desktop-managers/gnome.nix
       # gnome portal breaks things in sway (https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start)
       # we still want gnome apps, but don't care about working gnome desktop
       #pkgs.xdg-desktop-portal-gnome
@@ -260,8 +267,8 @@ in
 
   services.printing.enable = true;
   services.printing.drivers = [
-    (pkgs.callPackage ./../../pkgs/kyocera-phase5.nix {})
-    (pkgs.callPackage ./../../pkgs/kmbeu {})
+    (pkgs.callPackage ./../../pkgs/kyocera-phase5.nix { })
+    (pkgs.callPackage ./../../pkgs/kmbeu { })
   ];
 
   #services.teamviewer.enable = true;
@@ -274,7 +281,7 @@ in
     { domain = "@jackaudio"; type = "-"; item = "rtprio"; value = "99"; }
     { domain = "@jackaudio"; type = "-"; item = "memlock"; value = "unlimited"; }
   ];
-  users.groups.jackaudio = {};
+  users.groups.jackaudio = { };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -378,7 +385,7 @@ in
       BindReadOnly = "/tmp/.X11-unix";
     };
     networkConfig = {
-      VirtualEthernet = false;  # Use host networking
+      VirtualEthernet = false; # Use host networking
     };
   };
 
@@ -438,7 +445,18 @@ in
   users.users = {
     wsh = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "docker" "dialout" "scanner" "lp" "jackaudio" "adbusers" "vboxusers" "lxd" ];
+      extraGroups = [
+        "adbusers"
+        "dialout"
+        "docker"
+        "jackaudio"
+        "lp"
+        "lxd"
+        "networkmanager"
+        "scanner"
+        "vboxusers"
+        "wheel"
+      ];
       uid = 1000;
       group = "wsh";
       shell = pkgs.zsh;
@@ -467,15 +485,15 @@ in
     auto-optimise-store = true;
     builders-use-substitutes = true;
     experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-    keep-derivations = true;     # Allow building off-line
-    keep-outputs = true;         # Recommended by nix-direnv
+    keep-derivations = true; # Allow building off-line
+    keep-outputs = true; # Recommended by nix-direnv
   };
   nix.nixPath = [
     #"nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "nixpkgs=/home/wsh/nix/nixpkgs"
     "nixos-config=/etc/nixos/configuration.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
-    ];
+  ];
   nix.distributedBuilds = true;
   nix.gc = {
     automatic = true;
