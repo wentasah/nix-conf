@@ -21,6 +21,7 @@ in
       ../../modules/fastdds.nix
       ../../modules/xkb-wsh.nix
       ../../modules/qt5.nix
+      ../../modules/ydotool.nix
       #../../modules/greetd.nix
     ];
 
@@ -450,6 +451,7 @@ in
         "adbusers"
         "dialout"
         "docker"
+        "input"
         "jackaudio"
         "lp"
         "lxd"

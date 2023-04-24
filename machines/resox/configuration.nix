@@ -11,6 +11,7 @@
       ../../modules/home-printer.nix
       ../../modules/xkb-wsh.nix
       ../../modules/fastdds.nix
+      ../../modules/ydotool.nix
     ];
 
   #services.emacs.package = pkgs.emacsGcc;
