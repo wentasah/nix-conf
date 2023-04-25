@@ -90,10 +90,24 @@ update_home_manager() {
     was_head_changed git pull --quiet
 }
 
+update_flake_input() {
+    cd ~/nix/conf
+    local flake_input=$1
+    local old_hash=$(git hash-object flake.lock)
+    nix flake lock --update-input "$flake_input"
+    local new_hash=$(git hash-object flake.lock)
+    if [[ $old_hash != $new_hash ]]; then
+        echo "!!! Flake input $flake_input changed"
+        return 0
+    fi
+    return 1
+}
+
 updated() {
     local result=1
     update_nix_conf && result=0
     #update_home_manager && result=0
+    update_flake_input emacs-overlay && result=0
     update_nixpkgs && result=0
     if [[ $result = 0 ]]; then
         # Reset failed build counter
