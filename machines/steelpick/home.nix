@@ -151,7 +151,7 @@ in
     lexicon
     libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
-    libreoffice-fresh
+    libreoffice-fresh libreoffice-fresh.unwrapped.jdk
     libsecret
     licenseutils
     linuxPackages.perf
