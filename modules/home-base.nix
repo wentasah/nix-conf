@@ -368,6 +368,7 @@
             # Xaw3d = pkgs.xorg.libXaw3d;
             # # lucid -> lucid
             withPgtk = true;
+            treeSitterPlugins = pkgs.tree-sitter.allGrammars;
           }
       ).overrideAttrs(old: {
         #dontStrip = true;
