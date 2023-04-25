@@ -17,6 +17,7 @@
     systemdIntegration = true;
     extraSessionCommands = ''
       . /etc/set-environment
+      . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       # We want out services to have the same PATH as our session
       systemctl --user set-environment PATH=$PATH
     '';
