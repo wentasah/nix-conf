@@ -451,12 +451,12 @@ in
         "adbusers"
         "dialout"
         "docker"
-        "input"
         "jackaudio"
         "lp"
         "lxd"
         "networkmanager"
         "scanner"
+        "uinput"
         "vboxusers"
         "wheel"
       ];
