@@ -369,11 +369,13 @@
             # Xaw3d = pkgs.xorg.libXaw3d;
             # # lucid -> lucid
             withPgtk = true;
-            treeSitterPlugins = pkgs.tree-sitter.allGrammars;
           }
       ).overrideAttrs(old: {
         #dontStrip = true;
         separateDebugInfo = true;
+        passthru = old.passthru // {
+          treeSitter = true;
+        };
       }))).emacsWithPackages;
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
@@ -388,7 +390,9 @@
         vterm
       ]) ++ (with epkgs.elpaPackages; [
         jinx
-      ]) ++ [
+      ]) ++ (with epkgs.manualPackages; [
+        treesit-grammars.with-all-grammars
+      ]) ++[
         pkgs.notmuch   # From main packages set
       ]);
   };
