@@ -390,9 +390,9 @@
         vterm
       ]) ++ (with epkgs.elpaPackages; [
         jinx
-      ]) ++ (with epkgs.manualPackages; [
-        treesit-grammars.with-all-grammars
-      ]) ++[
+      ]) ++ (if epkgs.manualPackages ? treesit-grammars then [
+        epkgs.manualPackages.treesit-grammars.with-all-grammars
+      ] else []) ++[
         pkgs.notmuch   # From main packages set
       ]);
   };
