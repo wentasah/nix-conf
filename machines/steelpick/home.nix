@@ -322,10 +322,12 @@ in
 
     backup-overleaf = {
       Unit = {
-        Description = "Backup overleaf";
+        Description = "Backup overleaf repos";
       };
       Service = {
-        ExecStart = "${pkgs.git}/bin/git --git-dir=%h/thermac/D5.3-overleaf fetch --all";
+        ExecCondition = "${pkgs.bash}/bin/bash -c '! nmcli --get-values GENERAL.METERED dev show|grep -F yes'";
+        ExecStart = "%h/bin/fetch-all-overleaf";
+        WorkingDirectory = "%h/papers/_in-progress";
         Environment = "SSH_ASKPASS=";
       };
     };
