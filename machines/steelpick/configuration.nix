@@ -118,7 +118,9 @@ in
   # };
 
   # Set your time zone.
-  time.timeZone = "Europe/Prague";
+  # time.timeZone = "Europe/Prague";
+  services.automatic-timezoned.enable = true;
+  services.geoclue2.enableDemoAgent = lib.mkForce true;
 
   fonts.enableGhostscriptFonts = true;
 
