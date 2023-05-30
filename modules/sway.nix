@@ -41,6 +41,7 @@
     wl-clipboard
     wlr-randr
     wofi
+    way-displays
     rofi
     xdg-desktop-portal-wlr
     ydotool
