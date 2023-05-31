@@ -174,6 +174,27 @@
     };
   };
 
+  programs.sway = {
+    enable = true;
+    extraSessionCommands = ''
+      PATH=$HOME/bin:$PATH
+    '';
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
+  };
+  # xdg.portal = {
+  #   enable = true;     # Screen sharing under sway
+  #   # gtk portal needed to make gtk apps happy
+  #   extraPortals = lib.mkForce [ # override nixos/modules/services/x11/desktop-managers/gnome.nix
+  #     # gnome portal breaks things in sway (https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start)
+  #     # we still want gnome apps, but don't care about working gnome desktop
+  #     #pkgs.xdg-desktop-portal-gnome
+  #     pkgs.xdg-desktop-portal-gtk
+  #   ];
+  # };
+  
   fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
     noto-fonts
@@ -189,7 +210,7 @@
   documentation = {
     enable = true;
     man.enable = true;
-    man.generateCaches = true;
+    #man.generateCaches = true;
     info.enable = true;
     doc.enable = true;
     dev.enable = true;

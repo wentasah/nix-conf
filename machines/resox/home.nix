@@ -38,7 +38,8 @@ in
 {
   imports = [
     ../../modules/home-base.nix
-    ../../modules/i3.nix
+    #../../modules/i3.nix
+    ../../modules/sway.nix
     ../../modules/gdu.nix
     ../../modules/go.nix
     ../../modules/git-annex.nix
@@ -266,7 +267,7 @@ in
   };
 
   programs.man.enable = true;
-  programs.man.generateCaches = true;
+  #programs.man.generateCaches = true;
   programs.info.enable = true;
 
   programs.obs-studio.enable = true;
