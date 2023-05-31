@@ -106,6 +106,7 @@
     sqlite-interactive
     sshfs
     sshuttle
+    graphviz
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
