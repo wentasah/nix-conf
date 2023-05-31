@@ -122,7 +122,7 @@
       "slack"
       "teams"
       "unrar"
-      "xkcd-font-unstable"
+      "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
     ];
   };
@@ -270,7 +270,9 @@
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    forwardX11 = true;
+    settings = {
+      X11Forwarding = true;
+    };
   };
 
   programs.ssh = {
