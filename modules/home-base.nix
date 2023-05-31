@@ -44,6 +44,7 @@
     gnumake
     gnupg
     gpg-tui
+    graphviz
     help2man
     htop
     hunspellDicts.cs_CZ
@@ -106,7 +107,6 @@
     sqlite-interactive
     sshfs
     sshuttle
-    graphviz
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
