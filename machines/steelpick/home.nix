@@ -228,7 +228,7 @@ in
 
     # Emacs versions from emacs-overlay
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
-    (pkgs.writeShellScriptBin "emacs-git" ''exec ${emacsGit}/bin/emacs "$@"'')
+    #(pkgs.writeShellScriptBin "emacs-git" ''exec ${emacsGit}/bin/emacs "$@"'')
 
     # Unfree fonts
     xkcd-font
