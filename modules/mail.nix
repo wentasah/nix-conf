@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    isync
+    (isync.override { withCyrusSaslXoauth2 = true; })
     oauth2ms
   ];
 }
