@@ -183,6 +183,8 @@ build() {
             echo "  sudo nixos-rebuild switch $override_input"
         else
             (
+                cp conf/flake.lock out/"$HOST"
+
                 cd nixpkgs
                 if git diff --quiet wentasah/ci; then
                     return
@@ -293,6 +295,9 @@ case "$cmd" in
         fi;;
     "build")
         build "$@";;
+    "copy")
+        rsync ritchie:nix/out/steelpick/flake.lock ~/nix/conf
+        nix copy -j16 --from ssh://ritchie "$(ssh ritchie readlink nix/out/steelpick/flake)";;
     "merge")
         merge_nixpkgs_topics_into_master;;
     "switch")
