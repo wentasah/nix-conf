@@ -226,6 +226,9 @@ in
     zulip
     #zulip-term #broken
 
+    # Nautilus python extensions
+    nautilus-open-any-terminal
+
     # Emacs versions from emacs-overlay
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacsUnstable}/bin/emacs "$@"'')
     #(pkgs.writeShellScriptBin "emacs-git" ''exec ${emacsGit}/bin/emacs "$@"'')

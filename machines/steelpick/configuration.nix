@@ -151,7 +151,7 @@ in
     wget
     elinks
     stlink
-    gnome.nautilus-python nautilus-open-any-terminal
+    gnome.nautilus-python
     glibcInfo
     psmisc
     ddrescue
