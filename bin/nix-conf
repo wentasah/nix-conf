@@ -41,7 +41,7 @@ update_nix_conf() {
         WAS_RERUN=0 exec $0
     fi
     if [[ $flake_lock_dirty == 1 ]] && ! git stash pop --quiet; then
-        # Don't try to resolve the conflict. In the work case, we'll
+        # Don't try to resolve the conflict. In the worst case, we'll
         # run an unnecessary rebuild.
         git restore flake.lock
         git stash drop
