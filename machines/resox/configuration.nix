@@ -36,7 +36,7 @@
     "v4l2loopback"
   ];
 
-  boot.binfmt.emulatedSystems = [ "armv7l-linux" ];
+  boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
 
   networking.hostName = "resox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

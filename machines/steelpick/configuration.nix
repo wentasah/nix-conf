@@ -72,6 +72,8 @@ in
     "kernel.perf_event_paranoid" = 0; # Enable perf for non-root
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking.hostName = "steelpick"; # Define your hostname.
   networking.domain = "2x.cz";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
