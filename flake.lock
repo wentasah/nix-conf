@@ -396,11 +396,11 @@
     "nixseparatedebuginfod": {
       "flake": false,
       "locked": {
-        "lastModified": 1684756800,
-        "narHash": "sha256-3FlvbYbznNjxfloMzsAGT3GQAsRiKO4IHaCzTmNL2dU=",
+        "lastModified": 1687008871,
+        "narHash": "sha256-8G0QnpqzRFdKuT5sLgI8SZusESWLEFL59iEuZ0ZMsYo=",
         "owner": "symphorien",
         "repo": "nixseparatedebuginfod",
-        "rev": "a0b7c22f77c0a08cfdf2c204a3a64a2f1f8a943e",
+        "rev": "b5129f826ca37dd30f14f6d868a796d8e7697065",
         "type": "github"
       },
       "original": {
