@@ -278,6 +278,8 @@ in
     (pkgs.callPackage ./../../pkgs/kmbeu { })
   ];
 
+  services.tailscale.enable = true;
+
   #services.teamviewer.enable = true;
 
   #services.jack.jackd.enable = true;
