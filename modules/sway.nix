@@ -15,7 +15,7 @@
       include config.local
     '';
     systemdIntegration = true;
-    # new: systemd.enable = true;
+    # systemd.enable = true; # Stable requires the above, unstable warns about it. Switch to this for 23.11.
     extraSessionCommands = ''
       . /etc/set-environment
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
