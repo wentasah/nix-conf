@@ -362,7 +362,7 @@
     package = let
       emacsWithPackages = (pkgs.emacsPackagesFor ((
         #pkgs.emacs
-        pkgs.emacsUnstable
+        pkgs.emacs-unstable
         #pkgs.emacsGit
           .override {
             # withGTK2 = false;

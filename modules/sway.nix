@@ -14,7 +14,8 @@
     extraConfigEarly = ''
       include config.local
     '';
-    systemd.enable = true;
+    systemdIntegration = true;
+    # new: systemd.enable = true;
     extraSessionCommands = ''
       . /etc/set-environment
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
