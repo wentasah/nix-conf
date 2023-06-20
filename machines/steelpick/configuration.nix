@@ -490,6 +490,7 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
+  nix.package = pkgs.nixUnstable;
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
