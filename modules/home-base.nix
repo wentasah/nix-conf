@@ -19,6 +19,7 @@
     ccls
     cloc
     cmake-language-server
+    colmena
     colordiff
     csv2latex
     csvtool
