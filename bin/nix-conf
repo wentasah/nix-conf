@@ -252,7 +252,8 @@ add_pr() {
     git fetch origin refs/pull/"$pr"/head
     if git merge-base --is-ancestor nixos-unstable FETCH_HEAD; then
         # Rebase PR's commits on nixos-unstable
-        add_commits "$branch" FETCH_HEAD ^origin/master ^origin/staging
+        # shellcheck disable=SC2046
+        add_commits "$branch" $(gh pr view --json commits "$pr" | jq --raw-output '.commits[].oid')
     else
         # Merge PR's commits
         git branch "$branch" FETCH_HEAD
