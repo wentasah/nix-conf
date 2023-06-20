@@ -249,8 +249,7 @@ in
 
   # List services that you want to enable:
 
-  # broken 2023-06-18
-  #services.nixseparatedebuginfod.enable = true;
+  services.nixseparatedebuginfod.enable = true;
 
   services.nscd.enableNsncd = true; # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.11-highlights
 

@@ -394,13 +394,18 @@
       }
     },
     "nixseparatedebuginfod": {
-      "flake": false,
+      "inputs": {
+        "flake-utils": "flake-utils_4",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1687008871,
-        "narHash": "sha256-8G0QnpqzRFdKuT5sLgI8SZusESWLEFL59iEuZ0ZMsYo=",
+        "lastModified": 1687089600,
+        "narHash": "sha256-Na4biGGcbKalhb2dvT/uh2t0fLI4voL6jZa1KKs8MkE=",
         "owner": "symphorien",
         "repo": "nixseparatedebuginfod",
-        "rev": "b5129f826ca37dd30f14f6d868a796d8e7697065",
+        "rev": "04562dd327ff04b5ccbaa7f99cd6f46cb9ecf6d7",
         "type": "github"
       },
       "original": {

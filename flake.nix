@@ -15,7 +15,7 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; flake = false; };
+    nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -71,7 +71,7 @@
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
             home-manager.nixosModules.home-manager
-            (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
+            inputs.nixseparatedebuginfod.nixosModules.default
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
@@ -88,7 +88,7 @@
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
             envfs.nixosModules.envfs
-            (import (inputs.nixseparatedebuginfod.outPath + "/module.nix"))
+            inputs.nixseparatedebuginfod.nixosModules.default
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
