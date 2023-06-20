@@ -17,3 +17,16 @@
 
       nix repl>:lf /etc/nixos
       nix repl>nixosConfigurations.<hostname>
+
+- Allow accessing SSH remote stores (e.g. for using remote builders)
+  on non-NixOS distribution (e.g. Debian):
+
+  ```sh
+  echo 'SetEnv PATH=/nix/var/nix/profiles/default/bin:/usr/bin:/bin:/usr/sbin:/sbin' > /etc/ssh/sshd_config.d/nix-path.conf
+  ```
+
+  Check whether it works by:
+
+  ```sh
+  nix store ping --store ssh://host
+  ```
