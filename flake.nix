@@ -16,6 +16,8 @@
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixpkgs-update = { url = "github:ryantm/nixpkgs-update"; # inputs.nixpkgs.follows = "nixpkgs";
+                     };
   };
 
   outputs =
@@ -45,6 +47,7 @@
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
           inherit (devenv.packages.x86_64-linux) devenv;
+          inherit (inputs.nixpkgs-update.packages.x86_64-linux) nixpkgs-update;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           mc = (prev.mc.overrideAttrs (old: {

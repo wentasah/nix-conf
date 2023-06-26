@@ -80,6 +80,7 @@
     nixos-shell
     nixpkgs-fmt
     nixpkgs-review
+    nixpkgs-update
     nurl
     nvd
     odt2txt
