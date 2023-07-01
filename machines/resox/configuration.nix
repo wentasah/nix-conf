@@ -342,6 +342,14 @@
 
   services.flatpak.enable = true;
 
+  services.hydra = {
+    enable = true;
+    hydraURL = "http://localhost:3000";
+    notificationSender = "hydra@localhost";
+    buildMachinesFiles = [];
+    useSubstitutes = true;
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
