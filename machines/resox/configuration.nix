@@ -144,6 +144,8 @@
     gitAndTools.gitFull
     htop
     iftop
+    kitty.terminfo
+    kitty.shell_integration
     krita
     gwenview
     shotwell
