@@ -490,7 +490,15 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
-  nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nixUnstable.overrideAttrs (old: {
+    patches = old.patches ++ [
+      # nix flakes metadata: Show lastModified timestamp for each input
+      (pkgs.fetchpatch {
+        url = "https://github.com/wentasah/nix/commit/8702614ec23d8491b08260e95239246886b65c97.patch";
+        hash = "sha256-hcKBeqmNCZlltPGXUSiVKp8M3IzGse8PfsGzr1YRklo=";
+      })
+    ];
+  });
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
