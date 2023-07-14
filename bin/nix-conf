@@ -138,6 +138,16 @@ failed_recently() {
     fi
 }
 
+print_switch_instructions() {
+    local override_input=$1
+    echo "Diff from current configuration:"
+    nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
+    echo
+    echo "Run one of the following to switch the configuration:"
+    echo "  sudo nix-conf switch"
+    echo "  sudo nixos-rebuild switch $override_input"
+}
+
 build() {
     cd ~/nix
 
@@ -175,12 +185,7 @@ build() {
         fi
 
         if [[ $(hostname) = "$HOST" ]]; then
-            echo "Diff from current configuration:"
-            nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
-            echo
-            echo "Run one of the following to switch the configuration:"
-            echo "  sudo nix-conf switch"
-            echo "  sudo nixos-rebuild switch $override_input"
+            print_switch_instructions "$override_input"
         else
             (
                 cp conf/flake.lock out/"$HOST"
@@ -297,8 +302,13 @@ case "$cmd" in
     "build")
         build "$@";;
     "copy")
+        update_nixpkgs || :
         rsync ritchie:nix/out/steelpick/flake.lock ~/nix/conf
-        nix copy -j16 --from ssh://ritchie "$(ssh ritchie readlink nix/out/steelpick/flake)";;
+        O=$(ssh ritchie readlink nix/out/steelpick/flake)
+        nix copy -j16 --from ssh://ritchie "$O"
+        ln -sfn "$O" ~/nix/out/"$HOST"/flake
+        print_switch_instructions "TODO"
+        ;;
     "merge")
         merge_nixpkgs_topics_into_master;;
     "switch")
