@@ -192,6 +192,8 @@
       gst   = "git status";
       j     = "julia --project --thread=auto";
       jc    = "journalctl";
+      jcu   = "journalctl --user";
+      kssh  = "kitty +kitten ssh";
       l     = "exa -la --group --header";
       lg    = "exa -la --group --header --git";
       ln    = "nocorrect ln"; # no spelling correction on ln
