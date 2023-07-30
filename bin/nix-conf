@@ -229,7 +229,7 @@ $(nix store diff-closures $old_version out/"$HOST"/flake | ansifilter | sed -e '
 switch() {
     local O="/home/${SUDO_USER:-$USER}/nix/out/$HOST/flake"
     nix-env -p /nix/var/nix/profiles/system --set "$O"
-    "$O"/bin/switch-to-configuration switch
+    "$O"/bin/switch-to-configuration "${1:-switch}"
 }
 
 push() {
@@ -313,6 +313,8 @@ case "$cmd" in
         merge_nixpkgs_topics_into_master;;
     "switch")
         switch;;
+    "boot")
+        switch boot;;
     "push")
         push;;
     "add-pr")
