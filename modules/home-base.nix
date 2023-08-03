@@ -132,6 +132,19 @@
     ".config/bat/config".text = ''
         --theme=gruvbox-light
     '';
+    "ec" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        if [ -n "''${DISPLAY}''${WAYLAND_DISPLAY}" ]; then
+            args="--no-wait"
+            [ -z "$1" ] && args="$args --create-frame"
+        else
+                args="-t"
+        fi
+        exec ${config.programs.emacs.package}/bin/emacsclient $args -a  "" "$@"
+      '';
+    };
     "bin/emacsclient-tty" = {
       executable = true;
       text = ''
