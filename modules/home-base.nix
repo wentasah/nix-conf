@@ -132,7 +132,7 @@
     ".config/bat/config".text = ''
         --theme=gruvbox-light
     '';
-    "ec" = {
+    "bin/ec" = {
       executable = true;
       text = ''
         #!${pkgs.runtimeShell}
