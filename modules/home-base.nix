@@ -392,7 +392,7 @@
         #dontStrip = true;
         separateDebugInfo = true;
         passthru = old.passthru // {
-          treeSitter = true;
+          withTreeSitter = true;
         };
       }))).emacsWithPackages;
     in
