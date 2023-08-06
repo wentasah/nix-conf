@@ -144,6 +144,7 @@
     gitAndTools.gitFull
     htop
     iftop
+    keepassxc
     kitty.terminfo
     kitty.shell_integration
     krita
