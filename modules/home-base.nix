@@ -199,7 +199,6 @@
     defaultKeymap = "emacs";
     shellAliases = {
       ag    = "ag --color-line-number='0;33' --color-path='0;32'";
-      colcon = "~/bin/ros-build-wrapper colcon";
       cp    = "nocorrect cp"; # no spelling correction on cp
       gm    = "git machete";
       grep  = "grep --color";
