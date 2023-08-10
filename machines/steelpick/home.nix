@@ -175,7 +175,7 @@ in
     pavucontrol
     pdfpc
     perl.devdoc
-    perlPackages.AppClusterSSH
+    #perlPackages.AppClusterSSH # broken 2023-08-10
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
     playerctl
