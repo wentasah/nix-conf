@@ -251,6 +251,7 @@
     dataDir = "/home/share/sync";
     openDefaultPorts = true;
   };
+  users.users.syncthing.homeMode = "750";
 
   services.nginx = {
     enable = true;
