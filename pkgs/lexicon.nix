@@ -10,6 +10,7 @@ let
 in
 pkgs.buildFHSUserEnvBubblewrap {
     name = "lexicon";
+    multiArch = true;
     multiPkgs = pkgs: (with pkgs;
       [
         alsa-lib
