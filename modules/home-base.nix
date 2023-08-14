@@ -194,6 +194,7 @@
   programs.zsh = {
     enable = true;
     enableVteIntegration = true;
+    enableAutosuggestions = true;
     history.path = "$HOME/.history";
     history.share = false;
     defaultKeymap = "emacs";
