@@ -47,6 +47,7 @@ in
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
     ../../modules/msmtp.nix
+    ../../modules/xdp-no-gnome.nix
   ];
 
   nixpkgs = {
