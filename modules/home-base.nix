@@ -414,6 +414,10 @@
         pkgs.notmuch   # From main packages set
       ]);
   };
+  services.emacs = {
+    enable = true;
+    socketActivation.enable = true;
+  };
 
   programs.fzf = {
     enable = true;
