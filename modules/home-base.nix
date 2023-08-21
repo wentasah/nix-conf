@@ -14,6 +14,8 @@
     bat
     bbe
     bc                          # For linux kernel compilation
+    black
+    black-macchiato
     btop
     cachix
     ccls
