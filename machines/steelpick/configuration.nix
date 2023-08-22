@@ -281,7 +281,7 @@ in
   programs.system-config-printer.enable = true;
 
   services.tailscale.enable = true;
-  systemd.services.tailscale.wantedBy = lib.mkForce []; # Don't start automatically
+  systemd.services.tailscaled.wantedBy = lib.mkForce []; # Don't start automatically
 
   #services.teamviewer.enable = true;
 
