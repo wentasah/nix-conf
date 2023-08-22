@@ -298,6 +298,7 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.settings.AllowUsers = "wsh root novaboot-test";
+  services.openssh.settings.X11Forwarding = true;
 
   services.tftpd-hpa = {
     enable = true;
