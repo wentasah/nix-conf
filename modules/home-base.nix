@@ -89,6 +89,7 @@
     oil
     p7zip
     pandoc
+    pastel
     pdf2svg
     pdfgrep
     pdftk
