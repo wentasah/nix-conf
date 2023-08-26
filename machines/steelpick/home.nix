@@ -128,6 +128,7 @@ in
     flex
     flowblade
     #freecad # broken
+    ghostscript
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
