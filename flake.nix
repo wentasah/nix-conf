@@ -99,7 +99,7 @@
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                    d2 julia-stable-bin nurl i3status-rust ikiwiki nil;
+                    d2 julia-stable-bin nurl i3status-rust ikiwiki nil eza;
                   #xdg-desktop-portal = import ./pkgs/xdg-desktop-portal-1.17.0.nix { inherit final prev; };
                 })
               ];
