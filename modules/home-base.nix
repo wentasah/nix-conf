@@ -16,6 +16,7 @@
     bc                          # For linux kernel compilation
     black
     black-macchiato
+    btdu
     btop
     cachix
     ccls
