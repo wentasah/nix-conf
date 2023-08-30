@@ -50,18 +50,6 @@
           inherit (inputs.nixpkgs-update.packages.x86_64-linux) nixpkgs-update;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
-          mc = (prev.mc.overrideAttrs (old: {
-            version = old.version + "wsh";
-            patches = (old.patches or []) ++ [
-              ./pkgs/mc/0001-Don-t-clear-subshell-prompt-during-its-reading.patch
-            ];
-            postPatch = ''
-              substituteInPlace contrib/mc-wrapper.sh.in \
-                  --replace '@bindir@/mc' \
-                            'STARSHIP_CONFIG=$HOME/.config/starship.mc.toml @bindir@/mc'
-            '';
-          }));
-
         })
       ];
     in
