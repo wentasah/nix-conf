@@ -22,6 +22,7 @@
    { device = "/dev/disk/by-uuid/17a40f9b-feba-4116-8c42-fffe1aa1dad5";
      fsType = "btrfs";
    };
+ fileSystems."/var/lib/docker" = { device = "/dev/disk/by-label/data"; fsType = "btrfs"; options = [ "subvol=docker" ]; };
 
    fileSystems."/home/share"         = { options = [ "bind" ]; device = "/mnt/data/share"; };
    fileSystems."/home/lucka/Stažené" = { options = [ "bind" ]; device = "/mnt/data/lucka/Stažené"; };
