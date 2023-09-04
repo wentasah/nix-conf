@@ -244,7 +244,6 @@ in
 
   virtualisation.virtualbox.host.enable = true;
 
-  # Broken
   virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
