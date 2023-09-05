@@ -1,6 +1,12 @@
 { config, pkgs, lib, ... }:
 # Basic home manager configuration common to all my systems. Mostly
 # CLI utilities.
+let
+  globalPythonPackages = (pp: with pp; [
+    requests urllib3 # for filesender.py
+    matplotlib tkinter
+  ]);
+in
 {
   home.packages = with pkgs; [
     (hiPrio parallel) # Prefer this over parallel from moreutils
@@ -99,6 +105,7 @@
     poppler_utils
     psmisc                      # killall, fuser, ...
     pv
+    (python3.withPackages globalPythonPackages)
     ranger
     redo-apenwarr
     restic
