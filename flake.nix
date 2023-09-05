@@ -18,6 +18,7 @@
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixpkgs-update = { url = "github:ryantm/nixpkgs-update"; # inputs.nixpkgs.follows = "nixpkgs";
                      };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -63,6 +64,7 @@
             nixos-hardware.nixosModules.common-cpu-intel
             home-manager.nixosModules.home-manager
             inputs.nixseparatedebuginfod.nixosModules.default
+            inputs.sops-nix.nixosModules.sops
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
@@ -80,6 +82,7 @@
             home-manager-stable.nixosModules.home-manager
             envfs.nixosModules.envfs
             inputs.nixseparatedebuginfod.nixosModules.default
+            inputs.sops-nix.nixosModules.sops
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
