@@ -5,6 +5,7 @@ let
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
     matplotlib tkinter
+    flake8 flake8-bugbear
   ]);
 in
 {
