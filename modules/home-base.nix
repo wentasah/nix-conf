@@ -38,7 +38,6 @@ in
     devenv
     dua
     entr
-    exa
     eza
     fd
     ffmpeg
