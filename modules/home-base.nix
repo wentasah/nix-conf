@@ -44,6 +44,7 @@ in
     #gdb # we use gdb provided by nixseparatedebuginfod module
     gcalcli
     gh
+    git-backdate
     git-machete
     gitAndTools.delta
     gitAndTools.git-lfs
