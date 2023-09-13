@@ -265,6 +265,7 @@ add_pr() {
         git-machete add "$branch"
         merge_nixpkgs_topics_into_master
     fi
+    git-machete anno --branch="$branch" "PR #$pr rebase=no push=no"
 }
 
 update() {
