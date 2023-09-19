@@ -61,7 +61,7 @@ merge_nixpkgs_topics_into_master() {
     local commit_msg='automatic merge by nix-conf'
     if [[ -f .git/machete ]]; then
         # On my laptop - merge all non-root branches managed by git-machete
-        readarray -t to_merge < <(sed -nE '/^[[:space:]]+/ s///p' .git/machete)
+        readarray -t to_merge < <(sed -nE '/^[[:space:]]+([^ ]*).*/ s//\1/p' .git/machete)
         commit_msg+=$'\n'$'\n'"Merged branches:${to_merge[@]/#/$'\n'- }"
     else
         # CI: Recreate the merge from HEAD of my repo
