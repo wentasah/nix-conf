@@ -40,6 +40,7 @@
     wdisplays
     wev
     wl-clipboard
+    wl-mirror pipectl
     wlr-randr
     wofi
     way-displays
