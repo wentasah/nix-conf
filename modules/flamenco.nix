@@ -15,7 +15,7 @@ in
     flamenco = { };
   };
   environment.systemPackages = with pkgs; [
-    blender
+    blender-hip
     pkgs.cifs-utils
   ];
   systemd.services.flamenco-manager = {
