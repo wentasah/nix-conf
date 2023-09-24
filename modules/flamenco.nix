@@ -24,7 +24,7 @@ in
   };
   environment.systemPackages = with pkgs; [
     blender-hip
-    pkgs.cifs-utils
+    cifs-utils
   ];
   systemd.services.flamenco-manager = {
     description = "Flamenco Manager";
