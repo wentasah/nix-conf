@@ -135,6 +135,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
+    amdgpu_top
     btrfs-progs
     compsize
     chromium
