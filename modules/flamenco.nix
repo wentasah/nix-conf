@@ -9,7 +9,15 @@ in
       options = let
         # this line prevents hanging on network split
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in ["${automount_opts},mfsymlinks,gid=flamenco,forcegid,file_mode=0664,dir_mode=0775,credentials=/etc/nixos/smb-flamenco.secret"];
+      in ["${automount_opts},mfsymlinks,uid=flamenco-manager,gid=flamenco,forceuid,forcegid,file_mode=0664,dir_mode=0775,credentials=/etc/nixos/smb-flamenco.secret"];
+  };
+  users.users.flamenco-manager = {
+    isSystemUser = true;
+    group = "flamenco";
+  };
+  users.users.flamenco = {
+    isNormalUser = true;        # We need home directory to store blender's config
+    group = "flamenco";
   };
   users.groups = {
     flamenco = { };
@@ -28,10 +36,10 @@ in
           flamenco-manager.yaml
     '';
     serviceConfig = {
-      Group = "flamenco";
+      User = "flamenco-manager"; # have full control over shared storage
+      Group = "flamenco";       # access to shared files
       ExecStart = "${flamenco}/flamenco-manager";
       UMask = 0002;
-      DynamicUser = true;
       Restart = "always";
       StateDirectory = "flamenco-manager";
       WorkingDirectory = "/var/lib/flamenco-manager";
@@ -45,10 +53,10 @@ in
       FLAMENCO_HOME = "/var/lib/flamenco-worker";
     };
     serviceConfig = {
-      Group = "flamenco";
+      User = "flamenco"; # worker needs access to blender's config (e.g. Prefs → System → Render devices)
+      Group = "flamenco";       # access to shared files
       ExecStart = "${flamenco}/flamenco-worker";
       UMask = 0002;
-      DynamicUser = true;
       StateDirectory = "flamenco-worker";
       WorkingDirectory = "/var/lib/flamenco-worker";
       Restart = "always";
