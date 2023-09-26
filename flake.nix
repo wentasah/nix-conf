@@ -49,6 +49,7 @@
           inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
           inherit (devenv.packages.x86_64-linux) devenv;
           inherit (inputs.nixpkgs-update.packages.x86_64-linux) nixpkgs-update;
+          foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
         })

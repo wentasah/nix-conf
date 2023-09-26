@@ -118,6 +118,7 @@ in
     easyeffects
     exif
     fdupes
+    foxglove-studio
     firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
