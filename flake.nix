@@ -52,6 +52,12 @@
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
+          mc = (prev.mc.overrideAttrs (old: {
+            version = old.version + "wsh";
+            patches = (old.patches or []) ++ [
+              ./pkgs/mc/0001-sftpfs-Don-t-set-preferred-hostkey-methods-too-restr.patch
+            ];
+          }));
         })
       ];
     in
