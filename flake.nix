@@ -15,6 +15,7 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
+    tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixpkgs-update = { url = "github:ryantm/nixpkgs-update"; # inputs.nixpkgs.follows = "nixpkgs";
                      };
@@ -39,6 +40,10 @@
     , ...
     } @ inputs:
     let
+      tree-sitter-typst = {
+        src = inputs.tree-sitter-typst;
+        generate = true;
+      };
       common-overlays = [
         emacs-overlay.overlay
         novaboot.overlays.x86_64-linux
@@ -58,6 +63,7 @@
               ./pkgs/mc/0001-sftpfs-Don-t-set-preferred-hostkey-methods-too-restr.patch
             ];
           }));
+          tree-sitter = prev.tree-sitter.override { extraGrammars = { inherit tree-sitter-typst; }; };
         })
       ];
     in

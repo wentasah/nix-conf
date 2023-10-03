@@ -125,6 +125,9 @@ in
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
+    typst
+    typst-lsp
+    typstfmt
     uncrustify
     unzip
     valgrind
