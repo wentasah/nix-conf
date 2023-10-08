@@ -121,7 +121,6 @@
 
       "saleae-logic"
       "slack"
-      "teams"
       "unrar"
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
@@ -173,7 +172,6 @@
     enable = true;
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
-      teams = "${pkgs.teams}/bin/teams";
       #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
       skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };
