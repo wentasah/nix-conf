@@ -42,6 +42,7 @@ in
         "kyocera-phase5"
         "konica-minolta-bizhub"
         "saleae-logic"
+        "saleae-logic-2"
         "unrar"
         "xkcd-font"
       ];

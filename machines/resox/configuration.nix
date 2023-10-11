@@ -120,6 +120,7 @@
       "steam-run"
 
       "saleae-logic"
+      "saleae-logic-2"
       "slack"
       "unrar"
       "xkcd-font"
