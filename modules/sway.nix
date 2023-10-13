@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./dunst.nix
@@ -14,8 +14,6 @@
     extraConfigEarly = ''
       include config.local
     '';
-    systemdIntegration = true;
-    # systemd.enable = true; # Stable requires the above, unstable warns about it. Switch to this for 23.11.
     extraSessionCommands = ''
       . /etc/set-environment
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
@@ -26,7 +24,11 @@
       base = true;
       gtk = true;
     };
-  };
+  } // (if lib.versionAtLeast lib.trivial.release "23.11" then {
+    systemd.enable = true;
+  } else {
+    systemdIntegration = true;
+  });
 
   home.packages = with pkgs; [
     brightnessctl
