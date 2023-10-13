@@ -17,8 +17,6 @@
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nixpkgs-update = { url = "github:ryantm/nixpkgs-update"; # inputs.nixpkgs.follows = "nixpkgs";
-                     };
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
@@ -53,7 +51,6 @@
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
           inherit (devenv.packages.x86_64-linux) devenv;
-          inherit (inputs.nixpkgs-update.packages.x86_64-linux) nixpkgs-update;
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
