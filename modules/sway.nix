@@ -71,4 +71,12 @@
       target = "sway-session.target";
     };
   };
+  systemd.user.services.waybar.Service = {
+    # Append to PATH to allow running my scripts in ~/bin, which I
+    # have configured in ~/.config/waybar/config for custom blocks.
+    ExecStart = lib.mkForce (pkgs.writeShellScript "start-waybar" ''
+      PATH=$PATH:${lib.strings.makeBinPath (with pkgs; [ bash coreutils procps "$HOME" ])}
+      exec ${config.programs.waybar.package}/bin/waybar
+    '');
+  };
 }
