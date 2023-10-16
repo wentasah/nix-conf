@@ -268,6 +268,11 @@ in
         cd "./$(git rev-parse --show-cdup)/$dir"
       }
 
+      src() {
+        local dir="$(cd ~/src && fd --type d --glob --hidden .git | sed -e 's|/.git/$||' | fzf +m -0)" &&
+        cd ~/src/"$dir"
+      }
+
       # Rebind fzf-cd to a sane key
       bindkey '\eC' fzf-cd-widget
       bindkey '\ec' capitalize-word
