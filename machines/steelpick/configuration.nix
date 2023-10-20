@@ -182,13 +182,13 @@ in
 
   programs.zsh.enable = true;
 
-  programs.command-not-found.enable = false;
-  programs.zsh.interactiveShellInit = ''
-    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
-  programs.bash.interactiveShellInit = ''
-    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
+  programs.command-not-found.enable = false; # the same functionality is handled by nix-index-database
+#   programs.zsh.interactiveShellInit = ''
+#     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+#   '';
+#   programs.bash.interactiveShellInit = ''
+#     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+#   '';
   # Enable starship for other users
   programs.bash.promptInit = ''
     if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then

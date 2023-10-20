@@ -121,8 +121,9 @@ updated() {
     if [[ $result = 0 ]]; then
         # Reset failed build counter
         rm -f ~/nix/out/"$HOST"/flake.retry.cnt
-        # Update emacs-overlay only if something else is updated
+        # Update selected overlays only if something else is updated
         update_flake_input emacs-overlay
+        update_flake_input nix-index-database
     fi
     return $result
 }

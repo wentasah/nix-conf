@@ -18,6 +18,7 @@
     tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix.url = "github:Mic92/sops-nix";
+    nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -75,6 +76,7 @@
             home-manager.nixosModules.home-manager
             inputs.nixseparatedebuginfod.nixosModules.default
             inputs.sops-nix.nixosModules.sops
+            inputs.nix-index-database.nixosModules.nix-index
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;

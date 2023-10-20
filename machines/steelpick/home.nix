@@ -158,7 +158,6 @@ in
     musescore
     mytexlive
     nasm
-    nix-index
     nix-init
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
