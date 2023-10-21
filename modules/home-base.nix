@@ -264,7 +264,7 @@ in
       }
 
       gcd() {
-        local dir="$(git ls-tree -d -r --name-only --full-name HEAD $(git rev-parse --show-cdup) | fzf +m -0)" &&
+        local dir="$((echo /; git ls-tree -d -r --name-only --full-tree HEAD) | fzf +m -0)" &&
         cd "./$(git rev-parse --show-cdup)/$dir"
       }
 
