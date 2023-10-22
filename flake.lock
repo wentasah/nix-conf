@@ -33,11 +33,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1696962651,
-        "narHash": "sha256-4ETXHQzxUEUvWl8epgbYEnnk1kgcRfjbuvH8U8npGB0=",
+        "lastModified": 1697567849,
+        "narHash": "sha256-GaBuqoE5VJRt8tZ8uY4hbmaV0eu7HxADURZY+ER4B/4=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "f5a40daaee5ccbea1675a7a4e47a84ce919e769f",
+        "rev": "8e36d1e403c464e855de36c52ff23096951dfbc0",
         "type": "github"
       },
       "original": {
@@ -302,6 +302,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1697340827,
+        "narHash": "sha256-XlrR68N7jyaZ0bs8TPrhqcWG0IPG3pbjrKzJMpYOsos=",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "rev": "29977d0796c058bbcfb2df5b18eb5badf1711007",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1691871742,
@@ -351,11 +371,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1696697597,
-        "narHash": "sha256-q26Qv4DQ+h6IeozF2o1secyQG0jt2VUT3V0K58jr3pg=",
+        "lastModified": 1697226376,
+        "narHash": "sha256-cumLLb1QOUtWieUnLGqo+ylNt3+fU8Lcv5Zl+tYbRUE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5a237aecb57296f67276ac9ab296a41c23981f56",
+        "rev": "898cb2064b6e98b8c5499f37e81adbdf2925f7c5",
         "type": "github"
       },
       "original": {
@@ -413,11 +433,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1696019113,
-        "narHash": "sha256-DXeaNhiqCDECb2Hre/U1THvgnh08jSyAzN9qiUmiiXI=",
+        "lastModified": 1697456312,
+        "narHash": "sha256-vwKB3ZmPELXZ70tDxjN4jEalyjYa6og2JF4V567Q5lo=",
         "owner": "wentasah",
         "repo": "nixpkgs",
-        "rev": "d5585e03c165c86dcfc07664104ad70721949cef",
+        "rev": "dc72380ddb826c66131d945c0fdb490798dba61b",
         "type": "github"
       },
       "original": {
@@ -529,6 +549,7 @@
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
         "nix-autobahn": "nix-autobahn",
+        "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable_2",
