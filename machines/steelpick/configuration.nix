@@ -46,6 +46,9 @@ in
         "unrar"
         "xkcd-font"
       ];
+      permittedInsecurePackages = [
+        "zotero-6.0.27"
+      ];
     };
     overlays = [ myOverlay ];
   };

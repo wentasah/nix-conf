@@ -126,6 +126,9 @@
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
     ];
+    permittedInsecurePackages = [
+      "zotero-6.0.27"
+    ];
   };
 
   programs.steam.enable = true;
