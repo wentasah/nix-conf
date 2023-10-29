@@ -1,5 +1,5 @@
 { lib, fetchFromGitHub, rustPlatform, openssl, pkg-config
-, withSlang ? true, sv-lang
+, withSlang ? false, sv-lang
 }:
 
 rustPlatform.buildRustPackage (rec {
