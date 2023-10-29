@@ -218,6 +218,9 @@ in
     enable = true;
     extraSessionCommands = ''
       PATH=$HOME/bin:$PATH
+
+      # Vivado shows blank white screen without this:
+      export _JAVA_AWT_WM_NONREPARENTING=1
     '';
     wrapperFeatures = {
       base = true;
