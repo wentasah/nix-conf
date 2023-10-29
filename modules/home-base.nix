@@ -9,6 +9,9 @@ let
   ]);
 in
 {
+  imports = [
+    ./verilog.nix
+  ];
   home.packages = with pkgs; [
     (hiPrio parallel) # Prefer this over parallel from moreutils
     alejandra
