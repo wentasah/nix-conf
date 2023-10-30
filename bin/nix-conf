@@ -118,6 +118,9 @@ updated() {
     update_nix_conf && result=0
     #update_home_manager && result=0
     update_nixpkgs && result=0
+    # Update nixpkgs-stable, but don't trigger rebuild of unstable
+    # stuff (i.e. result=0). `nix flake check` will then rebuild stable
+    update_flake_input nixpkgs-stable
     if [[ $result = 0 ]]; then
         # Reset failed build counter
         rm -f ~/nix/out/"$HOST"/flake.retry.cnt
