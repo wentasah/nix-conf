@@ -127,7 +127,7 @@
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
     ];
     permittedInsecurePackages = [
-      "zotero-6.0.27"
+      "zotero-6.0.26"
     ];
   };
 

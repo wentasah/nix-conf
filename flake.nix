@@ -103,7 +103,7 @@
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                    d2 julia-stable-bin nurl ikiwiki nil eza git-backdate typstfmt sv-lang zotero;
+                    d2 julia-stable-bin nurl ikiwiki nil eza git-backdate typstfmt sv-lang;
                   # Veridian needs Rust from unstable
                   veridian = nixpkgs.outputs.legacyPackages.x86_64-linux.callPackage ./pkgs/veridian { };
                   #xdg-desktop-portal = import ./pkgs/xdg-desktop-portal-1.17.0.nix { inherit final prev; };
