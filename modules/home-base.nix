@@ -134,6 +134,7 @@ in
     unzip
     valgrind
     websocat
+    xmlstarlet
     yamllint
     yq
     zip
