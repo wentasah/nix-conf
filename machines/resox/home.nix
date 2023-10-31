@@ -96,7 +96,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    avidemux
+    #avidemux #broken
     bear
     binutils-unwrapped-all-targets
     bison

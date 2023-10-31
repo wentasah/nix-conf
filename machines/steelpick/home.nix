@@ -93,7 +93,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    avidemux
+    #avidemux #broken: see https://github.com/NixOS/nixpkgs/pull/263171
     bear
     binutils-unwrapped-all-targets
     bison
