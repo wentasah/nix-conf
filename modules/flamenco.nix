@@ -1,5 +1,7 @@
 { pkgs, config, ... }:
-let flamenco = pkgs.callPackage ../pkgs/flamenco {};
+let
+  flamenco = pkgs.callPackage ../pkgs/flamenco {};
+  blender = pkgs.blender-hip;
 in
 {
   #fileSystems."/srv/blender" = {device = "turris.lan:/srv/blender"; fsType = "nfs";};
@@ -22,9 +24,9 @@ in
   users.groups = {
     flamenco = { };
   };
-  environment.systemPackages = with pkgs; [
-    blender-hip
-    cifs-utils
+  environment.systemPackages = [
+    blender
+    pkgs.cifs-utils
   ];
   systemd.services.flamenco-manager = {
     description = "Flamenco Manager";
@@ -52,6 +54,7 @@ in
     environment = {
       FLAMENCO_HOME = "/var/lib/flamenco-worker";
     };
+    path = [ blender ];
     serviceConfig = {
       User = "flamenco"; # worker needs access to blender's config (e.g. Prefs → System → Render devices)
       Group = "flamenco";       # access to shared files
