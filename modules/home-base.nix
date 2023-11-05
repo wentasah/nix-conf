@@ -72,6 +72,7 @@ in
     ltrace
     #mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
     man-pages-posix
+    marksman
     mc
     mdsh
     meson
