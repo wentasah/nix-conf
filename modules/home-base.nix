@@ -274,7 +274,7 @@ in
       }
 
       src() {
-        local dir="$(cd ~/src && fd --type d --glob --hidden .git | sed -e 's|/.git/$||' | fzf +m -0)" &&
+        local dir="$(fd --base-directory ~/src --type d --hidden --full-path "$1[^/]*/.git$" | sed -e 's|/.git/$||' | fzf +m -0 -1)" &&
         cd ~/src/"$dir"
       }
 
