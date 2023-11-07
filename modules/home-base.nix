@@ -45,6 +45,7 @@ in
     eza
     fd
     ffmpeg
+    findrepo
     #gdb # we use gdb provided by nixseparatedebuginfod module
     gcalcli
     gh
@@ -275,7 +276,7 @@ in
       }
 
       src() {
-        local dir="$(fd --base-directory ~/src --type d --hidden --full-path "$1[^/]*/.git$" | sed -e 's|/.git/$||' | fzf +m -0 -1)" &&
+        local dir="$(findrepo --base-dir ~/src | grep -F -e "$1" | fzf +m -0 -1)" &&
         cd ~/src/"$dir"
       }
 

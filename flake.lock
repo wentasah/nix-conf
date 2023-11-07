@@ -67,6 +67,21 @@
         "type": "github"
       }
     },
+    "findrepo": {
+      "locked": {
+        "lastModified": 1699400299,
+        "narHash": "sha256-PF9f0sHzvmVzRjg0vgSiVoXr1L/Oq1XLg3kRM7Ps64U=",
+        "owner": "wentasah",
+        "repo": "findrepo",
+        "rev": "882339e9219bc54de226a6122ed04656ba2cc0d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wentasah",
+        "repo": "findrepo",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -560,6 +575,7 @@
         "devenv": "devenv",
         "emacs-overlay": "emacs-overlay",
         "envfs": "envfs",
+        "findrepo": "findrepo",
         "flake-compat": "flake-compat_2",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
