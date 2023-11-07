@@ -19,6 +19,7 @@
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix.url = "github:Mic92/sops-nix";
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
+    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
   };
 
   outputs =
@@ -39,19 +40,30 @@
     , ...
     } @ inputs:
     let
+      inherit (nixpkgs) lib;
+
+      # Flakes require ‘packages’ attribute to contain per-platform attrsets.
+      # Here we explicitly define all the platforms that will be exposed.
+      platforms = [
+        "x86_64-linux"
+        #"aarch64-linux"
+      ];
+
+      forAllPlatforms = f: lib.genAttrs platforms f;
+
       tree-sitter-typst = {
         src = inputs.tree-sitter-typst;
         generate = true;
       };
-      common-overlays = [
+      common-overlays = platform: [
         emacs-overlay.overlay
-        novaboot.overlays.x86_64-linux
+        novaboot.overlays.${platform}
         shdw.overlays.default
         sterm.overlay
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
-          inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
-          inherit (devenv.packages.x86_64-linux) devenv;
+          inherit (nix-autobahn.packages.${platform}) nix-autobahn;
+          inherit (devenv.packages.${platform}) devenv;
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
@@ -65,8 +77,15 @@
           veridian = final.callPackage ./pkgs/veridian { };
         })
       ];
+      # Create combined package set from nixpkgs and our overlays.
+      mkPkgs = platform: import nixpkgs {
+        system = platform;
+        overlays = common-overlays platform;
+      };
     in
     {
+      # Nixpkgs packages with our overlays and packages.
+      legacyPackages = forAllPlatforms mkPkgs;
 
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {
@@ -81,7 +100,7 @@
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
-              nixpkgs.overlays = common-overlays;
+              nixpkgs.overlays = common-overlays "x86_64-linux";
             }
           ];
         };
@@ -99,7 +118,7 @@
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
-              nixpkgs.overlays = common-overlays ++ [
+              nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
@@ -134,7 +153,7 @@
               home.homeDirectory = "/home/sojka";
               home.stateVersion = "22.05";
               programs.home-manager.enable = true;
-              nixpkgs.overlays = common-overlays;
+              nixpkgs.overlays = common-overlays "x86_64-linux";
 
               programs.zsh.envExtra = ''
               if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
