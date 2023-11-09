@@ -81,6 +81,12 @@ merge_nixpkgs_topics_into_master() {
 }
 
 update_nixpkgs() {
+    # Update stable
+    cd ~/nix/nixpkgs-stable
+    exit_if_dirty
+    git pull --quiet
+
+    # Update unstable + merge my changes
     cd ~/nix/nixpkgs
     exit_if_dirty
 
