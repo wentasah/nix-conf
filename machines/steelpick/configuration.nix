@@ -396,6 +396,15 @@ in
   # Make the authoritative version of NOVA available also from the internal repo
   fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = { options = [ "bind" ]; device = "/home/wsh/vyuka/osy/pages/nova"; };
 
+  fileSystems."/srv/blender" = {
+      device = "//turris.lan/flamenco";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in ["${automount_opts},mfsymlinks,uid=wsh,gid=wsh,forceuid,forcegid,file_mode=0600,dir_mode=0700,credentials=/etc/nixos/smb-flamenco.secret"];
+  };
+
   systemd.nspawn.ros-melodic = {
     enable = true;
     execConfig = {
