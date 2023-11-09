@@ -215,7 +215,7 @@ build() {
             if [[ $old_version != $(readlink out/"$HOST"/flake) ]]; then
                 matrix-commander --markdown -m "nix-conf CI update completed
 
-$(nvd diff $old_version out/"$HOST"/flake)" || :
+$(nvd diff $old_version out/"$HOST"/flake | sed -e 's/^/    /')" || :
             fi
         fi
     else
