@@ -186,6 +186,8 @@ in
   programs.zsh.enable = true;
 
   programs.command-not-found.enable = false; # the same functionality is handled by nix-index-database
+  programs.nix-index-database.comma.enable = true;
+
 #   programs.zsh.interactiveShellInit = ''
 #     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
 #   '';
