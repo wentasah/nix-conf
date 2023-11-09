@@ -80,7 +80,7 @@ merge_nixpkgs_topics_into_master() {
     git commit -m "$commit_msg"
 }
 
-update_nixpkgs() {
+update_clonned_nixpkgs() {
     # Update stable
     cd ~/nix/nixpkgs-stable
     exit_if_dirty
@@ -123,7 +123,7 @@ updated() {
     local result=1
     update_nix_conf && result=0
     #update_home_manager && result=0
-    update_nixpkgs && result=0
+    update_clonned_nixpkgs && result=0
     # Update nixpkgs-stable, but don't trigger rebuild of unstable
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
     update_flake_input nixpkgs-stable
@@ -314,7 +314,7 @@ case "$cmd" in
     "build")
         build "$@";;
     "copy")
-        update_nixpkgs || :
+        update_clonned_nixpkgs || :
         rsync ritchie:nix/out/steelpick/flake.lock ~/nix/conf
         O=$(ssh ritchie readlink nix/out/steelpick/flake)
         nix copy -j16 --from ssh://ritchie "$O"
