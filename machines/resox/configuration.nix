@@ -380,7 +380,7 @@
   users.users.tom = {
     description = "Tomáš";
     isNormalUser = true;
-    extraGroups = [ "scanner" ];
+    extraGroups = [ "scanner" "flamenco" ];
   };
 
   users.users.miki = {
