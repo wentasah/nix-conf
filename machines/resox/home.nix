@@ -259,7 +259,7 @@ in
   };
 
   home.sessionVariables = {
-    NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
+    NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs-stable:$NIX_PATH";
   };
 
   programs.man.enable = true;
