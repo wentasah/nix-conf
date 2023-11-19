@@ -1,7 +1,17 @@
 { pkgs, config, ... }:
 let
   flamenco = pkgs.callPackage ../pkgs/flamenco {};
-  blender = pkgs.blender-hip;
+  blender = pkgs.blender-hip; #.withPackages (p: with p; [ scenariogeneration ]); # for 23.11
+  blender-wrapped =
+    (pkgs.blender-with-packages.override {
+      blender = blender;
+    }) {
+      packages = [
+        (pkgs.callPackage ../pkgs/pyclothoids.nix { })
+        (pkgs.callPackage ../pkgs/scenariogeneration.nix { })
+      ];
+
+    };
 in
 {
   #fileSystems."/srv/blender" = {device = "turris.lan:/srv/blender"; fsType = "nfs";};
@@ -26,6 +36,7 @@ in
   };
   environment.systemPackages = [
     blender
+    blender-wrapped
     pkgs.cifs-utils
   ];
   systemd.services.flamenco-manager = {
@@ -66,4 +77,19 @@ in
       ReadWritePaths = "/srv/blender";
     };
   };
+
+  # Add python packages for using in Blender Addons (prepared for 23.11)
+  nixpkgs.overlays = [
+    (final: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (
+          python-final: python-prev: {
+            pyclothoids = final.callPackage ../pkgs/pyclothoids.nix { };
+            scenariogeneration = final.callPackage ../pkgs/scenariogeneration.nix { };
+          }
+        )
+      ];
+    })
+
+  ];
 }
