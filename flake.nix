@@ -67,6 +67,7 @@
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;
           inherit (devenv.packages.${platform}) devenv;
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
+          pyclothoids = final.callPackage ./pkgs/pyclothoids.nix { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           mc = (prev.mc.overrideAttrs (old: {
