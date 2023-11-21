@@ -87,8 +87,9 @@
       };
     in
     {
-      # Nixpkgs packages with our overlays and packages.
-      legacyPackages = forAllPlatforms mkPkgs;
+      # Packages to test nix-update
+      packages =  forAllPlatforms (platform:
+        { inherit (mkPkgs platform) foxglove-studio; });
 
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {
