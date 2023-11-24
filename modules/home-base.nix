@@ -92,6 +92,7 @@ in
     nix-prefetch-scripts
     nix-template
     nix-tree
+    nix-update
     nixfmt
     nixos-generators
     nixos-shell
