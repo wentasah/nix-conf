@@ -39,7 +39,6 @@ in
     csvtool
     d2
     daemontools
-    devenv
     dua
     entr
     eza

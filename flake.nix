@@ -4,7 +4,6 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
-    devenv = { url = github:cachix/devenv/v0.3; inputs.nixpkgs.follows = "nixpkgs"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -37,7 +36,6 @@
     , nix-autobahn
     , shdw
     , envfs
-    , devenv
     , ...
     } @ inputs:
     let
@@ -65,7 +63,6 @@
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;
-          inherit (devenv.packages.${platform}) devenv;
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           pyclothoids = final.callPackage ./pkgs/pyclothoids.nix { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
