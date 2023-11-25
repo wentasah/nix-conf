@@ -17,7 +17,7 @@
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
-    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
+    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     findrepo.url = "github:wentasah/findrepo";
