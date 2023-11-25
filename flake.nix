@@ -5,7 +5,6 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
-    envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-23.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -35,7 +34,6 @@
     , novaboot
     , nix-autobahn
     , shdw
-    , envfs
     , ...
     } @ inputs:
     let
@@ -113,7 +111,6 @@
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
-            envfs.nixosModules.envfs
             inputs.nixseparatedebuginfod.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             {
