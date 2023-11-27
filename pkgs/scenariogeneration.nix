@@ -1,10 +1,15 @@
 { lib
-, python3
+, buildPythonPackage
 , fetchFromGitHub
-#, callPackage
-, pyclothoids #? callPackage ./pyclothoids.nix { }
+, pyclothoids
+, setuptools
+, pytest
+, numpy
+, lxml
+, scipy
+, xmlschema
 }:
-python3.pkgs.buildPythonApplication rec {
+buildPythonPackage rec {
   pname = "scenariogeneration";
   version = "0.13.2";
   pyproject = true;
@@ -16,20 +21,19 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-ayg6eGkcX6vw1KFyl19YLjGBVnCaC13aGDYCcnJFA0U=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = [
     setuptools
   ];
 
-  nativeCheckInputs = with python3.pkgs; [
+  nativeCheckInputs = [
     pytest
   ];
 
-  propagatedBuildInputs = (with python3.pkgs; [
+  propagatedBuildInputs = [
     numpy
     lxml
     scipy
     xmlschema
-  ]) ++ [
     pyclothoids
   ];
 

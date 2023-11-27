@@ -1,8 +1,10 @@
 { lib
-, python3
 , fetchFromGitHub
+, buildPythonPackage
+, setuptools
+, pybind11
 }:
-python3.pkgs.buildPythonApplication rec {
+buildPythonPackage rec {
   pname = "pyclothoids";
   version = "0.1.5";
   pyproject = true;
@@ -21,11 +23,11 @@ python3.pkgs.buildPythonApplication rec {
     rm -rf pyclothoids/_clothoids_cpp
   '';
 
-  nativeBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = [
     setuptools
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  propagatedBuildInputs = [
     pybind11
   ];
 
