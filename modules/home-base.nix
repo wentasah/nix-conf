@@ -86,6 +86,7 @@ in
     ninja
     niv
     nix-doc
+    nix-du
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
