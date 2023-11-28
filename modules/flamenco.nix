@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
   flamenco = pkgs.callPackage ../pkgs/flamenco {};
-  blender = pkgs.blender-hip.withPackages (p: [ p.pyclothoids p.scenariogeneration ]);
+  blender = (pkgs.blender-hip.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; };
 in
 {
   #fileSystems."/srv/blender" = {device = "turris.lan:/srv/blender"; fsType = "nfs";};
