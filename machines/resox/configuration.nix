@@ -144,6 +144,7 @@
     chromium
     file
     firefox-wayland
+    foxglove-studio
     gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
