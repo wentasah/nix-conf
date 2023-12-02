@@ -76,12 +76,14 @@ in
     firefox-wayland
     chromium
     gitAndTools.git-annex
+    gnome.gnome-music
     lsof
     git
     gnomeExtensions.appindicator
     libreoffice-fresh
     links2
     mc
+    rhythmbox
     skypeforlinux
     wget
     vim
