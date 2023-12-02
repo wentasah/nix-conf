@@ -207,7 +207,7 @@
   # };
   
   fonts.enableGhostscriptFonts = true;
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
     liberation_ttf
   ];
