@@ -76,6 +76,7 @@ in
     firefox-wayland
     chromium
     gitAndTools.git-annex
+    kitty.terminfo
     lsof
     git
     gnomeExtensions.appindicator
