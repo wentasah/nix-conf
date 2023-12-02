@@ -167,6 +167,10 @@ in
     isNormalUser = true;
     description = "Michal";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    packages = with pkgs; [
+      nix-output-monitor
+      python3
+    ];
   };
 
   # This value determines the NixOS release from which the default
