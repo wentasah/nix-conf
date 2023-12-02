@@ -28,14 +28,14 @@ def was_head_changed(cmd):
         cmd()
     new_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
     if old_tree != new_tree:
-        print(f"!!! Tree hash in {os.curdir()} changed from {old_tree} to {new_tree}")
+        print(f"!!! Tree hash in {os.curdir} changed from {old_tree} to {new_tree}")
         return True
     return False
 
 
 def exit_if_dirty():
     if run("git diff-index --quiet HEAD --", shell=True).returncode != 0:
-        print(f"{os.curdir()} dirty!", file=sys.stderr)
+        print(f"{os.curdir} dirty!", file=sys.stderr)
         sys.exit(1)
 
 
