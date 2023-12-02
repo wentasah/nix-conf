@@ -155,6 +155,8 @@ in
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  environment.homeBinInPath = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucka = {
     isNormalUser = true;

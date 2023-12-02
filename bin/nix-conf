@@ -177,7 +177,8 @@ def build(host, nix_args):
     cd("~/nix")
 
     #os.environ['PATH'] = "/nix/var/nix/profiles/default/bin:{os.environ['PATH']}"
-    old_version = os.readlink(f'out/{host}/flake')
+    try: old_version = os.readlink(f'out/{host}/flake')
+    except FileNotFoundError: old_version = None
     override_input = []
     match host:
         case "steelpick": override_input += ['--override-input', 'nixpkgs', f'{os.curdir}/nixpkgs']
