@@ -8,8 +8,9 @@ let
     #/opt/Lingea/Lexicon5/LucGUI "$@"
   '';
 in
-pkgs.buildFHSUserEnvBubblewrap {
+pkgs.buildFHSEnv {
     name = "lexicon";
+    multiArch = true;
     multiPkgs = pkgs: (with pkgs;
       [
         alsa-lib

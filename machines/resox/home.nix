@@ -30,10 +30,6 @@ let
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
-  globalPythonPackages = (pp: with pp; [
-    requests urllib3 # for filesender.py
-    matplotlib tkinter
-  ]);
 in
 {
   imports = [
@@ -47,6 +43,7 @@ in
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
     ../../modules/msmtp.nix
+    ../../modules/xdp-no-gnome.nix
   ];
 
   nixpkgs = {
@@ -91,7 +88,6 @@ in
     (import ../../pkgs/unfs3 { inherit pkgs; })
     (pkgs.callPackage ../../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../../pkgs/enumerate-markdown {})
-    (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -100,7 +96,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    avidemux
+    #avidemux #broken
     bear
     binutils-unwrapped-all-targets
     bison
@@ -263,7 +259,7 @@ in
   };
 
   home.sessionVariables = {
-    NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs:$NIX_PATH";
+    NIX_PATH = "nixpkgs=$HOME/nix/nixpkgs-stable:$NIX_PATH";
   };
 
   programs.man.enable = true;

@@ -13,25 +13,30 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/14d3bba4-f618-4d7c-a3f8-ee1c8719c5f5";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/14d3bba4-f618-4d7c-a3f8-ee1c8719c5f5";
       fsType = "btrfs";
     };
+    "/mnt/data" = {
+      device = "/dev/disk/by-uuid/17a40f9b-feba-4116-8c42-fffe1aa1dad5";
+      fsType = "btrfs";
+    };
+    "/var/lib/docker" = {
+      device = "/dev/disk/by-label/data";
+      fsType = "btrfs";
+      options = [ "subvol=docker" ];
+    };
+    "/home/share" = {
+      options = [ "bind" ];
+      device = "/mnt/data/share";
+    };
+    "/home/lucka/Stažené" = {
+      options = [ "bind" ];
+      device = "/mnt/data/lucka/Stažené";
+    };
+  };
 
- fileSystems."/mnt/data" =
-   { device = "/dev/disk/by-uuid/17a40f9b-feba-4116-8c42-fffe1aa1dad5";
-     fsType = "btrfs";
-   };
-
-   fileSystems."/home/share"         = { options = [ "bind" ]; device = "/mnt/data/share"; };
-   fileSystems."/home/lucka/Stažené" = { options = [ "bind" ]; device = "/mnt/data/lucka/Stažené"; };
-
-#
-#  fileSystems."/mnt/old-root" =
-#    { device = "/dev/disk/by-uuid/d14e491e-4f2e-4617-8963-9cd76c555d66";
-#      fsType = "ext4";
-#    };
-#
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

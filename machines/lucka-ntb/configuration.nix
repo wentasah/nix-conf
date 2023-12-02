@@ -77,6 +77,7 @@ in
     chromium
     gitAndTools.git-annex
     gnome.gnome-music
+    kitty.terminfo
     lsof
     git
     gnomeExtensions.appindicator

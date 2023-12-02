@@ -1,7 +1,17 @@
 { config, pkgs, lib, ... }:
 # Basic home manager configuration common to all my systems. Mostly
 # CLI utilities.
+let
+  globalPythonPackages = (pp: with pp; [
+    requests urllib3 # for filesender.py
+    matplotlib tkinter
+    flake8 flake8-bugbear
+  ]);
+in
 {
+  imports = [
+    ./verilog.nix
+  ];
   home.packages = with pkgs; [
     (hiPrio parallel) # Prefer this over parallel from moreutils
     alejandra
@@ -14,6 +24,9 @@
     bat
     bbe
     bc                          # For linux kernel compilation
+    black
+    black-macchiato
+    btdu
     btop
     cachix
     ccls
@@ -21,19 +34,21 @@
     cmake-language-server
     colmena
     colordiff
+    crate2nix
     csv2latex
     csvtool
     d2
     daemontools
-    devenv
     dua
     entr
-    exa
+    eza
     fd
     ffmpeg
+    findrepo
     #gdb # we use gdb provided by nixseparatedebuginfod module
     gcalcli
     gh
+    git-backdate
     git-machete
     gitAndTools.delta
     gitAndTools.git-lfs
@@ -58,6 +73,7 @@
     ltrace
     #mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
     man-pages-posix
+    marksman
     mc
     mdsh
     meson
@@ -70,23 +86,25 @@
     ninja
     niv
     nix-doc
+    nix-du
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
     nix-template
     nix-tree
+    nix-update
     nixfmt
     nixos-generators
     nixos-shell
     nixpkgs-fmt
     nixpkgs-review
-    nixpkgs-update
     nurl
     nvd
     odt2txt
     oil
     p7zip
     pandoc
+    pastel
     pdf2svg
     pdfgrep
     pdftk
@@ -94,6 +112,7 @@
     poppler_utils
     psmisc                      # killall, fuser, ...
     pv
+    (python3.withPackages globalPythonPackages)
     ranger
     redo-apenwarr
     restic
@@ -112,10 +131,14 @@
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
+    typst
+    typst-lsp
+    typstfmt
     uncrustify
     unzip
     valgrind
     websocat
+    xmlstarlet
     yamllint
     yq
     zip
@@ -132,6 +155,19 @@
     ".config/bat/config".text = ''
         --theme=gruvbox-light
     '';
+    "bin/ec" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        if [ -n "''${DISPLAY}''${WAYLAND_DISPLAY}" ]; then
+            args="--no-wait"
+            [ -z "$1" ] && args="$args --create-frame"
+        else
+                args="-t"
+        fi
+        exec ${config.programs.emacs.package}/bin/emacsclient $args -a  "" "$@"
+      '';
+    };
     "bin/emacsclient-tty" = {
       executable = true;
       text = ''
@@ -192,8 +228,10 @@
       gst   = "git status";
       j     = "julia --project --thread=auto";
       jc    = "journalctl";
-      l     = "exa -la --group --header";
-      lg    = "exa -la --group --header --git";
+      jcu   = "journalctl --user";
+      kssh  = "kitty +kitten ssh";
+      l     = "eza -la --group --header --time-style=relative --hyperlink";
+      lg    = "eza -la --group --header --time-style=relative --hyperlink --git";
       ln    = "nocorrect ln"; # no spelling correction on ln
       lnr   = "nocorrect ln -s --relative";
       ls    = "ls --color=auto";
@@ -234,8 +272,13 @@
       }
 
       gcd() {
-        local dir="$(git ls-tree -d -r --name-only --full-name HEAD $(git rev-parse --show-cdup) | fzf +m -0)" &&
+        local dir="$((echo /; git ls-tree -d -r --name-only --full-tree HEAD) | fzf +m -0)" &&
         cd "./$(git rev-parse --show-cdup)/$dir"
+      }
+
+      src() {
+        local dir="$(findrepo --base-dir ~/src | grep -F -e "$1" | fzf +m -0 -1)" &&
+        cd ~/src/"$dir"
       }
 
       # Rebind fzf-cd to a sane key
@@ -377,7 +420,7 @@
         #dontStrip = true;
         separateDebugInfo = true;
         passthru = old.passthru // {
-          treeSitter = true;
+          withTreeSitter = true;
         };
       }))).emacsWithPackages;
     in
@@ -398,6 +441,10 @@
       ] else []) ++[
         pkgs.notmuch   # From main packages set
       ]);
+  };
+  services.emacs = {
+    enable = true;
+    socketActivation.enable = true;
   };
 
   programs.fzf = {

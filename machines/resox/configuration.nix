@@ -12,6 +12,7 @@
       ../../modules/xkb-wsh.nix
       ../../modules/fastdds.nix
       ../../modules/ydotool.nix
+      ../../modules/flamenco.nix
     ];
 
   #services.emacs.package = pkgs.emacsGcc;
@@ -119,11 +120,14 @@
       "steam-run"
 
       "saleae-logic"
+      "saleae-logic-2"
       "slack"
-      "teams"
       "unrar"
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
+    ];
+    permittedInsecurePackages = [
+      "zotero-6.0.26"
     ];
   };
 
@@ -134,16 +138,19 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     (import ./emacs.nix { inherit pkgs; })
+    amdgpu_top
     btrfs-progs
     compsize
     chromium
     file
     firefox-wayland
+    foxglove-studio
     gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
     htop
     iftop
+    keepassxc
     kitty.terminfo
     kitty.shell_integration
     krita
@@ -170,11 +177,13 @@
     enable = true;
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
-      teams = "${pkgs.teams}/bin/teams";
       #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
       skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };
   };
+
+#   programs.command-not-found.enable = false; # the same functionality is handled by nix-index-database
+#   programs.nix-index-database.comma.enable = true;
 
   programs.sway = {
     enable = true;
@@ -250,6 +259,7 @@
     dataDir = "/home/share/sync";
     openDefaultPorts = true;
   };
+  users.users.syncthing.homeMode = "750";
 
   services.nginx = {
     enable = true;
@@ -344,19 +354,13 @@
 
   services.flatpak.enable = true;
 
-  services.hydra = {
-    enable = true;
-    hydraURL = "http://localhost:3000";
-    notificationSender = "hydra@localhost";
-    buildMachinesFiles = [];
-    useSubstitutes = true;
-  };
+  services.envfs.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
     description = "Michal";
     isNormalUser = true;
-    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" ];
+    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" "flamenco" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
@@ -371,7 +375,7 @@
   users.users.tom = {
     description = "Tomáš";
     isNormalUser = true;
-    extraGroups = [ "scanner" ];
+    extraGroups = [ "scanner" "flamenco" ];
   };
 
   users.users.miki = {

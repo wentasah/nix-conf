@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./dunst.nix
@@ -14,8 +14,6 @@
     extraConfigEarly = ''
       include config.local
     '';
-    systemdIntegration = true;
-    # systemd.enable = true; # Stable requires the above, unstable warns about it. Switch to this for 23.11.
     extraSessionCommands = ''
       . /etc/set-environment
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
@@ -26,7 +24,11 @@
       base = true;
       gtk = true;
     };
-  };
+  } // (if lib.versionAtLeast lib.trivial.release "23.11" then {
+    systemd.enable = true;
+  } else {
+    systemdIntegration = true;
+  });
 
   home.packages = with pkgs; [
     brightnessctl
@@ -40,6 +42,7 @@
     wdisplays
     wev
     wl-clipboard
+    wl-mirror pipectl
     wlr-randr
     wofi
     way-displays
@@ -67,5 +70,13 @@
       enable = true;
       target = "sway-session.target";
     };
+  };
+  systemd.user.services.waybar.Service = {
+    # Append to PATH to allow running my scripts in ~/bin, which I
+    # have configured in ~/.config/waybar/config for custom blocks.
+    ExecStart = lib.mkForce (pkgs.writeShellScript "start-waybar" ''
+      PATH=$PATH:${lib.strings.makeBinPath (with pkgs; [ bash coreutils procps "$HOME" ])}
+      exec ${config.programs.waybar.package}/bin/waybar
+    '');
   };
 }

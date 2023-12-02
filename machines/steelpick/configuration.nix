@@ -42,8 +42,12 @@ in
         "kyocera-phase5"
         "konica-minolta-bizhub"
         "saleae-logic"
+        "saleae-logic-2"
         "unrar"
         "xkcd-font"
+      ];
+      permittedInsecurePackages = [
+        "zotero-6.0.27"
       ];
     };
     overlays = [ myOverlay ];
@@ -181,13 +185,15 @@ in
 
   programs.zsh.enable = true;
 
-  programs.command-not-found.enable = false;
-  programs.zsh.interactiveShellInit = ''
-    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
-  programs.bash.interactiveShellInit = ''
-    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
+  programs.command-not-found.enable = false; # the same functionality is handled by nix-index-database
+  programs.nix-index-database.comma.enable = true;
+
+#   programs.zsh.interactiveShellInit = ''
+#     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+#   '';
+#   programs.bash.interactiveShellInit = ''
+#     source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+#   '';
   # Enable starship for other users
   programs.bash.promptInit = ''
     if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
@@ -214,6 +220,9 @@ in
     enable = true;
     extraSessionCommands = ''
       PATH=$HOME/bin:$PATH
+
+      # Vivado shows blank white screen without this:
+      export _JAVA_AWT_WM_NONREPARENTING=1
     '';
     wrapperFeatures = {
       base = true;
@@ -244,8 +253,7 @@ in
 
   virtualisation.virtualbox.host.enable = true;
 
-  # Broken
-  # virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
+  virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
 
@@ -277,8 +285,11 @@ in
     (pkgs.callPackage ./../../pkgs/kyocera-phase5.nix { })
     (pkgs.callPackage ./../../pkgs/kmbeu { })
   ];
+  services.ipp-usb.enable = true; # USB printers
+  programs.system-config-printer.enable = true;
 
   services.tailscale.enable = true;
+  systemd.services.tailscaled.wantedBy = lib.mkForce []; # Don't start automatically
 
   #services.teamviewer.enable = true;
 
@@ -294,7 +305,8 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.settings.AllowUsers = "wsh root novaboot-test";
+  services.openssh.settings.AllowUsers = [ "wsh" "root" "novaboot-test" ];
+  services.openssh.settings.X11Forwarding = true;
 
   services.tftpd-hpa = {
     enable = true;
@@ -351,7 +363,7 @@ in
 
   services.locate = {
     enable = true;
-    locate = pkgs.mlocate;
+    package = pkgs.mlocate;
     localuser = null;
   };
 
@@ -384,6 +396,15 @@ in
   # Make the authoritative version of NOVA available also from the internal repo
   fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = { options = [ "bind" ]; device = "/home/wsh/vyuka/osy/pages/nova"; };
 
+  fileSystems."/srv/blender" = {
+      device = "//turris.lan/flamenco";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in ["${automount_opts},mfsymlinks,uid=wsh,gid=wsh,forceuid,forcegid,file_mode=0600,dir_mode=0700,credentials=/etc/nixos/smb-flamenco.secret"];
+  };
+
   systemd.nspawn.ros-melodic = {
     enable = true;
     execConfig = {
@@ -404,7 +425,7 @@ in
     # Stop user systemd instance immediately after logout. This is
     # needed because I start session daemons by systemd. If they are
     # not restarted, they cannot connect to a new WAYLAND DISPLAY.
-    UserStopDelaySec=0
+    UserStopDelaySec=1
   '';
 
   # Enable the X11 windowing system.

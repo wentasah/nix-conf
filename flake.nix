@@ -2,22 +2,23 @@
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    devenv = { url = github:cachix/devenv/v0.3; inputs.nixpkgs.follows = "nixpkgs"; };
-    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; };
-    envfs = { url = "github:Mic92/envfs"; inputs.nixpkgs.follows = "nixpkgs"; };
+    emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-stable = { url = "github:nix-community/home-manager/release-23.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    home-manager-stable = { url = "github:nix-community/home-manager/release-23.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
+    tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nixpkgs-update = { url = "github:ryantm/nixpkgs-update"; # inputs.nixpkgs.follows = "nixpkgs";
-                     };
+    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
+    nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
+    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    findrepo.url = "github:wentasah/findrepo";
   };
 
   outputs =
@@ -33,39 +34,57 @@
     , novaboot
     , nix-autobahn
     , shdw
-    , envfs
-    , devenv
     , ...
     } @ inputs:
     let
-      common-overlays = [
+      inherit (nixpkgs) lib;
+
+      # Flakes require ‘packages’ attribute to contain per-platform attrsets.
+      # Here we explicitly define all the platforms that will be exposed.
+      platforms = [
+        "x86_64-linux"
+        #"aarch64-linux"
+      ];
+
+      forAllPlatforms = f: lib.genAttrs platforms f;
+
+      tree-sitter-typst = {
+        src = inputs.tree-sitter-typst;
+        generate = true;
+      };
+      common-overlays = platform: [
         emacs-overlay.overlay
-        novaboot.overlays.x86_64-linux
+        novaboot.overlays.${platform}
         shdw.overlays.default
         sterm.overlay
+        inputs.findrepo.overlays.default
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
-          inherit (nix-autobahn.packages.x86_64-linux) nix-autobahn;
-          inherit (devenv.packages.x86_64-linux) devenv;
-          inherit (inputs.nixpkgs-update.packages.x86_64-linux) nixpkgs-update;
+          inherit (nix-autobahn.packages.${platform}) nix-autobahn;
+          foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
+          pyclothoids = final.callPackage ./pkgs/pyclothoids.nix { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           mc = (prev.mc.overrideAttrs (old: {
             version = old.version + "wsh";
             patches = (old.patches or []) ++ [
-              ./pkgs/mc/0001-Don-t-clear-subshell-prompt-during-its-reading.patch
+              ./pkgs/mc/0001-sftpfs-Don-t-set-preferred-hostkey-methods-too-restr.patch
             ];
-            postPatch = ''
-              substituteInPlace contrib/mc-wrapper.sh.in \
-                  --replace '@bindir@/mc' \
-                            'STARSHIP_CONFIG=$HOME/.config/starship.mc.toml @bindir@/mc'
-            '';
           }));
-
+          tree-sitter = prev.tree-sitter.override { extraGrammars = { inherit tree-sitter-typst; }; };
+          veridian = final.callPackage ./pkgs/veridian { };
         })
       ];
+      # Create combined package set from nixpkgs and our overlays.
+      mkPkgs = platform: import nixpkgs {
+        system = platform;
+        overlays = common-overlays platform;
+      };
     in
     {
+      # Packages to test nix-update
+      packages =  forAllPlatforms (platform:
+        { inherit (mkPkgs platform) foxglove-studio; });
 
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {
@@ -75,10 +94,12 @@
             nixos-hardware.nixosModules.common-cpu-intel
             home-manager.nixosModules.home-manager
             inputs.nixseparatedebuginfod.nixosModules.default
+            inputs.sops-nix.nixosModules.sops
+            inputs.nix-index-database.nixosModules.nix-index
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
-              nixpkgs.overlays = common-overlays;
+              nixpkgs.overlays = common-overlays "x86_64-linux";
             }
           ];
         };
@@ -90,16 +111,19 @@
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
-            envfs.nixosModules.envfs
             inputs.nixseparatedebuginfod.nixosModules.default
+            inputs.sops-nix.nixosModules.sops
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
-              nixpkgs.overlays = common-overlays ++ [
+              nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                    d2 julia-stable-bin nurl i3status-rust ikiwiki nil;
+                    d2 julia-stable-bin nurl ikiwiki nil eza git-backdate typstfmt sv-lang;
+                  # Veridian needs Rust from unstable
+                  veridian = nixpkgs.outputs.legacyPackages.x86_64-linux.callPackage ./pkgs/veridian { };
+                  #xdg-desktop-portal = import ./pkgs/xdg-desktop-portal-1.17.0.nix { inherit final prev; };
                 })
               ];
             }
@@ -127,7 +151,7 @@
               home.homeDirectory = "/home/sojka";
               home.stateVersion = "22.05";
               programs.home-manager.enable = true;
-              nixpkgs.overlays = common-overlays;
+              nixpkgs.overlays = common-overlays "x86_64-linux";
 
               programs.zsh.envExtra = ''
               if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then

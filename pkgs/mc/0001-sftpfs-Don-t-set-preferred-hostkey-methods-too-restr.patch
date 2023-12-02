@@ -1,0 +1,144 @@
+From 3d6a74afdc228a1f76ec350104365455c1f801e2 Mon Sep 17 00:00:00 2001
+From: Michal Sojka <michal.sojka@cvut.cz>
+Date: Sun, 1 Oct 2023 01:28:38 +0200
+Subject: [PATCH] sftpfs: Don't set preferred hostkey methods too restrictively
+
+This fixes "sftp: failure establishing SSH session (-5)" error that
+may appear on some systems when using SFTP link feature. The error
+appears even when connecting to the same host via the "ssh" command
+works. Whether the error appears or not depends on the content of
+~/.ssh/known_hosts file.
+
+Problem description:
+
+Midnight Commander uses ~/.ssh/known_hosts for two reasons. Obviously,
+one reason is checking for hostkey match after the SSH handshake. The
+second reason is to set preferences which host key the remote side
+should send us during the SSH handshake. And this is the problematic
+place.
+
+Entries in ~/.ssh/known_hosts store host names either in plain text or
+in a hashed form. libssh2 does not export host name hashes, only plain
+text host names. When mc tries to find a matching entry to set hostkey
+preferences, it cannot cannot reliably match the hashed host names.
+Before this change, mc assumed that any entry with hashed host name
+matches the connecting host and set hostkey preference to the type of
+that key. In many cases, this was incorrect. For example, when the
+first hashed entry in ~/.ssh/known_hosts appeared before the matching
+non-hashed one, and its key type was ssh-rsa, which is disabled by
+default since OpenSSH 8.8 (released 2021-09-26), then mc requested
+only the ssh-rsa host key from the remote host. Since this host key is
+likely disabled these days, no key was sent by the remote host and mc
+reported error -5 (LIBSSH2_ERROR_KEX_FAILURE).
+
+Solution:
+
+In this commit, we fix the problem as follows:
+
+1. When finding a matching known_hosts entry in order to set the
+   preferred hostkey method, we ignore the entries with hashed host
+   names. If we find no matching entry with the plain text host name,
+   no preference is set, resulting in the server sending us whatever
+   key it wants and our libssh2 supports it. Likely, that key will
+   match an entry with hashed host name later during the host key
+   check.
+
+2. If, on the other hand, a matching plain text entry is found, we use
+   its type as a preference, but newly, we add other methods as a
+   fallback. If the matched entry has a server-supported key type, it
+   will be used. If it is not supported by the server (e.g. the old
+   ssh-rsa type), the added fallback ensures that the server sends us
+   some host key, which will likely match an entry with hashed host
+   name later during the host key check.
+
+This solution is not ideal, but I think it's good enough. For example,
+the following situation is not solved ideally (I think): The
+known_hosts file contains a single entry for some server. It has a
+hashed host name and key of type B. Since we ignore hashed entries,
+the server can send its host key as type A, which is higher on the
+preference list. To the user, it will appear as that she has never
+connected to that server before. After accepting the new key, it will
+be added to known_hosts and the problem disappears.
+
+Ideal solution would IMHO be to create libssh2_knownhost_find()
+function in libssh2. It would allow finding all matching entries (even
+with hashed host names) in known_hosts. Midnight commander would then
+use all key types of found entries as its preference.
+
+Note: Since the code modified by this commit was inspired by code from
+curl, curl has the same problem. See
+https://github.com/libssh2/libssh2/issues/676#issuecomment-1741877207.
+---
+ src/vfs/sftpfs/connection.c | 34 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
+
+diff --git a/src/vfs/sftpfs/connection.c b/src/vfs/sftpfs/connection.c
+index d2466dedb..c381758cf 100644
+--- a/src/vfs/sftpfs/connection.c
++++ b/src/vfs/sftpfs/connection.c
+@@ -74,6 +74,22 @@ static const char *const hostkey_method_ssh_ecdsa_256 = "ecdsa-sha2-nistp256";
+ static const char *const hostkey_method_ssh_rsa = "ssh-rsa";
+ static const char *const hostkey_method_ssh_dss = "ssh-dss";
+ 
++/* hostkey methods supported by libssh2 1.11.0 */
++static const char *default_hostkey_methods =
++    "ecdsa-sha2-nistp256,"
++    "ecdsa-sha2-nistp384,"
++    "ecdsa-sha2-nistp521,"
++    "ecdsa-sha2-nistp256-cert-v01@openssh.com,"
++    "ecdsa-sha2-nistp384-cert-v01@openssh.com,"
++    "ecdsa-sha2-nistp521-cert-v01@openssh.com,"
++    "ssh-ed25519,"
++    "ssh-ed25519-cert-v01@openssh.com,"
++    "rsa-sha2-256,"
++    "rsa-sha2-512,"
++    "ssh-rsa,"
++    "ssh-rsa-cert-v01@openssh.com,"
++    "ssh-dss";
++
+ /**
+  *
+  * The current implementation of know host key checking has following limitations:
+@@ -236,6 +252,8 @@ sftpfs_read_known_hosts (struct vfs_s_super *super, GError ** mcerror)
+     struct libssh2_knownhost *store = NULL;
+     int rc;
+     gboolean found = FALSE;
++    char *hostkey_methods = NULL;
++    size_t len;
+ 
+     sftpfs_super->known_hosts = libssh2_knownhost_init (sftpfs_super->session);
+     if (sftpfs_super->known_hosts == NULL)
+@@ -257,7 +275,9 @@ sftpfs_read_known_hosts (struct vfs_s_super *super, GError ** mcerror)
+                 continue;
+ 
+             if (store->name == NULL)
+-                found = TRUE;
++                /* Ignore hashed hostnames. Currently, libssh2 offers
++                 * no way for us to match it. */
++                continue;
+             else if (store->name[0] != '[')
+                 found = strcmp (store->name, super->path_element->host) == 0;
+             else
+@@ -326,8 +346,18 @@ sftpfs_read_known_hosts (struct vfs_s_super *super, GError ** mcerror)
+             return FALSE;
+         }
+ 
++        /* Append the default hostkey methods (with lower priority).
++         * Since we ignored hashed hostnames, the actual matching host
++         * key might have different type than the one found in
++         * known_hosts for non-hashed hostname. Methods not supported
++         * by libssh2 it are ignored. */
++        len = strlen(hostkey_method) + 1 + strlen(default_hostkey_methods) + 1;
++        hostkey_methods = malloc(len);
++        snprintf(hostkey_methods, len, "%s,%s", hostkey_method, default_hostkey_methods);
++
+         rc = libssh2_session_method_pref (sftpfs_super->session, LIBSSH2_METHOD_HOSTKEY,
+-                                          hostkey_method);
++                                          hostkey_methods);
++        free(hostkey_methods);
+         if (rc < 0)
+             goto err;
+     }
+-- 
+2.42.0
+

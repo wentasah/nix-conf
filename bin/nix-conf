@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
 # Script to rebuild my system(s) when something changes. I'm running
 # this from a cron job on a server.
@@ -9,316 +9,362 @@
 #
 # Example: nix-conf build --log-format raw
 
-set -euo pipefail
+import argparse
+import os
+from subprocess import check_output, check_call, run, STDOUT, CalledProcessError
+import sys
+import shutil
+from shlex import quote
 
-was_head_changed() {
-    local old_tree=$(git rev-parse HEAD^{tree})
-    "$@" || exit 1
-    local new_tree=$(git rev-parse HEAD^{tree})
-    if [[ $old_tree != $new_tree ]]; then
-        echo "!!! Tree hash in $PWD changed from $old_tree to $new_tree"
-        return 0
-    fi
-    return 1
-}
+def system(cmd: str):
+    check_call(cmd, shell=True)
 
-exit_if_dirty() {
-    if ! git diff-index --quiet HEAD --; then
-        echo >&2 "$PWD dirty!"
-        exit 1
-    fi
-}
 
-update_nix_conf() {
-    cd ~/nix/conf
-    local flake_lock_dirty=0
-    if ! git diff --quiet flake.lock; then
-        git stash push -- flake.lock # Dirty flake.lock can prevent git pull
-        flake_lock_dirty=1
-    fi
-        # The following must be on a single line so that update of the script via git pull works.
-    if was_head_changed git pull --quiet https://github.com/wentasah/nix-conf.git; then
-        WAS_RERUN=0 exec $0
-    fi
-    if [[ $flake_lock_dirty == 1 ]] && ! git stash pop --quiet; then
+def was_head_changed(cmd):
+    old_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
+    if type(cmd) == str:
+        system(cmd)
+    else:
+        cmd()
+    new_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
+    if old_tree != new_tree:
+        print(f"!!! Tree hash in {os.curdir()} changed from {old_tree} to {new_tree}")
+        return True
+    return False
+
+
+def exit_if_dirty():
+    if run("git diff-index --quiet HEAD --", shell=True).returncode != 0:
+        print(f"{os.curdir()} dirty!", file=sys.stderr)
+        sys.exit(1)
+
+
+def cd(path):
+    os.chdir(os.path.expanduser(path))
+
+
+def update_nix_conf():
+    cd("~/nix/conf")
+    flake_lock_dirty = False
+    if run("git diff --quiet flake.lock", shell=True).returncode != 0:
+        check_call("git stash push -- flake.lock", shell=True)  # Dirty flake.lock can prevent git pull
+        flake_lock_dirty = True
+
+    if was_head_changed("git pull --quiet https://github.com/wentasah/nix-conf.git"):
+        # Reexec potentially newer version of ourselves
+        os.putenv("WAS_RERUN", "true")
+        os.execv(sys.argv[0], sys.argv)
+
+    if flake_lock_dirty and run("git stash pop --quiet", shell=True).returncode != 0:
         # Don't try to resolve the conflict. In the worst case, we'll
         # run an unnecessary rebuild.
-        git restore flake.lock
-        git stash drop
-    fi
+        system("git restore flake.lock")
+        system("git stash drop")
+
     # Git repo was not changed - report the result based on the value of RERUN variable.
-    local ret=${WAS_RERUN:-1}
-    unset WAS_RERUN
-    return "$ret"
-}
+    return os.getenv("WAS_RERUN") == "true"
 
-merge_nixpkgs_topics_into_master() {
-    cd ~/nix/nixpkgs
 
-    git checkout --quiet master
-    git reset --keep nixos-unstable
+def merge_nixpkgs_topics_into_master():
+    cd("~/nix/nixpkgs")
 
-    local commit_msg='automatic merge by nix-conf'
-    if [[ -f .git/machete ]]; then
+    system("git checkout --quiet master")
+    system("git reset --keep nixos-unstable")
+
+    commit_msg='automatic merge by nix-conf'
+    if os.path.isfile(".git/machete"):
         # On my laptop - merge all non-root branches managed by git-machete
-        readarray -t to_merge < <(sed -nE '/^[[:space:]]+/ s///p' .git/machete)
-        commit_msg+=$'\n'$'\n'"Merged branches:${to_merge[@]/#/$'\n'- }"
-    else
-        # CI: Recreate the merge from HEAD of my repo
+        with open(".git/machete", 'r') as f:
+            to_merge = [line.lstrip().split(' ', 1)[0] for line in f.readlines() if line.startswith((' ', '\t'))]
+        commit_msg += "\n\nMerged branches:\n" + "\n".join(["- {branch}" for branch in to_merge])
+    else:
+        # CI: Recreate the merge from the HEAD of my repo
         ## git fetch . test
-        if [[ $(git show wentasah/master) == *"$commit_msg"* ]]; then
-            readarray -t to_merge < <(git cat-file -p wentasah/master | sed -ne '/^parent / s///p')
-            commit_msg=$(git show --format='%B' --no-patch wentasah/master) # Use the same commit message
-        else
-            echo >&2 "HEAD of $(git config remote.wentasah.url) is not a merge commit created by nix-conf"
-            exit 1
-        fi
-    fi
-    git merge --quiet --no-ff --no-commit "${to_merge[@]}"
-    GIT_AUTHOR_DATE=$(git show nixos-unstable --format='%aD') \
-    GIT_COMMITTER_DATE=$(git show nixos-unstable --format='%cD') \
-    git commit -m "$commit_msg"
-}
+        if commit_msg in check_output("git show wentasah/master", shell=True).decode():
+            to_merge = check_output("git cat-file -p wentasah/master | sed -ne '/^parent / s///p'", shell=True).splitlines()
+            commit_msg = check_output("git show --format='%B' --no-patch wentasah/master", shell=True)  # Use the same commit message
+        else:
+            remote = check_output('git config remote.wentasah.url', shell=True)
+            print(f"HEAD of {remote} is not a merge commit created by nix-conf", file=sys.stderr)
+            sys.exit(1)
 
-update_nixpkgs() {
-    cd ~/nix/nixpkgs
-    exit_if_dirty
+    check_call(['git', 'merge', '--quiet', '--no-ff', '--no-commit'] + to_merge)
+    check_call(['git', 'commit', '-m', commit_msg], env=os.environ | {
+        "GIT_AUTHOR_DATE": check_output("git show nixos-unstable --format='%aD'", shell=True),
+        "GIT_COMMITTER_DATE": check_output("git show nixos-unstable --format='%cD'", shell=True),
+    })
 
-    update_nixpkgs_and_merge_topics() {
-        git fetch --quiet origin
-        git fetch --quiet wentasah
-        git update-ref refs/heads/nixos-unstable origin/nixos-unstable
-        merge_nixpkgs_topics_into_master
-    }
 
-    was_head_changed update_nixpkgs_and_merge_topics \
-        && echo "nixpkgs upstream commit: $(git rev-parse origin/nixos-unstable)"
-}
+def update_clonned_nixpkgs():
+    # Update stable
+    cd("~/nix/nixpkgs-stable")
+    exit_if_dirty()
+    system("git pull --quiet")
 
-update_home_manager() {
-    cd ~/nix/home-manager
-    was_head_changed git pull --quiet
-}
+    # Update unstable + merge my changes
+    cd("~/nix/nixpkgs")
+    exit_if_dirty()
 
-update_flake_input() {
-    cd ~/nix/conf
-    local flake_input=$1
-    local old_hash=$(git hash-object flake.lock)
-    nix flake lock --update-input "$flake_input"
-    local new_hash=$(git hash-object flake.lock)
-    if [[ $old_hash != $new_hash ]]; then
-        echo "!!! Flake input $flake_input changed"
-        return 0
-    fi
-    return 1
-}
+    def update_nixpkgs_and_merge_topics():
+        system("git fetch --quiet origin")
+        system("git fetch --quiet wentasah")
+        system("git update-ref refs/heads/nixos-unstable origin/nixos-unstable")
+        merge_nixpkgs_topics_into_master()
 
-updated() {
-    local result=1
-    update_nix_conf && result=0
-    #update_home_manager && result=0
-    update_nixpkgs && result=0
-    if [[ $result = 0 ]]; then
+    if was_head_changed(update_nixpkgs_and_merge_topics):
+        print("nixpkgs upstream commit: ", check_output("git rev-parse origin/nixos-unstable", shell=True))
+        return True
+    return False
+
+
+def update_home_manager():
+    cd("~/nix/home-manager")
+    was_head_changed("git pull --quiet")
+
+
+def update_flake_input(flake_input: str):
+    cd("~/nix/conf")
+    old_hash = check_output("git hash-object flake.lock", shell=True)
+    check_call(["nix", "flake", "lock", "--update-input", flake_input])
+    new_hash = check_output("git hash-object flake.lock", shell=True)
+    if old_hash != new_hash:
+        print(f"!!! Flake input {flake_input} changed")
+        return True
+    return False
+
+
+def updated(host):
+    result = False
+    if update_nix_conf(): result = True
+    #if update_home_manager: result = True
+    if update_clonned_nixpkgs: result = True
+    # Update nixpkgs-stable, but don't trigger rebuild of unstable
+    # stuff (i.e. result=0). `nix flake check` will then rebuild stable
+    update_flake_input("nixpkgs-stable")
+    if result:
         # Reset failed build counter
-        rm -f ~/nix/out/"$HOST"/flake.retry.cnt
-        # Update emacs-overlay only if something else is updated
-        update_flake_input emacs-overlay
-    fi
-    return $result
-}
+        system(f'rm -f ~/nix/out/{host}/flake.retry.cnt')
+        # Update selected overlays only if something else is updated
+        update_flake_input("emacs-overlay")
+        update_flake_input("nix-index-database")
 
-failed_recently() {
-    cnt=~/nix/out/$HOST/flake.retry.cnt
-    if [[ -s ~/nix/out/$HOST/flake.error ]] &&
-       [[ $(cat $cnt) -lt 2 ]]; then
-        echo $(( $(cat $cnt) + 1 )) > $cnt
-        return 0
-    else
-        return 1
-    fi
-}
+    return result
 
-print_switch_instructions() {
-    local override_input=$1
-    echo "Diff from current configuration:"
-    nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
-    echo
-    echo "Run one of the following to switch the configuration:"
-    echo "  sudo nix-conf switch"
-    echo "  sudo nixos-rebuild switch $override_input"
-}
 
-build() {
-    cd ~/nix
+def failed_recently(host):
+    dir = os.path.expanduser(f'~/nix/out/{host}')
+    cnt = f'{dir}/flake.retry.cnt'
+    cnt_val = int(open(cnt).readline() or 0)
+    if os.path.getsize(f"{dir}/flake.error") and cnt_val < 2:
+        print(cnt_val + 1, file=cnt)
+        return True
+    else:
+        return False
 
-    PATH=/nix/var/nix/profiles/default/bin:$PATH
-    local old_version=$(readlink out/"$HOST"/flake || :)
-    local override_input=
-    case "$HOST" in
-        steelpick) override_input="--override-input nixpkgs $PWD/nixpkgs";;
-    esac
-    if [[ -f conf/flake.nix ]]; then
-        local status=0
-        (
-            mkdir -p out/"$HOST"
-            local nix=nix
-            if ! tty -s; then
-                exec > out/"$HOST"/flake.log 2>&1
-            else
-                echo "No log from interactive session" > out/"$HOST"/flake.log
-                command -v nom &> /dev/null && nix=nom
-            fi
-            $nix build \
-                "$@" \
-                --out-link out/"$HOST"/flake $override_input \
-                ./conf#nixosConfigurations."$HOST".config.system.build.toplevel
-        ) || status=$?
-        if [[ $status -eq 0 ]]; then
-            : > out/"$HOST"/flake.error
+
+def print_switch_instructions(host, override_input: str):
+    print("Diff from current configuration:")
+    # nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
+    system(f'nvd diff /run/current-system ~/nix/out/{host}/flake')
+    print(f"""
+Run one of the following to switch the configuration:
+  sudo nix-conf switch
+  sudo nixos-rebuild switch {" ".join(override_input)}
+    """)
+
+
+def build(host, nix_args):
+    cd("~/nix")
+
+    #os.environ['PATH'] = "/nix/var/nix/profiles/default/bin:{os.environ['PATH']}"
+    old_version = os.readlink(f'out/{host}/flake')
+    override_input = []
+    match host:
+        case "steelpick": override_input += ['--override-input', 'nixpkgs', f'{os.curdir}/nixpkgs']
+
+    if os.path.isfile("conf/flake.nix"):
+        os.makedirs(f"out/{host}", exist_ok=True)
+        nix = "nix"
+        log = None
+        if not os.isatty(sys.stdin.fileno()):
+            log = open(f"out/{host}/flake.log", 'w')
+        else:
+            print("No log from interactive session", file=open(f'out/{host}/flake.log', 'w'))
+            nix = 'nom'
+
+        cmd = [nix, "build", *nix_args, "--out-link", f"out/{host}/flake", *override_input,
+               f"./conf#nixosConfigurations.{host}.config.system.build.toplevel"]
+        print('Running:', ' '.join([quote(a) for a in cmd]), file=sys.stderr)
+        status = run(cmd, stdout=log, stderr=STDOUT).returncode
+
+        if status == 0:
+            open(f'out/{host}/flake.error', 'w') # truncate
             # Reset failed build counter
-            rm -f out/"$HOST"/flake.retry.cnt
-        else
-            # we use cat instead of mv to not break hardlinks to the flake.error
-            cat out/"$HOST"/flake.log > out/"$HOST"/flake.error
-            touch out/"$HOST"/flake.retry.cnt
-            exit $status
-        fi
+            try: os.remove(f'out/{host}/flake.retry.cnt')
+            except FileNotFoundError: pass
+        else:
+            # we copy instead of renaming to not break hardlinks to the flake.error
+            shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
+            open(f'out/{host}/flake.retry.cnt')
+            sys.exit(status)
 
-        if [[ $(hostname) = "$HOST" ]]; then
-            print_switch_instructions "$override_input"
-        else
-            (
-                cp conf/flake.lock out/"$HOST"
+        if check_output("hostname").decode().strip() == host:
+            print_switch_instructions(host, override_input)
+        else:
+            shutil.copy("conf/flake.lock", f'out/{host}/')
 
-                cd nixpkgs
-                if git diff --quiet wentasah/ci; then
-                    return
-                fi
-                git push --force wentasah HEAD:ci
+            cd("nixpkgs")
+            if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
+                return
 
-	        local old_commit=$(git rev-parse history)
-	        local new_commit=$(git commit-tree -p "$old_commit" -p HEAD "HEAD^{tree}" -m "update history branch")
-	        git update-ref refs/heads/history "$new_commit" "$old_commit"
-                git push wentasah history
-            )
-            if [[ $old_version != $(readlink out/"$HOST"/flake) ]]; then
-                matrix-commander --markdown -m "nix-conf CI update completed
+            system("git push --force wentasah HEAD:ci")
+            old_commit = check_output("git rev-parse history", shell=True).decode().strip()
+            new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True)
+            system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
+            system("git push wentasah history")
 
-$(nix store diff-closures $old_version out/"$HOST"/flake | ansifilter | sed -e 's/^/    /')" || :
-            fi
-        fi
-    else
-        export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
-        export NIXOS_CONFIG=$PWD/conf/$HOST/configuration.nix
+            if old_version != os.readlink(f'out/{host}/flake'):
+                system("""matrix-commander --markdown -m "nix-conf CI update completed
 
-        mkdir -p out/"$HOST"/nixos
-        (
-            cd out/"$HOST"/nixos
-            nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
-        )
+$(nvd diff $old_version out/"$HOST"/flake | sed -e 's/^/    /')""")
+    else:
+        raise RuntimeError("Only flakes are supported")
+#         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
+#         export NIXOS_CONFIG=$PWD/conf/$HOST/configuration.nix
 
-        mkdir -p out/"$HOST"/home
-        (
-            cd out/"$HOST"/home
-            nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
-                      --run "home-manager build --keep-going -f ~/nix/conf/$HOST/home.nix"
-        )
-    fi
-}
+#         mkdir -p out/"$HOST"/nixos
+#         (
+#             cd out/"$HOST"/nixos
+#             nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
+#         )
 
-switch() {
-    local O="/home/${SUDO_USER:-$USER}/nix/out/$HOST/flake"
-    nix-env -p /nix/var/nix/profiles/system --set "$O"
-    "$O"/bin/switch-to-configuration switch
-}
+#         mkdir -p out/"$HOST"/home
+#         (
+#             cd out/"$HOST"/home
+#             nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
+#                       --run "home-manager build --keep-going -f ~/nix/conf/$HOST/home.nix"
+#         )
+#     fi
 
-push() {
-    cd ~/nix/nixpkgs
-    git push --force-with-lease wentasah master:master
-    git push wentasah nixos-unstable:nixos-unstable
-    cd ~/nix/conf
-    nix flake lock --update-input nixpkgs --commit-lock-file
-    git push
-}
 
-add_commits() {
-    local branch="${1:?no branch given}";
-    shift
-    git checkout -B "$branch" nixos-unstable
-    git cherry-pick "${@:?no commits specified}"
-    git-machete add
-    merge_nixpkgs_topics_into_master
-}
+def switch(host, method='switch'):
+    O = f'/home/{os.getenv("SUDO_USER", os.getenv("USER"))}/nix/out/{host}/flake'
+    system(f'nix-env -p /nix/var/nix/profiles/system --set "{O}"')
+    system(f'{O}/bin/switch-to-configuration {method}')
 
-add_pr() {
-    local pr="${1:?no PR number given}";
-    local branch="${2:?no branch given}-pr-$pr";
-    git fetch origin master staging
-    git fetch origin refs/pull/"$pr"/head
-    if git merge-base --is-ancestor nixos-unstable FETCH_HEAD; then
+
+def push():
+    cd("~/nix/nixpkgs")
+    system("git push --force-with-lease wentasah master:master")
+    system("git push wentasah nixos-unstable:nixos-unstable")
+    cd("~/nix/conf")
+    system("nix flake lock --update-input nixpkgs --commit-lock-file")
+    system("git push")
+
+
+def add_commits(branch: str, commits: list[str]):
+    system(f'git checkout -B {branch} nixos-unstable')
+    system(f'git cherry-pick {" ".join(commits)}')
+    system(f'git-machete add')
+    merge_nixpkgs_topics_into_master()
+
+
+def add_pr(pr: int, branch: str):
+    system('git fetch origin master staging')
+    system(f'git fetch origin refs/pull/{pr}/head')
+    if run('git merge-base --is-ancestor nixos-unstable FETCH_HEAD', shell=True).returncode == 0:
         # Rebase PR's commits on nixos-unstable
-        # shellcheck disable=SC2046
-        add_commits "$branch" $(gh pr view --json commits "$pr" | jq --raw-output '.commits[].oid')
-    else
+        commits = check_output(f"gh pr view --json commits {pr} | jq --raw-output '.commits[].oid'") \
+            .decode().splitlines()
+        add_commits(branch, commits)
+    else:
         # Merge PR's commits
-        git branch "$branch" FETCH_HEAD
-        git-machete add "$branch"
+        system(f'git branch {branch} FETCH_HEAD')
+        system(f'git-machete add {branch}')
         merge_nixpkgs_topics_into_master
-    fi
-}
+    system(f'git-machete anno --branch="{branch}" "PR #{pr} rebase=no push=no"')
 
-update() {
-    if updated || failed_recently; then
-        build "$@"
-    else
-        echo "Nothing to do for update."
-    fi
-}
 
-if [[ ${1:-} ]] && [[ $1 != -* ]]; then
-    cmd=$1
-    shift
-else
-    cmd=update
-fi
+def update(host, nix_args):
+    if updated(host) or failed_recently():
+        build(host, nix_args)
+    else:
+        print("Nothing to do for update.")
 
-export GIT_AUTHOR_NAME=nix-conf
-export GIT_AUTHOR_EMAIL=nix-conf@localhost
-export GIT_COMMITTER_NAME=nix-conf
-export GIT_COMMITTER_EMAIL=nix-conf@localhost
 
-# For which host to build the configuration
-HOST=${HOST:-$(hostname)}
+def ci(host, nix_args):
+    update(host, nix_args)
+    try:
+        system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
+    except CalledProcessError:
+        with open(os.path.expanduser(f"~/nix/out/{host}/flake.error"), 'a') as f:
+            print("nix flake check failed!!!", file=f)
+            sys.exit(1)
 
-case "$cmd" in
-    "update")
-        update "$@";;
-    "ci")
-        update "$@"
-        if ! nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs; then
-           echo "nix flake check failed!!!" | tee -a ~/nix/out/"$HOST"/flake.error
-           exit 1
-        fi;;
-    "build")
-        build "$@";;
-    "copy")
-        update_nixpkgs || :
-        rsync ritchie:nix/out/steelpick/flake.lock ~/nix/conf
-        O=$(ssh ritchie readlink nix/out/steelpick/flake)
-        nix copy -j16 --from ssh://ritchie "$O"
-        ln -sfn "$O" ~/nix/out/"$HOST"/flake
-        print_switch_instructions "TODO"
-        ;;
-    "merge")
-        merge_nixpkgs_topics_into_master;;
-    "switch")
-        switch;;
-    "push")
-        push;;
-    "add-pr")
-        add_pr "$@";;
-    "add-commits")
-        add_commits "$@";;
-    *)
-        echo >&2 "Unknown command: $cmd"
-esac
+
+def copy(host):
+    update_clonned_nixpkgs()
+    system(f"rsync ritchie:nix/out/{host}/flake.lock ~/nix/conf")
+    O = check_output(f'ssh ritchie readlink nix/out/{host}/flake', shell=True).decode().strip()
+    system(f'nix copy -j16 --from ssh://ritchie "{O}"')
+    dest = os.path.expanduser(f'~/nix/out/{host}/flake')
+    try: os.remove(dest)
+    except FileNotFoundError: pass
+    os.symlink(O, dest)
+    print_switch_instructions(host, [])  # TODO override
+
+
+os.environ['GIT_AUTHOR_NAME'] = 'nix-conf'
+os.environ['GIT_AUTHOR_EMAIL'] = 'nix-conf@localhost'
+os.environ['GIT_COMMITTER_NAME'] = 'nix-conf'
+os.environ['GIT_COMMITTER_EMAIL'] = 'nix-conf@localhost'
+
+parser = argparse.ArgumentParser(
+    prog="nix-conf",
+    description="Tool to help maintaining my Nix and NixOS environment",
+)
+parser.add_argument(
+    "--host",
+    default=os.getenv("HOST", check_output("hostname").decode().strip()),
+    help="For which host to build the configuration",
+)
+subparsers = parser.add_subparsers(required=True)
+
+parser_update = subparsers.add_parser('update')
+parser_update.add_argument("nix_args", nargs='*')
+parser_update.set_defaults(func=lambda args: update(args.host, args.nix_args))
+
+parser_ci = subparsers.add_parser('ci')
+parser_ci.add_argument("nix_args", nargs='*')
+parser_ci.set_defaults(func=lambda args: ci(args.host, args.nix_args))
+
+parser_build = subparsers.add_parser('build')
+parser_build.add_argument("nix_args", nargs='*')
+parser_build.set_defaults(func=lambda args: build(args.host, args.nix_args))
+
+parser_copy = subparsers.add_parser('copy')
+parser_copy.set_defaults(func=lambda args: copy(args.host))
+
+parser_merge = subparsers.add_parser('merge')
+parser_merge.set_defaults(func=lambda args: merge_nixpkgs_topics_into_master())
+
+parser_switch = subparsers.add_parser('switch')
+parser_switch.set_defaults(func=lambda args: switch(args.host))
+
+parser_boot = subparsers.add_parser('boot')
+parser_boot.set_defaults(func=lambda args: switch(args.host, method='boot'))
+
+parser_push = subparsers.add_parser('push')
+parser_push.set_defaults(func=lambda args: push())
+
+parser_add_pr = subparsers.add_parser('add-pr')
+parser_add_pr.add_argument("pr_num", type=int)
+parser_add_pr.add_argument("branch", type=str)
+parser_add_pr.set_defaults(func=lambda args: add_pr(args.pr_num, args.branch))
+
+parser_add_commits = subparsers.add_parser('add-commits')
+parser_add_commits.add_argument("branch", type=str)
+parser_add_commits.set_defaults(func=lambda args: add_commits(args.branch))
+
+args = parser.parse_args()
+args.func(args)

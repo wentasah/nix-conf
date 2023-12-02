@@ -29,10 +29,6 @@ let
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
-  globalPythonPackages = (pp: with pp; [
-    requests urllib3 # for filesender.py
-    matplotlib tkinter
-  ]);
 in
 {
   imports = [
@@ -89,7 +85,6 @@ in
     (import ../../pkgs/unfs3 { inherit pkgs; })
     (pkgs.callPackage ../../pkgs/cargo-prefetch {})
     (pkgs.callPackage ../../pkgs/enumerate-markdown {})
-    (python3.withPackages globalPythonPackages)
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -98,7 +93,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    avidemux
+    #avidemux #broken: see https://github.com/NixOS/nixpkgs/pull/263171
     bear
     binutils-unwrapped-all-targets
     bison
@@ -123,11 +118,13 @@ in
     easyeffects
     exif
     fdupes
+    foxglove-studio
     firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
     flowblade
     #freecad # broken
+    ghostscript
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
@@ -161,7 +158,6 @@ in
     musescore
     mytexlive
     nasm
-    nix-index
     nix-init
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
@@ -175,7 +171,7 @@ in
     pavucontrol
     pdfpc
     perl.devdoc
-    perlPackages.AppClusterSSH
+    #perlPackages.AppClusterSSH # broken 2023-08-10
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
     playerctl
