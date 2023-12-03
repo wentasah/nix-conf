@@ -75,7 +75,7 @@ def merge_nixpkgs_topics_into_master():
     if os.path.isfile(".git/machete"):
         # On my laptop - merge all non-root branches managed by git-machete
         with open(".git/machete", 'r') as f:
-            to_merge = [line.lstrip().split(' ', 1)[0] for line in f.readlines() if line.startswith((' ', '\t'))]
+            to_merge = [line.strip().split(' ', 1)[0] for line in f.readlines() if line.startswith((' ', '\t'))]
         commit_msg += "\n\nMerged branches:\n" + "\n".join(["- {branch}" for branch in to_merge])
     else:
         # CI: Recreate the merge from the HEAD of my repo
