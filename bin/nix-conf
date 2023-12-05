@@ -11,18 +11,37 @@
 
 import argparse
 import os
-from subprocess import check_output, check_call, run, STDOUT, CalledProcessError
+import subprocess
+from subprocess import check_output, STDOUT, CalledProcessError
 import sys
 import shutil
 from shlex import quote
+
+verbose = False
+
+
+def print_verbose(*args, **kwargs):
+    if verbose:
+        print(*args, **kwargs)
+
 
 def system(cmd: str):
     check_call(cmd, shell=True)
 
 
+def run(*args, **kwargs):
+    print_verbose(args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]]))
+    return subprocess.run(*args, **kwargs)
+
+
+def check_call(*args, **kwargs):
+    print_verbose(args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]]))
+    return subprocess.check_call(*args, **kwargs)
+
+
 def was_head_changed(cmd):
     old_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
-    if type(cmd) == str:
+    if isinstance(cmd, str):
         system(cmd)
     else:
         cmd()
@@ -40,6 +59,7 @@ def exit_if_dirty():
 
 
 def cd(path):
+    print_verbose(f"cd {path}")
     os.chdir(os.path.expanduser(path))
 
 
@@ -329,6 +349,8 @@ parser.add_argument(
     default=os.getenv("HOST", check_output("hostname").decode().strip()),
     help="For which host to build the configuration",
 )
+parser.add_argument("-v", "--verbose", action='store_true',
+                    help="Print executed commands")
 subparsers = parser.add_subparsers(required=True)
 
 parser_update = subparsers.add_parser('update')
@@ -368,4 +390,5 @@ parser_add_commits.add_argument("branch", type=str)
 parser_add_commits.set_defaults(func=lambda args: add_commits(args.branch))
 
 args = parser.parse_args()
+verbose = args.verbose
 args.func(args)
