@@ -240,7 +240,7 @@ def build(host, nix_args):
 
             system("git push --force wentasah HEAD:ci")
             old_commit = check_output("git rev-parse history", shell=True).decode().strip()
-            new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True)
+            new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode()
             system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
             system("git push wentasah history")
 
