@@ -102,7 +102,7 @@ def merge_nixpkgs_topics_into_master():
         ## git fetch . test
         if commit_msg in check_output("git show wentasah/master", shell=True).decode():
             to_merge = check_output("git cat-file -p wentasah/master | sed -ne '/^parent / s///p'", shell=True).decode().splitlines()
-            commit_msg = check_output("git show --format='%B' --no-patch wentasah/master", shell=True)  # Use the same commit message
+            commit_msg = check_output("git show --format='%B' --no-patch wentasah/master", shell=True).decode()  # Use the same commit message
         else:
             remote = check_output('git config remote.wentasah.url', shell=True)
             print(f"HEAD of {remote} is not a merge commit created by nix-conf", file=sys.stderr)
