@@ -176,7 +176,8 @@ def failed_recently(host):
     cnt = f'{dir}/flake.retry.cnt'
     cnt_val = int(open(cnt).readline() or 0)
     if os.path.getsize(f"{dir}/flake.error") and cnt_val < 2:
-        print(cnt_val + 1, file=cnt)
+        with open(cnt, 'w') as f:
+            print(cnt_val + 1, file=f)
         return True
     else:
         return False
