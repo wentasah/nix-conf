@@ -157,7 +157,7 @@ def updated(host):
     result = False
     if update_nix_conf(): result = True
     #if update_home_manager: result = True
-    if update_clonned_nixpkgs: result = True
+    if update_clonned_nixpkgs(): result = True
     # Update nixpkgs-stable, but don't trigger rebuild of unstable
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
     update_flake_input("nixpkgs-stable")
