@@ -307,7 +307,7 @@ def add_pr(pr: int, branch: str):
 
 
 def update(host, nix_args):
-    if updated(host) or failed_recently():
+    if updated(host) or failed_recently(host):
         build(host, nix_args)
     else:
         print("Nothing to do for update.")
