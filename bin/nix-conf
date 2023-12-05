@@ -110,8 +110,8 @@ def merge_nixpkgs_topics_into_master():
 
     check_call(['git', 'merge', '--quiet', '--no-ff', '--no-commit'] + to_merge)
     check_call(['git', 'commit', '-m', commit_msg], env=os.environ | {
-        "GIT_AUTHOR_DATE": check_output("git show nixos-unstable --format='%aD'", shell=True),
-        "GIT_COMMITTER_DATE": check_output("git show nixos-unstable --format='%cD'", shell=True),
+        "GIT_AUTHOR_DATE": check_output("git show nixos-unstable --format='%aD'", shell=True).decode(),
+        "GIT_COMMITTER_DATE": check_output("git show nixos-unstable --format='%cD'", shell=True).decode(),
     })
 
 
