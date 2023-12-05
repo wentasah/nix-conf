@@ -226,7 +226,7 @@ def build(host, nix_args):
         else:
             # we copy instead of renaming to not break hardlinks to the flake.error
             shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
-            open(f'out/{host}/flake.retry.cnt')
+            open(f'out/{host}/flake.retry.cnt', 'w')
             sys.exit(status)
 
         if check_output("hostname").decode().strip() == host:
