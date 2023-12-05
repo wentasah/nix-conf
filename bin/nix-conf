@@ -174,7 +174,10 @@ def updated(host):
 def failed_recently(host):
     dir = os.path.expanduser(f'~/nix/out/{host}')
     cnt = f'{dir}/flake.retry.cnt'
-    cnt_val = int(open(cnt).readline() or 0)
+    try:
+        cnt_val = int(open(cnt).readline())
+    except (FileNotFoundError, ValueError):
+        cnt_val = 0
     if os.path.getsize(f"{dir}/flake.error") and cnt_val < 2:
         with open(cnt, 'w') as f:
             print(cnt_val + 1, file=f)
