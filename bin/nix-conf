@@ -236,6 +236,7 @@ def build(host, nix_args):
             print_switch_instructions(host, override_input)
         else:
             shutil.copy("conf/flake.lock", f'out/{host}/')
+            new_version = os.readlink(f'out/{host}/flake')
 
             cd("nixpkgs")
             if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
@@ -247,7 +248,7 @@ def build(host, nix_args):
             system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
             system("git push wentasah history")
 
-            if old_version != os.readlink(f'out/{host}/flake'):
+            if old_version != new_version:
                 system("""matrix-commander --markdown -m "nix-conf CI update completed
 
 $(nvd diff $old_version out/"$HOST"/flake | sed -e 's/^/    /')""")
