@@ -254,22 +254,6 @@ def build(host, nix_args):
 $(nvd diff $old_version out/"$HOST"/flake | sed -e 's/^/    /')""")
     else:
         raise RuntimeError("Only flakes are supported")
-#         export NIX_PATH=nixpkgs=$PWD/nixpkgs:nixos-hardware=$PWD/nixos-hardware
-#         export NIXOS_CONFIG=$PWD/conf/$HOST/configuration.nix
-
-#         mkdir -p out/"$HOST"/nixos
-#         (
-#             cd out/"$HOST"/nixos
-#             nix-shell -p nixos-rebuild --run "nixos-rebuild build --keep-going"
-#         )
-
-#         mkdir -p out/"$HOST"/home
-#         (
-#             cd out/"$HOST"/home
-#             nix-shell -E 'with import <nixpkgs> { }; runCommand "dummy" { buildInputs = [ (import ~/nix/home-manager {}).home-manager ]; } ""' \
-#                       --run "home-manager build --keep-going -f ~/nix/conf/$HOST/home.nix"
-#         )
-#     fi
 
 
 def switch(host, method='switch'):
