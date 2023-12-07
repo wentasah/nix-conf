@@ -40,12 +40,12 @@ def check_call(*args, **kwargs):
 
 
 def was_head_changed(cmd):
-    old_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
+    old_tree = check_output("git rev-parse HEAD^{tree}", shell=True).decode().strip()
     if isinstance(cmd, str):
         system(cmd)
     else:
         cmd()
-    new_tree = check_output("git rev-parse HEAD^{tree}", shell=True)
+    new_tree = check_output("git rev-parse HEAD^{tree}", shell=True).decode().strip()
     if old_tree != new_tree:
         print(f"!!! Tree hash in {os.getcwd()} changed from {old_tree} to {new_tree}")
         return True
