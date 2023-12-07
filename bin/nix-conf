@@ -132,7 +132,7 @@ def update_clonned_nixpkgs():
         merge_nixpkgs_topics_into_master()
 
     if was_head_changed(update_nixpkgs_and_merge_topics):
-        print("nixpkgs upstream commit: ", check_output("git rev-parse origin/nixos-unstable", shell=True))
+        print("nixpkgs upstream commit: ", check_output("git rev-parse origin/nixos-unstable", shell=True).decode().strip())
         return True
     return False
 
