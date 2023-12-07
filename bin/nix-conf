@@ -219,7 +219,6 @@ def build(host, nix_args):
 
         cmd = [nix, "build", *nix_args, "--out-link", f"out/{host}/flake", *override_input,
                f"./conf#nixosConfigurations.{host}.config.system.build.toplevel"]
-        print_verbose('Running:', ' '.join([quote(a) for a in cmd]), file=sys.stderr)
         status = run(cmd, stdout=log, stderr=STDOUT).returncode
 
         if status == 0:
