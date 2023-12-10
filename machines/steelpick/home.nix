@@ -102,7 +102,7 @@ in
     carla
     cask
     clang
-    clang-tools_15
+    clang-tools_15              # properly wrapped clangd
     clementine
     clinfo
     cmakeWithGui
