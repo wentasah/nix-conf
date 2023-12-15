@@ -251,7 +251,13 @@ def build(host, nix_args):
             if old_version != os.readlink(f'out/{host}/flake'):
                 diff = check_output(f"nvd diff {old_version} out/{host}/flake", shell=True).decode().splitlines()
                 diff_md = "\n".join(["    " + line for line in diff])
-                check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
+                try:
+                    check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
+                except CalledProcessError:
+                    # The above can fail with:
+                    # ERROR: matrix-commander: E150: room_send failed with error 'RoomSendError: M_TOO_LARGE event too large'.
+                    # Try sending a shorter message
+                    check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed (diff omitted - probably too long)"])
     else:
         raise RuntimeError("Only flakes are supported")
 
