@@ -132,7 +132,7 @@ in
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
     typst
-    typst-lsp
+    #typst-lsp #broken https://github.com/NixOS/nixpkgs/issues/273835
     typstfmt
     uncrustify
     unzip
