@@ -232,6 +232,7 @@ in
       kssh  = "kitty +kitten ssh";
       l     = "eza -la --group --header --time-style=relative --hyperlink";
       lg    = "eza -la --group --header --time-style=relative --hyperlink --git";
+      lt    = "eza -la --group --header --time-style=relative --hyperlink --tree";
       ln    = "nocorrect ln"; # no spelling correction on ln
       lnr   = "nocorrect ln -s --relative";
       ls    = "ls --color=auto";
