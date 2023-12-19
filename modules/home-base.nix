@@ -39,6 +39,7 @@ in
     csvtool
     d2
     daemontools
+    doxygen_gui
     dua
     entr
     eza
