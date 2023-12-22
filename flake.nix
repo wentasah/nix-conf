@@ -19,6 +19,7 @@
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     findrepo.url = "github:wentasah/findrepo";
+    carla.url = github:CTU-IIG/carla-simulator.nix;
   };
 
   outputs =
@@ -58,6 +59,7 @@
         shdw.overlays.default
         sterm.overlay
         inputs.findrepo.overlays.default
+        inputs.carla.overlays."0.9.14"
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;

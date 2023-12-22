@@ -102,6 +102,7 @@ in
     bison
     bubblewrap
     can-utils
+    carla-bin
     cask
     chromium
     clang
