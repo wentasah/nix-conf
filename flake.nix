@@ -19,7 +19,7 @@
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     findrepo.url = "github:wentasah/findrepo";
-    carla.url = github:CTU-IIG/carla-simulator.nix;
+    carla-stable = { url = "github:CTU-IIG/carla-simulator.nix"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
   };
 
   outputs =
@@ -59,7 +59,6 @@
         shdw.overlays.default
         sterm.overlay
         inputs.findrepo.overlays.default
-        inputs.carla.overlays."0.9.14"
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;
@@ -119,6 +118,7 @@
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
+                inputs.carla-stable.overlays."0.9.14"
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
