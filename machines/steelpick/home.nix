@@ -198,6 +198,7 @@ in
     v4l-utils # for qv4l2
     vlc
     video-trimmer
+    warp
     wireshark
     wol
     wmctrl

@@ -169,6 +169,7 @@
     skypeforlinux
     tree
     vim
+    warp
     wget
     gnome.gnome-tweaks
   ];
