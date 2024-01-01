@@ -289,7 +289,7 @@ def add_pr(pr: int, branch: str):
     system(f'git fetch origin refs/pull/{pr}/head')
     if run('git merge-base --is-ancestor nixos-unstable FETCH_HEAD', shell=True).returncode == 0:
         # Rebase PR's commits on nixos-unstable
-        commits = check_output(f"gh pr view --json commits {pr} | jq --raw-output '.commits[].oid'") \
+        commits = check_output(f"gh pr view --json commits {pr} | jq --raw-output '.commits[].oid'", shell=True) \
             .decode().splitlines()
         add_commits(branch, commits)
     else:
