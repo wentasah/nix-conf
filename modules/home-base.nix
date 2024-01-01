@@ -100,6 +100,7 @@ in
     nixos-shell
     nixpkgs-fmt
     nixpkgs-review
+    nodePackages.bash-language-server
     nurl
     nvd
     odt2txt
