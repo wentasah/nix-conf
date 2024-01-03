@@ -528,6 +528,7 @@ in
     options = "--delete-older-than 4d";
     persistent = true;
   };
+  nix.package = pkgs.nixVersions.nix_2_19;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation
