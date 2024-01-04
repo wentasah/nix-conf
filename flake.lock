@@ -1,15 +1,17 @@
 {
   "nodes": {
-    "carla": {
+    "carla-stable": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
       },
       "locked": {
-        "lastModified": 1701098959,
-        "narHash": "sha256-iNvdv7xsuYdxPN7CXKTabkRYJPlG93Z65aQRATZz05Y=",
+        "lastModified": 1703287571,
+        "narHash": "sha256-/jXPJLJdDK/K0u3cW33z6uegZxakFXTJNvsnp8J+fss=",
         "owner": "CTU-IIG",
         "repo": "carla-simulator.nix",
-        "rev": "62d82a75bc8c82c67dac1a6fa055c7fd2a75606e",
+        "rev": "44564caba30278d188eb8a8e9ee27109405834b1",
         "type": "github"
       },
       "original": {
@@ -29,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703379790,
-        "narHash": "sha256-EvPV2L6ixy4kYhrwGZ93jjgpKdnI4obl2+2WDqJa2+s=",
+        "lastModified": 1704387047,
+        "narHash": "sha256-YiQoAg5EOAdNfXBWDWcnIb7GrZ1Al4ThZy9V0VakCtQ=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "d1755a1bc7482123a229cef72b526944f6085891",
+        "rev": "9206a7acdc0dd951d5d229b09405c7c6205bcef4",
         "type": "github"
       },
       "original": {
@@ -224,11 +226,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703386643,
-        "narHash": "sha256-+YyJPWqLgcsnl9W0s5bpuEO6XJon8mhfr1VjNDcHQ+Q=",
+        "lastModified": 1703992163,
+        "narHash": "sha256-709CGmwU34dxv8DjSpRBZ+HibVJIVaFcA4JH+GFnhyM=",
         "owner": "Mic92",
         "repo": "nix-index-database",
-        "rev": "1d4d588a4671d08d25fb1f5f509d3eb24fceb074",
+        "rev": "d6510ce144f5da7dd9bac667ba3d5a4946c00d11",
         "type": "github"
       },
       "original": {
@@ -254,48 +256,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1700851152,
-        "narHash": "sha256-3PWITNJZyA3jz5IGREJRfSykM6xSLmD8u5A3WpBCyDM=",
-        "owner": "NixOS",
+        "lastModified": 1704194953,
+        "narHash": "sha256-jBTZa8WKiWzz/jo/vjUcc1I0zdI548cJCTbBoFHnJB0=",
+        "owner": "wentasah",
         "repo": "nixpkgs",
-        "rev": "1216a5ba22a93a4a3a3bfdb4bff0f4727c576fcc",
+        "rev": "18ff09aa6e26dd0904e113bb247851080b9d0692",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
+        "owner": "wentasah",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1703068421,
-        "narHash": "sha256-WSw5Faqlw75McIflnl5v7qVD/B3S2sLh+968bpOGrWA=",
+        "lastModified": 1704145853,
+        "narHash": "sha256-G/1AMt9ibpeMlcxvD1vNaC8imGaK+g7zZ99e29BLgWw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d65bceaee0fb1e64363f7871bc43dc1c6ecad99f",
+        "rev": "2d2ea8eab9e400618748ab1a6a108255233b602c",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "ref": "nixos-23.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1702830618,
-        "narHash": "sha256-Fg0bjCpoNpBvVRxVZ7E70YacC21IUgHC9Q0TjcChjHo=",
-        "owner": "wentasah",
-        "repo": "nixpkgs",
-        "rev": "00828b621aa1acc52c84709eead3af7b3d5ab7be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wentasah",
-        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -361,7 +347,7 @@
     },
     "root": {
       "inputs": {
-        "carla": "carla",
+        "carla-stable": "carla-stable",
         "emacs-overlay": "emacs-overlay",
         "findrepo": "findrepo",
         "flake-compat": "flake-compat",
@@ -370,7 +356,7 @@
         "nix-autobahn": "nix-autobahn",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixseparatedebuginfod": "nixseparatedebuginfod",
         "notify-while-running": "notify-while-running",
