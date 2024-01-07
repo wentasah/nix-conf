@@ -35,7 +35,7 @@ in
           ]
         '';
         description = ''
-          Extra command line arguments to pass to atftp.
+          Extra command line arguments to pass to tftpd-hpa.
         '';
       };
 
