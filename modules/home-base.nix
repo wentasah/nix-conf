@@ -57,6 +57,7 @@ in
     gitAndTools.tig
     gitbatch
     gitui
+    glab
     global
     gnumake
     gnupg
