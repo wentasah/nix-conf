@@ -114,6 +114,7 @@
             home-manager-stable.nixosModules.home-manager
             inputs.nixseparatedebuginfod.nixosModules.default
             inputs.sops-nix.nixosModules.sops
+            inputs.nix-index-database.nixosModules.nix-index
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
