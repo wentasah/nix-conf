@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ...}:
+{ pkgs, lib, ...}:
 {
   # For NixOS < 24.05
   services.avahi.enable = true;
@@ -18,7 +18,7 @@
   # The solution is to use mdns4 instead of mdns NSS module.
 
   # settings from avahi-daemon.nix where mdns is replaced with mdns4
-  system.nssModules = pkgs.nssmdns;
+  system.nssModules = [ pkgs.nssmdns ];
   system.nssDatabases.hosts = with lib; (mkMerge [
     (mkBefore [ "mdns4_minimal [NOTFOUND=return]" ]) # before resolve
     (mkAfter [ "mdns4" ]) # after dns
