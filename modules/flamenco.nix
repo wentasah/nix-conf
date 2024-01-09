@@ -66,16 +66,4 @@ in
       ReadWritePaths = "/srv/blender";
     };
   };
-
-  # Add python packages for using in Blender Addons (prepared for 23.11)
-  nixpkgs.overlays = [
-    (final: prev: {
-      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-        (python-final: python-prev: {
-          pyclothoids = python-final.callPackage ../pkgs/pyclothoids.nix { };
-          scenariogeneration = python-final.callPackage ../pkgs/scenariogeneration.nix { };
-        })
-      ];
-    })
-  ];
 }

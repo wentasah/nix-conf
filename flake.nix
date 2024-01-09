@@ -63,7 +63,6 @@
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
-          pyclothoids = final.callPackage ./pkgs/pyclothoids.nix { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           mc = (prev.mc.overrideAttrs (old: {
@@ -74,6 +73,13 @@
           }));
           tree-sitter = prev.tree-sitter.override { extraGrammars = { inherit tree-sitter-typst; }; };
           veridian = final.callPackage ./pkgs/veridian { };
+          # Add python packages for using in Blender Addons (prepared for 23.11)
+          pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+            (python-final: python-prev: {
+              pyclothoids = python-final.callPackage ./pkgs/pyclothoids.nix { };
+              scenariogeneration = python-final.callPackage ./pkgs/scenariogeneration.nix { };
+            })
+          ];
         })
       ];
       # Create combined package set from nixpkgs and our overlays.

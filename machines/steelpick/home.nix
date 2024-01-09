@@ -29,6 +29,7 @@ let
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
+  blender = (pkgs.blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; };
 in
 {
   imports = [
@@ -97,6 +98,7 @@ in
     bear
     binutils-unwrapped-all-targets
     bison
+    blender
     bubblewrap
     can-utils
     carla
