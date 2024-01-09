@@ -433,12 +433,12 @@ in
         all-the-icons
         forge
         magit
-        pdf-tools
       ]) ++ (with epkgs.melpaPackages; [
         direnv
         julia-mode # for ikiwiki-org-plugin in my blog
         nix-mode
         vterm
+        pdf-tools
       ]) ++ (with epkgs.elpaPackages; [
         jinx
       ]) ++ (if epkgs.manualPackages ? treesit-grammars then [
