@@ -100,7 +100,6 @@
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
             home-manager.nixosModules.home-manager
-            inputs.nixseparatedebuginfod.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             {
