@@ -109,7 +109,7 @@ in
     clinfo
     cmakeWithGui
     cppreference
-    cura
+    #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
     #cutter # currently broken
     difftastic
     dnsmasq                     # for documentation
