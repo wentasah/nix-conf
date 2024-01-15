@@ -62,6 +62,7 @@
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${platform}) nix-autobahn;
+          fastdds = final.callPackage ./pkgs/fastdds { };
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
@@ -91,7 +92,7 @@
     {
       # Packages to test nix-update
       packages =  forAllPlatforms (platform:
-        { inherit (mkPkgs platform) foxglove-studio; });
+        { inherit (mkPkgs platform) foxglove-studio fastdds; });
 
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {

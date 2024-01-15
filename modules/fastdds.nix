@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  fastdds = pkgs.callPackage ../pkgs/fastdds { };
+  fastdds = pkgs.fastdds;
   #fastddsgen = pkgs.callPackage ../pkgs/fastdds/fastddsgen.nix { };
 in
 {

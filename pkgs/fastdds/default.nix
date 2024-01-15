@@ -48,12 +48,12 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "fastdds";
-  version = "2.7.0";
+  version = "2.13.1";
   src = fetchFromGitHub {
     owner = "eProsima";
     repo = "Fast-DDS";
     rev = "v${version}";
-    sha256 = "sha256-gsggWI2aBIsnKBx9OBRy4fdvDoAlkAhovFx33/r7Pxs=";
+    sha256 = "sha256-UDM7pruAaoqfEPgpxYdfP2a3tG/ZpR2ajCADZ5ZdIVU=";
   };
 
   nativeBuildInputs = [
