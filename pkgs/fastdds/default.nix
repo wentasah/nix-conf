@@ -3,12 +3,12 @@
 let
   foonathan-memory = stdenv.mkDerivation rec {
     pname = "foonathan_memory";
-    version = "0.7-1";
+    version = "0.7-3";
     src = fetchFromGitHub {
       owner = "foonathan";
       repo = "memory";
       rev = "v${version}";
-      sha256 = "sha256-AnSigXKL5b16b9TOGgpRpUc3SJzQfYhNhygm6Y8XLVA=";
+      sha256 = "sha256-nLBnxPbPKiLCFF2TJgD/eJKJJfzktVBW3SRW2m3WK/s=";
     };
 
     #   patches = [
