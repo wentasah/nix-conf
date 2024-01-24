@@ -45,6 +45,8 @@ in
         "saleae-logic-2"
         "unrar"
         "xkcd-font"
+        "steam-run"
+        "steam-original"
       ];
     };
     overlays = [ myOverlay ];

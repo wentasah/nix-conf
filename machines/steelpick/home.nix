@@ -190,6 +190,7 @@ in
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
+    steam-run
     sterm
     stm32cubeide
     tcpreplay
