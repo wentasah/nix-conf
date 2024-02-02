@@ -161,6 +161,7 @@ in
     mytexlive
     nasm
     nix-init
+    (hiPrio nixfmt-rfc-style)   # override nixfmt
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
     novaboot                    # from novaboot overlay
