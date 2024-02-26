@@ -102,6 +102,7 @@ in
     nixpkgs-fmt
     nixpkgs-review
     nodePackages.bash-language-server
+    npins
     nurl
     nvd
     odt2txt
