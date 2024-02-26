@@ -278,6 +278,7 @@ def push():
 
 
 def add_commits(branch: str, commits: list[str]):
+    cd("~/nix/nixpkgs")
     system(f'git checkout -B {branch} nixos-unstable')
     system(f'git cherry-pick {" ".join(commits)}')
     system(f'git-machete add')
@@ -285,6 +286,7 @@ def add_commits(branch: str, commits: list[str]):
 
 
 def add_pr(pr: int, branch: str):
+    cd("~/nix/nixpkgs")
     system('git fetch origin master staging')
     system(f'git fetch origin refs/pull/{pr}/head')
     if run('git merge-base --is-ancestor nixos-unstable FETCH_HEAD', shell=True).returncode == 0:
