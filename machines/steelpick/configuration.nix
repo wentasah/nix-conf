@@ -360,6 +360,8 @@ in
 
   hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
 
+  hardware.rtl-sdr.enable = true;
+
   services.locate = {
     enable = true;
     package = pkgs.mlocate;
@@ -482,6 +484,7 @@ in
         "lp"
         "lxd"
         "networkmanager"
+        "plugdev"               # for rtl-sdr
         "scanner"
         "uinput"
         "vboxusers"
