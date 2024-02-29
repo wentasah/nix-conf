@@ -157,7 +157,7 @@ in
     lsof # TODO: git-annex assistant should depend on this
     man-pages
     meld
-    musescore
+    #musescore # broken (https://nixpk.gs/pr-tracker.html?pr=290037, https://github.com/NixOS/nixpkgs/issues/291397)
     mytexlive
     nasm
     nix-init
