@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703287571,
-        "narHash": "sha256-/jXPJLJdDK/K0u3cW33z6uegZxakFXTJNvsnp8J+fss=",
+        "lastModified": 1709415279,
+        "narHash": "sha256-7F9mV21ZUo9DjJSwf/cgE8F3obGGUuMCEOG0t9CErL8=",
         "owner": "CTU-IIG",
         "repo": "carla-simulator.nix",
-        "rev": "44564caba30278d188eb8a8e9ee27109405834b1",
+        "rev": "c27d4449582623f03a85b4af8f57f3ade597c23e",
         "type": "github"
       },
       "original": {
