@@ -127,7 +127,7 @@
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs-stable;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
-                inputs.carla-stable.overlays."0.9.14"
+                inputs.carla-stable.overlays."0.9.15"
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
