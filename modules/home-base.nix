@@ -122,7 +122,7 @@ in
     redo-apenwarr
     restic
     ripgrep
-    rnix-lsp
+    #rnix-lsp # needs insecure nix-2.15.3
     rsync
     sd
     sequoia
