@@ -28,7 +28,7 @@ in
     black-macchiato
     btdu
     btop
-    cachix
+    # cachix disabled for stable failure https://github.com/NixOS/nixpkgs/pull/294212
     ccls
     cloc
     cmake-language-server
