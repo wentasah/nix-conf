@@ -290,15 +290,15 @@
       "inputs": {
         "flake-utils": "flake-utils_3",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ]
       },
       "locked": {
-        "lastModified": 1701000000,
-        "narHash": "sha256-YclZV0n36KnkEZNcHxWqmuhdBa6eB8Wdmwcf5EMYEp4=",
+        "lastModified": 1709812800,
+        "narHash": "sha256-lbYU9gveZ4SkIpMMN8KRJItA3PZSDWcJAJs4WDoivBg=",
         "owner": "symphorien",
         "repo": "nixseparatedebuginfod",
-        "rev": "c8e79d5b228b71686172ff6626394bed2ad7b7a3",
+        "rev": "98d79461660f595637fa710d59a654f242b4c3f7",
         "type": "github"
       },
       "original": {
