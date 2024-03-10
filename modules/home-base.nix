@@ -46,7 +46,7 @@ in
     fd
     ffmpeg
     findrepo
-    #gdb # we use gdb provided by nixseparatedebuginfod module
+    gdb
     gcalcli
     gh
     git-backdate
