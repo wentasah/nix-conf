@@ -151,6 +151,7 @@
     gitAndTools.gitFull
     htop
     iftop
+    nethogs
     keepassxc
     kitty.terminfo
     kitty.shell_integration

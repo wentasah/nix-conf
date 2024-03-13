@@ -148,6 +148,8 @@ in
     gnumake
     htop
     lsof
+    iftop
+    nethogs
     mc
     ncdu
     tftp-hpa
