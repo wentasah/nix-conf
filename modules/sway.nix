@@ -19,6 +19,8 @@
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       # We want out services to have the same PATH as our session
       systemctl --user set-environment PATH=$PATH
+      # Fix some JAVA apps
+      export _JAVA_AWT_WM_NONREPARENTING=1
     '';
     wrapperFeatures = {
       base = true;
