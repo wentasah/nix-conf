@@ -143,6 +143,7 @@ in
     unzip
     valgrind
     websocat
+    waypipe
     xmlstarlet
     yamllint
     yq

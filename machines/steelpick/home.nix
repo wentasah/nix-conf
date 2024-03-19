@@ -203,7 +203,6 @@ in
     vlc
     video-trimmer
     warp
-    waypipe
     wireshark
     wol
     wmctrl
