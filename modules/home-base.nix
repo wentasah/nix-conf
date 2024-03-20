@@ -146,7 +146,7 @@ in
     waypipe
     xmlstarlet
     yamllint
-    yq
+    yq-go
     zip
     zsh-completions
     zsh-syntax-highlighting
