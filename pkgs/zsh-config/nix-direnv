@@ -15,7 +15,7 @@ mkShell {
   ];
 }
 EOF
-    ${EDITOR:-vim} default.nix
+    ${EDITOR:-vim} shell.nix
   fi
 }
 flakify() {
