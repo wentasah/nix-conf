@@ -133,6 +133,8 @@ in
     sqlite-interactive
     sshfs
     sshuttle
+    sta
+    tectonic
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
