@@ -37,7 +37,7 @@ in
     crate2nix
     csv2latex
     csvtool
-    # d2 # disable until https://github.com/NixOS/nixpkgs/issues/298590 gets resolved
+    d2
     daemontools
     doxygen_gui
     dua
