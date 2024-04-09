@@ -78,6 +78,7 @@ in
     man-pages-posix
     marksman
     mc
+    mcap-cli
     mdsh
     meson
     ministat
