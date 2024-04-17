@@ -309,7 +309,6 @@ in
 
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
-  services.gpg-agent.pinentryFlavor = "qt";
 
   #services.lorri.enable = true;
 
