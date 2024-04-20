@@ -91,6 +91,7 @@ in
     niv
     nix-doc
     nix-du
+    nix-init
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
