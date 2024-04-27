@@ -71,6 +71,7 @@ in
     imagemagick
     jo
     jq
+    lemminx
     libxml2 # for xmllint
     ltrace
     #mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
