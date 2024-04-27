@@ -29,7 +29,7 @@ in
   emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
     magit          # ; Integrate git <C-x g>
   ]) ++ (with epkgs.melpaPackages; [
-    smartparens
+    #smartparens
     nix-mode
     vterm
   ]) ++ (with epkgs.elpaPackages; [
