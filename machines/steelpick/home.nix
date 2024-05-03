@@ -320,7 +320,7 @@ in
       };
       Service = {
         ExecStart = "${pkgs.git}/bin/git --git-dir=%h/srv/etc fetch --all";
-        Environment = "SSH_ASKPASS=";
+        Environment = "SSH_ASKPASS= SSH_AUTH_SOCK=/run/user/%U/ssh-agent";
       };
     };
 
@@ -332,7 +332,7 @@ in
         ExecCondition = "${pkgs.bash}/bin/bash -c '! nmcli --get-values GENERAL.METERED dev show|grep -F yes'";
         ExecStart = "%h/bin/fetch-all-overleaf";
         WorkingDirectory = "%h/papers/_in-progress";
-        Environment = "SSH_ASKPASS=";
+        Environment = "SSH_ASKPASS= SSH_AUTH_SOCK=/run/user/%U/ssh-agent";
       };
     };
 
