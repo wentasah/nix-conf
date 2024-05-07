@@ -50,6 +50,7 @@ in
     gcalcli
     gh
     git-backdate
+    git-filter-repo
     git-machete
     gitAndTools.delta
     gitAndTools.git-lfs
