@@ -194,6 +194,7 @@ in
     sterm
     stm32cubeide
     tcpreplay
+    texpresso
     thunderbird
     unrar
     usbrelay
