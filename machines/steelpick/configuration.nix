@@ -436,17 +436,17 @@ in
     enable = true;
     wacom.enable = true;
 
-    layout = "us,cz";
-    xkbVariant = ",ucw";
-    xkbOptions = "compose:ralt,grp:caps_switch,terminate:ctrl_alt_bksp,wsh:caps_arrows";
+    xkb.layout = "us,cz";
+    xkb.variant = ",ucw";
+    xkb.options = "compose:ralt,grp:caps_switch,terminate:ctrl_alt_bksp,wsh:caps_arrows";
   };
 
   # Enable touchpad support.
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   #services.xserver.displayManager.lightdm.enable = true;
+  services.displayManager.defaultSession = "sway";
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.defaultSession = "sway";
   services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 

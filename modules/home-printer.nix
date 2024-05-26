@@ -11,10 +11,8 @@
       mfcl2700dwcupswrapper
     ]);
 
-  # For NixOS >= 24.05
   services.avahi.enable = true;
-  #services.avahi.nssmdns4 = true; # enable after removing ./home-printer-fix23.11.nix
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
 
   hardware.sane.enable = true;
   hardware.sane.brscan4 = {

@@ -100,7 +100,7 @@ in
     nix-template
     nix-tree
     nix-update
-    nixfmt
+    nixfmt-rfc-style
     nixos-generators
     nixos-shell
     nixpkgs-fmt

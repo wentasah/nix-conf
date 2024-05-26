@@ -9,7 +9,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
-      ../../modules/home-printer-fix23.11.nix
       ../../modules/xkb-wsh.nix
       ../../modules/fastdds.nix
       ../../modules/ydotool.nix
@@ -162,7 +161,7 @@
     mc
     nix-output-monitor
     ncdu
-    nvtop-amd
+    nvtopPackages.amd
     obs-studio
     pciutils
 #    (shotcut.overrideAttrs ({ patches ? [], ...}: {
@@ -314,8 +313,8 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.options = "eurosign:e";
 
   services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
