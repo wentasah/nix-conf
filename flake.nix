@@ -65,14 +65,6 @@
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
-          mc = if ! lib.strings.versionAtLeast prev.mc.version "4.8.31" # TODO: Remove after 24.05
-               then (prev.mc.overrideAttrs (old: {
-                 version = old.version + "wsh";
-                 patches = (old.patches or []) ++ [
-                   ./pkgs/mc/0001-sftpfs-Don-t-set-preferred-hostkey-methods-too-restr.patch
-                 ];}))
-               else
-                 prev.mc;
           tree-sitter = prev.tree-sitter.override { extraGrammars = { inherit tree-sitter-typst; }; };
           veridian = final.callPackage ./pkgs/veridian { };
           # Add python packages for using in Blender Addons (prepared for 23.11)
@@ -128,11 +120,7 @@
                 inputs.carla-stable.overlays."0.9.15"
                 (final: prev: {
                   # Packages from unstable
-                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                    d2 julia-stable-bin nurl ikiwiki nil eza git-backdate typstfmt sv-lang mcap-cli;
-                  # Veridian needs Rust from unstable
-                  veridian = nixpkgs.outputs.legacyPackages.x86_64-linux.callPackage ./pkgs/veridian { };
-                  #xdg-desktop-portal = import ./pkgs/xdg-desktop-portal-1.17.0.nix { inherit final prev; };
+                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux);
                 })
               ];
             }

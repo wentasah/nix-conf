@@ -26,11 +26,8 @@
       base = true;
       gtk = true;
     };
-  } // (if lib.versionAtLeast lib.trivial.release "23.11" then {
     systemd.enable = true;
-  } else {
-    systemdIntegration = true;
-  });
+  };
 
   home.packages = with pkgs; let
     swappy = pkgs.swappy.overrideAttrs ({ patches ? [], ... }:
