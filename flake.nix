@@ -2,11 +2,11 @@
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-stable = { url = "github:nix-community/home-manager/release-23.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    home-manager-stable = { url = "github:nix-community/home-manager/release-24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
@@ -14,12 +14,11 @@
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
     tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
-    nixseparatedebuginfod = { url = "github:symphorien/nixseparatedebuginfod"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     findrepo.url = "github:wentasah/findrepo";
-    carla-stable = { url = "github:CTU-IIG/carla-simulator.nix"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
   };
 
   outputs =
@@ -120,7 +119,6 @@
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
-            inputs.nixseparatedebuginfod.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             {

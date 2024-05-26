@@ -15,10 +15,10 @@
       include config.local
     '';
     extraSessionCommands = ''
-      . /etc/set-environment
-      . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+      . /etc/set-environment || echo >&2 "Ignoring ^^^"
+      . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"  || echo >&2 "Ignoring ^^^"
       # We want out services to have the same PATH as our session
-      systemctl --user set-environment PATH=$PATH
+      systemctl --user set-environment PATH=$PATH  || echo >&2 "Ignoring ^^^"
       # Fix some JAVA apps
       export _JAVA_AWT_WM_NONREPARENTING=1
     '';
