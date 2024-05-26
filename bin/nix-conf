@@ -145,7 +145,7 @@ def update_home_manager():
 def update_flake_input(flake_input: str):
     cd("~/nix/conf")
     old_hash = check_output("git hash-object flake.lock", shell=True)
-    check_call(["nix", "flake", "lock", "--update-input", flake_input])
+    check_call(["nix", "flake", "update", flake_input])
     new_hash = check_output("git hash-object flake.lock", shell=True)
     if old_hash != new_hash:
         print(f"!!! Flake input {flake_input} changed")
@@ -273,7 +273,7 @@ def push():
     system("git push --force-with-lease wentasah master:master")
     system("git push wentasah nixos-unstable:nixos-unstable")
     cd("~/nix/conf")
-    system("nix flake lock --update-input nixpkgs --commit-lock-file")
+    system("nix flake update nixpkgs --commit-lock-file")
     system("git push")
 
 
