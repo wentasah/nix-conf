@@ -207,59 +207,56 @@ def build(host, nix_args):
     match host:
         case "steelpick": override_input += ['--override-input', 'nixpkgs', f'{os.getcwd()}/nixpkgs']
 
-    if os.path.isfile("conf/flake.nix"):
-        os.makedirs(f"out/{host}", exist_ok=True)
-        nix = "nix"
-        log = None
-        if not os.isatty(sys.stdin.fileno()):
-            log = open(f"out/{host}/flake.log", 'w')
-        else:
-            print("No log from interactive session", file=open(f'out/{host}/flake.log', 'w'))
-            nix = 'nom'
-
-        cmd = [nix, "build", *nix_args, "--out-link", f"out/{host}/flake", *override_input,
-               f"./conf#nixosConfigurations.{host}.config.system.build.toplevel"]
-        status = run(cmd, stdout=log, stderr=STDOUT).returncode
-
-        if status == 0:
-            open(f'out/{host}/flake.error', 'w') # truncate
-            # Reset failed build counter
-            try: os.remove(f'out/{host}/flake.retry.cnt')
-            except FileNotFoundError: pass
-        else:
-            # we copy instead of renaming to not break hardlinks to the flake.error
-            shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
-            open(f'out/{host}/flake.retry.cnt', 'w')
-            sys.exit(status)
-
-        if check_output("hostname").decode().strip() == host:
-            print_switch_instructions(host, override_input)
-        else:
-            shutil.copy("conf/flake.lock", f'out/{host}/')
-
-            cd("nixpkgs")
-            if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
-                return
-
-            system("git push --force wentasah HEAD:ci")
-            old_commit = check_output("git rev-parse history", shell=True).decode().strip()
-            new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode().strip()
-            system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
-            system("git push wentasah history")
-
-            cd("..")
-            if old_version != os.readlink(f'out/{host}/flake'):
-                diff = check_output(f"nvd diff {old_version} out/{host}/flake", shell=True).decode().splitlines()
-                diff_md = "\n".join(["    " + line for line in diff])
-                try:
-                    check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
-                except CalledProcessError:
-                    # The above can fail with:
-                    # ERROR: matrix-commander: E150: room_send failed with error 'RoomSendError: M_TOO_LARGE event too large'.
-                    # Try sending a shorter message
-                    check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed (diff omitted - probably too long)"])
+    os.makedirs(f"out/{host}", exist_ok=True)
+    nix = "nix"
+    log = None
+    if not os.isatty(sys.stdin.fileno()):
+        log = open(f"out/{host}/flake.log", 'w')
     else:
-        raise RuntimeError("Only flakes are supported")
+        print("No log from interactive session", file=open(f'out/{host}/flake.log', 'w'))
+        nix = 'nom'
+
+    cmd = [nix, "build", *nix_args, "--out-link", f"out/{host}/flake", *override_input,
+           f"./conf#nixosConfigurations.{host}.config.system.build.toplevel"]
+    status = run(cmd, stdout=log, stderr=STDOUT).returncode
+
+    if status == 0:
+        open(f'out/{host}/flake.error', 'w') # truncate
+        # Reset failed build counter
+        try: os.remove(f'out/{host}/flake.retry.cnt')
+        except FileNotFoundError: pass
+    else:
+        # we copy instead of renaming to not break hardlinks to the flake.error
+        shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
+        open(f'out/{host}/flake.retry.cnt', 'w')
+        sys.exit(status)
+
+    if check_output("hostname").decode().strip() == host:
+        print_switch_instructions(host, override_input)
+    else:
+        shutil.copy("conf/flake.lock", f'out/{host}/')
+
+        cd("nixpkgs")
+        if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
+            return
+
+        system("git push --force wentasah HEAD:ci")
+        old_commit = check_output("git rev-parse history", shell=True).decode().strip()
+        new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode().strip()
+        system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
+        system("git push wentasah history")
+
+        cd("..")
+        if old_version != os.readlink(f'out/{host}/flake'):
+            diff = check_output(f"nvd diff {old_version} out/{host}/flake", shell=True).decode().splitlines()
+            diff_md = "\n".join(["    " + line for line in diff])
+            try:
+                check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
+            except CalledProcessError:
+                # The above can fail with:
+                # ERROR: matrix-commander: E150: room_send failed with error 'RoomSendError: M_TOO_LARGE event too large'.
+                # Try sending a shorter message
+                check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed (diff omitted - probably too long)"])
 
 
 def switch(host, method='switch'):
