@@ -55,6 +55,9 @@ in
       options = "--delete-older-than 14d";
       persistent = true;
     };
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   nixpkgs.config = {
