@@ -102,8 +102,12 @@ in
 
   programs.mosh.enable = true;
 
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.randomizedDelaySec = "30min";
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/home/wsh/nix/conf";
+    flags = [ "--update-input" "nixpkgs-stable" ];
+    randomizedDelaySec = "30min";
+  };
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
   systemd.services.nixos-upgrade.serviceConfig = {
     Restart = "on-failure";

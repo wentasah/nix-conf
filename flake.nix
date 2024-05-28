@@ -126,7 +126,10 @@
             }
           ];
         };
-
+        lucka-ntb = nixpkgs-stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/lucka-ntb/configuration.nix ];
+        };
         turbot = nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
