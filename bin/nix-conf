@@ -202,6 +202,10 @@ def build(host, nix_args):
 
     #os.environ['PATH'] = "/nix/var/nix/profiles/default/bin:{os.environ['PATH']}"
     try:
+        os.unlink(f"out/{host}/flake.old")
+    except FileNotFoundError:
+        pass
+    try:
         shutil.copyfile(
             f"out/{host}/flake", f"out/{host}/flake.old", follow_symlinks=False
         )
