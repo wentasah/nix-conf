@@ -201,8 +201,12 @@ def build(host, nix_args):
     cd("~/nix")
 
     #os.environ['PATH'] = "/nix/var/nix/profiles/default/bin:{os.environ['PATH']}"
-    try: old_version = os.readlink(f'out/{host}/flake')
-    except FileNotFoundError: old_version = None
+    try:
+        shutil.copyfile(
+            f"out/{host}/flake", f"out/{host}/flake.old", follow_symlinks=False
+        )
+    except (FileNotFoundError, shutil.SameFileError):
+        pass
     override_input = []
     match host:
         case "steelpick": override_input += ['--override-input', 'nixpkgs', f'{os.getcwd()}/nixpkgs']
@@ -236,6 +240,7 @@ def build(host, nix_args):
     else:
         shutil.copy("conf/flake.lock", f'out/{host}/')
 
+def publish_ci_update(host):
         cd("nixpkgs")
         if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
             return
@@ -247,8 +252,8 @@ def build(host, nix_args):
         system("git push wentasah history")
 
         cd("..")
-        if old_version != os.readlink(f'out/{host}/flake'):
-            diff = check_output(f"nvd diff {old_version} out/{host}/flake", shell=True).decode().splitlines()
+        if os.readlink(f'out/{host}/flake.old') != os.readlink(f'out/{host}/flake'):
+            diff = check_output(f"nvd diff out/{host}/flake.old out/{host}/flake", shell=True).decode().splitlines()
             diff_md = "\n".join(["    " + line for line in diff])
             try:
                 check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
@@ -308,6 +313,7 @@ def update(host, nix_args):
 
 def ci(host, nix_args):
     update(host, nix_args)
+    publish_ci_update(host)
     try:
         system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
     except CalledProcessError:
