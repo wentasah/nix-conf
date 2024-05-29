@@ -4,6 +4,7 @@
 , dpkg
 , makeWrapper
 , electron
+, genericUpdater, writeShellScript, libxml2
 }:
 stdenv.mkDerivation rec {
   pname = "foxglove-studio";
@@ -35,4 +36,13 @@ stdenv.mkDerivation rec {
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ stdenv.cc.cc ]}" \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
   '';
+
+  passthru.updateScript = genericUpdater {
+    versionLister = writeShellScript "foxglove-versionLister" ''
+      curl https://docs.foxglove.dev/changelog/atom.xml \
+        | sed -e '2 s/xmlns=".*"//' \
+        | ${libxml2}/bin/xmllint --xpath 'string(/feed/entry[1]/title/text())' - \
+        | sed -e 's/^v//'
+    '';
+  };
 }
