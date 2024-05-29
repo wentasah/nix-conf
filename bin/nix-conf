@@ -245,7 +245,7 @@ def build(host, nix_args):
         shutil.copy("conf/flake.lock", f'out/{host}/')
 
 def publish_ci_update(host):
-        cd("nixpkgs")
+        cd("~/nix/nixpkgs")
         if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
             return
 
