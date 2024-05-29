@@ -84,8 +84,7 @@
     in
     {
       # Packages to test nix-update
-      packages =  forAllPlatforms (platform:
-        { inherit (mkPkgs platform) foxglove-studio fastdds; });
+      legacyPackages =  forAllPlatforms mkPkgs;
 
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {
