@@ -148,6 +148,7 @@
     gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
+    gnome.nautilus-python
     htop
     iftop
     nethogs

@@ -159,6 +159,7 @@ in
     musescore
     mytexlive
     nasm
+    nautilus-open-any-terminal
     nix-index
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
