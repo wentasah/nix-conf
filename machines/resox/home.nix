@@ -40,6 +40,7 @@ in
     ../../modules/go.nix
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
+    ../../modules/nautilus-open-any-terminal.nix
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
     ../../modules/msmtp.nix
@@ -159,7 +160,6 @@ in
     musescore
     mytexlive
     nasm
-    nautilus-open-any-terminal
     nix-index
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server

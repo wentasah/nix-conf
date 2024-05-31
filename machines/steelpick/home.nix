@@ -41,6 +41,7 @@ in
     ../../modules/git-annex.nix
     ../../modules/linux-build.nix
     ../../modules/mail.nix
+    ../../modules/nautilus-open-any-terminal.nix
     ../../modules/fonts.nix
     ../../modules/qtcreator.nix
     ../../modules/msmtp.nix
@@ -226,9 +227,6 @@ in
     zotero
     zulip
     #zulip-term #broken
-
-    # Nautilus python extensions
-    nautilus-open-any-terminal
 
     # Emacs versions from emacs-overlay
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
