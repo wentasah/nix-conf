@@ -15,7 +15,7 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/14d3bba4-f618-4d7c-a3f8-ee1c8719c5f5";
+      device = "/dev/disk/by-uuid/32324fce-00d8-4e8b-9f2c-94e22e659ed0";
       fsType = "btrfs";
     };
     "/mnt/data" = {
