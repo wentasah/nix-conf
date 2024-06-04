@@ -39,10 +39,9 @@ stdenv.mkDerivation rec {
 
   passthru.updateScript = genericUpdater {
     versionLister = writeShellScript "foxglove-versionLister" ''
-      curl https://docs.foxglove.dev/changelog/atom.xml \
-        | sed -e '2 s/xmlns=".*"//' \
-        | ${libxml2}/bin/xmllint --xpath 'string(/feed/entry[1]/title/text())' - \
-        | sed -e 's/^v//'
+      curl https://foxglove.dev/download \
+        | ${libxml2}/bin/xmllint --xpath 'string(//a[@class="download_downloadButton__XUA_h"]/@href)' - \
+        | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+'
     '';
   };
 }
