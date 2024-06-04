@@ -21,7 +21,6 @@ in
       ../../modules/fastdds.nix
       ../../modules/xkb-wsh.nix
       ../../modules/qt5.nix
-      ../../modules/ydotool.nix
       #../../modules/greetd.nix
     ];
 
@@ -288,6 +287,7 @@ in
   ];
   services.ipp-usb.enable = true; # USB printers
   programs.system-config-printer.enable = true;
+  programs.ydotool.enable = true;
 
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce []; # Don't start automatically
@@ -488,7 +488,7 @@ in
         "networkmanager"
         "plugdev"               # for rtl-sdr
         "scanner"
-        "uinput"
+        "ydotool"
         "vboxusers"
         "wheel"
       ];

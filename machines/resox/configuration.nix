@@ -11,7 +11,6 @@
       ../../modules/home-printer.nix
       ../../modules/xkb-wsh.nix
       ../../modules/fastdds.nix
-      ../../modules/ydotool.nix
       ../../modules/flamenco.nix
     ];
 
@@ -133,6 +132,7 @@
 
   programs.steam.enable = true;
   programs.nix-ld.enable = true;
+  programs.ydotool.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -363,7 +363,7 @@
   users.users.wsh = {
     description = "Michal";
     isNormalUser = true;
-    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" "flamenco" ];
+    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" "flamenco" "ydotool" ];
     uid = 1000;
     shell = pkgs.zsh;
   };

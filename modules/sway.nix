@@ -59,7 +59,6 @@
     way-displays
     rofi
     xdg-desktop-portal-wlr
-    ydotool
     #     (swaylock.overrideAttrs(old: {
     #       src = fetchFromGitHub {
     #         owner = "swaywm";
