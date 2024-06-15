@@ -142,6 +142,7 @@
     btrfs-progs
     compsize
     chromium
+    ddrescue
     file
     firefox-wayland
     foxglove-studio
