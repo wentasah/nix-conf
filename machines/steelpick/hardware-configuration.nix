@@ -10,7 +10,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -20,12 +20,11 @@
       fsType = "btrfs";
       options = [
         "subvol=nixos"
-        "nodiscard" # work around https://trofi.github.io/posts/281-a-signal-from-the-stars.html
       ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/fc19d75e-e64e-4adf-a3e2-791f99ab889a"; }
+    [
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
