@@ -363,6 +363,7 @@ in
   hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
 
   hardware.rtl-sdr.enable = true;
+  hardware.saleae-logic.enable = true;
 
   services.locate = {
     enable = true;
