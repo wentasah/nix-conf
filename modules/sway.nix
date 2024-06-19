@@ -72,6 +72,12 @@
   ];
 
   services.clipman.enable = true;
+  systemd.user.services.clipman.Service.ExecStart = lib.mkForce
+    ("${pkgs.wl-clipboard}/bin/wl-paste -t text --watch ${config.services.clipman.package}/bin/clipman store"
+     # --no-persist is needed to resolve copying problem in Nautilus.
+     # --See https://www.reddit.com/r/swaywm/comments/112sew3/copyingmoving_files_using_gui_file_managers/
+     + " --no-persist");
+
   services.network-manager-applet.enable = true;
 
   programs.waybar = {
