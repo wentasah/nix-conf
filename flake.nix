@@ -150,6 +150,9 @@
               home.homeDirectory = "/home/sojka";
               home.stateVersion = "22.05";
               programs.home-manager.enable = true;
+              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+                "aspell-dict-en-science"
+              ];
               nixpkgs.overlays = common-overlays "x86_64-linux";
 
               programs.zsh.envExtra = ''
