@@ -46,6 +46,7 @@ in
         "xkcd-font"
         "steam-run"
         "steam-original"
+        "aspell-dict-en-science"
       ];
     };
     overlays = [ myOverlay ];

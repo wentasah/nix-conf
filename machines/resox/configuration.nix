@@ -124,6 +124,7 @@
       "unrar"
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
+      "aspell-dict-en-science"
     ];
     permittedInsecurePackages = [
       "zotero-6.0.26"
