@@ -30,3 +30,9 @@
   ```sh
   nix store ping --store ssh://host
   ```
+
+- Update home-manager configuration via a Flake:
+
+  ```sh
+  home-manager switch --flake ~/nix/conf#ritchie
+  ```
