@@ -361,7 +361,7 @@ in
     #media-session.enable = true;
   };
 
-  hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
+  hardware.graphics.extraPackages = with pkgs; [ intel-compute-runtime ];
 
   hardware.rtl-sdr.enable = true;
   hardware.saleae-logic.enable = true;
