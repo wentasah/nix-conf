@@ -59,6 +59,7 @@
     way-displays
     rofi
     xdg-desktop-portal-wlr
+    networkmanager_dmenu
     #     (swaylock.overrideAttrs(old: {
     #       src = fetchFromGitHub {
     #         owner = "swaywm";
