@@ -99,7 +99,7 @@ in
     bear
     binutils-unwrapped-all-targets
     bison
-    blender
+    # blender # broken https://github.com/NixOS/nixpkgs/issues/325663
     bubblewrap
     can-utils
     carla
@@ -143,7 +143,7 @@ in
     kdiff3
     keepassxc
     kernelshark
-    kicad-small
+    #kicad-small # broken "error: wxpython-4.2.1 not supported for interpreter python3.12"
     kitty
     # korganizer akonadi
     krita

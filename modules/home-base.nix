@@ -76,7 +76,7 @@ in
     libxml2 # for xmllint
     ltrace
     #mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
-    magic-wormhole
+    #magic-wormhole # broken https://github.com/NixOS/nixpkgs/issues/325854
     man-pages-posix
     marksman
     mc
