@@ -158,7 +158,7 @@ in
     wget
     elinks
     stlink
-    gnome.nautilus-python
+    nautilus-python
     glibcInfo
     psmisc
     ddrescue
