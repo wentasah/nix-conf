@@ -97,7 +97,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    #avidemux #broken
+    avidemux
     bear
     binutils-unwrapped-all-targets
     bison
@@ -113,7 +113,7 @@ in
     cmakeWithGui
     cppreference
     cura
-    #cutter # currently broken
+    cutter
     difftastic
     dnsmasq                     # for documentation
     docker-compose
@@ -128,7 +128,7 @@ in
     #flameshot # crashes under sway!
     flex
     flowblade
-    #freecad # broken
+    freecad
     gimp
 #    glib.out                    # for gdbus bash completion
     glibcInfo                   # Not visible in emacs :-(
@@ -180,7 +180,7 @@ in
     pod-mode
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     python3Packages.jupyter_core
-    # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
+    python3Packages.notebook
     python3Packages.python-lsp-server
     qemu
     radare2
