@@ -95,7 +95,7 @@ in
     audacity
     auto-multiple-choice
     automake
-    #avidemux #broken: see https://github.com/NixOS/nixpkgs/pull/263171
+    avidemux
     bear
     binutils-unwrapped-all-targets
     bison
@@ -111,7 +111,7 @@ in
     cmakeWithGui
     cppreference
     #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
-    #cutter # currently broken
+    cutter
     difftastic
     dnsmasq                     # for documentation
     docker-compose
@@ -174,14 +174,13 @@ in
     pavucontrol
     pdfpc
     perl.devdoc
-    #perlPackages.AppClusterSSH # broken 2023-08-10
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
     playerctl
     pod-mode
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     python3Packages.jupyter_core
-    # python3Packages.notebook # broken because python3.10-mistune-0.8.4 is insecure (since https://github.com/NixOS/nixpkgs/pull/184209)
+    python3Packages.notebook
     python3Packages.python-lsp-server
     qemu
     radare2
