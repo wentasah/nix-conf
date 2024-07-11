@@ -99,7 +99,7 @@ in
     bear
     binutils-unwrapped-all-targets
     bison
-    # blender # broken https://github.com/NixOS/nixpkgs/issues/325663
+    blender
     bubblewrap
     can-utils
     carla
