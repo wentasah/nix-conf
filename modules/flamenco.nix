@@ -32,17 +32,21 @@ in
     description = "Flamenco Manager";
     wantedBy = [ "multi-user.target" ];
     preStart = ''
+      # Remove old configuration file (if any)
+      rm -f flamenco-manager.yaml
       ${flamenco}/flamenco-manager -write-config
       # Storage location is always relative to executable. Set it outside of read-only Nix store.
-      sed -i -e '/^local_manager_storage_path:/ s|.*|local_manager_storage_path: ../../../var/lib/flamenco-manager/storage|' \
+      sed -i \
+          -e '/^local_manager_storage_path:/ s|.*|local_manager_storage_path: ../../../var/lib/flamenco-manager/storage|' \
+          -e '/^shared_storage_path:/ s|.*|shared_storage_path: /srv/blender|' \
           flamenco-manager.yaml
     '';
     serviceConfig = {
       User = "flamenco-manager"; # have full control over shared storage
-      Group = "flamenco";       # access to shared files
+      Group = "flamenco";        # access to shared files
       ExecStart = "${flamenco}/flamenco-manager";
       UMask = 0002;
-      Restart = "always";
+      Restart = "on-abnormal";
       StateDirectory = "flamenco-manager";
       WorkingDirectory = "/var/lib/flamenco-manager";
       ReadWritePaths = "/srv/blender";
@@ -62,7 +66,7 @@ in
       UMask = 0002;
       StateDirectory = "flamenco-worker";
       WorkingDirectory = "/var/lib/flamenco-worker";
-      Restart = "always";
+      Restart = "on-abnormal";
       ReadWritePaths = "/srv/blender";
     };
   };
