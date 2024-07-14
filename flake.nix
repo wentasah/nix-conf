@@ -98,7 +98,14 @@
             {
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
-              nixpkgs.overlays = common-overlays "x86_64-linux";
+              nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
+                (final: prev: {
+                  # Packages from stable
+                  inherit (nixpkgs-stable.outputs.legacyPackages.x86_64-linux)
+                    kicad-small # unstable broken "error: wxpython-4.2.1 not supported for interpreter python3.12"
+                    ;
+                })
+              ];
             }
           ];
         };

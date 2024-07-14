@@ -142,7 +142,7 @@ in
     kdiff3
     keepassxc
     kernelshark
-    #kicad-small # broken "error: wxpython-4.2.1 not supported for interpreter python3.12"
+    kicad-small
     kitty
     # korganizer akonadi
     krita
