@@ -13,7 +13,6 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
-    tree-sitter-typst = { url = "github:uben0/tree-sitter-typst"; flake = false; };
     sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
@@ -48,10 +47,6 @@
 
       forAllPlatforms = f: lib.genAttrs platforms f;
 
-      tree-sitter-typst = {
-        src = inputs.tree-sitter-typst;
-        generate = true;
-      };
       common-overlays = platform: [
         emacs-overlay.overlay
         novaboot.overlays.${platform}
@@ -66,7 +61,6 @@
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
-          tree-sitter = prev.tree-sitter.override { extraGrammars = { inherit tree-sitter-typst; }; };
           veridian = final.callPackage ./pkgs/veridian { };
           # Add python packages for using in Blender Addons (prepared for 23.11)
           pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [

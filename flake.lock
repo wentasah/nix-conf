@@ -324,8 +324,7 @@
         "novaboot": "novaboot",
         "shdw": "shdw",
         "sops-nix": "sops-nix",
-        "sterm": "sterm",
-        "tree-sitter-typst": "tree-sitter-typst"
+        "sterm": "sterm"
       }
     },
     "shdw": {
@@ -419,22 +418,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tree-sitter-typst": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1715259279,
-        "narHash": "sha256-W8mNIASM85btE3XychvagVJofIb+CkNT4XeIhdQt8FU=",
-        "owner": "uben0",
-        "repo": "tree-sitter-typst",
-        "rev": "3924cb9ed9e0e62ce7df9c4fe0faa4c234795999",
-        "type": "github"
-      },
-      "original": {
-        "owner": "uben0",
-        "repo": "tree-sitter-typst",
         "type": "github"
       }
     }
