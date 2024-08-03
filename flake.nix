@@ -141,10 +141,8 @@
       };
 
       homeConfigurations = {
-        ritchie = let
+        ritchie = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        in home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
           modules = [
             ./modules/home-base.nix
             ./modules/fonts.nix
@@ -164,9 +162,6 @@
                   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
                 fi
               '';
-              home.packages = with pkgs; [
-                  (hiPrio (btop.override { cudaSupport = true; })) # hiPrio = override home-base.nix
-              ];
             }
           ];
         };
