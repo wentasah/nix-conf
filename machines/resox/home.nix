@@ -102,6 +102,7 @@ in
     binutils-unwrapped-all-targets
     bison
     bubblewrap
+    (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
     can-utils
     carla-bin
     cask
