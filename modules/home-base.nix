@@ -419,8 +419,8 @@ in
 
     package = let
       emacsWithPackages = (pkgs.emacsPackagesFor ((
-        #pkgs.emacs
-        pkgs.emacs-unstable
+        pkgs.emacs
+        #pkgs.emacs-unstable
         #pkgs.emacsGit
           .override {
             # withGTK2 = false;
@@ -429,13 +429,15 @@ in
             # # lucid -> lucid
             withPgtk = true;
           }
-      ).overrideAttrs(old: {
-        #dontStrip = true;
-        separateDebugInfo = true;
-        passthru = old.passthru // {
-          withTreeSitter = true;
-        };
-      }))).emacsWithPackages;
+      )
+#       .overrideAttrs(old: {
+#         #dontStrip = true;
+#         separateDebugInfo = true;
+#         passthru = old.passthru // {
+#           withTreeSitter = true;
+#         };
+#       })
+      )).emacsWithPackages;
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
         all-the-icons
