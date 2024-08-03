@@ -158,10 +158,10 @@
               nixpkgs.overlays = common-overlays "x86_64-linux";
 
               programs.zsh.envExtra = ''
-              if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-                . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-              fi
-            '';
+                if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+                  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+                fi
+              '';
             }
           ];
         };
