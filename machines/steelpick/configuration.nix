@@ -100,8 +100,6 @@ in
   '';
 
   systemd = {
-    #enableUnifiedCgroupHierarchy = false; # true breaks demos-sched
-    enableUnifiedCgroupHierarchy = lib.mkForce true; # override LXD to test DEmOS
     extraConfig = ''
       # Don't block reboot for too long
       DefaultTimeoutStopSec=30
