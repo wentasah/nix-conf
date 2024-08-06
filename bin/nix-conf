@@ -16,13 +16,31 @@ from subprocess import check_output, STDOUT, CalledProcessError
 import sys
 import shutil
 from shlex import quote
+from collections.abc import Callable
+from typing import IO, Any
 
-verbose = False
+verbose = True
+
+HAS_TTY = sys.stdout.isatty()
+
+
+def color_text(code: int, file: IO[Any] | None = None) -> Callable[[str], None]:
+    def wrapper(text: str) -> None:
+        if HAS_TTY:
+            print(f"\x1b[{code}m{text}\x1b[0m", file=file)
+        else:
+            print(text, file=file)
+
+    return wrapper
+
+
+warn = color_text(31, file=sys.stderr)
+info = color_text(32, file=sys.stderr)
 
 
 def print_verbose(*args, **kwargs):
     if verbose:
-        print(*args, **kwargs, file=sys.stderr)
+        info(*args, **kwargs)
 
 
 def system(cmd: str):
@@ -30,12 +48,12 @@ def system(cmd: str):
 
 
 def run(*args, **kwargs):
-    print_verbose(args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]]))
+    print_verbose("$ " + (args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]])))
     return subprocess.run(*args, **kwargs)
 
 
 def check_call(*args, **kwargs):
-    print_verbose(args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]]))
+    print_verbose("$ " + (args[0] if isinstance(args[0], str) else " ".join([quote(a) for a in args[0]])))
     return subprocess.check_call(*args, **kwargs)
 
 
@@ -54,12 +72,12 @@ def was_head_changed(cmd):
 
 def exit_if_dirty():
     if run("git diff-index --quiet HEAD --", shell=True).returncode != 0:
-        print(f"{os.getcwd()} dirty!", file=sys.stderr)
+        warn(f"{os.getcwd()} dirty!")
         sys.exit(1)
 
 
 def cd(path):
-    print_verbose(f"cd {path}")
+    print_verbose(f"$ cd {path}")
     os.chdir(os.path.expanduser(path))
 
 
@@ -105,7 +123,7 @@ def merge_nixpkgs_topics_into_master():
             commit_msg = check_output("git show --format='%B' --no-patch wentasah/master", shell=True).decode()  # Use the same commit message
         else:
             remote = check_output('git config remote.wentasah.url', shell=True)
-            print(f"HEAD of {remote} is not a merge commit created by nix-conf", file=sys.stderr)
+            warn(f"HEAD of {remote} is not a merge commit created by nix-conf")
             sys.exit(1)
 
     check_call(['git', 'merge', '--quiet', '--no-ff', '--no-commit'] + to_merge)
@@ -353,7 +371,9 @@ parser.add_argument(
     help="For which host to build the configuration",
 )
 parser.add_argument("-v", "--verbose", action='store_true',
-                    help="Print executed commands")
+                    help="Print executed commands (default)")
+parser.add_argument("-q", "--quiet", action='store_true',
+                    help="Don't print executed commands")
 subparsers = parser.add_subparsers(required=True)
 
 parser_update = subparsers.add_parser('update')
@@ -393,5 +413,5 @@ parser_add_commits.add_argument("branch", type=str)
 parser_add_commits.set_defaults(func=lambda args: add_commits(args.branch))
 
 args = parser.parse_args()
-verbose = args.verbose
+verbose = not args.quiet
 args.func(args)
