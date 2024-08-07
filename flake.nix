@@ -141,8 +141,10 @@
       };
 
       homeConfigurations = {
-        ritchie = home-manager.lib.homeManagerConfiguration {
+        ritchie = let
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
           modules = [
             ./modules/home-base.nix
             ./modules/fonts.nix
@@ -162,6 +164,10 @@
                   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
                 fi
               '';
+              home.packages = with pkgs; [
+                # Override btop to show GPU statistics
+                (hiPrio (writeShellScriptBin "btop" ''LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 ${btop}/bin/btop "$@"''))
+              ];
             }
           ];
         };
