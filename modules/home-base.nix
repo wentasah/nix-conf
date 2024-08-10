@@ -503,4 +503,16 @@ in
       };
     };
   };
+
+  programs.yazi = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
 }
