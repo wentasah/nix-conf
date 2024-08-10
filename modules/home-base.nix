@@ -94,6 +94,7 @@ in
     nix-doc
     nix-du
     nix-init
+    nix-inspect
     nix-output-monitor
     nix-prefetch
     nix-prefetch-scripts
