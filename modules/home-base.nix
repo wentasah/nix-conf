@@ -508,6 +508,17 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    plugins = {
+      smart-enter = ../config/smart-enter.yazi;
+    };
+    keymap = {
+      manager.prepend_keymap = [
+        {on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file";}
+        {on = "<Delete>"; run = "remove";}
+        {on = "<S-Delete>"; run = "remove --permanently";}
+        {on = "y"; run = [''yank'' ''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm''];}
+      ];
+    };
   };
 
   programs.zoxide = {
