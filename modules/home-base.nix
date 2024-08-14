@@ -508,9 +508,10 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-    plugins = {
-      smart-enter = ../config/smart-enter.yazi;
-    };
+# Disable to work on 24.05
+#     plugins = {
+#       smart-enter = ../config/smart-enter.yazi;
+#     };
     keymap = {
       manager.prepend_keymap = [
         {on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file";}
