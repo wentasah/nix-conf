@@ -50,6 +50,7 @@
     powerline-fonts
     networkmanagerapplet # need for tray icons
     swaylock
+    swayr
     wdisplays
     wev
     wl-clipboard
