@@ -144,7 +144,7 @@ in
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
     typst
-    typst-lsp
+    #typst-lsp # broken https://github.com/nvarner/typst-lsp/pull/515
     typstfmt
     uncrustify
     unzip
