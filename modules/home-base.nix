@@ -286,12 +286,14 @@ in
       }
 
       gcd() {
-        local dir="$((echo /; git ls-tree -d -r --name-only --full-tree HEAD) | fzf +m -0)" &&
+        local dir
+        dir="$((echo /; git ls-tree -d -r --name-only --full-tree HEAD) | fzf +m -0)" &&
         cd "./$(git rev-parse --show-cdup)/$dir"
       }
 
       src() {
-        local dir="$(findrepo --base-dir ~/src | grep -F -e "$1" | fzf +m -0 -1)" &&
+        local dir
+        dir="$(findrepo --base-dir ~/src | grep -F -e "$1" | fzf +m -0 -1)" &&
         cd ~/src/"$dir"
       }
 
