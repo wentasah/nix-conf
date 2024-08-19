@@ -55,6 +55,7 @@
     wev
     wl-clipboard
     wl-mirror pipectl
+    wl-screenrec
     wlr-randr
     wofi
     way-displays
