@@ -141,7 +141,7 @@
     (import ./emacs.nix { inherit pkgs; })
     amdgpu_top
     btrfs-progs
-    compsize
+    #compsize # https://github.com/NixOS/nixpkgs/issues/336006
     chromium
     ddrescue
     file

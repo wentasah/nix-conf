@@ -138,7 +138,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     binutils-unwrapped # for strings etc.
-    compsize
+    #compsize # https://github.com/NixOS/nixpkgs/issues/336006
     dash # TODO: Try is as /bin/sh (environment.binsh)
     emacs-nox
     file
