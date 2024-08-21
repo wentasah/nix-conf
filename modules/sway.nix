@@ -50,7 +50,9 @@
     powerline-fonts
     networkmanagerapplet # need for tray icons
     swaylock
-    swayr
+    (swayr.overrideAttrs ({patches ? [], ...}: {
+      patches = patches ++ [ ../patches/swayr/Make-next-matching-window-behave-as-I-want.patch ];
+    }))
     wdisplays
     wev
     wl-clipboard
