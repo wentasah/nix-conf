@@ -257,7 +257,10 @@ in
 #   ])
   ;
 
-
+  # Run way-displays on steelpick, but not on my other computers.
+  wayland.windowManager.sway.extraConfig = ''
+    exec exec way-displays > /tmp/way-displays.''${XDG_VTNR}.''${USER}.log 2>&1
+  '';
 
   home.file = {
     "bin/ssh-askpass" = { executable = true; text = ''
