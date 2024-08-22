@@ -100,4 +100,20 @@
       exec ${config.programs.waybar.package}/bin/waybar
     '');
   };
+
+  #services.xsettingsd.enable = true;
+  systemd.user.services.gsd-xsettings = {
+    Unit = {
+      Description = "Gnome SettingsDaemon XSettings";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Install.WantedBy = [ "sway-session.target" ];
+
+    Service = {
+      ExecStart = "${pkgs.gnome.gnome-settings-daemon}/libexec/gsd-xsettings";
+    };
+  };
+
 }

@@ -292,21 +292,6 @@ in
     ];
   };
 
-  #services.xsettingsd.enable = true;
-  systemd.user.services.gsd-xsettings = {
-    Unit = {
-      Description = "Gnome SettingsDaemon XSettings";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Install.WantedBy = [ "graphical-session.target" ];
-
-    Service = {
-      ExecStart = "${pkgs.gnome.gnome-settings-daemon}/libexec/gsd-xsettings";
-    };
-  };
-
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
   services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
