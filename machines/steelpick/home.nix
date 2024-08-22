@@ -258,9 +258,18 @@ in
   ;
 
   # Run way-displays on steelpick, but not on my other computers.
-  wayland.windowManager.sway.extraConfig = ''
-    exec exec way-displays > /tmp/way-displays.''${XDG_VTNR}.''${USER}.log 2>&1
-  '';
+  systemd.user.services.gsd-xsettings = {
+    Unit = {
+      Description = "way-displays";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Install.WantedBy = [ "sway-session.target" ];
+    Service = {
+      ExecStart = "${pkgs.way-displays}/bin/way-displays";
+    };
+  };
+
 
   home.file = {
     "bin/ssh-askpass" = { executable = true; text = ''
