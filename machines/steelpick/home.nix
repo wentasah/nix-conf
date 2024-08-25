@@ -258,9 +258,9 @@ in
   ;
 
   # Run way-displays on steelpick, but not on my other computers.
-  systemd.user.services.gsd-xsettings = {
+  systemd.user.services.way-displays = {
     Unit = {
-      Description = "way-displays";
+      Description = "way-displays: Auto Manage Your Wayland Displays";
       After = [ "graphical-session-pre.target" ];
       PartOf = [ "graphical-session.target" ];
     };
