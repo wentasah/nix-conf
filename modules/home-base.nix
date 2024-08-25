@@ -104,7 +104,6 @@ in
     nixfmt-rfc-style
     nixos-generators
     nixos-shell
-    nixpkgs-fmt
     nixpkgs-review
     nodePackages.bash-language-server
     npins
