@@ -165,6 +165,8 @@ in
     ripgrep
     ntfs3g
     tcpdump
+    dmidecode
+    pciutils
   ];
 
   environment.homeBinInPath = true;
