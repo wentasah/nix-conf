@@ -68,6 +68,7 @@ in
     htop
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
+    hydra-check
     hyperfine
     imagemagick
     jo
