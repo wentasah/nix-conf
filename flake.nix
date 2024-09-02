@@ -18,6 +18,7 @@
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     findrepo.url = "github:wentasah/findrepo";
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -94,6 +95,7 @@
               # pin nixpkgs in the system-wide flake registry
               nix.registry.nixpkgs.flake = nixpkgs;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
+                inputs.nix-xilinx.overlay
                 (final: prev: {
                   # Packages from stable
                   inherit (nixpkgs-stable.outputs.legacyPackages.x86_64-linux)

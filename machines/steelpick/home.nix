@@ -202,6 +202,7 @@ in
     v4l-utils # for qv4l2
     vlc
     video-trimmer
+    vivado # from nix-xilinx overlay
     warp
     wireshark
     wol
