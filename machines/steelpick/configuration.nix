@@ -263,6 +263,11 @@ in
   services.nscd.enableNsncd = true; # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.11-highlights
 
   services.envfs.enable = true;
+  # buildroot needs /usr/bin/file :-(. See
+  # https://gitlab.com/buildroot.org/buildroot/-/blob/2bd1723c0a5224efca245edf6930aa485e29341b/support/dependencies/dependencies.sh#L64
+  services.envfs.extraFallbackPathCommands = ''
+    ln -s ${pkgs.findutils}/bin/file $out/file
+  '';
 
   services.avahi = {
     publish = {
