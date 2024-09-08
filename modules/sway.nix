@@ -51,7 +51,7 @@
     networkmanagerapplet # need for tray icons
     swaylock
     (swayr.overrideAttrs ({patches ? [], ...}: {
-      patches = patches ++ [ ../patches/swayr/Make-next-matching-window-behave-as-I-want.patch ];
+      patches = patches ++ [ ../patches/swayr/Add-next-matching-lru-window-command.patch ];
     }))
     wdisplays
     wev

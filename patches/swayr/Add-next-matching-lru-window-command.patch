@@ -1,0 +1,114 @@
+From e403ea6457856d205d7c6a717921a05e560ab267 Mon Sep 17 00:00:00 2001
+From: Michal Sojka <michal.sojka@cvut.cz>
+Date: Sun, 8 Sep 2024 21:01:07 +0200
+Subject: [PATCH] Add next-matching-lru-window command
+
+See the README and docstrings for description of the command.
+---
+ README.md         |  4 ++++
+ swayr/src/cmds.rs | 60 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+)
+
+diff --git a/README.md b/README.md
+index d38bcb4..3e63d1b 100644
+--- a/README.md
++++ b/README.md
+@@ -184,6 +184,10 @@ Those commands cycle through (a subset of windows) in most-recently-used order.
+   `prev-window` otherwise.
+ * `next-matching-window` / `prev-matching-window` both take a [criteria
+   query](#swayr-commands-criteria).
++* `next-matching-lru-window` take a [criteria
++  query](#swayr-commands-criteria) and focus LRU matching window if no
++  matching window is currently focused. If it is, switch to the next
++  matching window in LRU order.
+ 
+ #### Layout modification commands
+ 
+diff --git a/swayr/src/cmds.rs b/swayr/src/cmds.rs
+index 18fa450..74ad8c9 100644
+--- a/swayr/src/cmds.rs
++++ b/swayr/src/cmds.rs
+@@ -241,6 +241,20 @@ pub enum SwayrCommand {
+         /// The criteria query defining which windows to switch to.
+         criteria: String,
+     },
++    /// Focus to the LRU window matching the given criteria query if no
++    /// matching window is currently focused. If it is, switch to the next
++    /// matching window in LRU order.
++    ///
++    /// For example, you can bind a $mod+F to switch to "app_name=firefox" and
++    /// $mod+E to "app_name=emacs". If you have one Firefox and multiple Emacs
++    /// windows, you can switch between Firefox and the LRU Emacs by pressing
++    /// $mod+F and $mod+E alternatively. If you want another Emacs window,
++    /// press $mod+E multiple times. Then alternating $mod+F and $mod+E
++    /// switches between Firefox and another Emacs.
++    NextMatchingLRUWindow {
++        /// The criteria query defining which windows to switch to.
++        criteria: String,
++    },
+     /// Move the currently focused window or container to the selected
+     /// workspace.
+     MoveFocusedToWorkspace,
+@@ -616,6 +630,9 @@ fn exec_swayr_cmd_1(
+                 fdata,
+             )
+         }
++        SwayrCommand::NextMatchingLRUWindow { criteria } => {
++            focus_matching_lru_window(criteria, fdata)
++        }
+         SwayrCommand::TileWorkspace { floating } => {
+             tile_current_workspace(floating, false)
+         }
+@@ -1625,6 +1642,49 @@ fn focus_matching_window_in_direction(
+     focus_window_in_direction_1(&wins, dir, fdata, pred)
+ }
+ 
++pub fn focus_matching_lru_window(
++    criteria: &str,
++    fdata: &FocusData,
++) -> Result<String, String> {
++    let root = ipc::get_root_node(false);
++    let tree = t::get_tree(&root);
++    let wins = tree.get_windows(fdata);
++
++    let crits = criteria::parse_criteria(criteria)?;
++    let pred = criteria::criterion_to_predicate(&crits, &wins);
++
++    let mut wins: Vec<&t::DisplayNode> =
++        wins.iter().filter(|w| pred(w)).collect();
++
++    if wins.is_empty() {
++        return Err("No matching windows.".to_owned());
++    }
++
++    wins.sort_by(|a, b| {
++        let lru_a = fdata.last_focus_tick(a.node.id);
++        let lru_b = fdata.last_focus_tick(b.node.id);
++        lru_a.cmp(&lru_b).reverse()
++    });
++
++    // Here we differ from focus_matching_window_in_direction()
++    if !wins.iter().any(|w| w.node.focused) {
++        return focus_window_by_id(wins.first().unwrap().node.id);
++    }
++
++    let is_focused_window: Box<dyn Fn(&t::DisplayNode) -> bool> =
++        Box::new(|dn| dn.node.focused);
++
++    let mut iter = Box::new(wins.iter().rev().cycle());
++
++    loop {
++        let win = iter.next().unwrap();
++        if is_focused_window(win) {
++            let win = iter.next().unwrap();
++            return focus_window_by_id(win.node.id);
++        }
++    }
++}
++
+ pub fn focus_window_in_direction(
+     dir: Direction,
+     consider_wins: &ConsiderWindows,
+-- 
+2.46.0
+
