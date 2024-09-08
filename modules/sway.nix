@@ -1,4 +1,9 @@
 { config, pkgs, lib, ... }:
+let
+  swayr = (pkgs.swayr.overrideAttrs ({patches ? [], ...}: {
+    patches = patches ++ [ ../patches/swayr/Add-next-matching-lru-window-command.patch ];
+  }));
+in
 {
   imports = [
     ./dunst.nix
@@ -50,9 +55,7 @@
     powerline-fonts
     networkmanagerapplet # need for tray icons
     swaylock
-    (swayr.overrideAttrs ({patches ? [], ...}: {
-      patches = patches ++ [ ../patches/swayr/Add-next-matching-lru-window-command.patch ];
-    }))
+    swayr
     wdisplays
     wev
     wl-clipboard
@@ -99,6 +102,21 @@
       PATH=$PATH:${lib.strings.makeBinPath (with pkgs; [ bash coreutils procps "$HOME" ])}
       exec ${config.programs.waybar.package}/bin/waybar
     '');
+  };
+
+  systemd.user.services.swayrd = {
+    Unit = {
+      Description = "Advanced window switcher for sway";
+      PartOf = [ "sway-session.target" ];
+      After = [ "sway-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${swayr}/bin/swayrd";
+      Environment = "RUST_BACKTRACE=1 RUST_LOG=swayr=info";
+    };
+
+    Install = { WantedBy = [ "sway-session.target" ]; };
   };
 
   #services.xsettingsd.enable = true;
