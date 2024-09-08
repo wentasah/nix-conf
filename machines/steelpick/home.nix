@@ -258,20 +258,6 @@ in
 #   ])
   ;
 
-  # Run way-displays on steelpick, but not on my other computers.
-  systemd.user.services.way-displays = {
-    Unit = {
-      Description = "way-displays: Auto Manage Your Wayland Displays";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Install.WantedBy = [ "sway-session.target" ];
-    Service = {
-      ExecStart = "${pkgs.way-displays}/bin/way-displays";
-    };
-  };
-
-
   home.file = {
     "bin/ssh-askpass" = { executable = true; text = ''
       #!${pkgs.runtimeShell}
@@ -309,6 +295,19 @@ in
   #services.lorri.enable = true;
 
   systemd.user.services = {
+
+    # Run way-displays on steelpick, but not on my other computers.
+    way-displays = {
+      Unit = {
+        Description = "way-displays: Auto Manage Your Wayland Displays";
+        After = [ "graphical-session-pre.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "sway-session.target" ];
+      Service = {
+        ExecStart = "${pkgs.way-displays}/bin/way-displays";
+      };
+    };
 
     backup-etc-git = {
       Unit = {
