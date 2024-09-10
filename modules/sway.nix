@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 let
   swayr = (pkgs.swayr.overrideAttrs ({patches ? [], ...}: {
-    patches = patches ++ [ ../patches/swayr/Add-next-matching-lru-window-command.patch ];
+    patches = patches ++ [
+      ../patches/swayr/Add-next-matching-lru-window-command.patch
+      ../patches/swayr/Add-workspace-__visible__-criteria.patch
+    ];
   }));
 in
 {
