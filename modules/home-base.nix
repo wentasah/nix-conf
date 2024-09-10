@@ -140,6 +140,7 @@ in
     sshuttle
     sta
     tectonic
+    tinymist # alternative typst LSP
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
