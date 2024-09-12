@@ -150,6 +150,7 @@ in
     uncrustify
     unzip
     valgrind
+    vcstool
     websocat
     waypipe
     xmlstarlet
