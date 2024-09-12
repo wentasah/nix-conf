@@ -282,10 +282,9 @@ in
       setopt autoresume pushdsilent autopushd pushdminus
 
       d() {
-        # local dir
-        # dir=$(dirs -l -p | fzf +m) &&
-        # cd $dir
-        __zoxide_zi "$@"
+        local dir
+        dir=$(dirs -l -p | fzf +m) &&
+        cd $dir
       }
 
       gcd() {
