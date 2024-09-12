@@ -255,8 +255,6 @@ in
       lsd   = "ls -ld *(-/DN)"; # List only directories and symbolic links that point to directories
       mkdir = "nocorrect mkdir"; # no spelling correction on mkdir
       mv    = "nocorrect mv"; # no spelling correction on mv
-      o     = "octave -f --no-gui";
-      r     = "ranger_cd";
       sc    = "systemctl";
       scp   = "${pkgs.rsync}/bin/rsync -aP --inplace";
       scs   = "systemctl status";
