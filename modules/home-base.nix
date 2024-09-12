@@ -265,6 +265,7 @@ in
       sudo  = "nocorrect sudo";
       touch = "nocorrect touch";
       which = "nocorrect which";
+      zz    = "__zoxide_zi \"$@\"";
     };
     oh-my-zsh.enable = true;
     oh-my-zsh.plugins = [ "systemd" ];
