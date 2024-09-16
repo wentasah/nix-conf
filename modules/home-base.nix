@@ -94,6 +94,8 @@ in
     niv
     nix-doc
     nix-du
+    nix-eval-jobs
+    nix-fast-build
     nix-init
     nix-inspect
     nix-output-monitor
@@ -123,6 +125,8 @@ in
     psmisc                      # killall, fuser, ...
     pv
     (python3.withPackages globalPythonPackages)
+    python3Packages.python-lsp-server
+    pyright
     ranger
     redo-apenwarr
     restic
@@ -149,6 +153,7 @@ in
     typstfmt
     uncrustify
     unzip
+    update-nix-fetchgit
     valgrind
     vcstool
     websocat

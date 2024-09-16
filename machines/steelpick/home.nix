@@ -181,7 +181,6 @@ in
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     python3Packages.jupyter_core
     python3Packages.notebook
-    python3Packages.python-lsp-server
     qemu
     radare2
     saleae-logic-2
