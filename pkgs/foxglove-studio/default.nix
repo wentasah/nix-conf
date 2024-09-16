@@ -4,7 +4,7 @@
 , dpkg
 , makeWrapper
 , electron
-, genericUpdater, writeShellScript, libxml2
+, genericUpdater, writeShellScript
 }:
 stdenv.mkDerivation rec {
   pname = "foxglove-studio";
@@ -40,8 +40,7 @@ stdenv.mkDerivation rec {
   passthru.updateScript = genericUpdater {
     versionLister = writeShellScript "foxglove-versionLister" ''
       curl https://foxglove.dev/download \
-        | ${libxml2}/bin/xmllint --xpath 'string(//a[@class="download_downloadButton__XUA_h"]/@href)' - \
-        | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+'
+        | sed -nEe 's|.*"https://get.foxglove.dev/desktop/latest/foxglove-studio-(.*)-linux-amd64.deb".*|\1|p'
     '';
   };
 }
