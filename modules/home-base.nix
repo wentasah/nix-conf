@@ -5,7 +5,7 @@ let
   globalPythonPackages = (pp: with pp; [
     requests urllib3 # for filesender.py
     matplotlib tkinter
-    flake8 flake8-bugbear
+    flake8 flake8-bugbear isort
   ]);
 in
 {
@@ -124,9 +124,9 @@ in
     poppler_utils
     psmisc                      # killall, fuser, ...
     pv
+    pyright
     (python3.withPackages globalPythonPackages)
     python3Packages.python-lsp-server
-    pyright
     ranger
     redo-apenwarr
     restic
