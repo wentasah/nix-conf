@@ -356,6 +356,13 @@ def copy(host):
     print_switch_instructions(host, [])  # TODO override
 
 
+def get_nix_args(args):
+    nix_args = args.nix_args
+    if args.local:
+        nix_args = ['--builders', '', '-j4'] + nix_args
+    return nix_args
+
+
 os.environ['GIT_AUTHOR_NAME'] = 'nix-conf'
 os.environ['GIT_AUTHOR_EMAIL'] = 'nix-conf@localhost'
 os.environ['GIT_COMMITTER_NAME'] = 'nix-conf'
@@ -370,23 +377,29 @@ parser.add_argument(
     default=os.getenv("HOST", check_output("hostname").decode().strip()),
     help="For which host to build the configuration",
 )
+
+#parent_parser = argparse.ArgumentParser(add_help=False)
 parser.add_argument("-v", "--verbose", action='store_true',
                     help="Print executed commands (default)")
 parser.add_argument("-q", "--quiet", action='store_true',
                     help="Don't print executed commands")
+
+parent_parser = argparse.ArgumentParser(add_help=False)
+parent_parser.add_argument("-l", "--local", action='store_true',
+                           help="Disable remote builders")
 subparsers = parser.add_subparsers(required=True)
 
-parser_update = subparsers.add_parser('update')
+parser_update = subparsers.add_parser('update', parents=[parent_parser])
 parser_update.add_argument("nix_args", nargs='*')
-parser_update.set_defaults(func=lambda args: update(args.host, args.nix_args))
+parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args)))
 
 parser_ci = subparsers.add_parser('ci')
 parser_ci.add_argument("nix_args", nargs='*')
-parser_ci.set_defaults(func=lambda args: ci(args.host, args.nix_args))
+parser_ci.set_defaults(func=lambda args: ci(args.host, get_nix_args(args)))
 
-parser_build = subparsers.add_parser('build')
+parser_build = subparsers.add_parser('build', parents=[parent_parser])
 parser_build.add_argument("nix_args", nargs='*')
-parser_build.set_defaults(func=lambda args: build(args.host, args.nix_args))
+parser_build.set_defaults(func=lambda args: build(args.host, get_nix_args(args)))
 
 parser_copy = subparsers.add_parser('copy')
 parser_copy.set_defaults(func=lambda args: copy(args.host))
