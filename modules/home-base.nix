@@ -179,12 +179,7 @@ in
       executable = true;
       text = ''
         #!${pkgs.runtimeShell}
-        if [ -n "''${DISPLAY}''${WAYLAND_DISPLAY}" ]; then
-            args="--no-wait"
-            [ -z "$1" ] && args="$args --create-frame"
-        else
-                args="-t"
-        fi
+        [[ $DISPLAY$WAYLAND_DISPLAY ]] && args="--no-wait ''${1:---create-frame}" || args="--tty"
         exec ${config.programs.emacs.package}/bin/emacsclient $args -a  "" "$@"
       '';
     };
@@ -193,6 +188,13 @@ in
       text = ''
         #!${pkgs.runtimeShell}
         exec ${config.programs.emacs.package}/bin/emacsclient -t "$@"
+      '';
+    };
+    "bin/magit" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        exec ~/bin/ec -e "(magit \"$PWD\")" "$@"
       '';
     };
     "bin/whix" = {
@@ -311,13 +313,6 @@ in
       bindkey '^[l' down-case-word
 
       source ${pkgs.mc}/libexec/mc/mc.sh
-      # if [[ -f /usr/share/mc/bin/mc.sh ]]; then
-      #     source /usr/share/mc/bin/mc.sh
-      # else
-      #     if [[ -f /usr/libexec/mc/mc-wrapper.sh ]]; then
-      #         alias mc='. /usr/libexec/mc/mc-wrapper.sh'
-      #     fi
-      # fi
 
       # # Autoload all shell functions from all directories in $fpath (following
       # # symlinks) that have the executable bit on (the executable bit is not
