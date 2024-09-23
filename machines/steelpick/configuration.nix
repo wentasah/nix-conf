@@ -97,6 +97,8 @@ in
     10.35.95.4 optim
     10.35.0.32 ritchie-bmc
     10.35.0.31 optim-bmc
+#     # For the tunnel to wrwb license server
+#     127.0.0.1 k2.felk.cvut.cz
   '';
 
   systemd = {
