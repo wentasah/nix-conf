@@ -378,7 +378,6 @@ parser.add_argument(
     help="For which host to build the configuration",
 )
 
-#parent_parser = argparse.ArgumentParser(add_help=False)
 parser.add_argument("-v", "--verbose", action='store_true',
                     help="Print executed commands (default)")
 parser.add_argument("-q", "--quiet", action='store_true',
@@ -393,7 +392,7 @@ parser_update = subparsers.add_parser('update', parents=[parent_parser])
 parser_update.add_argument("nix_args", nargs='*')
 parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args)))
 
-parser_ci = subparsers.add_parser('ci')
+parser_ci = subparsers.add_parser('ci', parents=[parent_parser])
 parser_ci.add_argument("nix_args", nargs='*')
 parser_ci.set_defaults(func=lambda args: ci(args.host, get_nix_args(args)))
 
