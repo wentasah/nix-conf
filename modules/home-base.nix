@@ -121,6 +121,7 @@ in
     pdfgrep
     pdftk
     pkg-config
+    polylux2pdfpc
     poppler_utils
     psmisc                      # killall, fuser, ...
     pv
