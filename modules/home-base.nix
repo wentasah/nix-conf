@@ -34,6 +34,7 @@ in
     cmake-language-server
     colmena
     colordiff
+    colorized-logs
     crate2nix
     csv2latex
     csvtool
