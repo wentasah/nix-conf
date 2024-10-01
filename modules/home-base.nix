@@ -367,8 +367,8 @@ in
       source ${../pkgs/zsh-config/nix-direnv}
 
       # Setup ROS 2 auto completion for nix-direnv environments
-      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete ros2)"
-      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete colcon)"
+      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh ros2)"
+      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh colcon)"
 
       # Integrate run-nix-help (https://github.com/NixOS/nix/blob/master/misc/zsh/run-help-nix#L14)
       (( $+aliases[run-help] )) && unalias run-help
