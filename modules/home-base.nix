@@ -134,6 +134,7 @@ in
     restic
     ripgrep
     #rnix-lsp # needs insecure nix-2.15.3
+    ros2nix
     rsync
     sd
     sequoia

@@ -16,6 +16,9 @@
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
+    ros2nix = { url = "github:wentasah/ros2nix";
+                # inputs.nix-ros-overlay.inputs.nixpkgs.follows = "nixpkgs"; # FIXME
+              };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -60,6 +63,7 @@
           fastdds = final.callPackage ./pkgs/fastdds { };
           flamenco = final.callPackage ./pkgs/flamenco {};
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
+          ros2nix = inputs.ros2nix.outputs.packages.${platform}.ros2nix;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           veridian = final.callPackage ./pkgs/veridian { };
