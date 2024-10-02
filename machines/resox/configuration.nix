@@ -219,6 +219,9 @@
 
   environment.homeBinInPath = true;
 
+  # Get zsh completion for system packages (e.g. systemd).
+  environment.pathsToLink = [ "/share/zsh" ];
+
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.wsh = import ./home.nix;
