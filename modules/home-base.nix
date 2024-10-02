@@ -74,6 +74,7 @@ in
     imagemagick
     jo
     jq
+    just
     lemminx
     libxml2 # for xmllint
     ltrace
