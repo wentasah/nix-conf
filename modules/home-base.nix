@@ -276,8 +276,13 @@ in
       which = "nocorrect which";
       zz    = "__zoxide_zi \"$@\"";
     };
-    oh-my-zsh.enable = true;
-    oh-my-zsh.plugins = [ "systemd" ];
+    oh-my-zsh = {
+      enable = true;
+    };
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [ "main" "brackets" ];
+    };
     initExtraBeforeCompInit = ''
       # Make tramp work (https://www.gnu.org/software/emacs/manual/html_node/tramp/Frequently-Asked-Questions.html)
       [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
@@ -323,9 +328,6 @@ in
       # # necessary, but gives you an easy way to stop the autoloading of a
       # # particular shell function). $fpath should not be empty for this to work.
       # for func in $^fpath/*(N-.x:t); autoload $func
-
-      source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-      ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
       # Source localhost specific settings
       source ~/.zshrc.local
