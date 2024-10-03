@@ -336,9 +336,6 @@ in
       add-zsh-hook chpwd chpwd_recent_dirs
       zstyle ':completion:*:*:cdr:*:*' menu selection
 
-      # autoload bashcompinit
-      # bashcompinit
-
       vterm_printf(){
           if [ -n "$TMUX" ]; then
               # Tell tmux to pass the escape sequences through
@@ -356,9 +353,6 @@ in
       for zshrc_snipplet in ~/.zshrc.d/S[0-9][0-9]*[^~] ; do
         source $zshrc_snipplet
       done
-
-      ZSH_BASH_COMPLETIONS_FALLBACK_PATH=${pkgs.bash-completion}/share/bash-completion
-      #ZSH_BASH_COMPLETIONS_FALLBACK_WHITELIST=(openssl)
 
       if test -n "$KITTY_INSTALLATION_DIR"; then
           export KITTY_SHELL_INTEGRATION="enabled"
