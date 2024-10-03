@@ -1,0 +1,75 @@
+# -*-sh-*-
+DIRSTACKSIZE=100
+
+setopt notify interactivecomments recexact longlistjobs
+setopt autoresume pushdsilent autopushd pushdminus
+
+d() {
+  local dir
+  dir=$(dirs -l -p | fzf +m) &&
+  cd $dir
+}
+
+gcd() {
+  local dir
+  dir="$((echo /; git ls-tree -d -r --name-only --full-tree HEAD) | fzf +m -0)" &&
+  cd "./$(git rev-parse --show-cdup)/$dir"
+}
+
+src() {
+  local dir
+  dir="$(findrepo --base-dir ~/src | grep -F -e "$1" | fzf +m -0 -1)" &&
+  cd ~/src/"$dir"
+}
+
+# Rebind fzf-cd to a sane key
+bindkey '\eC' fzf-cd-widget
+bindkey '\ec' capitalize-word
+
+# Restore Alt-L behaviour overridden by Oh-My-Zsh (https://github.com/ohmyzsh/ohmyzsh/issues/5071)
+bindkey '^[l' down-case-word
+
+# # Autoload all shell functions from all directories in $fpath (following
+# # symlinks) that have the executable bit on (the executable bit is not
+# # necessary, but gives you an easy way to stop the autoloading of a
+# # particular shell function). $fpath should not be empty for this to work.
+# for func in $^fpath/*(N-.x:t); autoload $func
+
+# Source localhost specific settings
+source ~/.zshrc.local
+
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':completion:*:*:cdr:*:*' menu selection
+
+vterm_printf(){
+    if [ -n "$TMUX" ]; then
+        # Tell tmux to pass the escape sequences through
+        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "''${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+
+# Finally include zsh snippets
+for zshrc_snipplet in ~/.zshrc.d/S[0-9][0-9]*[^~] ; do
+  source $zshrc_snipplet
+done
+
+if test -n "$KITTY_INSTALLATION_DIR"; then
+    export KITTY_SHELL_INTEGRATION="enabled"
+    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+    kitty-integration
+    unfunction kitty-integration
+fi
+
+# Integrate run-nix-help (https://github.com/NixOS/nix/blob/master/misc/zsh/run-help-nix#L14)
+(( $+aliases[run-help] )) && unalias run-help
+autoload -Uz run-help run-help-nix
+
+# Hostnames in K23 lab
+k23="k23-177 k23-178 k23-179 k23-180 k23-181 k23-182 k23-183 k23-184 k23-185 k23-186 k23-187 k23-189 k23-190 k23-192 k23-193 k23-195 k23-196 k23-197 k23-198"
