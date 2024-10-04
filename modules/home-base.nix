@@ -198,7 +198,7 @@ in
       executable = true;
       text = ''
         #!${pkgs.runtimeShell}
-        exec ~/bin/ec -e "(magit \"$PWD\")" "$@"
+        exec ~/bin/ec -e "(magit \"$(git rev-parse --show-toplevel)\")" "$@"
       '';
     };
     "bin/whix" = {
