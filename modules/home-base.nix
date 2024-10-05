@@ -50,6 +50,7 @@ in
     gdb
     gcalcli
     gh
+    git-cliff
     git-backdate
     git-filter-repo
     git-machete
