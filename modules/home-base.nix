@@ -78,6 +78,7 @@ in
     just
     lemminx
     libxml2 # for xmllint
+    live-server
     ltrace
     mailutils # broken https://github.com/NixOS/nixpkgs/issues/223967
     magic-wormhole
