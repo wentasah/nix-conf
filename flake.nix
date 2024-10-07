@@ -124,7 +124,7 @@
                 inputs.carla-stable.overlays."0.9.15"
                 (final: prev: {
                   # Packages from unstable
-                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux) sequoia-sq yazi;
+                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux) sequoia-sq yazi live-server;
                 })
               ];
             }
