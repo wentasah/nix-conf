@@ -4,6 +4,32 @@ DIRSTACKSIZE=100
 setopt notify interactivecomments recexact longlistjobs
 setopt autoresume pushdsilent autopushd pushdminus
 
+# Run AE and view the result. This is a shell function, because we
+# want shell termination to kill the live-server process (shell
+# background job).
+ae() {
+  # Run ae
+  command ae "$@"
+  # View results
+  if [[ -f results/results.html ]]; then
+      d=/run/user/$UID/brute-ae
+      mkdir -p "$d"
+      pid=$(cat $d/pid)
+      proc_exe=$(basename "$(readlink /proc/$pid/exe)")
+      if [[ $pid ]] &&
+             [[ $proc_exe = "live-server" ]] &&
+             [[ $(readlink "/proc/$pid/cwd") != "$PWD" ]]
+      then
+          kill "$pid"
+          unset pid
+      fi
+      if [[ ! $pid ]] || [[ $proc_exe != "live-server" ]]; then
+          live-server -H localhost --open=results.html results < /dev/null &> "$d/log" &
+          echo $! > "$d/pid"
+      fi
+  fi
+}
+
 d() {
   local dir
   dir=$(dirs -l -p | fzf +m) &&
