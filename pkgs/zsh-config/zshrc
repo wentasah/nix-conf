@@ -14,11 +14,11 @@ ae() {
   if [[ -f results/results.html ]]; then
       d=/run/user/$UID/brute-ae
       mkdir -p "$d"
-      pid=$(cat $d/pid)
-      proc_exe=$(basename "$(readlink /proc/$pid/exe)")
+      pid=$(cat $d/pid || :)
+      proc_exe=$(basename "$(readlink /proc/"$pid"/exe)")
       if [[ $pid ]] &&
              [[ $proc_exe = "live-server" ]] &&
-             [[ $(readlink "/proc/$pid/cwd") != "$PWD" ]]
+             [[ $(realpath "/proc/$pid/cwd") != "$PWD" ]]
       then
           kill "$pid"
           unset pid
