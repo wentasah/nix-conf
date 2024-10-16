@@ -97,7 +97,7 @@ in
     auto-multiple-choice
     automake
     avidemux
-    bear
+    #bear # broken. fix: https://nixpk.gs/pr-tracker.html?pr=348399
     binutils-unwrapped-all-targets
     bison
     blender
@@ -112,7 +112,7 @@ in
     cmakeWithGui
     cppreference
     #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
-    cutter
+    #cutter # broken 2024-10-16
     difftastic
     dnsmasq                     # for documentation
     docker-compose
