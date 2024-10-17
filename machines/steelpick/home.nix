@@ -304,6 +304,7 @@ in
       };
       Install.WantedBy = [ "sway-session.target" ];
       Service = {
+        ExecStartPre = "${pkgs.coreutils}/bin/rm -f /tmp/way-displays.pid"; # Remove potentially stale .pid file
         ExecStart = "${pkgs.way-displays}/bin/way-displays";
       };
     };
