@@ -269,22 +269,6 @@
   };
   users.users.syncthing.homeMode = "750";
 
-  services.nginx = {
-    enable = true;
-    virtualHosts.localhost = {
-      listen = [{ addr = "127.0.0.1"; }];
-      locations."/~wsh/" = {
-        alias = "/srv/www/wsh/";
-      };
-    };
-  };
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
-
-  # Make my public_html accessible by default. It's not accessible
-  # directly from $HOME, because the $HOME has permissions 0700 and
-  # nginx runs under a different user.
-  fileSystems."/srv/www/wsh" = { options = [ "bind" ]; device = "/home/wsh/public_html"; };
-
   services.fwupd.enable = true;
 
   # Enable the OpenSSH daemon.
