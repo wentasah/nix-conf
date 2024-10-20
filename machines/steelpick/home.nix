@@ -189,6 +189,7 @@ in
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
+    ssh-to-age
     steam-run
     sterm
     stm32cubeide
