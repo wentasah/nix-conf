@@ -48,6 +48,7 @@ in
         "steam-original"
         "steam-unwrapped"
         "aspell-dict-en-science"
+        "drawio"
       ];
     };
     overlays = [ myOverlay ];
