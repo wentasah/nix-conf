@@ -130,7 +130,7 @@ in
     nurl
     nvd
     odt2txt
-    oil
+    oils-for-unix
     p7zip
     pandoc
     pastel
