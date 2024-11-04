@@ -97,7 +97,7 @@ in
     auto-multiple-choice
     automake
     avidemux
-    #bear # broken. fix: https://nixpk.gs/pr-tracker.html?pr=348399
+    bear
     binutils-unwrapped-all-targets
     bison
     blender
@@ -127,7 +127,7 @@ in
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     flex
     flowblade
-    #freecad # broken
+    freecad # broken
     ghostscript
     gimp
     glibcInfo                   # Not visible in emacs :-(
