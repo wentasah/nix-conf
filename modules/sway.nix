@@ -63,7 +63,7 @@ in
     wev
     wl-clipboard
     wl-mirror pipectl
-    wl-screenrec
+    #wl-screenrec # broken https://github.com/russelltg/wl-screenrec/issues/92
     wlr-randr
     wofi
     way-displays
