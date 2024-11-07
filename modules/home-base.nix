@@ -144,6 +144,7 @@ in
     pv
     pyright
     (python3.withPackages globalPythonPackages)
+    python3Packages.invoke
     python3Packages.python-lsp-server
     ranger
     redo-apenwarr
