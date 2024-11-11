@@ -161,6 +161,7 @@ in
     socat
     sops
     sqlite-interactive
+    ssh-to-age
     sshfs
     sshuttle
     sta
