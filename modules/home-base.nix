@@ -27,6 +27,7 @@ in
   ];
   home.packages = with pkgs; [
     (hiPrio parallel) # Prefer this over parallel from moreutils
+    age
     alejandra
     aspell
     aspellDicts.cs
