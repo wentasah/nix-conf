@@ -7,19 +7,6 @@ let
     matplotlib tkinter
     flake8 flake8-bugbear isort
   ]);
-  live-server = pkgs.live-server.overrideAttrs ({
-    version,
-    patches ? [],
-    ...
-  }: {
-    version = "${version}+wsh";
-    patches = patches ++ [
-      (pkgs.fetchpatch {
-        url = "https://github.com/wentasah/live-server/commit/261c664fabcd4cfe7c00d616c61d2e36548dbac5.patch";
-        hash = "sha256-tq8BZbXRj/keGcVVrGxYVCH2G+L83mGrhyB36NWxWlM=";
-      })
-    ];
-  });
 in
 {
   imports = [
