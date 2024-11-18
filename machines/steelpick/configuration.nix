@@ -5,10 +5,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  myOverlay = self: super:
-    rec {
-      #i3 = import ../../pkgs/i3 { pkgs = super; };
-    };
+  myOverlay = self: super: {
+  };
 in
 {
   imports =
@@ -460,7 +458,6 @@ in
   #services.xserver.displayManager.lightdm.enable = true;
   services.displayManager.defaultSession = "sway";
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
 #   services.xserver.desktopManager.plasma5.enable = true;

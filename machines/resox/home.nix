@@ -35,7 +35,6 @@ in
   imports = [
     ../../modules/home-base.nix
     ../../modules/home-desktop.nix
-    #../../modules/i3.nix
     ../../modules/sway.nix
     ../../modules/gdu.nix
     ../../modules/go.nix

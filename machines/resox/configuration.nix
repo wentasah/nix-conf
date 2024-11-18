@@ -306,7 +306,6 @@
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e";
 
-  services.xserver.windowManager.i3.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
 

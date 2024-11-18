@@ -53,7 +53,6 @@ in
     brightnessctl
     cantarell-fonts
     swappy grim slurp
-    i3status-rust
     font-awesome_4
     powerline-fonts
     networkmanagerapplet # need for tray icons
