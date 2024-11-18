@@ -353,7 +353,7 @@ in
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
         all-the-icons
-        forge
+        #forge # broken (emacsql> /nix/store/...-stdenv-linux/setup: line 227: pushd: sqlite: No such file or directory)
         magit
       ]) ++ (with epkgs.melpaPackages; [
         direnv
