@@ -173,7 +173,7 @@ def update_flake_input(flake_input: str):
 
 class FailedBuildCounter:
     def __init__(self, host):
-        self.filename = f'out/{host}/flake.failed.cnt'
+        self.filename = os.path.expanduser(f'~/nix/out/{host}/flake.failed.cnt')
 
     def reset(self):
         # Reset failed build counter
