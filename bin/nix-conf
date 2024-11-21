@@ -171,6 +171,29 @@ def update_flake_input(flake_input: str):
     return False
 
 
+class FailedBuildCounter:
+    def __init__(self, host):
+        self.filename = f'out/{host}/flake.failed.cnt'
+
+    def reset(self):
+        # Reset failed build counter
+        try:
+            os.remove(self.filename)
+        except FileNotFoundError:
+            pass
+
+    def get(self):
+        try:
+            return int(open(self.filename).readline())
+        except (FileNotFoundError, ValueError):
+            return 0
+
+    def increase(self):
+        cnt = self.get()
+        with open(self.filename, 'w') as f:
+            print(cnt + 1, file=f)
+
+
 def updated(host):
     result = False
     if update_nix_conf(): result = True
@@ -180,8 +203,7 @@ def updated(host):
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
     update_flake_input("nixpkgs-stable")
     if result:
-        # Reset failed build counter
-        system(f'rm -f ~/nix/out/{host}/flake.retry.cnt')
+        FailedBuildCounter(host).reset()
         # Update selected overlays only if something else is updated
         update_flake_input("emacs-overlay")
         update_flake_input("nix-index-database")
@@ -190,18 +212,8 @@ def updated(host):
 
 
 def failed_recently(host):
-    dir = os.path.expanduser(f'~/nix/out/{host}')
-    cnt = f'{dir}/flake.retry.cnt'
-    try:
-        cnt_val = int(open(cnt).readline())
-    except (FileNotFoundError, ValueError):
-        cnt_val = 0
-    if os.path.getsize(f"{dir}/flake.error") and cnt_val < 2:
-        with open(cnt, 'w') as f:
-            print(cnt_val + 1, file=f)
-        return True
-    else:
-        return False
+    cnt = FailedBuildCounter(host).get()
+    return cnt > 0 and cnt <= 2
 
 
 def print_switch_instructions(host, override_input: List[str]):
@@ -248,13 +260,11 @@ def build(host, nix_args):
 
     if status == 0:
         open(f'out/{host}/flake.error', 'w') # truncate
-        # Reset failed build counter
-        try: os.remove(f'out/{host}/flake.retry.cnt')
-        except FileNotFoundError: pass
+        FailedBuildCounter(host).reset()
     else:
         # we copy instead of renaming to not break hardlinks to the flake.error
         shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
-        open(f'out/{host}/flake.retry.cnt', 'w')
+        FailedBuildCounter(host).increase()
         sys.exit(status)
 
     if check_output("hostname").decode().strip() == host:
