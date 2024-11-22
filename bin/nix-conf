@@ -195,20 +195,20 @@ class FailedBuildCounter:
 
 
 def updated(host):
-    result = False
-    if update_nix_conf(): result = True
-    #if update_home_manager: result = True
-    if update_clonned_nixpkgs(): result = True
+    updated = [
+        update_nix_conf(),
+        update_clonned_nixpkgs(),
+    ]
     # Update nixpkgs-stable, but don't trigger rebuild of unstable
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
     update_flake_input("nixpkgs-stable")
-    if result:
+    if any(updated):
         FailedBuildCounter(host).reset()
         # Update selected overlays only if something else is updated
         update_flake_input("emacs-overlay")
         update_flake_input("nix-index-database")
 
-    return result
+    return any(updated)
 
 
 def failed_recently(host):
