@@ -347,7 +347,9 @@ def ci(host, nix_args):
     update(host, nix_args)
     publish_ci_update(host)
     try:
-        system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
+        # Running `nix flake check` if the build failed is pointless
+        if FailedBuildCounter(host).get() == 0:
+            system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
     except CalledProcessError:
         with open(os.path.expanduser(f"~/nix/out/{host}/flake.error"), 'a') as f:
             print("nix flake check failed!!!", file=f)
