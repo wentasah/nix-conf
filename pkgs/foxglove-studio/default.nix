@@ -8,11 +8,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "foxglove-studio";
-  version = "2.16.1";
+  version = "2.17.0";
 
   src = fetchurl {
     url = "https://get.foxglove.dev/desktop/latest/foxglove-studio-${version}-linux-amd64.deb";
-    hash = "sha256-TP2Ip8+8MfVxpWHhYLsZQ2GFNgY9rk3aZDgfQAJJDc8=";
+    hash = "sha256-JsgNzgMDrDkQ+hrblsG+Be/b8JubGen29VXpRuB5wyY=";
   };
 
   nativeBuildInputs = [ dpkg makeWrapper ];
@@ -39,6 +39,7 @@ stdenv.mkDerivation rec {
 
   passthru.updateScript = genericUpdater {
     versionLister = writeShellScript "foxglove-versionLister" ''
+      # FIXME
       curl https://foxglove.dev/download \
         | sed -nEe 's|.*"https://get.foxglove.dev/desktop/latest/foxglove-studio-(.*)-linux-amd64.deb".*|\1|p'
     '';
