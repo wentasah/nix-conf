@@ -13,7 +13,6 @@ in
     ./verilog.nix
   ];
   home.packages = with pkgs; [
-    (hiPrio parallel) # Prefer this over parallel from moreutils
     age
     alejandra
     aspell
@@ -48,11 +47,11 @@ in
     fd
     ffmpeg
     findrepo
-    gdb
     gcalcli
+    gdb
     gh
-    git-cliff
     git-backdate
+    git-cliff
     git-filter-repo
     git-machete
     gitAndTools.delta
@@ -69,6 +68,7 @@ in
     gpg-tui
     graphviz
     help2man
+    (hiPrio parallel) # Prefer this over parallel from moreutils
     htop
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
@@ -82,8 +82,8 @@ in
     libxml2 # for xmllint
     live-server
     ltrace
-    mailutils
     magic-wormhole
+    mailutils
     man-pages-posix
     marksman
     mc
@@ -166,8 +166,8 @@ in
     update-nix-fetchgit
     valgrind
     vcstool
-    websocat
     waypipe
+    websocat
     xmlstarlet
     yamllint
     yq-go
@@ -175,10 +175,11 @@ in
     zsh-completions
     zsh-syntax-highlighting
 
-    rustup
-    # rustc cargo rls clippy
+    cargo-edit
+    cargo-expand
     # rust-analyzer # already in rustup
-    cargo-edit cargo-expand
+    # rustc cargo rls clippy
+    rustup
   ];
 
   home.file = {

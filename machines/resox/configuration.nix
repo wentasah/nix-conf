@@ -111,20 +111,19 @@
   nixpkgs.config = {
     #allowUnfree = true;
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "skypeforlinux"
-      "mfcl2700dwlpr"
+      "aspell-dict-en-science"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "mfcl2700dwlpr"
+      "saleae-logic"
+      "saleae-logic-2"
+      "skypeforlinux"
+      "slack"
       "steam"
       "steam-original"
       "steam-run"
-
-      "saleae-logic"
-      "saleae-logic-2"
-      "slack"
       "unrar"
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
-      "aspell-dict-en-science"
     ];
     permittedInsecurePackages = [
       "zotero-6.0.26"
@@ -138,11 +137,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (import ./emacs.nix { inherit pkgs; })
     amdgpu_top
     btrfs-progs
-    compsize
     chromium
+    compsize
     ddrescue
     file
     firefox-wayland
@@ -150,32 +148,33 @@
     gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
+    gnome.gnome-tweaks
     gnome.nautilus-python
+    gwenview
     htop
     iftop
-    nethogs
+    (import ./emacs.nix { inherit pkgs; })
     keepassxc
-    kitty.terminfo
     kitty.shell_integration
+    kitty.terminfo
     krita
-    gwenview
-    shotwell
     libreoffice-fresh
     mc
-    nix-output-monitor
     ncdu
+    nethogs
+    nix-output-monitor
     nvtopPackages.amd
     obs-studio
     pciutils
+    shotwell
 #    (shotcut.overrideAttrs ({ patches ? [], ...}: {
 #      patches = patches ++ [ ../../nixpkgs/pkgs/applications/video/shotcut/0001-Don-t-use-connection_type-x11-for-VAAPI-HW-accelerat.patch ];
- #   }))
+#   }))
     skypeforlinux
     tree
     vim
     warp
     wget
-    gnome.gnome-tweaks
   ];
 
   programs.firejail = {

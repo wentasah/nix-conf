@@ -71,22 +71,6 @@ in
   #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
   home.packages = with pkgs; [
-
-    # pdfpc                       # using my custom modified version
-    #(pkgs.callPackage ../../pkgs/diffsitter {})
-    #emacs-all-the-icons-fonts
-    #firejail
-    #gnome3.nautilus
-    #gtkterm
-    #jupyter
-    #slack
-    (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    (gnuplot_qt.override { withCaca = true; })
-    (hiPrio gcc) # Prio over clang's c++ etc
-    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    (import ../../pkgs/unfs3 { inherit pkgs; })
-    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
-    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -112,6 +96,7 @@ in
     cppreference
     #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
     #cutter # broken 2024-10-16
+    devhelp
     difftastic
     dnsmasq                     # for documentation
     docker-compose
@@ -119,25 +104,34 @@ in
     drawio
     dunst
     easyeffects
+    #emacs-all-the-icons-fonts
     exif
     fdupes
-    foxglove-studio
+    (feedgnuplot.override { gnuplot = gnuplot_qt; })
     firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
-    (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
+    #firejail
     flex
     flowblade
+    foxglove-studio
     freecad # broken
     ghostscript
     gimp
     glibcInfo                   # Not visible in emacs :-(
-    devhelp
     gnome-tweaks
+    #gnome3.nautilus
+    (gnuplot_qt.override { withCaca = true; })
+    #gtkterm
     gtkterm
     hdf5
+    (hiPrio gcc) # Prio over clang's c++ etc
+    (hiPrio nixfmt-rfc-style)   # override nixfmt
     hotspot
     hugo
+    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
+    (import ../../pkgs/unfs3 { inherit pkgs; })
     inkscape
     julia-wrapper
+    #jupyter
     kdenlive
     kdiff3
     keepassxc
@@ -160,21 +154,24 @@ in
     musescore
     mytexlive
     nasm
-    (hiPrio nixfmt-rfc-style)   # override nixfmt
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
-    novaboot                    # from novaboot overlay
     notify-while-running
     notmuch
     notmuch.emacs
+    novaboot                    # from novaboot overlay
     okteta
     okular
     openssl
     pavucontrol
     pdfpc
+    # pdfpc                       # using my custom modified version
     perl.devdoc
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
+    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
+    #(pkgs.callPackage ../../pkgs/diffsitter {})
+    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     playerctl
     pod-mode
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
@@ -185,6 +182,7 @@ in
     saleae-logic-2
     screenkey
     shotcut
+    #slack
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
@@ -199,14 +197,15 @@ in
     usbrelay
     usbutils
     v4l-utils # for qv4l2
-    vlc
     video-trimmer
     vivado # from nix-xilinx overlay
+    vlc
     warp
     wireshark
-    wol
     wmctrl
+    wol
     wrenv
+    (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     wrwb
     x11docker
     xclip

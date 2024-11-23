@@ -33,17 +33,17 @@ let
 in
 {
   imports = [
+    ../../modules/fonts.nix
+    ../../modules/gdu.nix
+    ../../modules/git-annex.nix
+    ../../modules/go.nix
     ../../modules/home-base.nix
     ../../modules/home-desktop.nix
-    ../../modules/sway.nix
-    ../../modules/gdu.nix
-    ../../modules/go.nix
-    ../../modules/git-annex.nix
     ../../modules/linux-build.nix
-    ../../modules/nautilus-open-any-terminal.nix
-    ../../modules/fonts.nix
-    ../../modules/qtcreator.nix
     ../../modules/msmtp.nix
+    ../../modules/nautilus-open-any-terminal.nix
+    ../../modules/qtcreator.nix
+    ../../modules/sway.nix
     ../../modules/xdp-no-gnome.nix
   ];
 
@@ -72,23 +72,6 @@ in
   #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
   home.packages = with pkgs; [
-
-    # pdfpc                       # using my custom modified version
-    #(pkgs.callPackage ../../pkgs/diffsitter {})
-    #emacs-all-the-icons-fonts
-    #firejail
-    #gnome3.nautilus
-    #gtkterm
-    #jupyter
-    #slack
-    #teams
-    (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    (gnuplot_qt.override { withCaca = true; })
-    (hiPrio gcc) # Prio over clang's c++ etc
-    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    (import ../../pkgs/unfs3 { inherit pkgs; })
-    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
-    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -102,7 +85,6 @@ in
     binutils-unwrapped-all-targets
     bison
     bubblewrap
-    (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
     can-utils
     carla-bin
     cask
@@ -122,10 +104,12 @@ in
     drawio
     dunst
     easyeffects
+    #emacs-all-the-icons-fonts
     exif
     fdupes
+    (feedgnuplot.override { gnuplot = gnuplot_qt; })
     firefox
-    # (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
+    #firejail
     #flameshot # crashes under sway!
     flex
     flowblade
@@ -134,12 +118,20 @@ in
     glibcInfo                   # Not visible in emacs :-(
     gnome.devhelp
     gnome.gnome-tweaks
+    #gnome3.nautilus
+    (gnuplot_qt.override { withCaca = true; })
+    #gtkterm
     gtkterm
     hdf5
+    (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
+    (hiPrio gcc) # Prio over clang's c++ etc
     hotspot
     hugo
+    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
+    (import ../../pkgs/unfs3 { inherit pkgs; })
     inkscape
     julia-wrapper
+    #jupyter
     kdiff3
     keepassxc
     kernelshark
@@ -163,19 +155,23 @@ in
     nix-index
     nodePackages.markdownlint-cli
     nodePackages.typescript-language-server
-    novaboot                    # from novaboot overlay
     notify-while-running
     notmuch
     notmuch.emacs
+    novaboot                    # from novaboot overlay
     okteta
     okular
     openssl
     pavucontrol
     pdfpc
+    # pdfpc                       # using my custom modified version
     perl.devdoc
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
+    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
+    #(pkgs.callPackage ../../pkgs/diffsitter {})
+    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     playerctl
     pod-mode
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
@@ -187,21 +183,24 @@ in
     saleae-logic-2
     screenkey
     shotcut
+    #slack
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
     sterm
     #stm32cubeide
     tcpreplay
+    #teams
     thunderbird
     unrar
     usbrelay
     usbutils
     v4l-utils # for qv4l2
-    vlc
     video-trimmer
+    vlc
     wireshark
     wmctrl
+    # (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     x11docker
     xclip
     xdotool

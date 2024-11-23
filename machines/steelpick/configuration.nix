@@ -25,28 +25,28 @@ in
   nixpkgs = {
     config = {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "skypeforlinux"
-        "slack"
-        "zoom-us"
-        "faac"
-        "zoom" # zoom-us is now just zoom
-        "teamviewer"
+        "Oracle_VM_VirtualBox_Extension_Pack"
+        "aspell-dict-en-science"
+        "brother-udev-rule-type1"
         "brscan4"
         "brscan4-etc-files"
-        "brother-udev-rule-type1"
-        "mfcl2700dwlpr"
-        "Oracle_VM_VirtualBox_Extension_Pack"
-        "kyocera-phase5"
+        "drawio"
+        "faac"
         "konica-minolta-bizhub"
+        "kyocera-phase5"
+        "mfcl2700dwlpr"
         "saleae-logic"
         "saleae-logic-2"
+        "skypeforlinux"
+        "slack"
+        "steam-original"
+        "steam-run"
+        "steam-unwrapped"
+        "teamviewer"
         "unrar"
         "xkcd-font"
-        "steam-run"
-        "steam-original"
-        "steam-unwrapped"
-        "aspell-dict-en-science"
-        "drawio"
+        "zoom" # zoom-us is now just zoom
+        "zoom-us"
       ];
     };
     overlays = [ myOverlay ];
@@ -140,35 +140,35 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     binutils-unwrapped # for strings etc.
+    cntr
     compsize
     dash # TODO: Try is as /bin/sh (environment.binsh)
+    ddrescue
+    dmidecode
+    elinks
     emacs-nox
     file
     gitAndTools.gitFull
+    glibcInfo
     gnumake
     htop
-    lsof
     iftop
-    nethogs
+    lsof
     mc
+    nautilus-python
     ncdu
+    nethogs
+    ntfs3g
+    pciutils
+    psmisc
+    ripgrep
+    stlink
+    tcpdump
     tftp-hpa
     tree
     vim
     wget
-    elinks
-    stlink
-    nautilus-python
-    glibcInfo
-    psmisc
-    ddrescue
     zoom-us
-    cntr
-    ripgrep
-    ntfs3g
-    tcpdump
-    dmidecode
-    pciutils
   ];
 
   environment.homeBinInPath = true;
@@ -498,9 +498,9 @@ in
         "networkmanager"
         "plugdev"               # for rtl-sdr
         "scanner"
-        "ydotool"
         "vboxusers"
         "wheel"
+        "ydotool"
       ];
       uid = 1000;
       group = "wsh";
