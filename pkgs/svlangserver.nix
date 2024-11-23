@@ -1,14 +1,15 @@
 { lib, buildNpmPackage, fetchFromGitHub }:
 
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "svlangserver";
   version = "0.4.1+git";
 
   src = fetchFromGitHub {
     owner = "imc-trading";
-    repo = pname;
-    rev = "7f53c7f3394447bdd06de9566cd7240aa6cf0c8e";
-    hash = "sha256-tVaRlISH6godtWFtUlIYJ55mIkTFN9dCDsGjcByp3Us=";
+    repo = "svlangserver";
+    rev = "59c97307b0a02d3e114ff4546def71b94f55e19c";
+    sha256 = "0awp172hdyb0hry6ana78xxvvqj5kv8f6ch5cx0rb0mg4hl2mqll";
+    # date = "2024-05-21T06:35:05-05:00";
   };
 
   npmDepsHash = "sha256-7j9TE1QkqymOWKjE1tSA8n9AJ2nSyjQoDq/8jptIPwY=";
