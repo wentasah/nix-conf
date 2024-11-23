@@ -165,7 +165,6 @@ in
     openssl
     pavucontrol
     pdfpc
-    # pdfpc                       # using my custom modified version
     perl.devdoc
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin

@@ -118,9 +118,7 @@ in
     glibcInfo                   # Not visible in emacs :-(
     gnome.devhelp
     gnome.gnome-tweaks
-    #gnome3.nautilus
     (gnuplot_qt.override { withCaca = true; })
-    #gtkterm
     gtkterm
     hdf5
     (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
@@ -131,13 +129,11 @@ in
     (import ../../pkgs/unfs3 { inherit pkgs; })
     inkscape
     julia-wrapper
-    #jupyter
     kdiff3
     keepassxc
     kernelshark
     kicad-small
     kitty
-    # korganizer akonadi
     krita
     lazydocker
     libev # to have the man page ready
@@ -164,7 +160,6 @@ in
     openssl
     pavucontrol
     pdfpc
-    # pdfpc                       # using my custom modified version
     perl.devdoc
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
