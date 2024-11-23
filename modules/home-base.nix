@@ -63,6 +63,7 @@ in
     gitui
     glab
     global
+    glow
     gnumake
     gnupg
     gpg-tui
