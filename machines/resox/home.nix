@@ -71,7 +71,13 @@ in
 
   #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let
+    setPrio = lib.setPrio;
+    # Prevent collision of addr2lines between binutils and clang
+    binutils-unwrapped-all-targets = setPrio 0 pkgs.binutils-unwrapped-all-targets;
+    clang = setPrio 1 pkgs.clang;
+    gcc = setPrio 2 pkgs.gcc; # Prio over clang's c++ etc.
+  in [
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -114,6 +120,7 @@ in
     flex
     flowblade
     freecad
+    gcc
     gimp
     glibcInfo                   # Not visible in emacs :-(
     gnome.devhelp
@@ -122,7 +129,6 @@ in
     gtkterm
     hdf5
     (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
-    (hiPrio gcc) # Prio over clang's c++ etc
     hotspot
     hugo
     (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
@@ -225,23 +231,23 @@ in
   ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [
     buildPackages.gcc
-    (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+    (setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
   ])
 #   ++ (with pkgsCross.armhf-embedded; [
 #     buildPackages.gcc
-#     (lib.setPrio 21 buildPackages.bintools-unwrapped) # arm-none-eabihf-objdump etc.
+#     (setPrio 21 buildPackages.bintools-unwrapped) # arm-none-eabihf-objdump etc.
 #   ])
   ++ (with pkgsCross.armv7l-hf-multiplatform; [
     buildPackages.gcc
-    (lib.setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
+    (setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
   ])
   ++ (with pkgsCross.mingwW64; [
     buildPackages.gcc
-    #(lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+    #(setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
   ])
 #   ++ (with pkgsCross.raspberryPi; [
 #     buildPackages.gcc
-#     (lib.setPrio 20 buildPackages.bintools-unwrapped)
+#     (setPrio 20 buildPackages.bintools-unwrapped)
 #   ])
   ;
 
