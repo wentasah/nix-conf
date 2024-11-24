@@ -88,6 +88,7 @@ in
     marksman
     mc
     mcap-cli
+    mdcat
     mdsh
     meson
     ministat
