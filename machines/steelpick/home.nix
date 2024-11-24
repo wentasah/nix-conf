@@ -70,7 +70,13 @@ in
 
   #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let
+    setPrio = lib.setPrio;
+    # Prevent collision of addr2lines between binutils and clang
+    binutils-unwrapped-all-targets = setPrio 0 pkgs.binutils-unwrapped-all-targets;
+    clang = setPrio 1 pkgs.clang;
+    gcc = setPrio 2 pkgs.gcc; # Prio over clang's c++ etc.
+  in [
     adoptopenjdk-icedtea-web
     afew
     arandr
@@ -114,6 +120,7 @@ in
     flowblade
     foxglove-studio
     freecad # broken
+    gcc
     ghostscript
     gimp
     glibcInfo                   # Not visible in emacs :-(
@@ -123,7 +130,6 @@ in
     #gtkterm
     gtkterm
     hdf5
-    (hiPrio gcc) # Prio over clang's c++ etc
     (hiPrio nixfmt-rfc-style)   # override nixfmt
     hotspot
     hugo
