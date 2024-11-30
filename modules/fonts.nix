@@ -12,17 +12,13 @@
     source-serif
     source-serif-pro
     iosevka
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "Iosevka"
-        "JetBrainsMono"
-        "NerdFontsSymbolsOnly"
-        "Noto"
-        "RobotoMono"
-        "SourceCodePro"
-      ];
-    })
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.iosevka
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
+    nerd-fonts.noto
+    nerd-fonts.roboto-mono
+    nerd-fonts.sauce-code-pro
   ];
 
 #   xdg.configFile = {
