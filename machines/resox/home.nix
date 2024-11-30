@@ -101,7 +101,7 @@ in
     clinfo
     cmakeWithGui
     cppreference
-    cura
+    #cura broken
     cutter
     difftastic
     dnsmasq                     # for documentation
@@ -123,8 +123,8 @@ in
     gcc
     gimp
     glibcInfo                   # Not visible in emacs :-(
-    gnome.devhelp
-    gnome.gnome-tweaks
+    devhelp
+    gnome-tweaks
     (gnuplot_qt.override { withCaca = true; })
     gtkterm
     hdf5

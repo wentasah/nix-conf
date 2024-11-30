@@ -113,6 +113,7 @@
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
       "aspell-dict-en-science"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "drawio"
       "mfcl2700dwlpr"
       "saleae-logic"
       "saleae-logic-2"
@@ -121,6 +122,7 @@
       "steam"
       "steam-original"
       "steam-run"
+      "steam-unwrapped"
       "unrar"
       "xkcd-font"
       "zoom-us" "faac" "zoom" # zoom-us is now just zoom
