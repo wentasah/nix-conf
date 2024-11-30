@@ -12,6 +12,7 @@
     source-serif
     source-serif-pro
     iosevka
+  ] ++ (if pkgs ? nerd-fonts then [
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.iosevka
     nerd-fonts.jetbrains-mono
@@ -19,7 +20,20 @@
     nerd-fonts.noto
     nerd-fonts.roboto-mono
     nerd-fonts.sauce-code-pro
-  ];
+  ] else [
+    # Remove after switching to 25.05
+    (nerdfonts.override {
+      fonts = [
+        "DejaVuSansMono"
+        "Iosevka"
+        "JetBrainsMono"
+        "NerdFontsSymbolsOnly"
+        "Noto"
+        "RobotoMono"
+        "SourceCodePro"
+      ];
+    })
+  ]);
 
 #   xdg.configFile = {
 #     "fontconfig/conf.d/99-my-fonts.conf".text = ''
