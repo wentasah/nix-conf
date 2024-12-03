@@ -68,6 +68,9 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':completion:*:*:cdr:*:*' menu selection
 
+autoload -Uz run-help-btrfs run-help-git run-help-ip run-help-openssl \
+         run-help-p4 run-help-sudo run-help-svk run-help-svn
+
 vterm_printf(){
     if [ -n "$TMUX" ]; then
         # Tell tmux to pass the escape sequences through
