@@ -90,6 +90,8 @@
           modules = [
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
+            nixos-hardware.nixosModules.common-pc-laptop
+            nixos-hardware.nixosModules.common-pc-laptop-ssd
             home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
