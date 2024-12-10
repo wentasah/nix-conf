@@ -222,7 +222,6 @@ in
     xorg.xkbcomp
     xorg.xkill
     xorg.xorgdocs
-    xournal
     xournalpp
     xplr
     xpra
