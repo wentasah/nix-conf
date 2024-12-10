@@ -24,8 +24,11 @@ stdenv.mkDerivation rec {
     runHook preInstall
 
     dpkg -x $src $out
+    chmod 755 $out
     mv $out/usr/* $out/
     rmdir $out/usr
+    mkdir $out/bin
+    ln -s "$out/opt/Foxglove Studio/foxglove-studio" "$out/bin"
 
     runHook postInstall
   '';
