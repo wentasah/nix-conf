@@ -31,22 +31,16 @@ in
         "brscan4"
         "brscan4-etc-files"
         "drawio"
-        "faac"
         "konica-minolta-bizhub"
         "kyocera-phase5"
         "mfcl2700dwlpr"
-        "saleae-logic"
         "saleae-logic-2"
         "skypeforlinux"
         "slack"
-        "steam-original"
-        "steam-run"
         "steam-unwrapped"
-        "teamviewer"
         "unrar"
         "xkcd-font"
         "zoom" # zoom-us is now just zoom
-        "zoom-us"
       ];
     };
     overlays = [ myOverlay ];
