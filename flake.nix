@@ -167,6 +167,11 @@
               programs.zsh.envExtra = ''
                 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
                   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+                else
+                  # Load the nix environment when nix is installed via system-manager
+                  local f
+                  f="$(dirname $(realpath $(which nix)))/../etc/profile.d/nix-daemon.sh"
+                  [ -e "$f" ] && source "$f"
                 fi
               '';
               home.packages = with pkgs; [
