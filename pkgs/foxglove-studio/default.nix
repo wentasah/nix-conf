@@ -42,9 +42,9 @@ stdenv.mkDerivation rec {
 
   passthru.updateScript = genericUpdater {
     versionLister = writeShellScript "foxglove-versionLister" ''
-      # FIXME
-      curl https://foxglove.dev/download \
-        | sed -nEe 's|.*"https://get.foxglove.dev/desktop/latest/foxglove-studio-(.*)-linux-amd64.deb".*|\1|p'
+      curl https://docs.foxglove.dev/changelog/ \
+      | xmllint --html --xpath 'string(//html/head/script[@type="application/ld+json"])' - 2>/dev/null \
+      | jq -r '[.blogPost|.[].url|match("https://docs.foxglove.dev/changelog/foxglove/v(.*)")|.captures[0].string]|first'
     '';
   };
 }
