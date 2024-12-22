@@ -11,12 +11,13 @@
 
 import argparse
 import os
-import subprocess
-from subprocess import check_output, STDOUT, CalledProcessError
-import sys
 import shutil
-from shlex import quote
+import socket
+import subprocess
+import sys
 from collections.abc import Callable
+from shlex import quote
+from subprocess import STDOUT, CalledProcessError, check_output
 from typing import IO, Any, List
 
 verbose = True
@@ -372,6 +373,8 @@ def get_nix_args(args):
     nix_args = args.nix_args
     if args.local:
         nix_args = ['--builders', '', '-j4'] + nix_args
+    elif socket.gethostname() == 'steelpick':
+        nix_args = ['--builders', 'ssh://ritchie'] + nix_args
     return nix_args
 
 
