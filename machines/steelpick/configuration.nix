@@ -25,7 +25,8 @@ in
   nixpkgs = {
     config = {
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "Oracle_VM_VirtualBox_Extension_Pack"
+        "Oracle_VM_VirtualBox_Extension_Pack" # remove after 25.05
+        "Oracle_VirtualBox_Extension_Pack"
         "aspell-dict-en-science"
         "brother-udev-rule-type1"
         "brscan4"
