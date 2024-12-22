@@ -3,7 +3,7 @@
 # You can use this without installing by: nix-shell -E '(import ./wrwb.nix {}).env
 
 {pkgs ? import <nixpkgs> {}}:
-with pkgs; (buildFHSUserEnvBubblewrap {
+with pkgs; (buildFHSEnvBubblewrap {
   name = "wrwb";
   targetPkgs = pkgs: (with pkgs; [
     bash # lot of scripts has /bin/bash shebang
