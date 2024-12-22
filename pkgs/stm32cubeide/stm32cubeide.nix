@@ -1,4 +1,4 @@
-{ stdenv, lib, buildFHSUserEnv, autoPatchelfHook, unzip, dpkg, gtk3,
+{ stdenv, lib, buildFHSEnv, autoPatchelfHook, unzip, dpkg, gtk3,
   cairo, glib, webkitgtk, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python3,
   requireFile
 }:
@@ -72,7 +72,7 @@ let
 in
 # We use FHS environment because we want to run the compilers
 # downloaded from the IDE and it is also needed by bundled SWT libraries.
-buildFHSUserEnv {
+buildFHSEnv {
   name = "stm32cubeide";
 
   targetPkgs = pkgs: with pkgs; [

@@ -3,7 +3,7 @@
 # You can use this without installing by: nix-shell -E '(import ./wrenv.nix {}).env
 
 {pkgs ? import <nixpkgs> {}}:
-with pkgs; (buildFHSUserEnvBubblewrap {
+with pkgs; (buildFHSEnvBubblewrap {
   name = "wrenv.sh";
   runScript = "/opt/WindRiver/wrenv.sh";
   targetPkgs = pkgs: (with pkgs; [
