@@ -103,6 +103,7 @@ in
     cppreference
     #cura broken
     cutter
+    devhelp
     difftastic
     dnsmasq                     # for documentation
     docker-compose
@@ -123,7 +124,6 @@ in
     gcc
     gimp
     glibcInfo                   # Not visible in emacs :-(
-    devhelp
     gnome-tweaks
     (gnuplot_qt.override { withCaca = true; })
     gtkterm
