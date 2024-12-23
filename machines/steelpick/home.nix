@@ -2,10 +2,6 @@
 
 let
   lib = pkgs.lib;
-  firejailedBinaries = {        # TODO: create wrapper automatically
-#     slack = "${pkgs.slack}/bin/slack";
-#     skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
-  };
   texlive = pkgs.texlive.override { python3 = (pkgs.python3.withPackages (ps: [ ps.pygments ])); };
   mytexlive = texlive.combine {
     inherit (pkgs.texlive) scheme-full;
@@ -237,7 +233,6 @@ in
     # Unfree fonts
     xkcd-font
   ]
-  ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
   ++ (with pkgsCross.aarch64-multiplatform; [
     buildPackages.gcc
     (lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.

@@ -132,7 +132,6 @@ in
     hotspot
     hugo
     (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    (import ../../pkgs/unfs3 { inherit pkgs; })
     inkscape
     julia-wrapper
     kdiff3
@@ -193,6 +192,7 @@ in
     tcpreplay
     #teams
     thunderbird
+    unfs3
     unrar
     usbrelay
     usbutils
