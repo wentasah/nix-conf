@@ -193,7 +193,6 @@ in
     tcpreplay
     texpresso
     thunderbird
-    unfs3
     unrar
     usbrelay
     usbutils
