@@ -51,7 +51,7 @@
 
       common-overlays = platform: [
         emacs-overlay.overlay
-        novaboot.overlays.${platform}
+        novaboot.overlays.default
         shdw.overlays.default
         sterm.overlay
         inputs.findrepo.overlays.default

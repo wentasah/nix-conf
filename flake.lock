@@ -384,11 +384,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1664225263,
-        "narHash": "sha256-qsXDBxuHnBNkC9UQw4M3HZ1zNMTzsQC98CwXm50g2kI=",
+        "lastModified": 1735482183,
+        "narHash": "sha256-fjqSQu78uoaWF40uH3+4LJayZuQ68tGPdXBkUVz1J1g=",
         "owner": "wentasah",
         "repo": "novaboot",
-        "rev": "f069d18ce46b91bcc8fffb3cdacd170927226f6f",
+        "rev": "bcc4df11b4a5ab72315d21f34707a4aa2b9c1ead",
         "type": "github"
       },
       "original": {
