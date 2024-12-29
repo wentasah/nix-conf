@@ -431,11 +431,11 @@
         "rosdistro": "rosdistro"
       },
       "locked": {
-        "lastModified": 1735402125,
-        "narHash": "sha256-hfE3Rj6fkVBFdN/ANwCiFtlAAI3fkjsojo5c4gGlVlQ=",
+        "lastModified": 1735483738,
+        "narHash": "sha256-naTBj5coznlPaQcgLXmiYXhKggYeDnSkuZgQ6edplmM=",
         "owner": "wentasah",
         "repo": "ros2nix",
-        "rev": "99af052d22307360665962a87847273366024b4e",
+        "rev": "239cee8bcbdba40dcaa1b5ad1eb56962de72b90a",
         "type": "github"
       },
       "original": {
