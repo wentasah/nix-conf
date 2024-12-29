@@ -342,7 +342,7 @@ def add_pr(pr: int, branch: str):
     else:
         # Merge PR's commits
         system(f'git branch {branch} FETCH_HEAD')
-        system(f'git-machete add {branch}')
+        system(f'git-machete add {branch} --onto nixos-unstable')
         merge_nixpkgs_topics_into_master()
     system(f'git-machete anno --branch="{branch}" "PR #{pr} rebase=no push=no"')
 
