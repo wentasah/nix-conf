@@ -144,7 +144,6 @@ in
     emacs-nox
     file
     gitAndTools.gitFull
-    glibcInfo
     gnumake
     htop
     iftop
