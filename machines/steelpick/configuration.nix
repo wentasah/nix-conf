@@ -142,6 +142,7 @@ in
     dmidecode
     elinks
     emacs-nox
+    ethtool
     file
     gitAndTools.gitFull
     gnumake
