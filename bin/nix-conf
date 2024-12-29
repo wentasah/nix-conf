@@ -19,6 +19,7 @@ from collections.abc import Callable
 from shlex import quote
 from subprocess import STDOUT, CalledProcessError, check_output
 from typing import IO, Any, List
+from os.path import expanduser
 
 verbose = True
 
@@ -79,7 +80,7 @@ def exit_if_dirty():
 
 def cd(path):
     print_verbose(f"$ cd {path}")
-    os.chdir(os.path.expanduser(path))
+    os.chdir(expanduser(path))
 
 
 def update_nix_conf():
@@ -174,7 +175,7 @@ def update_flake_input(flake_input: str):
 
 class FailedBuildCounter:
     def __init__(self, host):
-        self.filename = os.path.expanduser(f'~/nix/out/{host}/flake.failed.cnt')
+        self.filename = expanduser(f'~/nix/out/{host}/flake.failed.cnt')
 
     def reset(self):
         # Reset failed build counter
@@ -352,7 +353,7 @@ def ci(host, nix_args):
         if FailedBuildCounter(host).get() == 0:
             system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
     except CalledProcessError:
-        with open(os.path.expanduser(f"~/nix/out/{host}/flake.error"), 'a') as f:
+        with open(expanduser(f"~/nix/out/{host}/flake.error"), 'a') as f:
             print("nix flake check failed!!!", file=f)
             sys.exit(1)
 
@@ -362,7 +363,7 @@ def copy(host):
     system(f"rsync ritchie:nix/out/{host}/flake.lock ~/nix/conf")
     O = check_output(f'ssh ritchie readlink nix/out/{host}/flake', shell=True).decode().strip()
     system(f'nix copy -j16 --from ssh://ritchie "{O}"')
-    dest = os.path.expanduser(f'~/nix/out/{host}/flake')
+    dest = expanduser(f'~/nix/out/{host}/flake')
     try: os.remove(dest)
     except FileNotFoundError: pass
     os.symlink(O, dest)
