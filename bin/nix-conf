@@ -256,8 +256,17 @@ def build(host, nix_args):
         print("No log from interactive session", file=open(f'out/{host}/flake.log', 'w'))
         nix = 'nom'
 
-    cmd = [nix, "build", *nix_args, "--out-link", f"out/{host}/flake", *override_input,
-           f"./conf#nixosConfigurations.{host}.config.system.build.toplevel"]
+    cmd = [
+        nix,
+        "build",
+        *nix_args,
+        "--out-link",
+        expanduser(f"~/nix/out/{host}/flake"),
+        *override_input,
+        expanduser(
+            f"~/nix/conf#nixosConfigurations.{host}.config.system.build.toplevel"
+        ),
+    ]
     status = run(cmd, stdout=log, stderr=STDOUT).returncode
 
     if status == 0:
