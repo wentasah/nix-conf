@@ -88,7 +88,7 @@ in
     blender
     bubblewrap
     can-utils
-    carla
+    #carla # broken 2025-01-03
     cask
     clang
     clang-tools
@@ -181,7 +181,7 @@ in
     radare2
     saleae-logic-2
     screenkey
-    shotcut
+    #shotcut # broken 2025-01-03
     #slack
     smplayer mpv mplayer
     solvespace
