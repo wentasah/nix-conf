@@ -97,7 +97,7 @@ in
     cmakeWithGui
     cppreference
     #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
-    #cutter # broken 2024-10-16
+    cutter
     devhelp
     difftastic
     dnsmasq                     # for documentation
@@ -123,7 +123,6 @@ in
     gnome-tweaks
     #gnome3.nautilus
     (gnuplot_qt.override { withCaca = true; })
-    #gtkterm
     gtkterm
     hdf5
     (hiPrio nixfmt-rfc-style)   # override nixfmt
