@@ -118,6 +118,7 @@ in
     freecad # broken
     gcc
     ghostscript
+    ghostty
     gimp
     glibcInfo                   # Not visible in emacs :-(
     gnome-tweaks
