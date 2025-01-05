@@ -18,7 +18,7 @@
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     ros2nix = { url = "github:wentasah/ros2nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
-    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
+    sops-nix = { url = "github:Mic92/sops-nix"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
