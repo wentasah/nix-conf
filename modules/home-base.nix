@@ -69,6 +69,7 @@ in
     graphviz
     help2man
     (hiPrio parallel) # Prefer this over parallel from moreutils
+    home-manager
     htop
     hunspellDicts.cs_CZ
     hunspellDicts.en_US
