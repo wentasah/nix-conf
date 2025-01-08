@@ -12,12 +12,14 @@
       Persistent = true;
       OnCalendar = "weekly";
     };
+    Install.WantedBy = [ "default.target" ];
   };
 
   # TODO: This this work?
   systemd.user.tmpfiles.rules = [ "d %h/srv/%H/gdu 0700 - - 6w" ];
 
   systemd.user.services.gdu-save = {
+    Unit.ConditionACPower = true;
     Service = {
       ExecStart = toString (pkgs.writeShellScript "gdu-home" ''
         set -euo pipefail
