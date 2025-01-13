@@ -221,6 +221,8 @@ in
     };
   };
 
+  programs.sysdig.enable = true;
+
   programs.firejail = {
     enable = true;
     wrappedBinaries = {
