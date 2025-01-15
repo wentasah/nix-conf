@@ -169,9 +169,6 @@
     obs-studio
     pciutils
     shotwell
-#    (shotcut.overrideAttrs ({ patches ? [], ...}: {
-#      patches = patches ++ [ ../../nixpkgs/pkgs/applications/video/shotcut/0001-Don-t-use-connection_type-x11-for-VAAPI-HW-accelerat.patch ];
-#   }))
     skypeforlinux
     tree
     vim
