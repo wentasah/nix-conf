@@ -100,6 +100,7 @@ in
     cutter
     devhelp
     difftastic
+    distrobox
     dnsmasq                     # for documentation
     docker-compose
     dpkg
