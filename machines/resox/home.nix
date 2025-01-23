@@ -80,10 +80,8 @@ in
   in [
     adoptopenjdk-icedtea-web
     afew
-    arandr
     ardour jack2 x42-plugins gxplugins-lv2 qjackctl
     atool
-    audacity
     auto-multiple-choice
     automake
     avidemux
@@ -108,38 +106,24 @@ in
     dnsmasq                     # for documentation
     docker-compose
     dpkg
-    drawio
     dunst
     easyeffects
     #emacs-all-the-icons-fonts
     exif
     fdupes
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    firefox
     #firejail
     #flameshot # crashes under sway!
     flex
     flowblade
-    freecad
     gcc
-    gimp
     glibcInfo                   # Not visible in emacs :-(
     gnome-tweaks
-    (gnuplot_qt.override { withCaca = true; })
-    gtkterm
     hdf5
     (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
-    hotspot
     hugo
     (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    inkscape
     julia-wrapper
-    kdiff3
-    keepassxc
-    kernelshark
-    kicad-small
-    kitty
-    krita
     lazydocker
     libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
@@ -149,8 +133,6 @@ in
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     man-pages
-    meld
-    musescore
     mytexlive
     nasm
     nix-index
@@ -160,11 +142,7 @@ in
     notmuch
     notmuch.emacs
     novaboot                    # from novaboot overlay
-    okteta
-    okular
     openssl
-    pavucontrol
-    pdfpc
     perl.devdoc
     perlPackages.AppClusterSSH
     perlPackages.Expect.devdoc         # manpage for novaboot development
@@ -181,38 +159,25 @@ in
     qemu
     radare2
     saleae-logic-2
-    screenkey
-    shotcut
     #slack
-    smplayer mpv mplayer
-    solvespace
-    sqlitebrowser
     sterm
     #stm32cubeide
     tcpreplay
     #teams
-    thunderbird
     unfs3
     unrar
     usbrelay
     usbutils
     v4l-utils # for qv4l2
-    video-trimmer
-    vlc
     wireshark
-    wmctrl
     # (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     x11docker
-    xclip
-    xdotool
-    xdragon
     xf86_input_wacom
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
     xorg.xkill
     xorg.xorgdocs
-    xournalpp
     xplr
     xpra
     xrectsel

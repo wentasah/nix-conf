@@ -56,6 +56,7 @@ in
     networkmanager_dmenu
     networkmanagerapplet # need for tray icons
     powerline-fonts
+    pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     rofi
     swappy grim slurp
     swaylock

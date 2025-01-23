@@ -25,7 +25,6 @@ let
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
-  blender = (pkgs.blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; };
 in
 {
   imports = [
@@ -75,20 +74,16 @@ in
   in [
     adoptopenjdk-icedtea-web
     afew
-    arandr
     #ardour jack2 x42-plugins gxplugins-lv2 qjackctl # broken 2025-01-23
     atool
-    audacity
     auto-multiple-choice
     automake
     #avidemux # broken 2025-01-23
     bear
     binutils-unwrapped-all-targets
     bison
-    blender
     bubblewrap
     can-utils
-    carla
     cask
     clang
     clang-tools
@@ -104,56 +99,37 @@ in
     dnsmasq                     # for documentation
     docker-compose
     dpkg
-    drawio
     dunst
     easyeffects
     #emacs-all-the-icons-fonts
     exif
     fdupes
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     #firejail
     flex
     flowblade
     foxglove-studio
-    freecad
     gcc
     ghostscript
-    ghostty
-    gimp
     glibcInfo                   # Not visible in emacs :-(
     gnome-tweaks
     #gnome3.nautilus
-    (gnuplot_qt.override { withCaca = true; })
-    gtkterm
     hdf5
     (hiPrio nixfmt-rfc-style)   # override nixfmt
-    hotspot
     hugo
     (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    inkscape
-    julia-wrapper
+   julia-wrapper
     #jupyter
-    kdenlive
-    kdiff3
-    keepassxc
-    kernelshark
-    kicad-small
-    kitty
     # korganizer akonadi
-    krita
     lazydocker
     lexicon
     libev # to have the man page ready
     libnotify # for notify-send (for mailsync)
-    libreoffice-fresh libreoffice-fresh.unwrapped.jdk
     libsecret
     licenseutils
     linuxPackages.perf
     lsof # TODO: git-annex assistant should depend on this
     man-pages
-    meld
-    musescore
     mytexlive
     nasm
     nodePackages.markdownlint-cli
@@ -162,11 +138,7 @@ in
     notmuch
     notmuch.emacs
     novaboot                    # from novaboot overlay
-    okteta
-    okular
     openssl
-    pavucontrol
-    pdfpc
     perl.devdoc
     perlPackages.Expect.devdoc         # manpage for novaboot development
     pidgin
@@ -175,50 +147,36 @@ in
     (pkgs.callPackage ../../pkgs/enumerate-markdown {})
     playerctl
     pod-mode
-    pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
     python3Packages.jupyter_core
     python3Packages.notebook
     qemu
     radare2
     saleae-logic-2
-    screenkey
-    shotcut
     #slack
-    smplayer mpv mplayer
-    solvespace
-    sqlitebrowser
     ssh-to-age
     steam-run
     sterm
     stm32cubeide
     tcpreplay
     texpresso
-    thunderbird
     unrar
     usbrelay
     usbutils
     v4l-utils # for qv4l2
-    video-trimmer
     vivado # from nix-xilinx overlay
-    vlc
     warp
     wireshark
-    wmctrl
     wol
     wrenv
     (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     wrwb
     x11docker
-    xclip
-    xdotool
-    xdragon
     xf86_input_wacom
     xorg.xev
     xorg.xhost # for quick way to run GUI apps in chroots/containers
     xorg.xkbcomp
     xorg.xkill
     xorg.xorgdocs
-    xournalpp
     xplr
     xpra
     xrectsel
