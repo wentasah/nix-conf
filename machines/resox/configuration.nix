@@ -351,7 +351,7 @@
   users.users.wsh = {
     description = "Michal";
     isNormalUser = true;
-    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" "flamenco" "ydotool" ];
+    extraGroups = [ "adbusers" "dialout" "docker" "networkmanager" "scanner" "wheel" "flamenco" "ydotool" "pipewire" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
