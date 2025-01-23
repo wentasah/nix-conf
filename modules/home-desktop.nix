@@ -6,5 +6,6 @@
   home.packages = with pkgs; [
     kooha
     #handbrake # broken
+    qpwgraph
   ];
 }
