@@ -56,7 +56,9 @@ in
   boot.kernelPatches = [
     #{ name = "can-isotp-poll"; patch = ../../pkgs/linux/0001-can-isotp-fix-poll-to-not-report-false-positive-EPOL.patch; }
   ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    #v4l2loopback # broken 2025-01-22
+  ];
 
   boot.extraModprobeConfig = ''
     options v4l2loopback devices=1 card_label="OBS Cam" exclusive_caps=1
