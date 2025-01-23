@@ -4,8 +4,8 @@
   imports = [
   ];
   home.packages = with pkgs; [
+    handbrake
     kooha
-    #handbrake # broken
     qpwgraph
   ];
 }
