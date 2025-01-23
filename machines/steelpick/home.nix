@@ -76,12 +76,12 @@ in
     adoptopenjdk-icedtea-web
     afew
     arandr
-    ardour jack2 x42-plugins gxplugins-lv2 qjackctl
+    #ardour jack2 x42-plugins gxplugins-lv2 qjackctl # broken 2025-01-23
     atool
     audacity
     auto-multiple-choice
     automake
-    avidemux
+    #avidemux # broken 2025-01-23
     bear
     binutils-unwrapped-all-targets
     bison
