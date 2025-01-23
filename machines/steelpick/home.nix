@@ -88,7 +88,7 @@ in
     blender
     bubblewrap
     can-utils
-    #carla # broken 2025-01-03
+    carla
     cask
     clang
     clang-tools
@@ -116,7 +116,7 @@ in
     flex
     flowblade
     foxglove-studio
-    freecad # broken
+    freecad
     gcc
     ghostscript
     ghostty
@@ -182,7 +182,7 @@ in
     radare2
     saleae-logic-2
     screenkey
-    #shotcut # broken 2025-01-03
+    shotcut
     #slack
     smplayer mpv mplayer
     solvespace
@@ -224,7 +224,7 @@ in
     xrectsel
     zotero
     zulip
-    #zulip-term #broken
+    zulip-term
 
     # Emacs versions from emacs-overlay
     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
