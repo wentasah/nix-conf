@@ -52,12 +52,15 @@ in
     in [
     brightnessctl
     cantarell-fonts
-    swappy grim slurp
     font-awesome_4
-    powerline-fonts
+    networkmanager_dmenu
     networkmanagerapplet # need for tray icons
+    powerline-fonts
+    rofi
+    swappy grim slurp
     swaylock
     swayr
+    way-displays
     wdisplays
     wev
     wl-clipboard
@@ -65,10 +68,7 @@ in
     wl-screenrec
     wlr-randr
     wofi
-    way-displays
-    rofi
     xdg-desktop-portal-wlr
-    networkmanager_dmenu
   ];
 
   services.clipman.enable = true;
