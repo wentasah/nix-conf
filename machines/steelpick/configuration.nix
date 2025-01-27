@@ -390,11 +390,7 @@ in
   hardware.rtl-sdr.enable = true;
   hardware.saleae-logic.enable = true;
 
-  services.locate = {
-    enable = true;
-    package = pkgs.mlocate;
-    localuser = null;
-  };
+  services.locate.enable = true;
 
 #   services.nullmailer = {
 #     enable = true;
