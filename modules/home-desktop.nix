@@ -3,7 +3,18 @@
 {
   imports = [
   ];
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let
+    xdot' = xdot.overrideAttrs (old: {
+      version = "1.4wsh";
+      src = fetchFromGitHub {
+        owner = "jrfonseca";
+        repo = "xdot.py";
+        hash = "sha256-fWPltgpFHc43kB5ldYkPVFzikPWGu/yDyqwRRMxr93Y=";
+        rev = "2a68b2f303f477d493787bb4393c3a382c236405";
+        # date = "2024-11-24T19:37:17Z";
+      };
+    });
+  in [
     arandr
     audacity
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; })
@@ -44,6 +55,7 @@
     vlc
     wmctrl
     xclip
+    xdot'
     xdotool
     xdragon
     xournalpp
