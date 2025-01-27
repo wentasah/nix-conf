@@ -9,7 +9,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
-      ../../modules/xkb-wsh.nix
       ../../modules/fastdds.nix
       ../../modules/flamenco.nix
     ];
