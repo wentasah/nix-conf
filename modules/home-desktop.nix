@@ -47,5 +47,6 @@
     xdotool
     xdragon
     xournalpp
+    zynaddsubfx
   ];
 }
