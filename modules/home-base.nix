@@ -7,6 +7,7 @@ let
     matplotlib tkinter
     flake8 flake8-bugbear isort
   ]);
+  lazydocs = pkgs.callPackage ../pkgs/lazydocs.nix { };
 in
 {
   imports = [
@@ -79,6 +80,7 @@ in
     jo
     jq
     just
+    lazydocs
     lemminx
     libxml2 # for xmllint
     live-server
