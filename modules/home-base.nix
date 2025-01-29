@@ -144,6 +144,7 @@ in
     #rnix-lsp # needs insecure nix-2.15.3
     ros2nix
     rsync
+    ruff
     sd
     sequoia
     shdw
