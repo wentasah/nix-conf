@@ -143,6 +143,12 @@
             ./machines/turbot/hardware-configuration.nix
           ];
         };
+        rpi = nixpkgs-stable.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./machines/rpi/configuration.nix
+          ];
+        };
       };
 
       homeConfigurations = {
