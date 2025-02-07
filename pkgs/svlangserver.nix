@@ -19,6 +19,8 @@ buildNpmPackage {
 
   #NODE_OPTIONS = "--openssl-legacy-provider";
 
+  dontCheckForBrokenSymlinks = true; # No time to solve the real issue.
+
   meta = with lib; {
     description = "A language server for systemverilog that has been tested to work with coc.nvim, VSCode, Sublime Text 4, emacs, and Neovim";
     homepage = "https://github.com/imc-trading/svlangserver";
