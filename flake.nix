@@ -65,6 +65,8 @@
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           veridian = final.callPackage ./pkgs/veridian { };
+          svlangserver = final.callPackage ./pkgs/svlangserver.nix { };
+
           # Add python packages for using in Blender Addons (prepared for 23.11)
           pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
             (python-final: python-prev: {
@@ -146,7 +148,9 @@
         rpi = nixpkgs-stable.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
+            nixos-hardware.nixosModules.raspberry-pi-4
             ./machines/rpi/configuration.nix
+            { nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; }; }
           ];
         };
       };
