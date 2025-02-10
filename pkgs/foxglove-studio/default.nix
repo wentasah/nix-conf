@@ -5,6 +5,7 @@
 , makeWrapper
 , electron
 , genericUpdater, writeShellScript
+, curl, jq, libxml2
 }:
 stdenv.mkDerivation rec {
   pname = "foxglove-studio";
@@ -41,10 +42,10 @@ stdenv.mkDerivation rec {
   '';
 
   passthru.updateScript = genericUpdater {
-    versionLister = writeShellScript "foxglove-versionLister" ''
-      curl https://docs.foxglove.dev/changelog \
-      | xmllint --html --xpath 'string(//html/head/script[@type="application/ld+json"])' - 2>/dev/null \
-      | jq -r '[.blogPost|.[].url|match("https://docs.foxglove.dev/changelog/foxglove/v(.*)")|.captures[0].string]|first'
+    versionLister = writeShellScript "foxglove-version-lister" ''
+      ${curl}/bin/curl https://docs.foxglove.dev/changelog \
+      | ${libxml2}/bin/xmllint --html --xpath 'string(//html/head/script[@type="application/ld+json"])' - 2>/dev/null \
+      | ${jq}/bin/jq -r '[.blogPost|.[].url|match("https://docs.foxglove.dev/changelog/foxglove/v(.*)")|.captures[0].string]|first'
     '';
   };
 }
