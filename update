@@ -18,6 +18,7 @@ def main(args):
     nix_args = [update_nix]
     nix_args += ['--arg', 'include-overlays', f'(import {path} {{ }}).outputs.legacyPackages.x86_64-linux.overlays']
     nix_args += ['--argstr', 'path', args.attr_path]
+    nix_args += ['--argstr', 'skip-prompt', 'true']
     if args.commit:
         nix_args += ['--argstr', 'commit', 'true']
 
