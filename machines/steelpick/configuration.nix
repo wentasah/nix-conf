@@ -314,6 +314,7 @@ in
   programs.ydotool.enable = true;
 
   services.tailscale.enable = true;
+  services.tailscale.extraUpFlags = "--accept-routes"; # Enable subnet routes automatically
   systemd.services.tailscaled.wantedBy = lib.mkForce []; # Don't start automatically
 
   #services.teamviewer.enable = true;
