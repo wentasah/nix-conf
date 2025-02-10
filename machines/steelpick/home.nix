@@ -31,6 +31,7 @@ in
     ../../modules/home-base.nix
     ../../modules/home-desktop.nix
     ../../modules/sway.nix
+    ../../modules/hyprland.nix
     ../../modules/gdu.nix
     ../../modules/go.nix
     ../../modules/git-annex.nix

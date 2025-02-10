@@ -248,6 +248,11 @@ in
       gtk = true;
     };
   };
+  programs.hyprland = {
+    enable = true;
+    #withUWSM = true;
+  };
+
   xdg.portal = {
     enable = true; # Screen sharing under sway
     # gtk portal needed to make gtk apps happy
