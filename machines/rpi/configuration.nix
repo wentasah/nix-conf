@@ -18,19 +18,33 @@
     };
   };
 
-  nix.settings.trusted-users = [ "root" "@wheel" ];
+  nix = {
+    settings.experimental-features = "nix-command flakes";
+    settings.trusted-users = [ "root" "@wheel" ];
+
+    # explicitly set nix-path, NIX_PATH to nixpkgs from system registry
+    settings.nix-path = [ "nixpkgs=flake:nixpkgs" ];
+    nixPath = config.nix.settings.nix-path;
+  };
+
 
   environment.systemPackages = with pkgs; [
+    btop
+    htop
     kitty.terminfo
     mc
     vim
+
+    cage
+    foot
+    kodi-wayland
   ];
 
   systemd.services.librespot = {
     enable = true;
-    after = [ "network.target" ];
     description = "librespot Spotify client";
     wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.librespot}/bin/librespot --name 'Věž Sony MD'";
@@ -76,21 +90,18 @@
 
   #services.spotifyd.enable = true;
 
-  services.xserver.enable = true;
-  services.xserver.desktopManager.kodi.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "kodi";
-  services.xserver.displayManager.lightdm.greeter.enable = false;
+#   services.xserver.enable = true;
+#   services.xserver.desktopManager.kodi.enable = true;
+#   services.xserver.displayManager.autoLogin.enable = true;
+#   services.xserver.displayManager.autoLogin.user = "kodi";
+#   services.xserver.displayManager.lightdm.greeter.enable = false;
 
   # Define a user account
   users.extraUsers.kodi.isNormalUser = true;
 
-  services.cage.enable = true;
+  #services.cage.enable = true;
   services.cage.program = "${pkgs.kodi-wayland}/bin/kodi-standalone";
   services.cage.user = "kodi";
-
-
-  systemd.services.cage.wantedBy = [ "multi-user.target" ];
 
   users = {
     users.wsh = {
