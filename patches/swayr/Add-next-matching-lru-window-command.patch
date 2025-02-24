@@ -1,4 +1,4 @@
-From e403ea6457856d205d7c6a717921a05e560ab267 Mon Sep 17 00:00:00 2001
+From 8027ef7fee6cc3c62844e8e5644fe4ac0a853969 Mon Sep 17 00:00:00 2001
 From: Michal Sojka <michal.sojka@cvut.cz>
 Date: Sun, 8 Sep 2024 21:01:07 +0200
 Subject: [PATCH] Add next-matching-lru-window command
@@ -6,11 +6,11 @@ Subject: [PATCH] Add next-matching-lru-window command
 See the README and docstrings for description of the command.
 ---
  README.md         |  4 ++++
- swayr/src/cmds.rs | 60 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 64 insertions(+)
+ swayr/src/cmds.rs | 61 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
 
 diff --git a/README.md b/README.md
-index d38bcb4..3e63d1b 100644
+index d38ed5c..a7de498 100644
 --- a/README.md
 +++ b/README.md
 @@ -184,6 +184,10 @@ Those commands cycle through (a subset of windows) in most-recently-used order.
@@ -25,7 +25,7 @@ index d38bcb4..3e63d1b 100644
  #### Layout modification commands
  
 diff --git a/swayr/src/cmds.rs b/swayr/src/cmds.rs
-index 18fa450..74ad8c9 100644
+index ff15bcd..33eda4a 100644
 --- a/swayr/src/cmds.rs
 +++ b/swayr/src/cmds.rs
 @@ -241,6 +241,20 @@ pub enum SwayrCommand {
@@ -49,7 +49,7 @@ index 18fa450..74ad8c9 100644
      /// Move the currently focused window or container to the selected
      /// workspace.
      MoveFocusedToWorkspace,
-@@ -616,6 +630,9 @@ fn exec_swayr_cmd_1(
+@@ -623,6 +637,9 @@ fn exec_swayr_cmd_1(
                  fdata,
              )
          }
@@ -59,7 +59,7 @@ index 18fa450..74ad8c9 100644
          SwayrCommand::TileWorkspace { floating } => {
              tile_current_workspace(floating, false)
          }
-@@ -1625,6 +1642,49 @@ fn focus_matching_window_in_direction(
+@@ -1675,6 +1692,50 @@ fn focus_matching_window_in_direction(
      focus_window_in_direction_1(&wins, dir, fdata, pred)
  }
  
@@ -72,7 +72,8 @@ index 18fa450..74ad8c9 100644
 +    let wins = tree.get_windows(fdata);
 +
 +    let crits = criteria::parse_criteria(criteria)?;
-+    let pred = criteria::criterion_to_predicate(&crits, &wins);
++    let focused = wins.iter().find(|x| x.node.focused);
++    let pred = criteria::criterion_to_predicate(&crits, focused);
 +
 +    let mut wins: Vec<&t::DisplayNode> =
 +        wins.iter().filter(|w| pred(w)).collect();
@@ -110,5 +111,5 @@ index 18fa450..74ad8c9 100644
      dir: Direction,
      consider_wins: &ConsiderWindows,
 -- 
-2.46.0
+2.47.2
 
