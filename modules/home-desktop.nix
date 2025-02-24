@@ -29,7 +29,8 @@
     handbrake
     hotspot
     inkscape
-    kdenlive
+    kdePackages.kdenlive
+    kdePackages.okular
     kdiff3
     keepassxc
     kernelshark
@@ -41,7 +42,6 @@
     meld
     musescore
     okteta
-    okular
     pavucontrol
     pdfpc
     qpwgraph
