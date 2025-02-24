@@ -46,11 +46,11 @@
     },
     "findrepo": {
       "locked": {
-        "lastModified": 1723987005,
-        "narHash": "sha256-+sU5iWqhKw5FZ3zUbhhMqATXGQ9YgcjSFxb1dZ0N1Hs=",
+        "lastModified": 1740433670,
+        "narHash": "sha256-4fuZLT8xKpAB8GQOxjwLFjWkJ4maphPnijYmcY6Vcyc=",
         "owner": "wentasah",
         "repo": "findrepo",
-        "rev": "936a7548ade3e76243ca323e5b59cef3827e16d3",
+        "rev": "c04c23969c09898f16d32563b6abf8dc054877ed",
         "type": "github"
       },
       "original": {
