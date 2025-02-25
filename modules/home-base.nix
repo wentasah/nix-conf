@@ -337,7 +337,7 @@ in
 
     package = let
       emacsWithPackages = (pkgs.emacsPackagesFor ((
-        pkgs.emacs
+        pkgs.emacs30
         #pkgs.emacs-unstable
         #pkgs.emacsGit
           .override {
