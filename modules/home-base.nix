@@ -62,6 +62,7 @@ in
     gitbatch
     gitui
     glab
+    glibc.static                # to allow gcc -static
     global
     glow
     gnumake
@@ -158,6 +159,7 @@ in
     sshfs
     sshuttle
     sta
+    systemctl-tui
     tectonic
     tinymist # alternative typst LSP
     tmux
