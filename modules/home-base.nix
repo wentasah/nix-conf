@@ -70,6 +70,7 @@ in
     gpg-tui
     graphviz
     help2man
+    (hiPrio outils)   # collides with ts from moreutils
     (hiPrio parallel) # Prefer this over parallel from moreutils
     home-manager
     htop
@@ -148,6 +149,7 @@ in
     ros2nix
     rsync
     ruff
+    rush-parallel
     sd
     sequoia
     shdw
