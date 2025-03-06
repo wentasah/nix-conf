@@ -6,12 +6,13 @@
       pkgs.hyprlandPlugins.hyprscroller
     ];
     settings = {
-      source = "~/.config/hypr/local.conf";
+      source = "~/.config/hypr/hyprland_local.conf";
     };
   };
 
   home.packages = with pkgs; [
-    hyprlandPlugins.hyprscroller
+    quintom-cursor-theme
+    hypridle
   ];
 
   #services.xsettingsd.enable = true;
