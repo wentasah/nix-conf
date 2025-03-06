@@ -109,7 +109,6 @@ in
     fdupes
     (feedgnuplot.override { gnuplot = gnuplot_qt; })
     #firejail
-    #flameshot # crashes under sway!
     flex
     flowblade
     gcc
@@ -166,7 +165,6 @@ in
     usbutils
     v4l-utils # for qv4l2
     wireshark
-    # (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     x11docker
     xf86_input_wacom
     xorg.xev

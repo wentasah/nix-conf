@@ -169,7 +169,6 @@ in
     wireshark
     wol
     wrenv
-    (writeShellScriptBin "flameshot" ''QT_QPA_PLATFORMTHEME=gtk2 ${flameshot}/bin/flameshot "$@"'')
     wrwb
     x11docker
     xf86_input_wacom

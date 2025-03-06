@@ -21,6 +21,7 @@
     carla
     drawio
     firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
+    (flameshot.override { enableWlrSupport = true; })
     freecad
     ghostty
     gimp
