@@ -551,8 +551,8 @@ in
   virtualisation.docker.enableOnBoot = false; # use socket activation
   virtualisation.docker.autoPrune.enable = true;
 
-  virtualisation.lxd.enable = true;
-  virtualisation.lxc.lxcfs.enable = true;
+  #virtualisation.lxd.enable = true;
+  #virtualisation.lxc.lxcfs.enable = true;
 
   specialisation = {
 #     test = {
