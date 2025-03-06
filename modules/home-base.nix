@@ -340,26 +340,7 @@ in
     ];
 
     package = let
-      emacsWithPackages = (pkgs.emacsPackagesFor ((
-        pkgs.emacs30
-        #pkgs.emacs-unstable
-        #pkgs.emacsGit
-          .override {
-            # withGTK2 = false;
-            # withGTK3 = false;
-            # Xaw3d = pkgs.xorg.libXaw3d;
-            # # lucid -> lucid
-            withPgtk = true;
-          }
-      )
-#       .overrideAttrs(old: {
-#         #dontStrip = true;
-#         separateDebugInfo = true;
-#         passthru = old.passthru // {
-#           withTreeSitter = true;
-#         };
-#       })
-      )).emacsWithPackages;
+      emacsWithPackages = (pkgs.emacsPackagesFor pkgs.emacs-pgtk).emacsWithPackages;
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
         all-the-icons
