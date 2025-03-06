@@ -2,6 +2,7 @@
 # Home manager configuration common to all my desktops. Graphical tools, etc.
 {
   imports = [
+    ../modules/xkb-wsh-home.nix
   ];
   home.packages = with pkgs; let
     xdot' = xdot.overrideAttrs (old: {
