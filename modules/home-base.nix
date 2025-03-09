@@ -340,7 +340,7 @@ in
     ];
 
     package = let
-      emacsWithPackages = (pkgs.emacsPackagesFor pkgs.emacs-pgtk).emacsWithPackages;
+      emacsWithPackages = (pkgs.emacsPackagesFor (pkgs.emacs.override { withPgtk = true; })).emacsWithPackages;
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
         all-the-icons
