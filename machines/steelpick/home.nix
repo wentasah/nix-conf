@@ -185,7 +185,7 @@ in
     zulip-term
 
     # Emacs versions from emacs-overlay
-    (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
+    #(pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
     #(pkgs.writeShellScriptBin "emacs-git" ''exec ${emacsGit}/bin/emacs "$@"'')
 
     # Unfree fonts
