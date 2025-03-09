@@ -181,7 +181,7 @@ in
     xpra
     xrectsel
     zotero
-    zulip
+    # zulip # depends on insecure electron_32 (2024-03-09)
     zulip-term
 
     # Emacs versions from emacs-overlay
