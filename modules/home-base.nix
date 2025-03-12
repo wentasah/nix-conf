@@ -344,16 +344,155 @@ in
     in
       emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
         all-the-icons
-        #forge # broken (emacsql> /nix/store/...-stdenv-linux/setup: line 227: pushd: sqlite: No such file or directory)
+        auto-highlight-symbol
+        chatgpt-shell
+        color-identifiers-mode
+        consult
+        consult-dir
+        consult-flycheck
+        consult-lsp
+        consult-notmuch
+        corfu
+        csharp-mode
+        dash
+        diff-hl
+        dired-rsync
+        dirvish
+        doom-themes
+        edit-indirect
+        edit-server
+        electric-ospl
+        embark-consult
+        envrc
+        ethan-wspace
+        flycheck-package
+        flycheck-rust
+        flyspell-correct
+        forge
+        free-keys
+        ggtags
+        gptel
+        haskell-mode
+        hl-sentence
+        imenu-list
+        json-mode
+        json-reformat
+        julia-snail
+        julia-ts-mode
+        just-mode
+        lsp-julia
+        lsp-mode
+        lsp-treemacs
+        lsp-ui
+        macrostep
         magit
-      ]) ++ (with epkgs.melpaPackages; [
-        direnv
-        julia-mode # for ikiwiki-org-plugin in my blog
-        nix-mode
-        vterm
+        magit-todos
+        marginalia
+        markdown-mode
+        mastodon
+        meson-mode
+        modus-themes
+        most-used-words
+        multiple-cursors
+        my-repo-pins
+        nixos-options
+        nixpkgs-fmt
+        notmuch
+        orderless
+        org-appear
+        org-babel-eval-in-repl
+        org-caldav
+        org-mime
+        org-modern
+        org-ql
+        org-super-agenda
+        org-tree-slide
+        ox-gfm
+        paredit
+        paredit-everywhere
         pdf-tools
+        php-mode
+        plantuml-mode
+        poly-markdown
+        polymode
+        projectile
+        protobuf-mode
+        python-black
+        python-insert-docstring
+        python-pytest
+        ripgrep
+        robot-mode
+        rust-mode
+        rustic
+        simple-httpd
+        smartrep
+        string-edit-at-point
+        symbol-overlay
+        systemd
+        tabbar
+        transpose-frame
+        treemacs
+        typo
+        unfill
+        vertico
+        visual-fill-column
+        web-mode
+        wgrep
+        which-key
+        window-purpose
+        yafolding
+        yaml-mode
+        yasnippet
+        yasnippet-snippets
+        zoom
+        zoxide
+
+      ]) ++ (with epkgs.melpaPackages; [
+        academic-phrases
+        auctex-latexmk
+        bats-mode
+        bitbake
+        ccls
+        clang-format
+        command-log-mode
+        consult-ls-git
+        dtrt-indent
+        flymake-ruff
+        kkp
+        lorem-ipsum
+        md-readme
+        mo-git-blame
+        ninja-mode
+        nix-mode
+        nix-update
+        org-msg
+        org-present
+        ox-slack
+        paredit-menu
+        python-docstring
+        ruff-format
+        smartparens
+        smog
+        spdx
+        strace-mode
+        tommyh-theme
+        tree-mode
+        txl
+        udev-mode
+        uncrustify-mode
+        uniline
+        vala-mode
+        vterm
+        zig-mode
+
       ]) ++ (with epkgs.elpaPackages; [
+        auto-header
+        dts-mode
+        electric-spacing
+        guess-language
         jinx
+        use-package
+
       ]) ++ (if epkgs.manualPackages ? treesit-grammars then [
         epkgs.manualPackages.treesit-grammars.with-all-grammars
       ] else []) ++[
