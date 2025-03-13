@@ -149,6 +149,7 @@
           auto-header
           cape
           dts-mode
+          eglot
           electric-spacing
           jinx
           orgalist
@@ -189,6 +190,7 @@
         dts-mode
         edit-indirect
         edit-server
+        eglot
         electric-ospl
         electric-spacing
         embark-consult
