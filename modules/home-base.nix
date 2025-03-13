@@ -423,7 +423,6 @@ in
         ripgrep
         robot-mode
         rust-mode
-        rustic
         simple-httpd
         string-edit-at-point
         symbol-overlay
@@ -470,6 +469,7 @@ in
         paredit-menu
         python-docstring
         ruff-format
+        rustic
         smartparens
         smartrep
         smog
