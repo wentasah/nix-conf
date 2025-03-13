@@ -398,6 +398,7 @@ in
         nixos-options
         nixpkgs-fmt
         notmuch
+        ol-notmuch
         orderless
         org-appear
         org-babel-eval-in-repl
