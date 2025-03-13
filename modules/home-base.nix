@@ -470,7 +470,7 @@ in
         paredit-menu
         python-docstring
         ruff-format
-        rustic
+        (rustic.overrideAttrs ({ packageRequires ? [], ...}: { packageRequires = packageRequires ++ [ flycheck ]; }))
         smartparens
         smartrep
         smog
