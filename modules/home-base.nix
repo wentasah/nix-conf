@@ -425,7 +425,6 @@ in
         rust-mode
         rustic
         simple-httpd
-        smartrep
         string-edit-at-point
         symbol-overlay
         systemd
@@ -472,6 +471,7 @@ in
         python-docstring
         ruff-format
         smartparens
+        smartrep
         smog
         spdx
         strace-mode
