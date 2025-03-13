@@ -487,6 +487,7 @@ in
 
       ]) ++ (with epkgs.elpaPackages; [
         auto-header
+        cape
         dts-mode
         electric-spacing
         guess-language
