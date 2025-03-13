@@ -492,6 +492,7 @@ in
         electric-spacing
         guess-language
         jinx
+        orgalist
         use-package
 
       ]) ++ (if epkgs.manualPackages ? treesit-grammars then [
