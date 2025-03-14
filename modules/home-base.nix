@@ -295,6 +295,21 @@ in
     '';
   };
 
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    flags = [
+      "--disable-up-arrow"
+    ];
+    settings = {
+      history_filter = [
+        # Ignore commands from Emacs Tramp
+        "HISTFILE=~/.tramp_history"
+      ];
+    };
+  };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -313,6 +328,8 @@ in
   programs.fzf = {
     enable = true;
     defaultOptions = [ "--bind ctrl-k:kill-line --color=dark" ];
+    # I keep fzf enabled with atuin, because I use fzf-cd-widget.
+    # Ctrl-R gets correctly overridden by atuin.
   };
 
   programs.dircolors.enable = true;
