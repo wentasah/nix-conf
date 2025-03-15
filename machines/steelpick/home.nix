@@ -115,7 +115,6 @@ in
     glibcInfo                   # Not visible in emacs :-(
     gnome-tweaks
     #gnome3.nautilus
-    goimapnotify
     hdf5
     (hiPrio nixfmt-rfc-style)   # override nixfmt
     hugo

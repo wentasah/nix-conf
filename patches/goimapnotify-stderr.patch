@@ -1,0 +1,27 @@
+From eb5806d0bcdd06730f055120b5b0da81ad2138dd Mon Sep 17 00:00:00 2001
+From: Michal Sojka <michal.sojka@cvut.cz>
+Date: Sat, 15 Mar 2025 21:56:23 +0100
+Subject: [PATCH] chg: Don't suppress stderr of executed commands
+
+If onNewMail (or any other command) fails, the output shows only error
+like this: "OnNewMail command failed: exit status 127". This is far
+from sufficient for debugging the problem. With this change, the
+stderr of the command is inherited instead of redirected to /dev/null.
+---
+ command.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/command.go b/command.go
+index 0d88cb7..49a8996 100644
+--- a/command.go
++++ b/command.go
+@@ -44,5 +44,6 @@ func PrepareCommand(command string, rsp IDLEEvent, printCommand bool) *exec.Cmd
+ 	// #nosec
+ 	cmd := exec.Command(commandsplt[0], commandsplt[1:]...)
+ 	cmd.Stdout = os.Stdout
++	cmd.Stderr = os.Stderr
+ 	return cmd
+ }
+-- 
+2.48.1
+
