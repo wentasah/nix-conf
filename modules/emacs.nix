@@ -298,6 +298,7 @@
         vertico
         visual-fill-column
         vterm
+        vundo
         web-mode
         wgrep
         which-key
