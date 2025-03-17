@@ -10,7 +10,7 @@ nixify() {
     cat > shell.nix <<'EOF'
 with import <nixpkgs> {};
 mkShell {
-  nativeBuildInputs = [
+  packages = [
     bashInteractive
   ];
 }
