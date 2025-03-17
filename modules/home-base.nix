@@ -102,6 +102,7 @@ in
     mosh
     mtr
     ncdu
+    nh
     nil
     ninja
     niv
