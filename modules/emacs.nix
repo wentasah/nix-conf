@@ -39,9 +39,10 @@
     package = let
       emacs = pkgs.emacs.override { withPgtk = true; };
       emacsPackages = pkgs.emacsPackagesFor emacs;
+      # Override selected unstable (i.e. Melpa) packages with stable
+      # version, either from MelpaStable or Elpa.
       overrides = self: super: {
         inherit (self.melpaStablePackages)
-
           all-the-icons
           auto-highlight-symbol
           chatgpt-shell
@@ -141,11 +142,9 @@
           yasnippet-snippets
           zoom
           zoxide
-
         ;
 
         inherit (self.elpaPackages)
-
           auto-header
           cape
           dts-mode
@@ -154,7 +153,6 @@
           jinx
           orgalist
           use-package
-
         ;
       };
       emacsWithPackages = (emacsPackages.overrideScope overrides).emacsWithPackages;
