@@ -201,6 +201,7 @@
         forge
         free-keys
         ggtags
+        git-link
         gptel
         guess-language
         haskell-mode
@@ -266,6 +267,7 @@
         python-docstring
         python-insert-docstring
         python-pytest
+        rainbow-mode
         ripgrep
         robot-mode
         ruff-format
