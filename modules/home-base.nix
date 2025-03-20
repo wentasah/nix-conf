@@ -23,6 +23,7 @@ in
     aspellDicts.en-computers
     aspellDicts.en-science
     atop
+    attic-client
     bat
     bbe
     bc                          # For linux kernel compilation
