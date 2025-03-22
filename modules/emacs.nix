@@ -159,7 +159,9 @@
     in
       emacsWithPackages (epkgs: (with epkgs; [
         academic-phrases
+        adoc-mode
         all-the-icons
+        apache-mode
         auctex-latexmk
         auto-header
         auto-highlight-symbol
@@ -168,6 +170,7 @@
         cape
         ccls
         chatgpt-shell
+        circe
         clang-format
         color-identifiers-mode
         command-log-mode
@@ -178,42 +181,69 @@
         consult-lsp
         consult-notmuch
         corfu
+        crdt
         csharp-mode
+        csv-mode
         dash
+        deadgrep
         diff-hl
         dired-rsync
         dirvish
+        docbook
+        dockerfile-mode
         doom-themes
+        dpkg-dev-el
         dtrt-indent
         dts-mode
         edit-indirect
         edit-server
         eglot
+        eglot-jl
         electric-ospl
         electric-spacing
         embark-consult
         envrc
         ethan-wspace
+        filladapt
+        flycheck-julia
         flycheck-package
+        flycheck-plantuml
         flycheck-rust
         flymake-ruff
         flyspell-correct
         forge
         free-keys
         ggtags
+        git-blamed
         git-link
+        github-review
+        glsl-mode
+        gnome-c-style
+        gnuplot-mode
+        go-dlv
+        go-mode
         gptel
+        graphviz-dot-mode
         guess-language
         haskell-mode
+        highlight-doxygen
         hl-sentence
         imenu-list
+        impatient-mode
+        indent-bars
+        jinja2-mode
         jinx
+        jq-mode
         json-mode
         json-reformat
+        julia-repl
+        julia-repl
         julia-snail
         julia-ts-mode
         just-mode
         kkp
+        langtool
+        ligature
         lorem-ipsum
         lsp-julia
         lsp-mode
@@ -221,11 +251,14 @@
         lsp-ui
         macrostep
         magit
+        magit-annex
         magit-todos
         marginalia
         markdown-mode
+        markdown-toc
         mastodon
         md-readme
+        memory-usage
         meson-mode
         mo-git-blame
         modus-themes
@@ -243,6 +276,7 @@
         org-appear
         org-babel-eval-in-repl
         org-caldav
+        org-contrib
         org-mime
         org-modern
         org-msg
@@ -291,6 +325,7 @@
         typo
         udev-mode
         uncrustify-mode
+        undo-tree
         unfill
         uniline
         use-package
