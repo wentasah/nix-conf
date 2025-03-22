@@ -369,6 +369,7 @@ def ci():
             pass
 
         cd("~/nix/conf")
+        check_call('nix flake update nixpkgs --override-input nixpkgs ~/nix/nixpkgs', shell=True)
         log = None
         cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ../out/ci/gcroots/result"
         if not os.isatty(sys.stdin.fileno()):
