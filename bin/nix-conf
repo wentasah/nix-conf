@@ -264,7 +264,7 @@ def publish_ci_update():
         if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
             return
 
-        system("git push --force wentasah HEAD:ci")
+        system("git push --force wentasah HEAD:ci nixos-unstable")
         old_commit = check_output("git rev-parse history", shell=True).decode().strip()
         new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode().strip()
         system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
@@ -347,19 +347,19 @@ def ci():
 
         cd("~/nix/conf")
         check_call('nix flake update nixpkgs --override-input nixpkgs ~/nix/nixpkgs', shell=True)
-        log = None
         cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ../out/ci/gcroots/result"
         if not os.isatty(sys.stdin.fileno()):
-            cmd += " --no-nom"
-            log = open(f"../out/ci/log", 'w')
-        status = run(cmd, stdout=log, stderr=STDOUT, shell=True).returncode
+            cmd += " --no-nom 2>&1 | tee ~/nix/out/ci/log"
+        else:
+            Path('../out/ci/log').touch() # ensure path exists
+
+        status = run(cmd, shell=True).returncode
 
         if status == 0:
             shutil.copy("flake.lock", f'../out/ci/flake.lock')
             open(f'../out/ci/error', 'w') # truncate
             FailedBuildCounter("ci").reset()
         else:
-            Path('../out/ci/log').touch() # ensure path exists
             # we copy instead of renaming to not break hardlinks to the flake.error
             shutil.copyfile(f'../out/ci/log', f'../out/ci/error')
             FailedBuildCounter("ci").increase()
