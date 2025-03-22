@@ -281,8 +281,6 @@ def build(host, nix_args):
 
     if check_output("hostname").decode().strip() == host:
         print_switch_instructions(host, override_input)
-    else:
-        shutil.copy("conf/flake.lock", f'out/{host}/')
 
 def publish_ci_update():
         cd("~/nix/nixpkgs")
@@ -379,6 +377,7 @@ def ci():
         status = run(cmd, stdout=log, stderr=STDOUT, shell=True).returncode
 
         if status == 0:
+            shutil.copy("flake.lock", f'../out/ci/flake.lock')
             open(f'../out/ci/error', 'w') # truncate
             FailedBuildCounter("ci").reset()
         else:
@@ -396,8 +395,8 @@ def ci():
 
 def copy(host):
     update_clonned_nixpkgs()
-    system(f"rsync ritchie:nix/out/{host}/flake.lock ~/nix/conf")
-    O = check_output(f'ssh ritchie readlink nix/out/{host}/flake', shell=True).decode().strip()
+    system(f"rsync ritchie:nix/out/ci/flake.lock ~/nix/conf")
+    O = check_output(f'ssh ritchie readlink nix/out/ci/gcroots/result-x86_64-linux.{host}', shell=True).decode().strip()
     system(f'nix copy -j16 --from ssh://ritchie "{O}"')
     dest = expanduser(f'~/nix/out/{host}/flake')
     try: os.remove(dest)
