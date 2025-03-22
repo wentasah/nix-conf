@@ -20,6 +20,7 @@ from shlex import quote
 from subprocess import STDOUT, CalledProcessError, check_output
 from typing import IO, Any, List
 from os.path import expanduser
+from pathlib import Path
 
 verbose = True
 
@@ -283,7 +284,7 @@ def build(host, nix_args):
     else:
         shutil.copy("conf/flake.lock", f'out/{host}/')
 
-def publish_ci_update(host):
+def publish_ci_update():
         cd("~/nix/nixpkgs")
         if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
             return
@@ -294,9 +295,11 @@ def publish_ci_update(host):
         system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
         system("git push wentasah history")
 
-        cd("..")
-        if os.readlink(f'out/{host}/flake.old') != os.readlink(f'out/{host}/flake'):
-            diff = check_output(f"nvd diff out/{host}/flake.old out/{host}/flake", shell=True).decode().splitlines()
+
+def notify_ci_update(attr):
+        cd("~/nix/out/ci")
+        if os.readlink(f'gcroots.old/result-{attr}') != os.readlink(f'gcroots/result-{attr}'):
+            diff = check_output(f"nvd diff gcroots.old/result-{attr} gcroots/result-{attr}", shell=True).decode().splitlines()
             diff_md = "\n".join(["    " + line for line in diff])
             try:
                 check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
@@ -348,7 +351,7 @@ def add_pr(pr: int, branch: str):
 
 
 def update(host, nix_args):
-    if updated(host) or failed_recently(host):
+    if updated(host):
         build(host, nix_args)
     else:
         print("Nothing to do for update.")
@@ -356,27 +359,36 @@ def update(host, nix_args):
 
 def ci():
     if updated("ci") or failed_recently("ci"):
+        cd("~/nix")
+
+        shutil.rmtree("out/ci/gcroots.old", ignore_errors=True)
+        try:
+            shutil.copytree("out/ci/gcroots", "out/ci/gcroots.old", symlinks=True)
+        except (FileNotFoundError, shutil.SameFileError):
+            pass
+
         cd("~/nix/conf")
         log = None
+        cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ../out/ci/gcroots/result"
         if not os.isatty(sys.stdin.fileno()):
-            # TODO: Replace steelpick "host" with something else (ci?) after reconfiguring monitoring
-            log = open(f"out/steelpick/flake.log", 'w')
-        cmd = "nix-fast-build --no-nom --attic-cache wsh --out-link ../out/result"
-        status = run(cmd, stdout=log, stderr=STDOUT).returncode
+            cmd += " --no-nom"
+            log = open(f"../out/ci/log", 'w')
+        status = run(cmd, stdout=log, stderr=STDOUT, shell=True).returncode
 
         if status == 0:
-            open(f'out/steelpick/flake.error', 'w') # truncate
-            FailedBuildCounter("steelpick").reset()
-            # TODO: f"out/{host}/flake"
+            open(f'../out/ci/error', 'w') # truncate
+            FailedBuildCounter("ci").reset()
         else:
+            Path('../out/ci/log').touch() # ensure path exists
             # we copy instead of renaming to not break hardlinks to the flake.error
-            shutil.copyfile(f'out/steelpick/flake.log', f'out/steelpick/flake.error')
-            FailedBuildCounter("steelpick").increase()
+            shutil.copyfile(f'../out/ci/log', f'../out/ci/error')
+            FailedBuildCounter("ci").increase()
             sys.exit(status)
     else:
         print("Nothing to do for update.")
 
-    publish_ci_update("steelpick")
+    publish_ci_update()
+    notify_ci_update("x86_64-linux.steelpick")
 
 
 def copy(host):
