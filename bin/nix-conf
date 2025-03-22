@@ -354,17 +354,29 @@ def update(host, nix_args):
         print("Nothing to do for update.")
 
 
-def ci(host, nix_args):
-    update(host, nix_args)
-    publish_ci_update(host)
-    try:
-        # Running `nix flake check` if the build failed is pointless
-        if FailedBuildCounter(host).get() == 0:
-            system("nix flake check ~/nix/conf --override-input nixpkgs ~/nix/nixpkgs")
-    except CalledProcessError:
-        with open(expanduser(f"~/nix/out/{host}/flake.error"), 'a') as f:
-            print("nix flake check failed!!!", file=f)
-            sys.exit(1)
+def ci():
+    if updated("ci") or failed_recently("ci"):
+        cd("~/nix/conf")
+        log = None
+        if not os.isatty(sys.stdin.fileno()):
+            # TODO: Replace steelpick "host" with something else (ci?) after reconfiguring monitoring
+            log = open(f"out/steelpick/flake.log", 'w')
+        cmd = "nix-fast-build --no-nom --attic-cache wsh --out-link ../out/result"
+        status = run(cmd, stdout=log, stderr=STDOUT).returncode
+
+        if status == 0:
+            open(f'out/steelpick/flake.error', 'w') # truncate
+            FailedBuildCounter("steelpick").reset()
+            # TODO: f"out/{host}/flake"
+        else:
+            # we copy instead of renaming to not break hardlinks to the flake.error
+            shutil.copyfile(f'out/steelpick/flake.log', f'out/steelpick/flake.error')
+            FailedBuildCounter("steelpick").increase()
+            sys.exit(status)
+    else:
+        print("Nothing to do for update.")
+
+    publish_ci_update("steelpick")
 
 
 def copy(host):
@@ -418,8 +430,7 @@ parser_update.add_argument("nix_args", nargs='*')
 parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args)))
 
 parser_ci = subparsers.add_parser('ci', parents=[parent_parser])
-parser_ci.add_argument("nix_args", nargs='*')
-parser_ci.set_defaults(func=lambda args: ci(args.host, get_nix_args(args)))
+parser_ci.set_defaults(func=lambda args: ci())
 
 parser_build = subparsers.add_parser('build', parents=[parent_parser])
 parser_build.add_argument("nix_args", nargs='*')
