@@ -233,29 +233,12 @@ Run one of the following to switch the configuration:
 def build(host, nix_args):
     cd("~/nix")
 
-    #os.environ['PATH'] = "/nix/var/nix/profiles/default/bin:{os.environ['PATH']}"
-    try:
-        os.unlink(f"out/{host}/flake.old")
-    except FileNotFoundError:
-        pass
-    try:
-        shutil.copyfile(
-            f"out/{host}/flake", f"out/{host}/flake.old", follow_symlinks=False
-        )
-    except (FileNotFoundError, shutil.SameFileError):
-        pass
     override_input = []
     match host:
         case "steelpick": override_input += ['--override-input', 'nixpkgs', f'{os.getcwd()}/nixpkgs']
 
     os.makedirs(f"out/{host}", exist_ok=True)
-    nix = "nix"
-    log = None
-    if not os.isatty(sys.stdin.fileno()):
-        log = open(f"out/{host}/flake.log", 'w')
-    else:
-        print("No log from interactive session", file=open(f'out/{host}/flake.log', 'w'))
-        nix = 'nom'
+    nix = 'nom' if os.isatty(sys.stdin.fileno()) else "nix"
 
     cmd = [
         nix,
@@ -268,15 +251,9 @@ def build(host, nix_args):
             f"~/nix/conf#nixosConfigurations.{host}.config.system.build.toplevel"
         ),
     ]
-    status = run(cmd, stdout=log, stderr=STDOUT).returncode
+    status = run(cmd).returncode
 
-    if status == 0:
-        open(f'out/{host}/flake.error', 'w') # truncate
-        FailedBuildCounter(host).reset()
-    else:
-        # we copy instead of renaming to not break hardlinks to the flake.error
-        shutil.copyfile(f'out/{host}/flake.log', f'out/{host}/flake.error')
-        FailedBuildCounter(host).increase()
+    if status != 0:
         sys.exit(status)
 
     if check_output("hostname").decode().strip() == host:
