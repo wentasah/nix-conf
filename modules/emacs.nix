@@ -138,7 +138,6 @@
           window-purpose
           yafolding
           yaml-mode
-          yasnippet
           yasnippet-snippets
           zoom
           zoxide
