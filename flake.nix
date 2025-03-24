@@ -66,6 +66,16 @@
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           veridian = final.callPackage ./pkgs/veridian { };
           svlangserver = final.callPackage ./pkgs/svlangserver.nix { };
+          nix-fast-build = prev.nix-fast-build.overrideAttrs ({src, ...}: {
+            version = "1.1.0+wsh";
+            src = final.fetchFromGitHub {
+              owner = "wentasah";
+              repo = "nix-fast-build";
+              hash = "sha256-TBNyaHxgZDgrCwpnXWdGSmkCuM4RQKMHJsROKNSEn68=";
+              rev = "87241a458ddf7e6ef50b01331df22112b51efeee";
+              # date = "2025-03-24T17:25:32+01:00";
+            };
+          });
 
           # Add python packages for using in Blender Addons (prepared for 23.11)
           pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
