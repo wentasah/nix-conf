@@ -372,8 +372,8 @@ def ci():
             open(f'../out/ci/error', 'w') # truncate
             FailedBuildCounter("ci").reset()
         else:
-            # we copy instead of renaming to not break hardlinks to the flake.error
-            shutil.copyfile(f'../out/ci/log', f'../out/ci/error')
+            # Be careful to not delete the error file to not break hardlinks to it from icinga
+            system("grep -E '(^error:|ERROR:nix_fast_build)' ../out/ci/log > ../out/ci/error")
             FailedBuildCounter("ci").increase()
             sys.exit(status)
     else:
