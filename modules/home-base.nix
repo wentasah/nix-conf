@@ -170,6 +170,7 @@ in
     tmux
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
+    treefmt
     typst
     typstfmt
     uncrustify
