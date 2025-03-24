@@ -148,13 +148,18 @@ def update_clonned_nixpkgs():
 
     def update_nixpkgs_and_merge_topics():
         old_wentasah_master = check_output("git rev-parse wentasah/master", shell=True).decode().strip()
-        system("git fetch --quiet origin")
         system("git fetch --quiet wentasah")
-        if old_wentasah_master == check_output("git rev-parse wentasah/master", shell=True).decode().strip() and \
-           check_output("git rev-parse nixos-unstable", shell=True).decode().strip() == \
-           check_output("git rev-parse origin/nixos-unstable", shell=True).decode().strip():
-           # No relevant refs changed - no need to recreate master by merging topic branches
-           return False
+        new_wentasah_master = check_output("git rev-parse wentasah/master", shell=True).decode().strip()
+
+        system("git fetch --quiet origin")
+        old_nixos_unstable = check_output("git rev-parse nixos-unstable", shell=True).decode().strip()
+        new_nixos_unstable = check_output("git rev-parse origin/nixos-unstable", shell=True).decode().strip()
+
+        if old_wentasah_master == new_wentasah_master and \
+           old_nixos_unstable == new_nixos_unstable:
+            # No relevant refs changed - no need to recreate master by merging topic branches
+            print("No nixpkgs change detected")
+            return
 
         system("git update-ref refs/heads/nixos-unstable origin/nixos-unstable")
         merge_nixpkgs_topics_into_master()
