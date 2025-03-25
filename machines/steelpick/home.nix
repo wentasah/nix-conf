@@ -43,18 +43,6 @@ in
     ../../modules/msmtp.nix
   ];
 
-  nixpkgs = {
-    config = {
-      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "unrar"
-#         "skypeforlinux"
-#         "slack"
-      ];
-      allowBroken = false;
-      allowUnsupportedSystem = false;
-    };
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.home-manager.path = "$HOME/nix/home-manager";
