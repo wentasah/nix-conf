@@ -30,6 +30,8 @@ stdenv.mkDerivation rec {
     rmdir $out/usr
     mkdir $out/bin
     ln -s "$out/opt/Foxglove Studio/foxglove-studio" "$out/bin"
+    substituteInPlace $out/share/applications/foxglove-studio.desktop \
+      --replace-fail "/opt/Foxglove Studio/foxglove-studio" "$out/bin/foxglove-studio"
 
     runHook postInstall
   '';
