@@ -287,7 +287,7 @@ def publish_ci_update():
 def notify_ci_update(attr):
         cd("~/nix/out/ci")
         if not os.path.exists(f'gcroots.old/result-{attr}'):
-            print(f"warning: {os.getcwd()}/gcroots.old/result-{attr} does not exist - not checking for changes", file=sys.stderr)
+            warn(f"warning: {os.getcwd()}/gcroots.old/result-{attr} does not exist - not checking for changes")
             return
         if os.readlink(f'gcroots.old/result-{attr}') != os.readlink(f'gcroots/result-{attr}'):
             diff = check_output(f"nvd diff gcroots.old/result-{attr} gcroots/result-{attr}", shell=True).decode().splitlines()
