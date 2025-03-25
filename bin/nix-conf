@@ -274,13 +274,14 @@ def build(host, nix_args):
 def publish_ci_update():
         cd("~/nix/nixpkgs")
         if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
-            return
+            return False
 
         system("git push --force wentasah HEAD:ci")
         old_commit = check_output("git rev-parse history", shell=True).decode().strip()
         new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode().strip()
         system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
         system("git push wentasah history")
+        return True
 
 
 def notify_ci_update(attr):
@@ -379,8 +380,8 @@ def ci():
     else:
         print("Nothing to do for update.")
 
-    publish_ci_update()
-    notify_ci_update("x86_64-linux.steelpick")
+    if publish_ci_update():
+        notify_ci_update("x86_64-linux.steelpick")
 
 
 def copy(host):
