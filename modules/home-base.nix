@@ -352,23 +352,32 @@ in
   '';
   programs.direnv.nix-direnv.enable = true;
 
-  programs.yazi = {
+  programs.yazi = let
+    # See https://yazi-rs.github.io/docs/installation#nix
+	  yazi-plugins = pkgs.fetchFromGitHub {
+		  owner = "yazi-rs";
+		  repo = "plugins";
+		  rev = "273019910c1111a388dd20e057606016f4bd0d17";
+		  hash = "sha256-80mR86UWgD11XuzpVNn56fmGRkvj0af2cFaZkU8M31I=";
+		  # date = "2025-03-19T15:36:45+08:00";
+	  };
+  in {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-# Disable to work on 24.05
-#     plugins = {
-#       smart-enter = ../config/smart-enter.yazi;
-#     };
     keymap = {
       manager.prepend_keymap = [
-        {on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file";}
         {on = "<Delete>"; run = "remove";}
+        {on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file";}
         {on = "<S-Delete>"; run = "remove --permanently";}
         {on = "y"; run = [''yank'' ''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm''];}
+        {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
       ];
     };
-  };
+		plugins = {
+			chmod = "${yazi-plugins}/chmod.yazi";
+      git = "${yazi-plugins}/git.yazi";
+		};  };
 
   programs.zoxide = {
     enable = true;
