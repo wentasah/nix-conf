@@ -221,6 +221,7 @@ def updated(host):
         FailedBuildCounter(host).reset()
         # Update selected overlays only if something else is updated
         update_flake_input("emacs-overlay")
+        update_flake_input("home-manager")
         update_flake_input("nix-index-database")
 
     return any(updated)
