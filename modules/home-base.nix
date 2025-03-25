@@ -374,7 +374,7 @@ in
         {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
       ];
     };
-		plugins = if lib.hasPrefix "24.11" config.nixosConfigurations.resox.config.system.nixosVersion then {
+		plugins = if config.home.version.release == "24.11" then {
     } else {
 			chmod = "${yazi-plugins}/chmod.yazi";
       git = "${yazi-plugins}/git.yazi";
