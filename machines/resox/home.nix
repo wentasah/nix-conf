@@ -2,22 +2,19 @@
 
 let
   lib = pkgs.lib;
-  firejailedBinaries = {        # TODO: create wrapper automatically
-#     slack = "${pkgs.slack}/bin/slack";
-#     teams = "${pkgs.teams}/bin/teams";
-#     skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
-  };
   texlive = pkgs.texlive.override { python3 = (pkgs.python3.withPackages (ps: [ ps.pygments ])); };
   mytexlive = texlive.combine {
     inherit (pkgs.texlive) scheme-full;
-    pkgFilter = (pkg:
+    pkgFilter =
+      pkg:
       pkg.tlType == "run"
       || pkg.tlType == "bin"
       || (
-        pkg.tlType == "doc" &&
-        # Prevent collisions
-        !builtins.elem pkg.pname [ "core" ]
-      ));
+        pkg.tlType == "doc"
+        &&
+          # Prevent collisions
+          !builtins.elem pkg.pname [ "core" ]
+      );
   };
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
@@ -54,155 +51,162 @@ in
 
   #home.extraOutputsToInstall = [ "devman" "devdoc" ];
 
-  home.packages = with pkgs; let
-    setPrio = lib.setPrio;
-    # Prevent collision of addr2lines between binutils and clang
-    binutils-unwrapped-all-targets = setPrio 0 pkgs.binutils-unwrapped-all-targets;
-    clang = setPrio 1 pkgs.clang;
-    gcc = setPrio 2 pkgs.gcc; # Prio over clang's c++ etc.
-  in [
-    adoptopenjdk-icedtea-web
-    afew
-    ardour jack2 x42-plugins gxplugins-lv2 qjackctl
-    atool
-    auto-multiple-choice
-    automake
-    avidemux
-    bear
-    binutils-unwrapped-all-targets
-    bison
-    bubblewrap
-    can-utils
-    carla-bin
-    cask
-    chromium
-    clang
-    clang-tools
-    clementine
-    clinfo
-    cmakeWithGui
-    cppreference
-    #cura broken
-    cutter
-    devhelp
-    difftastic
-    dnsmasq                     # for documentation
-    docker-compose
-    dpkg
-    dunst
-    easyeffects
-    #emacs-all-the-icons-fonts
-    exif
-    fdupes
-    (feedgnuplot.override { gnuplot = gnuplot_qt; })
-    #firejail
-    flex
-    flowblade
-    gcc
-    glibcInfo                   # Not visible in emacs :-(
-    gnome-tweaks
-    hdf5
-    (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
-    hugo
-    (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
-    julia-wrapper
-    lazydocker
-    libev # to have the man page ready
-    libnotify # for notify-send (for mailsync)
-    libreoffice-fresh
-    libsecret
-    licenseutils
-    linuxPackages.perf
-    lsof # TODO: git-annex assistant should depend on this
-    man-pages
-    mytexlive
-    nasm
-    nix-index
-    nodePackages.markdownlint-cli
-    nodePackages.typescript-language-server
-    notify-while-running
-    notmuch
-    notmuch.emacs
-    novaboot                    # from novaboot overlay
-    openssl
-    perl.devdoc
-    perlPackages.AppClusterSSH
-    perlPackages.Expect.devdoc         # manpage for novaboot development
-    pidgin
-    (pkgs.callPackage ../../pkgs/cargo-prefetch {})
-    #(pkgs.callPackage ../../pkgs/diffsitter {})
-    (pkgs.callPackage ../../pkgs/enumerate-markdown {})
-    playerctl
-    pod-mode
-    pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
-    python3Packages.jupyter_core
-    python3Packages.notebook
-    python3Packages.python-lsp-server
-    qemu
-    radare2
-    saleae-logic-2
-    #slack
-    sterm
-    #stm32cubeide
-    tcpreplay
-    #teams
-    unfs3
-    unrar
-    usbrelay
-    usbutils
-    v4l-utils # for qv4l2
-    wireshark
-    x11docker
-    xf86_input_wacom
-    xorg.xev
-    xorg.xhost # for quick way to run GUI apps in chroots/containers
-    xorg.xkbcomp
-    xorg.xkill
-    xorg.xorgdocs
-    xplr
-    xpra
-    xrectsel
-    zotero
-    #zulip # depends on insecure electron_32 (2024-03-09)
-    #zulip-term #broken
+  home.packages =
+    with pkgs;
+    let
+      setPrio = lib.setPrio;
+      # Prevent collision of addr2lines between binutils and clang
+      binutils-unwrapped-all-targets = setPrio 0 pkgs.binutils-unwrapped-all-targets;
+      clang = setPrio 1 pkgs.clang;
+      gcc = setPrio 2 pkgs.gcc; # Prio over clang's c++ etc.
+    in
+    [
+      adoptopenjdk-icedtea-web
+      afew
+      ardour
+      atool
+      auto-multiple-choice
+      automake
+      avidemux
+      bear
+      binutils-unwrapped-all-targets
+      bison
+      bubblewrap
+      can-utils
+      carla-bin
+      cask
+      chromium
+      clang
+      clang-tools
+      clementine
+      clinfo
+      cmakeWithGui
+      cppreference
+      #cura broken
+      cutter
+      devhelp
+      difftastic
+      dnsmasq # for documentation
+      docker-compose
+      dpkg
+      dunst
+      easyeffects
+      #emacs-all-the-icons-fonts
+      exif
+      fdupes
+      (feedgnuplot.override { gnuplot = gnuplot_qt; })
+      #firejail
+      flex
+      flowblade
+      gcc
+      glibcInfo # Not visible in emacs :-(
+      gnome-tweaks
+      gxplugins-lv2
+      hdf5
+      (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
+      hugo
+      (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
+      jack2
+      julia-wrapper
+      lazydocker
+      libev # to have the man page ready
+      libnotify # for notify-send (for mailsync)
+      libreoffice-fresh
+      libsecret
+      licenseutils
+      linuxPackages.perf
+      lsof # TODO: git-annex assistant should depend on this
+      man-pages
+      mytexlive
+      nasm
+      nix-index
+      nodePackages.markdownlint-cli
+      nodePackages.typescript-language-server
+      notify-while-running
+      notmuch
+      notmuch.emacs
+      novaboot # from novaboot overlay
+      openssl
+      perl.devdoc
+      perlPackages.AppClusterSSH
+      perlPackages.Expect.devdoc # manpage for novaboot development
+      pidgin
+      (pkgs.callPackage ../../pkgs/cargo-prefetch { })
+      #(pkgs.callPackage ../../pkgs/diffsitter {})
+      (pkgs.callPackage ../../pkgs/enumerate-markdown { })
+      playerctl
+      pod-mode
+      pulseaudio # I use pactl in ~/.i3/config (even with pipewire)
+      python3Packages.jupyter_core
+      python3Packages.notebook
+      python3Packages.python-lsp-server
+      qemu
+      qjackctl
+      radare2
+      saleae-logic-2
+      #slack
+      sterm
+      #stm32cubeide
+      tcpreplay
+      #teams
+      unfs3
+      unrar
+      usbrelay
+      usbutils
+      v4l-utils # for qv4l2
+      wireshark
+      x11docker
+      x42-plugins
+      xf86_input_wacom
+      xorg.xev
+      xorg.xhost # for quick way to run GUI apps in chroots/containers
+      xorg.xkbcomp
+      xorg.xkill
+      xorg.xorgdocs
+      xplr
+      xpra
+      xrectsel
+      zotero
+      #zulip # depends on insecure electron_32 (2024-03-09)
+      #zulip-term #broken
 
-    # Emacs versions from emacs-overlay
-#     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
-#     (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkNativeComp}/bin/emacs "$@"'')
+      # Emacs versions from emacs-overlay
+      #     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
+      #     (pkgs.writeShellScriptBin "emacs-pgtk-gcc" ''exec ${emacsPgtkNativeComp}/bin/emacs "$@"'')
 
-    # Unfree fonts
-    xkcd-font
-  ]
-  ++ lib.attrVals (builtins.attrNames firejailedBinaries) pkgs
-  ++ (with pkgsCross.aarch64-multiplatform; [
-    buildPackages.gcc
-    (setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
-  ])
-#   ++ (with pkgsCross.armhf-embedded; [
-#     buildPackages.gcc
-#     (setPrio 21 buildPackages.bintools-unwrapped) # arm-none-eabihf-objdump etc.
-#   ])
-  ++ (with pkgsCross.armv7l-hf-multiplatform; [
-    buildPackages.gcc
-    (setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
-  ])
-  ++ (with pkgsCross.mingwW64; [
-    buildPackages.gcc
-    #(setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
-  ])
-#   ++ (with pkgsCross.raspberryPi; [
-#     buildPackages.gcc
-#     (setPrio 20 buildPackages.bintools-unwrapped)
-#   ])
+      # Unfree fonts
+      xkcd-font
+    ]
+    ++ (with pkgsCross.aarch64-multiplatform; [
+      buildPackages.gcc
+      (setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+    ])
+    #   ++ (with pkgsCross.armhf-embedded; [
+    #     buildPackages.gcc
+    #     (setPrio 21 buildPackages.bintools-unwrapped) # arm-none-eabihf-objdump etc.
+    #   ])
+    ++ (with pkgsCross.armv7l-hf-multiplatform; [
+      buildPackages.gcc
+      (setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
+    ])
+    ++ (with pkgsCross.mingwW64; [
+      buildPackages.gcc
+      #(setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
+    ])
+  #   ++ (with pkgsCross.raspberryPi; [
+  #     buildPackages.gcc
+  #     (setPrio 20 buildPackages.bintools-unwrapped)
+  #   ])
   ;
 
-
-
   home.file = {
-    "bin/ssh-askpass" = { executable = true; text = ''
-      #!${pkgs.runtimeShell}
-      exec ${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass
-    ''; };
+    "bin/ssh-askpass" = {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        exec ${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass
+      '';
+    };
   };
 
   home.sessionVariables = {
@@ -254,9 +258,9 @@ in
     };
   };
 
-#   xdg.mimeApps = {
-#     enable = true;
-#   };
+  #   xdg.mimeApps = {
+  #     enable = true;
+  #   };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
