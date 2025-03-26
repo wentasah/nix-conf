@@ -107,6 +107,7 @@ in
     nil
     ninja
     niv
+    nix-bisect
     nix-doc
     nix-du
     nix-eval-jobs
