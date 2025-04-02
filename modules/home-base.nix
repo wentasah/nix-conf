@@ -195,12 +195,6 @@ in
     rustup
   ];
 
-  services.home-manager.autoExpire = {
-    enable = true;
-    timestamp = "-7 days";
-    frequency = "weekly";
-  };
-
   home.file = {
     ".config/bat/config".text = ''
         --theme=gruvbox-light
@@ -392,4 +386,11 @@ in
     enableBashIntegration = true;
     enableZshIntegration = true;
   };
-}
+} // (if config.home.version.release == "24.11" then {
+} else {
+  services.home-manager.autoExpire = {
+    enable = true;
+    timestamp = "-7 days";
+    frequency = "weekly";
+  };
+})
