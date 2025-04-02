@@ -195,6 +195,12 @@ in
     rustup
   ];
 
+  services.home-manager.autoExpire = {
+    enable = true;
+    timestamp = "-7 days";
+    frequency = "weekly";
+  };
+
   home.file = {
     ".config/bat/config".text = ''
         --theme=gruvbox-light
