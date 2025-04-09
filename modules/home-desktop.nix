@@ -47,6 +47,7 @@
     pavucontrol
     pdfpc
     qpwgraph
+    #rustdesk
     screenkey
     shotcut
     smplayer mpv mplayer
