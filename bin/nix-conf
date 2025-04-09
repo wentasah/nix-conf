@@ -390,7 +390,8 @@ def copy(host):
     update_clonned_nixpkgs()
     system(f"rsync ritchie:nix/out/ci/flake.lock ~/nix/conf")
     O = check_output(f'ssh ritchie readlink nix/out/ci/gcroots/result-x86_64-linux.{host}', shell=True).decode().strip()
-    system(f'nix copy -j16 --from ssh://ritchie "{O}"')
+    #system(f'nix copy -j16 -L --from ssh://ritchie "{O}"')
+    system(f'nom build "{O}"')  # Copy packages from my binary cache
     dest = expanduser(f'~/nix/out/{host}/flake')
     try: os.remove(dest)
     except FileNotFoundError: pass
