@@ -47,7 +47,7 @@
     pavucontrol
     pdfpc
     qpwgraph
-    #rustdesk
+    rustdesk-flutter
     screenkey
     shotcut
     smplayer mpv mplayer
