@@ -29,16 +29,16 @@ stdenv.mkDerivation rec {
     mv $out/usr/* $out/
     rmdir $out/usr
     mkdir $out/bin
-    ln -s "$out/opt/Foxglove Studio/foxglove-studio" "$out/bin"
+    ln -s "$out/opt/Foxglove/foxglove-studio" "$out/bin"
     substituteInPlace $out/share/applications/foxglove-studio.desktop \
-      --replace-fail "/opt/Foxglove Studio/foxglove-studio" "$out/bin/foxglove-studio"
+      --replace-fail "/opt/Foxglove/foxglove-studio" "$out/bin/foxglove-studio"
 
     runHook postInstall
   '';
 
   postFixup = ''
     makeWrapper ${electron}/bin/electron $out/bin/${pname} \
-      --add-flags "'$out/opt/Foxglove Studio/resources/app.asar'" \
+      --add-flags "'$out/opt/Foxglove/resources/app.asar'" \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ stdenv.cc.cc ]}" \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
   '';
