@@ -62,6 +62,7 @@
     xdotool
     xdragon
     xournalpp
+    yubioath-flutter
     zynaddsubfx
   ];
 }

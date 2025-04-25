@@ -184,6 +184,7 @@ in
     xmlstarlet
     yamllint
     yq-go
+    yubikey-manager
     zip
     zsh-completions
     zsh-syntax-highlighting

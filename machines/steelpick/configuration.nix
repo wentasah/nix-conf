@@ -349,13 +349,17 @@ in
   services.gpm.enable = true;
 
   services.udev = {
-    packages = [ pkgs.stlink ];
+    packages = [
+      pkgs.stlink
+      pkgs.yubikey-personalization
+    ];
     extraRules = builtins.concatStringsSep "\n" [
       # USB relays
       ''SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05df", MODE="0600", OWNER="wsh"''
     ];
   };
 
+  services.pcscd.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

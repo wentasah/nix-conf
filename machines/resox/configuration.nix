@@ -297,6 +297,11 @@
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
 
+  services.pcscd.enable = true;
+  services.udev.packages = [
+    pkgs.yubikey-personalization
+  ];
+
   services.gpm.enable = true;
 
   # Enable the X11 windowing system.
