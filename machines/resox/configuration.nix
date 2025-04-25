@@ -154,7 +154,7 @@
     gwenview
     htop
     iftop
-    (import ./emacs.nix { inherit pkgs; })
+    emacs-nox
     keepassxc
     kitty.shell_integration
     kitty.terminfo
