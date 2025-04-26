@@ -28,7 +28,7 @@ in
     bbe
     bc                          # For linux kernel compilation
     black
-    #black-macchiato # broken 2025-03-24
+    black-macchiato
     btdu
     btop
     cachix
