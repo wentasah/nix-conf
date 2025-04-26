@@ -145,8 +145,10 @@ in
     (python3.withPackages globalPythonPackages)
     python3Packages.invoke
     python3Packages.python-lsp-server
+    rainfrog
     ranger
     redo-apenwarr
+    repgrep
     restic
     ripgrep
     #rnix-lsp # needs insecure nix-2.15.3
@@ -156,6 +158,7 @@ in
     rush-parallel
     sd
     sequoia
+    serie
     shdw
     shellcheck
     socat
