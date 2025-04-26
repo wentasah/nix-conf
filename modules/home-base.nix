@@ -224,6 +224,23 @@ in
         [[ $(whix "$1") =~ ^/nix/store/[^/]* ]] && echo "''${BASH_REMATCH[0]}"
       '';
     };
+    "bin/nix-develop-pure" = let
+      bashrc = pkgs.writeText "bashrc" ''
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+      '';
+    in {
+      executable = true;
+      text = ''
+        #!${pkgs.runtimeShell}
+        KEEP=(NOSYSBASHRC HOME USER LOGNAME DISPLAY TERM IN_NIX_SHELL NIX_SHELL_PRESERVE_PROMPT TZ PAGER NIX_BUILD_SHELL SHLVL)
+        if true; then
+            export NOSYSBASHRC=1  # Needed to ignore /etc/bashrc on NixOS
+            exec nix develop --ignore-environment ''${KEEP[@]/*/--keep &} --command bash --rcfile ${bashrc}
+        else
+            exec nix develop --ignore-environment ''${KEEP[@]/*/--keep &} --command bash --norc
+        fi
+      '';
+    };
   };
 
   home.sessionVariables = {
