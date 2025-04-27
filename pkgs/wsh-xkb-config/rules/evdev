@@ -1,4 +1,4 @@
+! include %S/evdev
+
 ! option                =       symbols
   wsh:caps_arrows       =       +wsh(caps_arrows)
-
-! include %S/evdev
