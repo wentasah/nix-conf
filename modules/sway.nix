@@ -52,6 +52,7 @@ in
     brightnessctl
     cantarell-fonts
     font-awesome_4
+    libxkbcommon                # for xkbcli
     networkmanager_dmenu
     networkmanagerapplet # need for tray icons
     powerline-fonts
