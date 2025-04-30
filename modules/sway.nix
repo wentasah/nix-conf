@@ -57,7 +57,7 @@ in
     networkmanagerapplet # need for tray icons
     powerline-fonts
     pulseaudio                  # I use pactl in ~/.i3/config (even with pipewire)
-    rofi
+    rofi-wayland
     swappy grim slurp
     swaylock
     swayr
