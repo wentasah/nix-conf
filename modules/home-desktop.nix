@@ -65,4 +65,11 @@
     yubioath-flutter
     zynaddsubfx
   ];
+
+  home.pointerCursor = {
+    gtk.enable = true;          # needs home.gtk.enable to be true
+    name = "Quintom_Ink";
+    package = pkgs.quintom-cursor-theme;
+    size = 24;
+  };
 }
