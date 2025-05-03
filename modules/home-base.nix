@@ -29,6 +29,7 @@ in
     bc                          # For linux kernel compilation
     black
     black-macchiato
+    boxes
     btdu
     btop
     cachix
