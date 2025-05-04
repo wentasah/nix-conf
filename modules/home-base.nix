@@ -44,6 +44,7 @@ in
     csvtool
     d2
     daemontools
+    dot-language-server
     doxygen_gui
     dua
     entr
