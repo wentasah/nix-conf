@@ -25,7 +25,10 @@
 
   #boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    hid-t150
+    v4l2loopback
+  ];
 
   boot.extraModprobeConfig = ''
     options v4l2loopback devices=1 card_label="OBS Cam" exclusive_caps=1
@@ -166,6 +169,7 @@
     nix-output-monitor
     nvtopPackages.amd
     obs-studio
+    oversteer
     pciutils
     shotwell
     skypeforlinux
