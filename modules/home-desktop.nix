@@ -42,6 +42,7 @@
     krita
     libreoffice-fresh libreoffice-fresh.unwrapped.jdk
     meld
+    mission-center
     musescore
     okteta
     pavucontrol
