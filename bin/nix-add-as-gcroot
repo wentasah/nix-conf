@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-set -x
+shopt -s lastpipe
 
-nix_store_path="$(nix-prefetch-url --print-path --type sha256 file://"$PWD/$1" | tail -n 1)"
+nix-prefetch-url --print-path --type sha256 file://"$PWD/$1" | readarray -t X
+hash=${X[0]}
+nix_store_path=${X[1]}
 nix-store --add-root "./$1.gcroot" --indirect --realise "$nix_store_path"
+echo "Hash: $hash"
