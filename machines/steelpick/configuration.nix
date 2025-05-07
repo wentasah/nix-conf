@@ -35,7 +35,6 @@ in
         "kyocera-phase5"
         "mfcl2700dwlpr"
         "saleae-logic-2"
-        "skypeforlinux"
         "slack"
         "steam-unwrapped"
         "unrar"
@@ -229,7 +228,6 @@ in
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
       #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
-      skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };
   };
 

@@ -119,7 +119,6 @@
       "mfcl2700dwlpr"
       "saleae-logic"
       "saleae-logic-2"
-      "skypeforlinux"
       "slack"
       "steam"
       "steam-original"
@@ -172,7 +171,6 @@
     oversteer
     pciutils
     shotwell
-    skypeforlinux
     tree
     vim
     warp
@@ -186,7 +184,6 @@
     wrappedBinaries = {
       slack = "${pkgs.slack}/bin/slack";
       #zoom-us = "${pkgs.zoom-us}/bin/zoom-us";
-      skypeforlinux = "${pkgs.skypeforlinux}/bin/skypeforlinux";
     };
   };
 

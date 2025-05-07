@@ -62,7 +62,6 @@ in
 
   nixpkgs.config = {
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "skypeforlinux"
       "faac"
       "zoom"
       "brscan4"
@@ -88,7 +87,6 @@ in
     links2
     mc
     rhythmbox
-    skypeforlinux
     wget
     vim
     zoom-us
