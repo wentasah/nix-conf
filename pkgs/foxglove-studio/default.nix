@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     versionLister = writeShellScript "foxglove-version-lister" ''
       ${curl}/bin/curl https://docs.foxglove.dev/changelog \
       | ${libxml2}/bin/xmllint --html --xpath 'string(//html/head/script[@type="application/ld+json"])' - 2>/dev/null \
-      | ${jq}/bin/jq -r '[.blogPost|.[].url|match("https://docs.foxglove.dev/changelog/foxglove/v(.*)")|.captures[0].string]|first'
+      | ${jq}/bin/jq -r '[.blogPost|.[].url|match("https://docs.foxglove.dev/changelog/foxglove/v?(.*)")|.captures[0].string]|first'
     '';
   };
 }
