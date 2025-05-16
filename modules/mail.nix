@@ -1,8 +1,15 @@
 { config, pkgs, ... }:
 let
   isync = pkgs.isync.override { withCyrusSaslXoauth2 = true; };
-  goimapnotify = pkgs.goimapnotify.overrideAttrs ({ patches ? [], ... }: {
-    patches = patches ++ [ ../patches/goimapnotify-stderr.patch ];
+  goimapnotify = pkgs.goimapnotify.overrideAttrs (old: rec {
+    version = "2.4.1";
+    src = pkgs.fetchFromGitLab {
+      owner = "shackra";
+      repo = "goimapnotify";
+      rev = version;
+      hash = "sha256-D1eDEfu7nnc0cnKnNJjdl1+Fu8AWQeewfK2YR0MgrFc=";
+    };
+
   });
 
 in {
@@ -30,8 +37,11 @@ in {
   # Run mailsync manually at start until
   # https://gitlab.com/shackra/goimapnotify/-/issues/48 is resolved.
   systemd.user.services.imapnotify-cvut = {
-    Service.ExecStartPre = config.accounts.email.accounts.cvut.imapnotify.onNotify;
-    Install.WantedBy = [ ]; # Don't start by default
+    Install.WantedBy = pkgs.lib.mkForce [ ]; # Don't start by default
+    # serviceConfig = {
+    #   KillMode = "mixed";
+    #   TimeoutStopSec = "5min";
+    # };
   };
 
   accounts.email.accounts.cvut = {
