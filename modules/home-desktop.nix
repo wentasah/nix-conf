@@ -54,7 +54,7 @@
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
-    thunderbird-bin # thunderbird calendar broken 2025-05-15
+    thunderbird
     video-trimmer
     vlc
     wmctrl
