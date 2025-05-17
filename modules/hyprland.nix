@@ -3,7 +3,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [
-      pkgs.hyprlandPlugins.hyprscroller
+      pkgs.hyprlandPlugins.hyprscrolling
     ];
     settings = {
       source = "~/.config/hypr/hyprland_local.conf";
