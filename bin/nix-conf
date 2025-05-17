@@ -404,7 +404,7 @@ def get_nix_args(args):
     if args.local:
         nix_args = ['--builders', '', '-j4'] + nix_args
     elif socket.gethostname() == 'steelpick':
-        nix_args = ['--builders', 'ssh://ritchie'] + nix_args
+        nix_args = ['--builders', 'ssh-ng://ritchie x86_64-linux,i686-linux - 16 2 nixos-test,benchmark,big-parallel,kvm'] + nix_args
     return nix_args
 
 
