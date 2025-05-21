@@ -1,17 +1,6 @@
 { config, pkgs, ... }:
 let
   isync = pkgs.isync.override { withCyrusSaslXoauth2 = true; };
-  goimapnotify = pkgs.goimapnotify.overrideAttrs (old: rec {
-    version = "2.4.1";
-    src = pkgs.fetchFromGitLab {
-      owner = "shackra";
-      repo = "goimapnotify";
-      rev = version;
-      hash = "sha256-D1eDEfu7nnc0cnKnNJjdl1+Fu8AWQeewfK2YR0MgrFc=";
-    };
-
-  });
-
 in {
   home.packages = with pkgs; [
     goimapnotify
@@ -21,7 +10,7 @@ in {
 
   services.imapnotify = {
     enable = true;
-    package = goimapnotify;
+    package = pkgs.goimapnotify;
     path = with pkgs; [
       afew
       bash
