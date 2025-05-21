@@ -28,9 +28,14 @@
     enable = true;
     socketActivation.enable = true;
   };
+  home.packages = with pkgs; [
+    parinfer-rust-emacs
+  ];
   programs.emacs = {
     enable = true;
-
+    extraConfig = ''
+      (setq parinfer-rust-library "${pkgs.parinfer-rust-emacs}/lib/libparinfer_rust.so")
+    '';
     #     # Not used since switch to straight
     #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
     extraPackages = epkgs: with epkgs; [
@@ -289,6 +294,7 @@
         paredit
         paredit-everywhere
         paredit-menu
+        parinfer-rust-mode
         pdf-tools
         php-mode
         plantuml-mode
