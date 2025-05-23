@@ -91,6 +91,7 @@
           lsp-ui
           macrostep
           magit
+          magit-section
           magit-todos
           marginalia
           markdown-mode
