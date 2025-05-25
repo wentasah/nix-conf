@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
+    adwaita-fonts
     emacs-all-the-icons-fonts
     iosevka
     lato
