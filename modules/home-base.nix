@@ -390,6 +390,14 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    settings = {
+      manager = {
+        show_hidden = true;
+      };
+      opener = {
+        edit = [ { run = "ec \"$@\""; desc = "Edit with ec"; block = true; for = "unix"; } ];
+      };
+    };
     keymap = {
       manager.prepend_keymap = [
         {on = "<Delete>"; run = "remove";}
