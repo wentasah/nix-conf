@@ -153,9 +153,9 @@
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
     gnome-tweaks
-    gwenview
     htop
     iftop
+    kdePackages.gwenview
     keepassxc
     kitty.shell_integration
     kitty.terminfo
