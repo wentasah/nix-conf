@@ -1,5 +1,5 @@
 { stdenv, lib, buildFHSEnv, autoPatchelfHook, unzip, dpkg, gtk3,
-  cairo, glib, webkitgtk, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python3,
+  cairo, glib, webkitgtk_4_0, libusb1, bash, libsecret, alsa-lib, bzip2, openssl, udev, ncurses5, tlf, xorg, fontconfig, pcsclite, python3,
   requireFile
 }:
 let
@@ -77,7 +77,7 @@ buildFHSEnv {
 
   targetPkgs = pkgs: with pkgs; [
     stm32cubeide
-    gtk3 cairo glib webkitgtk
+    gtk3 cairo glib webkitgtk_4_0
 
     # These libraries are also needed in the FHS environment for
     # flashing/debugging to work. Having them as dependencies in
