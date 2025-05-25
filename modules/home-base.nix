@@ -379,13 +379,13 @@ in
 
   programs.yazi = let
     # See https://yazi-rs.github.io/docs/installation#nix
-	  yazi-plugins = pkgs.fetchFromGitHub {
-		  owner = "yazi-rs";
-		  repo = "plugins";
-		  rev = "273019910c1111a388dd20e057606016f4bd0d17";
-		  hash = "sha256-80mR86UWgD11XuzpVNn56fmGRkvj0af2cFaZkU8M31I=";
-		  # date = "2025-03-19T15:36:45+08:00";
-	  };
+    yazi-plugins = pkgs.fetchFromGitHub {
+      owner = "yazi-rs";
+      repo = "plugins";
+      rev = "55bf6996ada3df4cbad331ce3be0c1090769fc7c";
+      hash = "sha256-v/C+ZBrF1ghDt1SXpZcDELmHMVAqfr44iWxzUWynyRk=";
+      # date = "2025-05-11T13:21:13+08:00";
+    };
   in {
     enable = true;
     enableBashIntegration = true;
@@ -399,11 +399,13 @@ in
         {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
       ];
     };
-		plugins = if config.home.version.release == "24.11" then {
+    plugins = if config.home.version.release == "24.11" then {
     } else {
-			chmod = "${yazi-plugins}/chmod.yazi";
+      chmod = "${yazi-plugins}/chmod.yazi";
       git = "${yazi-plugins}/git.yazi";
-		};  };
+      smart-enter = "${yazi-plugins}/smart-enter.yazi";
+    };
+  };
 
   programs.zoxide = {
     enable = true;
