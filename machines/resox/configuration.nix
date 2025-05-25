@@ -151,8 +151,7 @@
     gdu
     gitAndTools.gitAnnex lsof
     gitAndTools.gitFull
-    gnome.gnome-tweaks
-    gnome.nautilus-python
+    gnome-tweaks
     gwenview
     htop
     iftop
@@ -163,6 +162,7 @@
     krita
     libreoffice-fresh
     mc
+    nautilus-python
     ncdu
     nethogs
     nix-output-monitor
