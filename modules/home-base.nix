@@ -304,22 +304,26 @@ in
       enable = true;
       highlighters = [ "main" "brackets" ];
     };
-    initExtraBeforeCompInit = ''
-      # Make tramp work (https://www.gnu.org/software/emacs/manual/html_node/tramp/Frequently-Asked-Questions.html)
-      [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+    initContent = let
+      zshConfigEarlyInit = lib.mkOrder 550 ''
+        # Make tramp work (https://www.gnu.org/software/emacs/manual/html_node/tramp/Frequently-Asked-Questions.html)
+        [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
-      # Where to look for autoloaded function definitions
-      fpath=(~/.zfunc $fpath)
-    '';
-    initExtra = ''
-      source ${../pkgs/zsh-config/zshrc}
-      source ${pkgs.mc}/libexec/mc/mc.sh
-      source ${../pkgs/zsh-config/nix-direnv}
+        # Where to look for autoloaded function definitions
+        fpath=(~/.zfunc $fpath)
+      '';
+      zshConfig = ''
+        source ${../pkgs/zsh-config/zshrc}
+        source ${pkgs.mc}/libexec/mc/mc.sh
+        source ${../pkgs/zsh-config/nix-direnv}
 
-      # Setup ROS 2 auto completion for nix-direnv environments
-      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh ros2)"
-      eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh colcon)"
-    '';
+        # Setup ROS 2 auto completion for nix-direnv environments
+        eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh ros2)"
+        eval "$(${pkgs.python3Packages.argcomplete}/bin/register-python-argcomplete -s zsh colcon)"
+      '';
+    in
+      lib.mkMerge [ zshConfigEarlyInit zshConfig ];
+
   };
 
   programs.atuin = {
