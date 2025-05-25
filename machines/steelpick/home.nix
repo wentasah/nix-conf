@@ -241,7 +241,7 @@ in
 
   services.gpg-agent.enable = true;
   services.gpg-agent.enableExtraSocket = true;
-  services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+  services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
 
   #services.lorri.enable = true;
 
