@@ -411,8 +411,7 @@ in
         {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
       ];
     };
-    plugins = if config.home.version.release == "24.11" then {
-    } else {
+    plugins = {
       chmod = "${yazi-plugins}/chmod.yazi";
       git = "${yazi-plugins}/git.yazi";
       smart-enter = "${yazi-plugins}/smart-enter.yazi";
@@ -423,5 +422,11 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+  };
+
+  services.home-manager.autoExpire = {
+    enable = true;
+    timestamp = "-7 days";
+    frequency = "weekly";
   };
 }

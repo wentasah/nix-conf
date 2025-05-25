@@ -245,13 +245,6 @@ in
 
   #services.lorri.enable = true;
 
-  # TODO: Move to home-base after 25.05
-  services.home-manager.autoExpire = {
-    enable = true;
-    timestamp = "-7 days";
-    frequency = "weekly";
-  };
-
   systemd.user.services = {
 
     # Run way-displays on steelpick, but not on my other computers.
