@@ -26,7 +26,7 @@
   #boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
-    hid-t150
+    #hid-t150
     v4l2loopback
   ];
 
