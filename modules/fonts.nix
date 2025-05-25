@@ -20,20 +20,4 @@
     source-serif
     source-serif-pro
   ];
-
-#   xdg.configFile = {
-#     "fontconfig/conf.d/99-my-fonts.conf".text = ''
-#       <?xml version='1.0'?>
-#       <!DOCTYPE fontconfig SYSTEM 'urn:fontconfig:fonts.dtd'>
-#       <fontconfig>
-#         <!-- Default fonts -->
-#         <alias binding="same">
-#           <family>monospace</family>
-#           <prefer>
-#             <family>Iosevka Nerd Font Mono</family>
-#           </prefer>
-#         </alias>
-#       </fontconfig>
-#     '';
-#   };
 }
