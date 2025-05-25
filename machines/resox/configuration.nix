@@ -145,6 +145,7 @@
     chromium
     compsize
     ddrescue
+    emacs-nox
     file
     firefox-wayland
     foxglove-studio
@@ -155,7 +156,6 @@
     gwenview
     htop
     iftop
-    emacs-nox
     keepassxc
     kitty.shell_integration
     kitty.terminfo
