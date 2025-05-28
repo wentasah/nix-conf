@@ -132,6 +132,7 @@
           symbol-overlay
           systemd
           tabbar
+          transient
           transpose-frame
           treemacs
           typo
