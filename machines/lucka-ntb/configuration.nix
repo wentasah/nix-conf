@@ -78,7 +78,7 @@ in
     firefox-wayland
     chromium
     gitAndTools.git-annex
-    gnome.gnome-music
+    gnome-music
     kitty.terminfo
     lsof
     git
