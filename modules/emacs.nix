@@ -135,7 +135,6 @@
           transient
           transpose-frame
           treemacs
-          typo
           unfill
           vertico
           visual-fill-column
