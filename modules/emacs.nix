@@ -137,6 +137,7 @@
           treemacs
           typo
           unfill
+          uniline # remove after fixing https://github.com/tbanel/uniline/issues/8
           vertico
           visual-fill-column
           web-mode
