@@ -136,6 +136,7 @@
           transpose-frame
           treemacs
           unfill
+          uniline # remove after fixing https://github.com/tbanel/uniline/issues/8
           vertico
           visual-fill-column
           web-mode
@@ -333,7 +334,7 @@
         uncrustify-mode
         undo-tree
         unfill
-        #uniline # uncomment after fixing https://github.com/tbanel/uniline/issues/8
+        uniline
         use-package
         vala-mode
         vertico
