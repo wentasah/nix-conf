@@ -33,6 +33,10 @@
   };
 
   swapDevices = [
+    {
+      device = "/swapfile";
+      size = 32768; # 32 GB
+    }
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
