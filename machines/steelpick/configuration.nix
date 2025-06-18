@@ -435,6 +435,8 @@ in
     };
   };
 
+  services.gnome.gcr-ssh-agent.enable = false; # collides with ssh-agent
+
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
 
