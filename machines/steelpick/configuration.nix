@@ -422,7 +422,7 @@ in
   };
 
   systemd.nspawn.ros-melodic = {
-    enable = true;
+    enable = false;
     execConfig = {
       ResolvConf = "bind-host";
     };
