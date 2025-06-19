@@ -68,7 +68,7 @@ in
     [
       adoptopenjdk-icedtea-web
       afew
-      #ardour jack2 x42-plugins gxplugins-lv2 qjackctl # broken 2025-01-23
+      ardour jack2 x42-plugins gxplugins-lv2 qjackctl
       atool
       auto-multiple-choice
       automake
