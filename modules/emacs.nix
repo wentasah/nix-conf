@@ -328,7 +328,6 @@
         tree-mode
         treemacs
         txl
-        typo
         udev-mode
         uncrustify-mode
         undo-tree
