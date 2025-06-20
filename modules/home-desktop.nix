@@ -19,7 +19,7 @@
     arandr
     audacity
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; })
-    carla
+    # carla # broken 2025-06-20
     drawio
     firefox #-devedition-bin # I need devedition to use (currently) unrelease version of https://github.com/stsquad/emacs_chrome
     (flameshot.override { enableWlrSupport = true; })
