@@ -175,7 +175,7 @@ in
       xrectsel
       zotero
       # zulip # depends on insecure electron_32 (2024-03-09)
-      zulip-term
+      # zulip-term # broken <2025-06-21 Sat>
 
       # Emacs versions from emacs-overlay
       #(pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')

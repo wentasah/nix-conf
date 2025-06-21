@@ -332,7 +332,7 @@
         uncrustify-mode
         undo-tree
         unfill
-        uniline
+        # uniline # broken <2025-06-21 Sat> https://github.com/tbanel/uniline/issues/9
         use-package
         vala-mode
         vertico
