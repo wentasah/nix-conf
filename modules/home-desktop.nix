@@ -2,7 +2,8 @@
 # Home manager configuration common to all my desktops. Graphical tools, etc.
 {
   imports = [
-    ../modules/xkb-wsh-home.nix
+    ./xkb-wsh-home.nix
+    ./audio.nix
   ];
   home.packages = with pkgs; let
     xdot' = xdot.overrideAttrs (old: {
@@ -17,7 +18,6 @@
     });
   in [
     arandr
-    ardour jack2 x42-plugins gxplugins-lv2 qjackctl lsp-plugins
     audacity
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; })
     # carla # broken 2025-06-20
