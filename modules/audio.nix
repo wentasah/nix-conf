@@ -12,6 +12,7 @@
     gxplugins-lv2
     qjackctl
     lsp-plugins
+    swh_lv2
   ];
 
   home.sessionSearchVariables = {
