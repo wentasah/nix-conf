@@ -6,13 +6,26 @@
 }:
 {
   home.packages = with pkgs; [
+    aether-lv2
     ardour
-    jack2
-    x42-plugins
+    bs2b-lv2
+    caps
+    dragonfly-reverb
+    fomp
+    guitarix
     gxplugins-lv2
-    qjackctl
+    jack2
+    ladspaPlugins
     lsp-plugins
+    mda_lv2
+    molot-lite
+    qjackctl
+    rkrlv2
     swh_lv2
+    x42-avldrums
+    x42-gmsynth
+    x42-plugins
+    zam-plugins
   ];
 
   home.sessionSearchVariables = {
