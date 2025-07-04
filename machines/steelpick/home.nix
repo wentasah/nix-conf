@@ -68,7 +68,6 @@ in
     [
       adoptopenjdk-icedtea-web
       afew
-      ardour jack2 x42-plugins gxplugins-lv2 qjackctl
       atool
       auto-multiple-choice
       automake

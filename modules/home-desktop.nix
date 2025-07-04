@@ -17,6 +17,7 @@
     });
   in [
     arandr
+    ardour jack2 x42-plugins gxplugins-lv2 qjackctl lsp-plugins
     audacity
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; })
     # carla # broken 2025-06-20

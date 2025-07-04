@@ -63,7 +63,6 @@ in
     [
       adoptopenjdk-icedtea-web
       afew
-      ardour
       atool
       auto-multiple-choice
       automake
