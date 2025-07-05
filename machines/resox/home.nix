@@ -132,7 +132,6 @@ in
       pidgin
       (pkgs.callPackage ../../pkgs/cargo-prefetch { })
       #(pkgs.callPackage ../../pkgs/diffsitter {})
-      (pkgs.callPackage ../../pkgs/enumerate-markdown { })
       playerctl
       pod-mode
       pulseaudio # I use pactl in ~/.i3/config (even with pipewire)

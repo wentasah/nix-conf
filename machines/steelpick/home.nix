@@ -137,7 +137,6 @@ in
       pidgin
       (pkgs.callPackage ../../pkgs/cargo-prefetch { })
       #(pkgs.callPackage ../../pkgs/diffsitter {})
-      (pkgs.callPackage ../../pkgs/enumerate-markdown { })
       playerctl
       pod-mode
       python3Packages.jupyter_core
