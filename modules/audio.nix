@@ -18,6 +18,7 @@
     ladspaPlugins
     lsp-plugins
     mda_lv2
+    meterbridge
     molot-lite
     qjackctl
     rkrlv2
