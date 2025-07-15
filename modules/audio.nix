@@ -9,11 +9,15 @@
     aether-lv2
     ardour
     bs2b-lv2
+    calf
+    #(calf.overrideAttrs (o: { cmakeFlags = [ "-DENABLE_EXPERIMENTAL=1" ]; }))
     caps
+    coppwr
     dragonfly-reverb
     fomp
     guitarix
     gxplugins-lv2
+    jack-example-tools
     jack2
     ladspaPlugins
     lsp-plugins
@@ -23,6 +27,7 @@
     qjackctl
     rkrlv2
     swh_lv2
+    tap-plugins
     x42-avldrums
     x42-gmsynth
     x42-plugins
