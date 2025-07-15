@@ -110,6 +110,7 @@ in
     ninja
     niv
     nix-bisect
+    nix-diff
     nix-doc
     nix-du
     nix-eval-jobs
