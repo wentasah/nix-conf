@@ -228,7 +228,7 @@
         go-dlv
         go-mode
         gptel
-        #graphviz-dot-mode # broken: https://github.com/ppareit/graphviz-dot-mode/issues/85
+        graphviz-dot-mode
         guess-language
         haskell-mode
         highlight-doxygen
