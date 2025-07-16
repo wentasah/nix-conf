@@ -134,7 +134,6 @@ in
       openssl
       perl.devdoc
       perlPackages.Expect.devdoc # manpage for novaboot development
-      pidgin
       (pkgs.callPackage ../../pkgs/cargo-prefetch { })
       #(pkgs.callPackage ../../pkgs/diffsitter {})
       playerctl
