@@ -43,6 +43,8 @@
     kooha
     krita
     libreoffice-fresh libreoffice-fresh.unwrapped.jdk
+    libtracefs # package maintained by me - let's have its documentation etc.
+    libtracefs.devman
     meld
     mission-center
     musescore
