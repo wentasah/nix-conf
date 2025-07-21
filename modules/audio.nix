@@ -17,6 +17,7 @@
     fomp
     guitarix
     gxplugins-lv2
+    hydrogen
     jack-example-tools
     jack2
     ladspaPlugins
