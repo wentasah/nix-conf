@@ -51,6 +51,7 @@ in
     eza
     fd
     ffmpeg
+    filterpath
     findrepo
     gcalcli
     gdb
