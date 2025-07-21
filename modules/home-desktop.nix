@@ -27,7 +27,7 @@
     (flameshot.override { enableWlrSupport = true; })
     freecad
     ghostty
-    # gimp # broken https://github.com/NixOS/nixpkgs/issues/425521
+    gimp
     (gnuplot_qt.override { withCaca = true; })
     gtkterm
     handbrake
