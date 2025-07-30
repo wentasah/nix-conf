@@ -159,7 +159,7 @@ in
       wireshark
       wol
       wrenv
-      wrwb
+      #wrwb
       x11docker
       xf86_input_wacom
       xorg.xev
