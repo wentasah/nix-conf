@@ -77,7 +77,8 @@ buildFHSEnv {
 
   targetPkgs = pkgs: with pkgs; [
     stm32cubeide
-    gtk3 cairo glib webkitgtk_4_0
+    gtk3 cairo glib
+    webkitgtk_4_0               # needs insecure libsoup <2025-07-30 Wed>
 
     # These libraries are also needed in the FHS environment for
     # flashing/debugging to work. Having them as dependencies in

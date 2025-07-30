@@ -147,7 +147,7 @@ in
       ssh-to-age
       steam-run
       sterm
-      stm32cubeide
+      #stm32cubeide
       tcpreplay
       texpresso
       unrar
