@@ -96,10 +96,10 @@ in
   '';
 
   systemd = {
-    extraConfig = ''
+    settings.Manager = {
       # Don't block reboot for too long
-      DefaultTimeoutStopSec=30
-    '';
+      DefaultTimeoutStopSec = 30;
+    };
 
 #     sockets.tftpd = {
 #       description = "TFTP server socket";
