@@ -6,6 +6,7 @@
 }:
 {
   home.packages = with pkgs; [
+    adlplug
     aether-lv2
     ardour
     bs2b-lv2
@@ -25,9 +26,14 @@
     mda_lv2
     meterbridge
     molot-lite
+    odin2
+    opnplug
+    padthv1
     qjackctl
     rkrlv2
+    surge-XT
     swh_lv2
+    synthv1
     tap-plugins
     x42-avldrums
     x42-gmsynth
