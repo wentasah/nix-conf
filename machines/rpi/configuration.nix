@@ -27,6 +27,7 @@
     nixPath = config.nix.settings.nix-path;
   };
 
+  networking.hostName = "homeassistant";
 
   environment.systemPackages = with pkgs; [
     btop
