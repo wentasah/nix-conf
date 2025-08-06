@@ -45,10 +45,15 @@
     enable = true;
     description = "librespot Spotify client";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    wants = [ "network.target" "sound.target" ];
+    after = [ "network.target" "sound.target" ];
     serviceConfig = {
       Type = "simple";
+      SupplementaryGroups = [ "audio" ];
       ExecStart = "${pkgs.librespot}/bin/librespot --name 'Věž Sony MD'";
+      Restart = "always";
+      RestartSec = 10;
+      DynamicUser = true;
     };
   };
 
