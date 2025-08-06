@@ -51,6 +51,8 @@
     okteta
     pavucontrol
     pdfpc
+    pix
+    qimgv
     qpwgraph
     rustdesk-flutter
     screenkey
