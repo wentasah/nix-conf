@@ -49,7 +49,7 @@ in
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPatches = [
     #{ name = "can-isotp-poll"; patch = ../../pkgs/linux/0001-can-isotp-fix-poll-to-not-report-false-positive-EPOL.patch; }
   ];
