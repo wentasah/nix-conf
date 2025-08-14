@@ -125,10 +125,15 @@ in
 
   environment.variables.EDITOR = "vim";
 
-  documentation.dev.enable = true;
-  #documentation.man.generateCaches = true;
-
-  environment.extraOutputsToInstall = [ "man" "info" ];
+  documentation = {
+    dev.enable = true;
+    doc.enable = true;
+    enable = true;
+    info.enable = true;
+    man.enable = true;
+    #man.generateCaches = true;
+    nixos.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
