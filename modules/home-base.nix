@@ -430,7 +430,7 @@ in
     "mc/mc.ext.ini".text = ''
       ${builtins.readFile "${pkgs.mc}/etc/mc/mc.ext.ini"}
       [mcap]
-      Open=foxglove-studio %f &
+      Open=foxglove-studio %f >/dev/null 2>&1 &
       Shell=.mcap
    '';
   };
