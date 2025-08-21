@@ -433,6 +433,20 @@ in
       Open=foxglove-studio %f >/dev/null 2>&1 &
       Shell=.mcap
    '';
+    "mc/menu".text = ''
+      ${builtins.readFile "${pkgs.mc}/etc/mc/mc.menu"}
+      e       Edit with Emacs (X or text)
+              ec %f
+
+      a       Send as attachment (notmuch)
+              notmuch-attach %s
+
+      p       Copy full file path to clipboard
+              wl-copy "%d/%f"
+
+      k       KDiff3
+              kdiff3 %D/%F %f
+    '';
   };
 
   services.home-manager.autoExpire = {
