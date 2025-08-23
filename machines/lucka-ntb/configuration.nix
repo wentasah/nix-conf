@@ -38,6 +38,8 @@ in
   networking.networkmanager.logLevel = "INFO";
   #networking.networkmanager.unmanaged = [ "wlp2s0" ]; # USB wifi is more reliable and having both enabled has problems.
 
+  services.tailscale.enable = true;
+
   # Select internationalisation properties.
   i18n.defaultLocale = "cs_CZ.UTF-8";
   # console = {
