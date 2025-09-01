@@ -442,14 +442,13 @@ in
 
   services.gnome.gcr-ssh-agent.enable = false; # collides with ssh-agent
 
-  services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend";
     # Stop user systemd instance immediately after logout. This is
     # needed because I start session daemons by systemd. If they are
     # not restarted, they cannot connect to a new WAYLAND DISPLAY.
-    UserStopDelaySec=1
-  '';
+    UserStopDelaySec = 1;
+  };
 
   # Enable the X11 windowing system.
   services.xserver = {
