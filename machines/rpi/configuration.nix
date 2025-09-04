@@ -35,10 +35,6 @@
     kitty.terminfo
     mc
     vim
-
-    cage
-    foot
-    kodi-wayland
   ];
 
   systemd.services.librespot = {
@@ -93,21 +89,6 @@
   };
 
   services.openssh.enable = true;
-
-  #services.spotifyd.enable = true;
-
-#   services.xserver.enable = true;
-#   services.xserver.desktopManager.kodi.enable = true;
-#   services.xserver.displayManager.autoLogin.enable = true;
-#   services.xserver.displayManager.autoLogin.user = "kodi";
-#   services.xserver.displayManager.lightdm.greeter.enable = false;
-
-  # Define a user account
-  users.extraUsers.kodi.isNormalUser = true;
-
-  #services.cage.enable = true;
-  services.cage.program = "${pkgs.kodi-wayland}/bin/kodi-standalone";
-  services.cage.user = "kodi";
 
   users = {
     users.wsh = {
