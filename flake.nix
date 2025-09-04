@@ -86,6 +86,32 @@
           ];
         })
       ];
+
+      librespot-overlay =
+        final: prev: {
+          librespot =
+            let
+              version = "0.7.1";
+            in
+              prev.librespot.overrideAttrs (finalAttrs: prevAttrs: {
+                inherit version;
+                src = final.fetchFromGitHub {
+                  owner = "librespot-org";
+                  repo = "librespot";
+                  rev = "v${version}";
+                  sha256 = "sha256-gBMzvQxmy+GYzrOKWmbhl56j49BK8W8NYO2RrvS4mWI=";
+                };
+                cargoHash = "sha256-PiGIxMIA/RL+YkpG1f46zyAO5anx9Ii+anKrANCM+rk=";
+                buildFeatures = [ "native-tls" ] ++ prevAttrs.buildFeatures;
+                cargoBuildFeatures = [ "native-tls" ] ++ prevAttrs.cargoBuildFeatures;
+                cargoCheckFeatures = [ "native-tls" ] ++ prevAttrs.cargoCheckFeatures;
+                cargoDeps = final.rustPlatform.fetchCargoVendor {
+                  inherit (finalAttrs) pname src version;
+                  hash = finalAttrs.cargoHash;
+                };
+              });
+        };
+
       # Create combined package set from nixpkgs and our overlays.
       mkPkgs = platform: import nixpkgs {
         system = platform;
@@ -137,6 +163,7 @@
               nix.registry.nixpkgs.flake = nixpkgs-stable;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.carla-stable.overlays."0.9.15"
+                librespot-overlay
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux) ;
@@ -161,7 +188,10 @@
           modules = [
             nixos-hardware.nixosModules.raspberry-pi-4
             ./machines/rpi/configuration.nix
-            { nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; }; }
+            {
+              nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; };
+              nixpkgs.overlays = [ librespot-overlay ];
+            }
           ];
         };
       };
