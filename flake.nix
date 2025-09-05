@@ -86,7 +86,7 @@
           ];
         })
       ];
-
+      # TODO: Remove after switching to 25.11
       librespot-overlay =
         final: prev: {
           librespot =
