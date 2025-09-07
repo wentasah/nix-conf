@@ -41,11 +41,7 @@ in
       {
         patches = patches ++ [
           # Feature: Save as dialog (https://github.com/jtheoof/swappy/pull/133)
-          (fetchpatch {
-            url = "https://github.com/jtheoof/swappy/commit/e670f7283664840d0200df88df194da503b9b3ad.patch";
-            excludes = [ "src/po/tr.po" ];
-            hash = "sha256-jDV9YeNVoFe1E/Hd9NR+fiBMGOG9qXR+MpO546Z/WyE=";
-          })
+          ../patches/swappy-feat-save_as-add-save_as-button-for-snapshots.patch
         ];
       });
     in [

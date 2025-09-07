@@ -1,0 +1,268 @@
+From b5ebf6e7d52ba27653aa684ff751768f6c256608 Mon Sep 17 00:00:00 2001
+From: Max Kunzelmann <maxdev@posteo.de>
+Date: Sat, 30 Jul 2022 00:38:34 +0200
+Subject: [PATCH] feat(save_as): add save_as button for snapshots
+
+Allow to save snapshots with a different name and under a different
+location than specified in the configuration as default.
+
+Signed-off-by: Max Kunzelmann <maxdev@posteo.de>
+---
+ README.md          |  1 +
+ include/pixbuf.h   |  1 +
+ res/swappy.glade   | 21 +++++++++++++++++++++
+ src/application.c  | 35 +++++++++++++++++++++++++++++++++++
+ src/main.c         | 10 ++++++++++
+ src/pixbuf.c       | 25 +++++++++++++++++--------
+ src/po/POTFILES    |  1 +
+ src/po/meson.build |  9 ++++++++-
+ src/po/swappy.pot  | 12 ++++++++++++
+ 9 files changed, 106 insertions(+), 9 deletions(-)
+
+diff --git a/README.md b/README.md
+index 01bddde..1976bff 100644
+--- a/README.md
++++ b/README.md
+@@ -107,6 +107,7 @@ transparency=50
+ - `Ctrl+z`: Undo
+ - `Ctrl+Shift+z` or `Ctrl+y`: Redo
+ - `Ctrl+s`: Save to file (see man page)
++- `Ctrl+Shift+s`: Open "Save As" dialog
+ - `Ctrl+c`: Copy to clipboard
+ - `Escape` or `q` or `Ctrl+w`: Quit swappy
+ 
+diff --git a/include/pixbuf.h b/include/pixbuf.h
+index 9449b53..b2b50a0 100644
+--- a/include/pixbuf.h
++++ b/include/pixbuf.h
+@@ -4,6 +4,7 @@
+ 
+ GdkPixbuf *pixbuf_init_from_file(struct swappy_state *state);
+ GdkPixbuf *pixbuf_get_from_state(struct swappy_state *state);
++char *format_filename(char *filename_format);
+ void pixbuf_save_state_to_folder(GdkPixbuf *pixbuf, char *folder,
+                                  char *filename_format);
+ void pixbuf_save_to_file(GdkPixbuf *pixbuf, char *file);
+diff --git a/res/swappy.glade b/res/swappy.glade
+index e12a14f..5deb14e 100644
+--- a/res/swappy.glade
++++ b/res/swappy.glade
+@@ -32,6 +32,11 @@
+     <property name="can_focus">False</property>
+     <property name="icon_name">document-properties-symbolic</property>
+   </object>
++  <object class="GtkImage" id="img-save-as-surface">
++    <property name="visible">True</property>
++    <property name="can-focus">False</property>
++    <property name="icon-name">document-save-as</property>
++  </object>
+   <object class="GtkImage" id="zoom-in">
+     <property name="visible">True</property>
+     <property name="can_focus">False</property>
+@@ -873,6 +878,22 @@
+                 <property name="always_show_image">True</property>
+                 <signal name="clicked" handler="save_clicked_handler" swapped="no"/>
+               </object>
++              <packing>
++                <property name="expand">False</property>
++                <property name="fill">True</property>
++                <property name="position">1</property>
++              </packing>
++            </child>
++            <child>
++              <object class="GtkButton" id="save-as">
++                <property name="visible">True</property>
++                <property name="can-focus">False</property>
++                <property name="receives-default">True</property>
++                <property name="tooltip-text" translatable="yes">Save Surface As</property>
++                <property name="image">img-save-as-surface</property>
++                <property name="always-show-image">True</property>
++                <signal name="clicked" handler="save_as_clicked_handler" swapped="no"/>
++              </object>
+               <packing>
+                 <property name="expand">False</property>
+                 <property name="fill">True</property>
+diff --git a/src/application.c b/src/application.c
+index 975e572..2d13eb7 100644
+--- a/src/application.c
++++ b/src/application.c
+@@ -1,5 +1,6 @@
+ #include <gdk/gdk.h>
+ #include <glib-2.0/glib.h>
++#include <glib/gi18n-lib.h>
+ #include <glib/gstdio.h>
+ #include <gtk/gtk.h>
+ #include <inttypes.h>
+@@ -377,6 +378,37 @@ void save_clicked_handler(GtkWidget *widget, struct swappy_state *state) {
+   save_state_to_file_or_folder(state, NULL);
+ }
+ 
++void save_as_clicked_handler(GtkWidget *widget, struct swappy_state *state) {
++  gchar *filename_suggestion;
++  GtkWidget *dialog;
++  GtkFileChooser *chooser;
++  GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
++  gint res;
++
++  commit_state(state);
++  filename_suggestion = format_filename(state->config->save_filename_format);
++
++  dialog = gtk_file_chooser_dialog_new(NULL, state->ui->window, action,
++                                       _("_Cancel"), GTK_RESPONSE_CANCEL,
++                                       _("_Save"), GTK_RESPONSE_ACCEPT, NULL);
++  chooser = GTK_FILE_CHOOSER(dialog);
++  gtk_file_chooser_set_do_overwrite_confirmation(chooser, TRUE);
++  gtk_file_chooser_set_current_folder(chooser, state->config->save_dir);
++  gtk_file_chooser_set_current_name(chooser, filename_suggestion);
++  g_free(filename_suggestion);
++
++  res = gtk_dialog_run(GTK_DIALOG(dialog));
++  if (res == GTK_RESPONSE_ACCEPT) {
++    gchar *filename;
++
++    filename = gtk_file_chooser_get_filename(chooser);
++    save_state_to_file_or_folder(state, filename);
++    g_free(filename);
++  }
++
++  gtk_widget_destroy(dialog);
++}
++
+ void clear_clicked_handler(GtkWidget *widget, struct swappy_state *state) {
+   action_clear(state);
+ }
+@@ -442,6 +474,9 @@ void window_keypress_handler(GtkWidget *widget, GdkEventKey *event,
+       case GDK_KEY_s:
+         save_state_to_file_or_folder(state, NULL);
+         break;
++      case GDK_KEY_S:
++        save_as_clicked_handler(NULL, state);
++        break;
+       case GDK_KEY_b:
+         action_toggle_painting_panel(state, NULL);
+         break;
+diff --git a/src/main.c b/src/main.c
+index c04b96a..bb64671 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,5 +1,8 @@
+ #define _POSIX_C_SOURCE 200809L
+ 
++#include <libintl.h>
++#include <locale.h>
++
+ #include "application.h"
+ #include "config.h"
+ 
+@@ -7,6 +10,13 @@ int main(int argc, char *argv[]) {
+   struct swappy_state state = {0};
+   int status;
+ 
++  // set locales according to environment variables
++  setlocale(LC_ALL, "");
++  // set base directory for translated messages
++  bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
++  // explicitly set encoding of message translations to UTF-8
++  bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
++
+   state.argc = argc;
+   state.argv = argv;
+   state.mode = SWAPPY_PAINT_MODE_BRUSH;
+diff --git a/src/pixbuf.c b/src/pixbuf.c
+index a0f98c0..58edf79 100644
+--- a/src/pixbuf.c
++++ b/src/pixbuf.c
+@@ -22,26 +22,35 @@ static void write_file(GdkPixbuf *pixbuf, char *path) {
+   }
+ }
+ 
+-void pixbuf_save_state_to_folder(GdkPixbuf *pixbuf, char *folder,
+-                                 char *filename_format) {
++char *format_filename(char *filename_format) {
+   time_t current_time = time(NULL);
+   char *c_time_string;
+   char filename[255];
+-  char path[MAX_PATH];
+-  size_t bytes_formated;
++  size_t bytes_formatted;
+ 
+   c_time_string = ctime(&current_time);
+   c_time_string[strlen(c_time_string) - 1] = '\0';
+-  bytes_formated = strftime(filename, sizeof(filename), filename_format,
+-                            localtime(&current_time));
+-  if (!bytes_formated) {
++  bytes_formatted = strftime(filename, sizeof(filename), filename_format,
++                             localtime(&current_time));
++  if (!bytes_formatted) {
+     g_warning(
+         "filename_format: %s overflows filename limit - file cannot be saved",
+         filename_format);
+-    return;
++    return NULL;
+   }
+ 
++  return g_strdup(filename);
++}
++
++void pixbuf_save_state_to_folder(GdkPixbuf *pixbuf, char *folder,
++                                 char *filename_format) {
++  char path[MAX_PATH];
++  char *filename;
++  filename = format_filename(filename_format);
++  if (filename == NULL) return;
++
+   g_snprintf(path, MAX_PATH, "%s/%s", folder, filename);
++  g_free(filename);
+   g_info("saving surface to path: %s", path);
+   write_file(pixbuf, path);
+ }
+diff --git a/src/po/POTFILES b/src/po/POTFILES
+index 9f2d6d6..d21f0e3 100644
+--- a/src/po/POTFILES
++++ b/src/po/POTFILES
+@@ -1 +1,2 @@
+ res/swappy.glade
++src/application.c
+diff --git a/src/po/meson.build b/src/po/meson.build
+index d8cd15b..c73d9b1 100644
+--- a/src/po/meson.build
++++ b/src/po/meson.build
+@@ -1,7 +1,14 @@
+ i18n = import('i18n')
+ 
++conf = configuration_data()
+ # define GETTEXT_PACKAGE
+-add_project_arguments('-DGETTEXT_PACKAGE="swappy"', language:'c')
++conf.set_quoted('GETTEXT_PACKAGE',  meson.project_name())
++conf.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
++
++config_h = configure_file(
++        output : 'generated_config.h',
++        configuration : conf)
++add_project_arguments('-include', 'src/po/generated_config.h', language : 'c')
+ 
+ i18n.gettext(meson.project_name(),
+     args: '--directory=' + meson.source_root()
+diff --git a/src/po/swappy.pot b/src/po/swappy.pot
+index 3e256b1..a21a99f 100644
+--- a/src/po/swappy.pot
++++ b/src/po/swappy.pot
+@@ -68,3 +68,15 @@ msgstr ""
+ #: res/swappy.glade:871
+ msgid "Save Surface"
+ msgstr ""
++
++#: res/swappy.glade:800
++msgid "Save Surface As"
++msgstr ""
++
++#: src/application.c:327
++msgid "_Cancel"
++msgstr ""
++
++#: src/application.c:328
++msgid "_Save"
++msgstr ""
+-- 
+2.50.1
+
