@@ -166,7 +166,8 @@
                 librespot-overlay
                 (final: prev: {
                   # Packages from unstable
-                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux) ;
+                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
+                    dix;
                 })
               ];
             }
