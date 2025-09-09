@@ -236,7 +236,7 @@ def failed_recently(host):
 def print_switch_instructions(host, override_input: List[str]):
     print("Diff from current configuration:")
     # nix store diff-closures /run/current-system ~/nix/out/"$HOST"/flake
-    system(f'nvd diff /run/current-system ~/nix/out/{host}/flake')
+    system(f'dix /run/current-system ~/nix/out/{host}/flake')
     print(f"""
 Run one of the following to switch the configuration:
   sudo nix-conf switch
@@ -292,7 +292,7 @@ def notify_ci_update(attr):
             warn(f"warning: {os.getcwd()}/gcroots.old/result-{attr} does not exist - not checking for changes")
             return
         if os.readlink(f'gcroots.old/result-{attr}') != os.readlink(f'gcroots/result-{attr}'):
-            diff = check_output(f"nvd diff gcroots.old/result-{attr} gcroots/result-{attr}", shell=True).decode().splitlines()
+            diff = check_output(f"dix gcroots.old/result-{attr} gcroots/result-{attr}", shell=True).decode().splitlines()
             diff_md = "\n".join(["    " + line for line in diff])
             try:
                 check_call(["matrix-commander", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])

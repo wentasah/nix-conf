@@ -44,6 +44,7 @@ in
     csvtool
     d2
     daemontools
+    dix
     dot-language-server
     doxygen_gui
     dua
@@ -131,7 +132,6 @@ in
     nodePackages.bash-language-server
     npins
     nurl
-    nvd
     odt2txt
     oils-for-unix
     p7zip
