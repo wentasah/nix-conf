@@ -177,6 +177,11 @@
           system = "x86_64-linux";
           modules = [ ./machines/lucka-ntb/configuration.nix ];
         };
+        mikysak = nixpkgs-stable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/mikysak/configuration.nix ];
+          specialArgs = { inherit inputs; };
+        };
         turbot = nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
