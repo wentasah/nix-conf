@@ -113,6 +113,7 @@ in
   };
 
   programs.firefox.enable = true;
+  programs.firefox.languagePacks = [ "cs" ];
   programs.chromium.enable = true;
 
   # List packages installed in system profile.
