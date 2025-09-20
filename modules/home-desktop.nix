@@ -55,6 +55,7 @@
     pix
     qimgv
     qpwgraph
+    rquickshare
     rustdesk-flutter
     screenkey
     shotcut
