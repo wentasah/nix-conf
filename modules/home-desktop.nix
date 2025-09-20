@@ -58,6 +58,7 @@
     rustdesk-flutter
     screenkey
     shotcut
+    sioyek
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
