@@ -120,7 +120,7 @@ in
       libnotify # for notify-send (for mailsync)
       libsecret
       licenseutils
-      linuxPackages.perf
+      perf
       lsof # TODO: git-annex assistant should depend on this
       man-pages
       mytexlive

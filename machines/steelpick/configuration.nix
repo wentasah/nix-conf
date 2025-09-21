@@ -464,8 +464,8 @@ in
 
   #services.xserver.displayManager.lightdm.enable = true;
   services.displayManager.defaultSession = "sway";
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
 #   services.xserver.desktopManager.plasma5.enable = true;
 #   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
