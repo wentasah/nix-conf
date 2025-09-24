@@ -286,6 +286,8 @@
 
   services.logind.extraConfig = ''
     HandlePowerKey=suspend
+    # suspend even when locked
+    PowerKeyIgnoreInhibited = yes
   '';
 
   # Open ports in the firewall.
@@ -351,6 +353,8 @@
   services.flatpak.enable = true;
 
   services.envfs.enable = true;
+
+  programs.adb.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
