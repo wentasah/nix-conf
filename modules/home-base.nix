@@ -176,6 +176,7 @@ in
     tectonic
     tinymist # alternative typst LSP
     tmux
+    tokei
     trace-cmd
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
     treefmt
