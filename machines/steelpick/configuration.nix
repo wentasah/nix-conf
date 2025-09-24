@@ -443,6 +443,7 @@ in
 
   services.logind.settings.Login = {
     HandlePowerKey = "suspend";
+    PowerKeyIgnoreInhibited = "yes"; # suspend even when locked
     # Stop user systemd instance immediately after logout. This is
     # needed because I start session daemons by systemd. If they are
     # not restarted, they cannot connect to a new WAYLAND DISPLAY.
