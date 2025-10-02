@@ -156,6 +156,7 @@ in
     mc
     nautilus-python
     ncdu
+    net-tools
     nethogs
     ntfs3g
     pciutils
