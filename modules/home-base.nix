@@ -48,6 +48,7 @@ in
     dot-language-server
     doxygen_gui
     dua
+    elfutils
     entr
     eza
     fd
