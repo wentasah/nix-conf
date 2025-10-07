@@ -355,6 +355,7 @@ in
     packages = [
       pkgs.stlink
       pkgs.yubikey-personalization
+      pkgs.librealsense
     ];
     extraRules = builtins.concatStringsSep "\n" [
       # USB relays
