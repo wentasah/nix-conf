@@ -350,6 +350,8 @@ in
     enableZshIntegration = true;
   };
 
+  programs.zellij.enable = true;
+
   programs.bash = {
     enable = true;
     initExtra = ''
