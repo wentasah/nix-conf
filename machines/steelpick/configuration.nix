@@ -278,8 +278,7 @@ in
 
   programs.wshowkeys.enable = true;
 
-  virtualisation.virtualbox.host.enable = true;
-
+  #virtualisation.virtualbox.host.enable = true;  # broken <2025-10-08 Wed>
   #virtualisation.virtualbox.host.enableExtensionPack = true; # Enable temporarily for USB 2.0+ devices
 
   # List services that you want to enable:
