@@ -82,4 +82,15 @@
     package = pkgs.quintom-cursor-theme;
     size = 24;
   };
+
+  programs.foot = {
+    enable = true;
+    settings.main.include = [
+      # white background
+      #"${pkgs.foot.themes}/share/foot/themes/modus-operandi"
+      "${pkgs.foot.themes}/share/foot/themes/selenized-white"
+      #"${pkgs.foot.themes}/share/foot/themes/tempus-past"
+    ];
+    #settings.main.font = "JetBrainsMono Nerd Font:size=9";
+  };
 }
