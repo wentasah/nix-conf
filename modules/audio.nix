@@ -6,7 +6,7 @@
 }:
 {
   home.packages = with pkgs; [
-    adlplug
+    #adlplug # broken <2025-10-08 Wed>
     aether-lv2
     ardour
     bs2b-lv2
@@ -27,11 +27,11 @@
     meterbridge
     molot-lite
     odin2
-    opnplug
+    # opnplug # broken
     padthv1
     qjackctl
     rkrlv2
-    surge-XT
+    # surge-XT # broken
     swh_lv2
     synthv1
     tap-plugins
@@ -39,6 +39,7 @@
     x42-gmsynth
     x42-plugins
     zam-plugins
+    # zynaddsubfx # broken
   ];
 
   home.sessionSearchVariables = {

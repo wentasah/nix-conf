@@ -73,7 +73,6 @@
     xdragon
     xournalpp
     yubioath-flutter
-    zynaddsubfx
   ];
 
   home.pointerCursor = {
