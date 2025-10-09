@@ -86,9 +86,9 @@
           ];
         })
       ];
-      # TODO: Remove after switching to 25.11
-      librespot-overlay =
+      stable-overlay =
         final: prev: {
+          # TODO: Remove after switching to 25.11
           librespot =
             let
               version = "0.7.1";
@@ -163,7 +163,7 @@
               nix.registry.nixpkgs.flake = nixpkgs-stable;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.carla-stable.overlays."0.9.15"
-                librespot-overlay
+                stable-overlay
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
@@ -179,7 +179,13 @@
         };
         mikysak = nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/mikysak/configuration.nix ];
+          modules = [
+            ./machines/mikysak/configuration.nix
+            {
+              nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; };
+              nixpkgs.overlays = [ stable-overlay ];
+            }
+          ];
           specialArgs = { inherit inputs; };
         };
         turbot = nixpkgs-stable.lib.nixosSystem {
@@ -196,7 +202,7 @@
             ./machines/rpi/configuration.nix
             {
               nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; };
-              nixpkgs.overlays = [ librespot-overlay ];
+              nixpkgs.overlays = [ stable-overlay ];
             }
           ];
         };
