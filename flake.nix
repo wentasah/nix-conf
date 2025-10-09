@@ -135,8 +135,6 @@
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             {
-              # pin nixpkgs in the system-wide flake registry
-              nix.registry.nixpkgs.flake = nixpkgs;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.nix-xilinx.overlay
                 (final: prev: {
@@ -161,8 +159,6 @@
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             {
-              # pin nixpkgs in the system-wide flake registry
-              nix.registry.nixpkgs.flake = nixpkgs-stable;
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.carla-stable.overlays."0.9.15"
                 stable-overlay
@@ -184,7 +180,6 @@
           modules = [
             ./machines/mikysak/configuration.nix
             {
-              nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; };
               nixpkgs.overlays = [ stable-overlay ];
             }
           ];
@@ -203,7 +198,6 @@
             nixos-hardware.nixosModules.raspberry-pi-4
             ./machines/rpi/configuration.nix
             {
-              nix.registry.nixpkgs.to = { type = "path"; path = inputs.nixpkgs-stable; };
               nixpkgs.overlays = [ stable-overlay ];
             }
           ];

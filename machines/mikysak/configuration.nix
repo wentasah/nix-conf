@@ -75,10 +75,6 @@ in
     '';
     # set system registry
     registry = {
-      nixpkgs.to = {
-        type = "path";
-        path = inputs.nixpkgs;
-      };
       self.to = {
         type = "path";
         path = inputs.self;
