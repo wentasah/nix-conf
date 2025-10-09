@@ -97,6 +97,7 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.miky = {
+    description = "Miky";
     isNormalUser = true;
     packages = with pkgs; [ ];
   };
@@ -105,6 +106,7 @@ in
     packages = with pkgs; [
       nix-output-monitor
       python3
+      waypipe
     ];
   };
 
@@ -159,6 +161,11 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.timekpr = {
+    enable = true;
+    adminUsers = ["wsh"];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

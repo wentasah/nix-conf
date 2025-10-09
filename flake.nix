@@ -179,6 +179,7 @@
           system = "x86_64-linux";
           modules = [
             ./machines/mikysak/configuration.nix
+            ./modules/timekpr.nix # TODO remove in 25.11
             {
               nixpkgs.overlays = [ stable-overlay ];
             }
