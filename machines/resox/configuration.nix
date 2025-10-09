@@ -385,6 +385,10 @@
     uid = 1004;
   };
 
+  services.timekpr = {
+    enable = true;
+    adminUsers = ["wsh"];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -110,6 +110,7 @@
                   hash = finalAttrs.cargoHash;
                 };
               });
+          timekpr = prev.callPackage ./pkgs/timekpr/package.nix { };
         };
 
       # Create combined package set from nixpkgs and our overlays.
@@ -153,6 +154,7 @@
           system = "x86_64-linux";
           modules = [
             ./machines/resox/configuration.nix
+            ./modules/timekpr.nix # TODO remove in 25.11
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
