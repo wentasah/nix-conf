@@ -80,7 +80,7 @@ in
       cask
       clang
       clang-tools
-      clementine
+      #clementine # broken <2025-10-10 Fri>
       clinfo
       cmakeWithGui
       cppreference

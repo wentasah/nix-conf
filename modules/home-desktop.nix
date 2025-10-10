@@ -31,7 +31,7 @@
     gimp
     (gnuplot_qt.override { withCaca = true; })
     gtkterm
-    handbrake
+    #handbrake
     hotspot
     inkscape
     kdePackages.kdenlive

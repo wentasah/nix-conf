@@ -30,7 +30,7 @@
     # opnplug # broken
     padthv1
     qjackctl
-    rkrlv2
+    # rkrlv2 # broken
     # surge-XT # broken
     swh_lv2
     synthv1
