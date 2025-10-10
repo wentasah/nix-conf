@@ -39,7 +39,7 @@
     x42-gmsynth
     x42-plugins
     zam-plugins
-    # zynaddsubfx # broken
+    zynaddsubfx
   ];
 
   home.sessionSearchVariables = {
