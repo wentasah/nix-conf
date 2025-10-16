@@ -24,6 +24,9 @@
       '';
     };
   };
+  home.activation = {
+    emacsClientSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] "run ln -s $VERBOSE_ARG emacsclient-tty $HOME/bin/ecc";
+  };
   services.emacs = {
     enable = true;
     socketActivation.enable = true;
