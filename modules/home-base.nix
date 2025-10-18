@@ -15,6 +15,7 @@ in
     ./emacs.nix
   ];
   home.packages = with pkgs; [
+    act
     age
     alejandra
     aspell
