@@ -138,8 +138,8 @@ in
     flake = "/etc/nixos";
     flags = [ "--update-input" "nixpkgs-stable" ];
     randomizedDelaySec = "30min";
+    persistent = true;
   };
-  systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
   systemd.services.nixos-upgrade.serviceConfig = {
     Restart = "on-failure";
     RestartSec = "10min";
