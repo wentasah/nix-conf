@@ -76,7 +76,7 @@
           flycheck-package
           flycheck-rust
           flyspell-correct
-          #forge # stable version 0.5.3 broken <2025-06-23 Mon>
+          forge
           free-keys
           ggtags
           gptel
