@@ -1,7 +1,7 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
-    qtcreator
+    #qtcreator # broken <2025-10-23 Thu>
   ] ++ (with qt6; [
     qt3d
     qt5compat

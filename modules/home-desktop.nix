@@ -48,7 +48,7 @@
     libtracefs.devman
     meld
     mission-center
-    musescore
+    #musescore # broken <2025-10-23 Thu>
     okteta
     pavucontrol
     pdfpc
