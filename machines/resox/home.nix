@@ -18,7 +18,6 @@ let
   };
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
-  cppreference = import ../../pkgs/cppreference.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
@@ -80,7 +79,7 @@ in
       clementine
       clinfo
       cmakeWithGui
-      cppreference
+      cppreference-doc
       #cura broken
       cutter
       devhelp

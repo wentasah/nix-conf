@@ -21,7 +21,6 @@ let
   lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
   wrwb = import ../../pkgs/wrwb.nix { inherit pkgs; };
   wrenv = import ../../pkgs/wrenv.nix { inherit pkgs; };
-  cppreference = import ../../pkgs/cppreference.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
   stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
@@ -83,7 +82,7 @@ in
       #clementine # broken <2025-10-10 Fri>
       clinfo
       cmakeWithGui
-      cppreference
+      cppreference-doc
       #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
       cutter
       devhelp
