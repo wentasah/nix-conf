@@ -17,7 +17,7 @@ in
       ./novaboot.nix
       ../../modules/tftpd-hpa.nix
       ../../modules/fastdds.nix
-      ../../modules/qt5.nix
+      ../../modules/qt.nix
       #../../modules/greetd.nix
     ];
 
