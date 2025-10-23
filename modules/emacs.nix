@@ -25,7 +25,7 @@
     };
   };
   home.activation = {
-    emacsClientSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] "run ln -s $VERBOSE_ARG emacsclient-tty $HOME/bin/ecc";
+    emacsClientSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] "run ln -sf $VERBOSE_ARG emacsclient-tty $HOME/bin/ecc";
   };
   services.emacs = {
     enable = true;
