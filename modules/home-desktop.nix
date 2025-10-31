@@ -24,6 +24,7 @@
     # carla # broken 2025-06-20
     drawio
     faust
+    fido2-manage
     firefox
     (flameshot.override { enableWlrSupport = true; })
     freecad
