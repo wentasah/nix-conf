@@ -148,7 +148,7 @@ in
     emacs-nox
     ethtool
     file
-    gitAndTools.gitFull
+    gitFull
     gnumake
     htop
     iftop

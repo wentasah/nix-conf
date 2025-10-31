@@ -45,6 +45,7 @@ in
     csvtool
     d2
     daemontools
+    delta
     dix
     dot-language-server
     doxygen_gui
@@ -62,11 +63,9 @@ in
     git-backdate
     git-cliff
     git-filter-repo
+    git-lfs
     git-machete
-    gitAndTools.delta
-    gitAndTools.git-lfs
-    gitAndTools.git-subtrac
-    gitAndTools.tig
+    git-subtrac
     gitbatch
     gitui
     glab
@@ -144,7 +143,7 @@ in
     pdftk
     pkg-config
     polylux2pdfpc
-    poppler_utils
+    poppler-utils
     psmisc                      # killall, fuser, ...
     pv
     pyright
@@ -163,7 +162,7 @@ in
     ruff
     rush-parallel
     sd
-    sequoia
+    sequoia-sq
     serie
     shdw
     shellcheck
@@ -176,6 +175,7 @@ in
     sta
     systemctl-tui
     tectonic
+    tig
     tinymist # alternative typst LSP
     tmux
     tokei

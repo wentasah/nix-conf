@@ -76,7 +76,6 @@ in
       bison
       bubblewrap
       can-utils
-      cask
       clang
       clang-tools
       #clementine # broken <2025-10-10 Fri>
@@ -94,6 +93,7 @@ in
       dunst
       easyeffects
       #emacs-all-the-icons-fonts
+      emacs.pkgs.cask
       exif
       fdupes
       (feedgnuplot.override { gnuplot = gnuplot_qt; })
@@ -119,7 +119,6 @@ in
       libnotify # for notify-send (for mailsync)
       libsecret
       licenseutils
-      perf
       lsof # TODO: git-annex assistant should depend on this
       man-pages
       mytexlive
@@ -131,6 +130,7 @@ in
       notmuch.emacs
       novaboot # from novaboot overlay
       openssl
+      perf
       perl.devdoc
       perlPackages.Expect.devdoc # manpage for novaboot development
       (pkgs.callPackage ../../pkgs/cargo-prefetch { })

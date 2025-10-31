@@ -70,7 +70,7 @@
     xclip
     xdot'
     xdotool
-    xdragon
+    dragon-drop
     xournalpp
     yubioath-flutter
   ];
