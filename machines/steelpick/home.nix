@@ -137,7 +137,7 @@ in
       #(pkgs.callPackage ../../pkgs/diffsitter {})
       playerctl
       pod-mode
-      python3Packages.jupyter_core
+      python3Packages.jupyter-core
       python3Packages.notebook
       qemu
       radare2
