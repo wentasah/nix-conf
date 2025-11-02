@@ -77,8 +77,8 @@ in
     gpg-tui
     graphviz
     help2man
-    (hiPrio outils)   # collides with ts from moreutils
-    (hiPrio parallel) # Prefer this over parallel from moreutils
+    (lib.hiPrio outils)   # collides with ts from moreutils
+    (lib.hiPrio parallel) # Prefer this over parallel from moreutils
     home-manager
     htop
     hunspellDicts.cs_CZ

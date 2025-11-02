@@ -101,7 +101,7 @@ in
       gnome-tweaks
       gxplugins-lv2
       hdf5
-      (hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
+      (lib.hiPrio (btop.override { rocmSupport = true; })) # hiPrio = override home-base.nix
       hugo
       (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
       jack2
