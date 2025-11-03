@@ -554,7 +554,14 @@ in
     options = "--delete-older-than 4d";
     persistent = true;
   };
-  nix.package = pkgs.nixVersions.latest;
+  # nix.package = pkgs.nixVersions.latest;
+  nix.package = (pkgs.nixVersions.nixComponents_2_32.appendPatches [
+    (pkgs.fetchpatch2 {
+      name = "zsh-completion-put-compdef-on-first-line";
+      url = "https://github.com/NixOS/nix/commit/939f81c2e6fb998ca5a45540abac145e1aa5bdac.patch";
+      hash = "sha256-u8OqATgFJO5zrDQx/v7hRRyk+W5QBWOH5QF1fV6/xTg=";
+    })
+  ]).nix-everything;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false; # use socket activation
