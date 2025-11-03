@@ -15,8 +15,12 @@
     Install.WantedBy = [ "default.target" ];
   };
 
-  # TODO: This this work?
-  systemd.user.tmpfiles.rules = [ "d %h/srv/%H/gdu 0700 - - 6w" ];
+  systemd.user.tmpfiles.settings.gdu.rules = {
+    "%h/srv/%H/gdu".d = {
+      mode = "0700";
+      age = "6w";
+    };
+  };
 
   systemd.user.services.gdu-save = {
     Unit.ConditionACPower = true;
