@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
-      ../../modules/fastdds.nix
+      #../../modules/fastdds.nix # uncomment for 25.11
       ../../modules/flamenco.nix
     ];
 
