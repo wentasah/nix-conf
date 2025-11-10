@@ -183,7 +183,7 @@ in
     (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
     treefmt
     typst
-    typstfmt
+    typstyle
     uncrustify
     unzip
     update-nix-fetchgit
