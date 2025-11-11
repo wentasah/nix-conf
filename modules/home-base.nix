@@ -160,6 +160,7 @@ in
     ros2nix
     rsync
     ruff
+    rumdl
     rush-parallel
     sd
     sequoia-sq
