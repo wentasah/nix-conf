@@ -95,6 +95,7 @@ in
     libxml2 # for xmllint
     live-server
     ltrace
+    lurk
     magic-wormhole
     mailutils
     man-pages-posix
