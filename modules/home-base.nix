@@ -137,6 +137,7 @@ in
     nurl
     odt2txt
     oils-for-unix
+    ouch
     p7zip
     pandoc
     pastel
