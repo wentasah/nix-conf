@@ -84,6 +84,7 @@ in
     hydra-check
     hyperfine
     imagemagick
+    jless
     jo
     jq
     just
