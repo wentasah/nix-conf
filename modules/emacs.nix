@@ -311,6 +311,7 @@
         python-docstring
         python-insert-docstring
         python-pytest
+        qml-mode
         rainbow-mode
         ripgrep
         robot-mode
