@@ -31,7 +31,7 @@ in
         "brscan4-etc-files"
         "drawio"
         "konica-minolta-bizhub"
-        "kyocera-phase5"
+        "kyocera-driver"
         "mfcl2700dwlpr"
         "saleae-logic-2"
         "slack"
