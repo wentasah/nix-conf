@@ -17,6 +17,7 @@
       };
     });
   in [
+    appimage-run
     arandr
     audacity
     blender
