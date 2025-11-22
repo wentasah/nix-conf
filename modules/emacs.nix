@@ -333,6 +333,7 @@
         tree-mode
         treemacs
         txl
+        typescript-mode
         udev-mode
         uncrustify-mode
         undo-tree
