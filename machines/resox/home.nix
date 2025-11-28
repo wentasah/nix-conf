@@ -111,7 +111,7 @@ in
       libreoffice-fresh
       libsecret
       licenseutils
-      linuxPackages.perf
+      perf
       lsof # TODO: git-annex assistant should depend on this
       man-pages
       mytexlive
@@ -132,7 +132,7 @@ in
       playerctl
       pod-mode
       pulseaudio # I use pactl in ~/.i3/config (even with pipewire)
-      python3Packages.jupyter_core
+      python3Packages.jupyter-core
       python3Packages.notebook
       python3Packages.python-lsp-server
       qemu

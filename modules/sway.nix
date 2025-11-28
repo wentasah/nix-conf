@@ -44,7 +44,6 @@ in
           ../patches/swappy-feat-save_as-add-save_as-button-for-snapshots.patch
         ];
       });
-    rofi = if lib.trivial.release == "25.05" then rofi-wayland else pkgs.rofi; # Remove after 25.11 release
     in [
     brightnessctl
     cantarell-fonts

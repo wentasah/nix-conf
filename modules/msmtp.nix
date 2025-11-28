@@ -2,8 +2,7 @@
 {
   programs.msmtp = {
     enable = true;
-    # configContent = '' # uncomment after 25.11
-    extraConfig = ''
+    configContent = ''
       defaults
       port 587
       tls on

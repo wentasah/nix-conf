@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
-      #../../modules/fastdds.nix # uncomment for 25.11
+      ../../modules/fastdds.nix
       ../../modules/flamenco.nix
     ];
 
@@ -147,11 +147,11 @@
     ddrescue
     emacs-nox
     file
-    firefox-wayland
+    firefox
     foxglove-studio
     gdu
-    gitAndTools.gitAnnex lsof
-    gitAndTools.gitFull
+    git-annex lsof
+    gitFull
     gnome-tweaks
     htop
     iftop
@@ -253,7 +253,7 @@
 
   # List services that you want to enable:
 
-  services.nixseparatedebuginfod.enable = true;
+  services.nixseparatedebuginfod2.enable = true;
 
   services.avahi = {
     publish = {
@@ -284,11 +284,16 @@
     agentTimeout = "24h";
   };
 
-  services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-    # suspend even when locked
-    PowerKeyIgnoreInhibited = yes
-  '';
+  services.gnome.gcr-ssh-agent.enable = false; # collides with ssh-agent
+
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend";
+    PowerKeyIgnoreInhibited = "yes"; # suspend even when locked
+    # Stop user systemd instance immediately after logout. This is
+    # needed because I start session daemons by systemd. If they are
+    # not restarted, they cannot connect to a new WAYLAND DISPLAY.
+    UserStopDelaySec = 1;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -309,7 +314,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e";
 

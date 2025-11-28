@@ -2,14 +2,14 @@
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     findrepo.url = "github:wentasah/findrepo";
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-stable = { url = "github:nix-community/home-manager/release-25.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    home-manager-stable = { url = "github:nix-community/home-manager/release-25.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -88,29 +88,6 @@
       ];
       stable-overlay =
         final: prev: {
-          # TODO: Remove after switching to 25.11
-          librespot =
-            let
-              version = "0.7.1";
-            in
-              prev.librespot.overrideAttrs (finalAttrs: prevAttrs: {
-                inherit version;
-                src = final.fetchFromGitHub {
-                  owner = "librespot-org";
-                  repo = "librespot";
-                  rev = "v${version}";
-                  sha256 = "sha256-gBMzvQxmy+GYzrOKWmbhl56j49BK8W8NYO2RrvS4mWI=";
-                };
-                cargoHash = "sha256-PiGIxMIA/RL+YkpG1f46zyAO5anx9Ii+anKrANCM+rk=";
-                buildFeatures = [ "native-tls" ] ++ prevAttrs.buildFeatures;
-                cargoBuildFeatures = [ "native-tls" ] ++ prevAttrs.cargoBuildFeatures;
-                cargoCheckFeatures = [ "native-tls" ] ++ prevAttrs.cargoCheckFeatures;
-                cargoDeps = final.rustPlatform.fetchCargoVendor {
-                  inherit (finalAttrs) pname src version;
-                  hash = finalAttrs.cargoHash;
-                };
-              });
-          timekpr = prev.callPackage ./pkgs/timekpr/package.nix { };
         };
 
       # Create combined package set from nixpkgs and our overlays.
@@ -152,7 +129,6 @@
           system = "x86_64-linux";
           modules = [
             ./machines/resox/configuration.nix
-            ./modules/timekpr.nix # TODO remove in 25.11
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
@@ -181,7 +157,6 @@
           system = "x86_64-linux";
           modules = [
             ./machines/mikysak/configuration.nix
-            ./modules/timekpr.nix # TODO remove in 25.11
             {
               nixpkgs.overlays = [ stable-overlay ];
             }

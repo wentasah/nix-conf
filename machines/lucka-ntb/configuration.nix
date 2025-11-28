@@ -77,9 +77,9 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     (emacsWithPackages (epkgs: (with epkgs.melpaPackages; [ nix-mode ])))
-    firefox-wayland
+    firefox
     chromium
-    gitAndTools.git-annex
+    git-annex
     gnome-music
     kitty.terminfo
     lsof
@@ -155,8 +155,8 @@ in
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   environment.homeBinInPath = true;
 
