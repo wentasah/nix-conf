@@ -93,7 +93,6 @@ in
       dunst
       easyeffects
       #emacs-all-the-icons-fonts
-      emacs.pkgs.cask
       exif
       fdupes
       (feedgnuplot.override { gnuplot = gnuplot_qt; })

@@ -51,6 +51,7 @@ in
     doxygen_gui
     dua
     elfutils
+    emacs.pkgs.cask
     entr
     eza
     fd

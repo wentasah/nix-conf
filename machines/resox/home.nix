@@ -72,7 +72,6 @@ in
       bubblewrap
       can-utils
       carla-bin
-      cask
       chromium
       clang
       clang-tools
