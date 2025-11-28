@@ -393,16 +393,7 @@ in
   '';
   programs.direnv.nix-direnv.enable = true;
 
-  programs.yazi = let
-    # See https://yazi-rs.github.io/docs/installation#nix
-    yazi-plugins = pkgs.fetchFromGitHub {
-      owner = "yazi-rs";
-      repo = "plugins";
-      rev = "55bf6996ada3df4cbad331ce3be0c1090769fc7c";
-      hash = "sha256-v/C+ZBrF1ghDt1SXpZcDELmHMVAqfr44iWxzUWynyRk=";
-      # date = "2025-05-11T13:21:13+08:00";
-    };
-  in {
+  programs.yazi = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
@@ -421,12 +412,17 @@ in
         {on = "<S-Delete>"; run = "remove --permanently";}
         {on = "y"; run = [''yank'' ''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm''];}
         {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
+        {on = "<C-d>"; run = "plugin diff"; desc = "Diff the selected with the hovered file"; }
       ];
     };
     plugins = {
-      chmod = "${yazi-plugins}/chmod.yazi";
-      git = "${yazi-plugins}/git.yazi";
-      smart-enter = "${yazi-plugins}/smart-enter.yazi";
+      inherit (pkgs.yaziPlugins)
+        chmod
+        diff
+        git
+        ouch
+        smart-enter
+        ;
     };
   };
 
