@@ -250,6 +250,7 @@
         julia-snail
         julia-ts-mode
         just-mode
+        kdl-mode
         kkp
         langtool
         ligature
