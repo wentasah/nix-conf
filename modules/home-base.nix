@@ -161,6 +161,7 @@ in
     restic
     ripgrep
     #rnix-lsp # needs insecure nix-2.15.3
+    rnr
     ros2nix
     rsync
     ruff
