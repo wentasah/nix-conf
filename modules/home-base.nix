@@ -93,6 +93,7 @@ in
     lemminx
     (lib.hiPrio outils)   # collides with ts from moreutils
     (lib.hiPrio parallel) # Prefer this over parallel from moreutils
+    libwebp
     libxml2 # for xmllint
     live-server
     ltrace
