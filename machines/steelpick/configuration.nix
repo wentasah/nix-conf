@@ -168,6 +168,7 @@ in
     tree
     vim
     wget
+    wireguard-tools
     zoom-us
   ];
 
