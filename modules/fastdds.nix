@@ -5,7 +5,9 @@ let
 in
 {
   environment.systemPackages = [
-    fastdds fastdds.fastcdr fastdds.foonathan-memory
+    fastdds
+    fastdds.fastcdr
+    fastdds.foonathan-memory
     pkgs.fastddsgen
   ];
 
