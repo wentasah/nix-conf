@@ -30,12 +30,12 @@ let
   };
   fastcdr = stdenv.mkDerivation rec {
     pname = "fastcdr";
-    version = "2.1.3";
+    version = "2.3.4";
     src = fetchFromGitHub {
       owner = "eProsima";
       repo = "Fast-CDR";
       rev = "v${version}";
-      sha256 = "sha256-eSf6LNTVsGEBXjTmTBjjWKBqs68pbnVcw1p2bi1Asgg=";
+      sha256 = "sha256-KXQRQieyDPuSmLltf7iOVO4QdsHgaek+x1vneZyEg0E=";
     };
 
     nativeBuildInputs = [
@@ -48,12 +48,12 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "fastdds";
-  version = "2.13.1";
+  version = "3.4.1";
   src = fetchFromGitHub {
     owner = "eProsima";
     repo = "Fast-DDS";
     rev = "v${version}";
-    sha256 = "sha256-UDM7pruAaoqfEPgpxYdfP2a3tG/ZpR2ajCADZ5ZdIVU=";
+    sha256 = "sha256-6b7qjKrc59Uk7D9erh+tuqqNRhU2JKFDNlylnIp9rBg=";
   };
 
   nativeBuildInputs = [
