@@ -203,6 +203,7 @@
         dpkg-dev-el
         dtrt-indent
         dts-mode
+        easy-hugo
         edit-indirect
         edit-server
         eglot
