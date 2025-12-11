@@ -55,6 +55,7 @@
     okteta
     pavucontrol
     pdfpc
+    pinta
     pix
     qimgv
     qpwgraph
