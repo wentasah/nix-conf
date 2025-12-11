@@ -170,6 +170,7 @@
     obs-studio
     oversteer
     pciutils
+    remmina
     shotwell
     tree
     vim
