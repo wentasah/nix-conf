@@ -311,6 +311,15 @@ in
   };
 
   services.fwupd.enable = true;
+  services.fwupd.package = pkgs.fwupd.overrideAttrs (o: {
+    patches = (o.patches or []) ++ [
+      # dell-dock: Fix a regression when enumerating the status component
+      (pkgs.fetchpatch2 {
+        url = "https://github.com/fwupd/fwupd/pull/9619/commits/8d6f7cea63e44e0fda90e65c47d4f791bee6c845.patch";
+        hash = "sha256-ZhJyVyOkvAHGvIW18d9HB5WU6hJairK5HT8DkzI1R0M=";
+      })
+    ];
+  });
 
   services.printing.enable = true;
   services.printing.drivers = [
