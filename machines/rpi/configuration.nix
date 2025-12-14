@@ -29,6 +29,12 @@
 
   networking.hostName = "homeassistant";
 
+  time.timeZone = "Europe/Prague";
+
+  i18n.extraLocales = [
+    "cs_CZ.UTF-8/UTF-8"
+  ];
+
   environment.systemPackages = with pkgs; [
     btop
     htop
