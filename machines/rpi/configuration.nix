@@ -43,6 +43,8 @@
     vim
   ];
 
+  services.userborn.enable = true;
+
   systemd.services.librespot = {
     enable = true;
     description = "librespot Spotify client";
