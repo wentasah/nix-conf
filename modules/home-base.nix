@@ -187,7 +187,7 @@ in
     tmux
     tokei
     trace-cmd
-    (tree-sitter.withPlugins (_: tree-sitter.allGrammars))
+    (tree-sitter.withPlugins (_: lib.filter (g: !g.meta.broken) tree-sitter.allGrammars ))
     treefmt
     typst
     typstyle
