@@ -334,6 +334,7 @@
         transpose-frame
         tree-mode
         treemacs
+        treesit-grammars.with-all-grammars
         txl
         typescript-mode
         udev-mode
@@ -358,9 +359,7 @@
         zig-mode
         zoom
         zoxide
-      ]) ++ (if epkgs.manualPackages ? treesit-grammars then [
-        epkgs.manualPackages.treesit-grammars.with-all-grammars
-      ] else []) ++[
+      ]) ++ [
         pkgs.notmuch   # From main packages set
       ]);
   };
