@@ -384,8 +384,8 @@
     extraGroups = [ "scanner" "flamenco" ];
   };
 
-  users.users.miki = {
-    description = "Miki";
+  users.users.miky = {
+    description = "Miky";
     isNormalUser = true;
     extraGroups = [ "scanner" ];
     uid = 1004;
