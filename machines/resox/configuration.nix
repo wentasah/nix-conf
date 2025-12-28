@@ -391,6 +391,12 @@
     uid = 1004;
   };
 
+  users.users.jonas = {
+    description = "Jonáš";
+    isNormalUser = true;
+    extraGroups = [ "scanner" ];
+  };
+
   services.timekpr = {
     enable = true;
     adminUsers = ["wsh"];
