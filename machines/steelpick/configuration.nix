@@ -470,9 +470,10 @@ in
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
-#   services.xserver.desktopManager.plasma5.enable = true;
-#   # When using both KDE and Gnome, askPassword conflicts. Force gnome.
-#   programs.ssh.askPassword = lib.mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
+  # services.desktopManager.plasma6.enable = true;
+  # # When using both KDE and Gnome, askPassword conflicts. Force gnome.
+  # #programs.ssh.askPassword = lib.mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
+  # programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
 
   #services.autorandr.enable = true;
 
