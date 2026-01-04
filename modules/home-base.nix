@@ -400,7 +400,7 @@ in
     enableBashIntegration = true;
     enableZshIntegration = true;
     settings = {
-      manager = {
+      mgr = {
         show_hidden = true;
       };
       opener = {
@@ -408,7 +408,7 @@ in
       };
     };
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {on = "<Delete>"; run = "remove";}
         {on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter the child directory, or open the file";}
         {on = "<S-Delete>"; run = "remove --permanently";}
