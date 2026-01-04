@@ -415,6 +415,10 @@ in
         {on = "y"; run = [''yank'' ''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm''];}
         {on = [ "c" "m" ]; run  = "plugin chmod"; desc = "Chmod on selected files"; }
         {on = "<C-d>"; run = "plugin diff"; desc = "Diff the selected with the hovered file"; }
+        {on = "<Up>";   run = "arrow -1";  desc = "Previous file";}
+        {on = "<Down>"; run = "arrow 1";   desc = "Next file";}
+        {on = "<Home>"; run = "arrow top"; desc = "Top file";}
+        {on = "<End>";  run = "arrow bot"; desc = "Bottom file";}
       ];
     };
     plugins = {
