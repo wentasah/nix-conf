@@ -44,7 +44,7 @@ in
     csv2latex
     csvtool
     d2
-    daemontools
+    # daemontools                 # broken <2026-01-04 Sun>
     delta
     dix
     dot-language-server
@@ -71,7 +71,7 @@ in
     gitui
     glab
     glibc.static                # to allow gcc -static
-    global
+    # global                    # broken <2026-01-04 Sun>
     glow
     gnumake
     gnupg
