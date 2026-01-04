@@ -32,6 +32,10 @@ stdenv.mkDerivation rec {
       url = "https://sources.debian.org/data/main/l/licenseutils/0.0.9-5/debian/patches/fix-download-followlocation.patch";
       sha256 = "1n9s0sd1rcy7pjv0hp03zlkqkxah44a33nmfg7dk8qkzrgwvjhq2";
     })
+    (fetchpatch2 {
+      url = "https://sources.debian.org/data/main/l/licenseutils/0.0.9-8.1/debian/patches/gcc-15.patch";
+      hash = "sha256-NYNoQ0uTCYCaGt2WobgyUmoztuZv7z9J1T24MMdyg9g=";
+    })
   ];
   postPatch = ''
       substituteInPlace src/lu-sh.in --replace /bin/bash "${bashInteractive}/bin/bash"
