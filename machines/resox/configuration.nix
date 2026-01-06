@@ -141,6 +141,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     amdgpu_top
+    android-tools
     btrfs-progs
     chromium
     compsize
@@ -359,8 +360,6 @@
   services.flatpak.enable = true;
 
   services.envfs.enable = true;
-
-  programs.adb.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {

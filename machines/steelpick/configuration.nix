@@ -138,6 +138,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    android-tools
     binutils-unwrapped # for strings etc.
     cntr
     compsize
@@ -270,8 +271,6 @@ in
     ];
   };
   security.polkit.enable = true; # Needed by sway
-
-  programs.adb.enable = true;
 
   programs.nix-ld.enable = true;
 
