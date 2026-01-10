@@ -267,6 +267,7 @@
         marginalia
         markdown-mode
         markdown-toc
+        markdown-ts-mode
         mastodon
         md-readme
         memory-usage
