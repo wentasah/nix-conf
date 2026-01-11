@@ -39,17 +39,14 @@
     extraConfig = ''
       (setq parinfer-rust-library "${pkgs.parinfer-rust-emacs}/lib/libparinfer_rust.so")
     '';
-    #     # Not used since switch to straight
-    #     extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
-    extraPackages = epkgs: with epkgs; [
-    ];
-
+    # # Not used since switch to straight
+    # extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
     package = let
       emacs = pkgs.emacs.override { withPgtk = true; };
       emacsPackages = pkgs.emacsPackagesFor emacs;
       # Override selected unstable (i.e. Melpa) packages with stable
       # version, either from MelpaStable or Elpa.
-      overrides = self: super: {
+      stableOverrides = self: super: {
         inherit (self.melpaStablePackages)
           all-the-icons
           auto-highlight-symbol
@@ -163,7 +160,7 @@
           use-package
         ;
       };
-      emacsWithPackages = (emacsPackages.overrideScope overrides).emacsWithPackages;
+      emacsWithPackages = (emacsPackages.overrideScope stableOverrides).emacsWithPackages;
     in
       emacsWithPackages (epkgs: (with epkgs; [
         academic-phrases
