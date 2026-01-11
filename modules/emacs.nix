@@ -249,6 +249,7 @@
         julia-ts-mode
         just-mode
         kdl-mode
+        keycast
         kkp
         langtool
         ligature
