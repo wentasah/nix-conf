@@ -189,6 +189,7 @@ in
     trace-cmd
     (tree-sitter.withPlugins (_: lib.filter (g: !g.meta.broken) tree-sitter.allGrammars ))
     treefmt
+    ty
     typst
     typstyle
     uncrustify
