@@ -130,7 +130,7 @@ in
     nix-template
     nix-tree
     nix-update
-    nixfmt-rfc-style
+    nixfmt
     nixos-generators
     nixos-shell
     nixpkgs-review

@@ -106,7 +106,6 @@ in
       gnome-tweaks
       #gnome3.nautilus
       hdf5
-      (lib.hiPrio nixfmt-rfc-style) # override nixfmt
       hugo
       (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
       julia-wrapper
