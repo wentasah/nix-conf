@@ -17,6 +17,7 @@
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     ros2nix = { url = "github:wentasah/ros2nix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    scroll-flake = { url = "github:AsahiRocks/scroll-flake"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix = { url = "github:Mic92/sops-nix"; };
     sterm = { url = "github:wentasah/sterm"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -111,6 +112,7 @@
             home-manager.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
+            inputs.scroll-flake.nixosModules.default
             {
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.nix-xilinx.overlay
