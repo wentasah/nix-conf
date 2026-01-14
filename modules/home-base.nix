@@ -149,6 +149,7 @@ in
     pkg-config
     polylux2pdfpc
     poppler-utils
+    prek
     psmisc                      # killall, fuser, ...
     pv
     pyright
