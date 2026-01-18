@@ -336,6 +336,7 @@
         treesit-grammars.with-all-grammars
         txl
         typescript-mode
+        typst-preview
         udev-mode
         uncrustify-mode
         undo-tree
