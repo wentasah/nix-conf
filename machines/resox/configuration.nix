@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
       ../../modules/home-printer.nix
       ../../modules/fastdds.nix
-      ../../modules/flamenco.nix
+      # ../../modules/flamenco.nix
     ];
 
   #services.emacs.package = pkgs.emacsGcc;
