@@ -490,6 +490,12 @@ in
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # TODO: localsearch needs to be overriden to not block Gtk File Open/Save dialogs.
+  # systemctl --user edit localsearch-3.service
+  # [Unit]
+  # # Remove ConditionEnvironment=XDG_SESSION_CLASS=user
+  # ConditionEnvironment=
+
   # services.desktopManager.plasma6.enable = true;
   # # When using both KDE and Gnome, askPassword conflicts. Force gnome.
   # #programs.ssh.askPassword = lib.mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
