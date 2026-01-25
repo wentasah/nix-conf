@@ -13,6 +13,7 @@
     nerd-fonts.roboto-mono
     nerd-fonts.sauce-code-pro
     nerd-fonts.symbols-only
+    noto-fonts
     open-sans
     roboto
     roboto-slab
