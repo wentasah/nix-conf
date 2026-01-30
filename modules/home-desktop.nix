@@ -27,6 +27,7 @@
     drawio
     faust
     fido2-manage
+    file-roller
     firefox
     (flameshot.override { enableWlrSupport = true; })
     freecad
