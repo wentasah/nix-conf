@@ -38,7 +38,7 @@
     handbrake
     hotspot
     inkscape
-    kdePackages.kdenlive
+    (kdePackages.kdenlive.override { ffmpeg-full = ffmpeg-full.override { withShaderc = false; }; }) # <2026-02-02 Mon> https://github.com/NixOS/nixpkgs/issues/483540#issuecomment-3832857126
     kdePackages.okular
     kdiff3
     keepassxc
