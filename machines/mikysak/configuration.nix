@@ -103,6 +103,7 @@ in
   };
   users.users.wsh = {
     isNormalUser = true;
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
       nix-output-monitor
       python3
@@ -166,6 +167,8 @@ in
     enable = true;
     adminUsers = ["wsh"];
   };
+
+  services.kmscon.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
