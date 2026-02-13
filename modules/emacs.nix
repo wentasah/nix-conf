@@ -1,20 +1,37 @@
 { config, pkgs, lib, ... }:
 {
-  home.file = {
+  home.file = let
+    emacsclientWrapper = guiCond: ''
+        #!${pkgs.runtimeShell}
+        if ${guiCond}; then
+            args=("--no-wait")
+            [[ $# -eq 0 ]] && args+=("--create-frame")
+        else
+            args=("--tty")
+        fi
+        for i in "$@"; do
+            if [[ $i =~ ^(.*):([0-9]+)$ ]]; then
+                if [[ -e ''${BASH_REMATCH[1]} ]]; then
+                    args+=("+''${BASH_REMATCH[2]}" "''${BASH_REMATCH[1]}")
+                    continue
+                fi
+            fi
+            args+=("$i")
+        done
+        exec ${config.programs.emacs.package}/bin/emacsclient -a  "" "''${args[@]}"
+    '';
+  in {
     "bin/ec" = {
       executable = true;
-      text = ''
-        #!${pkgs.runtimeShell}
-        [[ $DISPLAY$WAYLAND_DISPLAY ]] && args="--no-wait ''${1:---create-frame}" || args="--tty"
-        exec ${config.programs.emacs.package}/bin/emacsclient $args -a  "" "$@"
-      '';
+      text = emacsclientWrapper "[[ $DISPLAY$WAYLAND_DISPLAY ]]";
+    };
+    "bin/ecc" = {
+      executable = true;
+      text = emacsclientWrapper "false";
     };
     "bin/emacsclient-tty" = {
       executable = true;
-      text = ''
-        #!${pkgs.runtimeShell}
-        exec ${config.programs.emacs.package}/bin/emacsclient -t "$@"
-      '';
+      text = emacsclientWrapper "false";
     };
     "bin/magit" = {
       executable = true;
@@ -23,9 +40,6 @@
         exec ~/bin/ec -e "(magit \"$(git rev-parse --show-toplevel)\")" "$@"
       '';
     };
-  };
-  home.activation = {
-    emacsClientSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] "run ln -sf $VERBOSE_ARG emacsclient-tty $HOME/bin/ecc";
   };
   services.emacs = {
     enable = true;
