@@ -63,7 +63,7 @@
     pix
     qimgv
     qpwgraph
-    rquickshare
+    #rquickshare # broken on stable <2026-02-18 Wed>
     rustdesk-flutter
     screenkey
     shotcut
