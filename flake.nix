@@ -50,7 +50,7 @@
 
       forAllPlatforms = f: lib.genAttrs platforms f;
 
-      common-overlays = platform: [
+      common-overlays = system: [
         emacs-overlay.overlay
         novaboot.overlays.default
         shdw.overlays.default
@@ -58,11 +58,11 @@
         inputs.findrepo.overlays.default
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
-          inherit (nix-autobahn.packages.${platform}) nix-autobahn;
+          inherit (nix-autobahn.packages.${system}) nix-autobahn;
           fastdds = final.callPackage ./pkgs/fastdds { };
           flamenco = final.callPackage ./pkgs/flamenco {};
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
-          ros2nix = inputs.ros2nix.outputs.packages.${platform}.ros2nix;
+          ros2nix = inputs.ros2nix.outputs.packages.${system}.ros2nix;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
           veridian = final.callPackage ./pkgs/veridian { };
@@ -92,9 +92,9 @@
         };
 
       # Create combined package set from nixpkgs and our overlays.
-      mkPkgs = platform: import nixpkgs {
-        system = platform;
-        overlays = common-overlays platform;
+      mkPkgs = system: import nixpkgs {
+        inherit system;
+        overlays = common-overlays system;
       };
     in
     {
