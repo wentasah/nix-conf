@@ -9,18 +9,13 @@ let
   };
 
   discord' = jail "discord" pkgs.discord (perm: with perm; [
-    (dbus {
-      talk = [
-        "org.freedesktop.Notifications"
-      ];
-    })
-
     open-urls-in-browser
     (add-pkg-deps [ (pkgs.writeShellApplication { name = "xdg-open"; text = ''"$BROWSER" "$1"''; }) ])
 
     gpu
     gui
     network
+    notifications
     (readwrite (noescape "~/.config/discord"))
     (readwrite (noescape "~/.config/discordcanary"))
     (readwrite (noescape "~/.config/discordptb"))
