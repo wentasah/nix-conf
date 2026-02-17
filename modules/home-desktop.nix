@@ -5,6 +5,9 @@
     ./xkb-wsh-home.nix
     ./audio.nix
   ];
+  home.sessionVariables = {
+    BROWSER = "firefox";  # For https://alexdav.id/projects/jail-nix/combinators/#open-urls-in-browser
+  };
   home.packages = with pkgs; let
     xdot' = xdot.overrideAttrs (old: {
       version = "1.4wsh";

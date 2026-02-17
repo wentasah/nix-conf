@@ -2,11 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, jail, ... }:
 
 let
   myOverlay = self: super: {
   };
+
+  discord' = jail "discord" pkgs.discord (perm: with perm; [
+    (dbus {
+      talk = [
+        "org.freedesktop.Notifications"
+      ];
+    })
+
+    open-urls-in-browser
+    (add-pkg-deps [ (pkgs.writeShellApplication { name = "xdg-open"; text = ''"$BROWSER" "$1"''; }) ])
+
+    gpu
+    gui
+    network
+    (readwrite (noescape "~/.config/discord"))
+    (readwrite (noescape "~/.config/discordcanary"))
+    (readwrite (noescape "~/.config/discordptb"))
+    (readwrite (noescape "~/download"))
+    (readwrite (noescape "~/students"))
+    xwayland
+  ]);
 in
 {
   imports =
@@ -29,6 +50,9 @@ in
         "brother-udev-rule-type1"
         "brscan4"
         "brscan4-etc-files"
+        "discord"
+        "discord-canary"
+        "discord-ptb"
         "drawio"
         "konica-minolta-bizhub"
         "kyocera-driver"
@@ -144,6 +168,7 @@ in
     compsize
     dash # TODO: Try is as /bin/sh (environment.binsh)
     ddrescue
+    discord'
     dmidecode
     elinks
     emacs-nox

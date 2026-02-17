@@ -10,6 +10,7 @@
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-25.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -105,6 +106,7 @@
         steelpick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            ({ pkgs, ... }: { _module.args.jail = inputs.jail-nix.lib.init pkgs; })
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-laptop

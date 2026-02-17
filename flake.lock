@@ -31,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770313032,
-        "narHash": "sha256-M34gN/3h6ATUCYGBn2dEyt8taQTdZ23gKTBIYHVh0j8=",
+        "lastModified": 1771057865,
+        "narHash": "sha256-Suny75DfQS3Mqd8ihiDZNsRs4CfRC3GiQDMmaFPj2qM=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "7be2629491f5e1939b1c60bcd9534f3b1c18be8b",
+        "rev": "56690eb79372e49054b0c2b87780fe3f86be7616",
         "type": "github"
       },
       "original": {
@@ -197,11 +197,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770318660,
-        "narHash": "sha256-yFVde8QZK7Dc0Xa8eQDsmxLX4NJNfL1NKfctSyiQgMY=",
+        "lastModified": 1771037579,
+        "narHash": "sha256-NX5XuhGcsmk0oEII2PEtMRgvh2KaAv3/WWQsOpxAgR4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "471e6a065f9efed51488d7c51a9abbd387df91b8",
+        "rev": "05e6dc0f6ed936f918cb6f0f21f1dad1e4c53150",
         "type": "github"
       },
       "original": {
@@ -229,6 +229,21 @@
         "ref": "release-25.11",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "jail-nix": {
+      "locked": {
+        "lastModified": 1770418571,
+        "narHash": "sha256-EzQUbe1gwW/xpJoMuMeblWcjAEF+F92cz/enz0Mz/qo=",
+        "owner": "~alexdavid",
+        "repo": "jail.nix",
+        "rev": "c141cf8cc68617625b4a28a7d8ce0a35904815d5",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~alexdavid",
+        "repo": "jail.nix",
+        "type": "sourcehut"
       }
     },
     "nix-autobahn": {
@@ -333,12 +348,13 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770197578,
-        "narHash": "sha256-6dgR/CGBSMqLxmH0U9ePfhexhN+WA8S9CQP3bsFN8N4=",
-        "owner": "wentasah",
-        "repo": "nixpkgs",
-        "rev": "1358b72ad3c338b1e8f877f6b493d5938eddda15",
-        "type": "github"
+        "lastModified": 1771008912,
+        "narHash": "sha256-w0V77g/pAnOOnjwJCpfLjA0CfIywA2LFonywDqYCBtc=",
+        "ref": "refs/heads/master",
+        "rev": "738bb8c11dec2f4a86a18dd94ac2cf02980a1ffc",
+        "revCount": 945875,
+        "type": "git",
+        "url": "file:///home/sojka/nix/nixpkgs"
       },
       "original": {
         "owner": "wentasah",
@@ -349,11 +365,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1770136044,
-        "narHash": "sha256-tlFqNG/uzz2++aAmn4v8J0vAkV3z7XngeIIB3rM3650=",
+        "lastModified": 1770770419,
+        "narHash": "sha256-iKZMkr6Cm9JzWlRYW/VPoL0A9jVKtZYiU4zSrVeetIs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e576e3c9cf9bad747afcddd9e34f51d18c855b4e",
+        "rev": "6c5e707c6b5339359a9a9e215c5e66d6d802fd7a",
         "type": "github"
       },
       "original": {
@@ -441,6 +457,7 @@
         "flake-compat": "flake-compat",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
+        "jail-nix": "jail-nix",
         "nix-autobahn": "nix-autobahn",
         "nix-index-database": "nix-index-database",
         "nix-xilinx": "nix-xilinx",
