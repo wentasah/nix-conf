@@ -9,6 +9,12 @@ let
   };
 
   discord' = jail "discord" pkgs.discord (perm: with perm; [
+    (dbus {
+      talk = [
+        "org.kde.StatusNotifierWatcher"
+      ];
+    })
+
     open-urls-in-browser
     (add-pkg-deps [ (pkgs.writeShellApplication { name = "xdg-open"; text = ''"$BROWSER" "$1"''; }) ])
 
