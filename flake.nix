@@ -105,6 +105,7 @@
       nixosConfigurations = {
         steelpick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             ({ pkgs, ... }: { _module.args.jail = inputs.jail-nix.lib.init pkgs; })
             ./machines/steelpick/configuration.nix

@@ -1,0 +1,5 @@
+keys:
+  - &admin_wsh age1ffgespr7x69skaxgrt5j0yhe6a2fn353resghu6d4x0yx4l669hqrup4w8
+  - &server_steelpick age166qhykw8ljn52peq2g5glkepkneye0eqx5yd76s6ercm7hhdl9sse0kmge
+creation_rules:
+  - {path_regex: ^machines/steelpick/secrets.yaml$, key_groups: [{age: [*admin_wsh, *server_steelpick]}]}

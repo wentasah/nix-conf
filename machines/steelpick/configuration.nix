@@ -40,6 +40,7 @@ in
       ../../modules/tftpd-hpa.nix
       ../../modules/fastdds.nix
       ../../modules/qt.nix
+      ../../modules/sops-nix.nix
       #../../modules/greetd.nix
     ];
 
