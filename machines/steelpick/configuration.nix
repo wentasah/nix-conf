@@ -417,6 +417,8 @@ in
   networking.firewall.interfaces.enp0s31f6.allowedUDPPorts = [ 69 ]; # TFTP
   networking.firewall.extraCommands = ''
     iptables -A INPUT -i wg-ipa2x -j ACCEPT
+    iptables -A nixos-fw -p udp -d 224.0.0.0/4 -j nixos-fw-accept
+    iptables -A nixos-fw -p udp -s 224.0.0.0/4 -j nixos-fw-accept
   '';
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
