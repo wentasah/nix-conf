@@ -532,12 +532,14 @@ in
 
   #services.autorandr.enable = true;
 
+  sops.secrets.grafana_secret_key = { owner = "grafana"; };
   services.grafana = {
     enable = true;
     settings = {
       server.http_addr = "127.0.0.1";
       server.http_port = 3000;
       analytics.reporting_enabled = false;
+      security.secret_key = "$__file{${config.sops.secrets.grafana_secret_key.path}}";
     };
   };
 
