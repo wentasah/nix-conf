@@ -199,6 +199,7 @@
         consult-ls-git
         consult-lsp
         consult-notmuch
+        copilot
         corfu
         crdt
         csharp-mode

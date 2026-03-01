@@ -26,6 +26,7 @@
     blender
     # ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
     # carla # broken 2025-06-20
+    claude-code
     dragon-drop
     drawio
     faust

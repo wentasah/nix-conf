@@ -52,6 +52,8 @@ in
         "brother-udev-rule-type1"
         "brscan4"
         "brscan4-etc-files"
+        "claude-code"
+        "copilot-language-server"
         "discord"
         "discord-canary"
         "discord-ptb"
