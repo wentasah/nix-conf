@@ -432,6 +432,7 @@ in
         smart-enter
         ;
     };
+    shellWrapperName = "y";
   };
 
   programs.zoxide = {
