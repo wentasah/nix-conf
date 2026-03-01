@@ -56,7 +56,7 @@
     meld
     mission-center
     #musescore # broken <2025-10-23 Thu>
-    okteta
+    # okteta <2026-03-01 Sun>
     pavucontrol
     pdfpc
     pinta

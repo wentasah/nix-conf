@@ -16,7 +16,7 @@
     coppwr
     dragonfly-reverb
     fomp
-    guitarix
+    # guitarix <2026-03-01 Sun>
     gxplugins-lv2
     hydrogen
     jack-example-tools
