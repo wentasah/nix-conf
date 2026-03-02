@@ -117,6 +117,7 @@
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
       "claude-code"
       "copilot-language-server"
+      "discord"
       "drawio"
       "mfcl2700dwlpr"
       "saleae-logic"

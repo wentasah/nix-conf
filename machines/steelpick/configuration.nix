@@ -7,28 +7,6 @@
 let
   myOverlay = self: super: {
   };
-
-  discord' = jail "discord" pkgs.discord (perm: with perm; [
-    (dbus {
-      talk = [
-        "org.kde.StatusNotifierWatcher"
-      ];
-    })
-
-    open-urls-in-browser
-    (add-pkg-deps [ (pkgs.writeShellApplication { name = "xdg-open"; text = ''"$BROWSER" "$1"''; }) ])
-
-    gpu
-    gui
-    network
-    notifications
-    (readwrite (noescape "~/.config/discord"))
-    (readwrite (noescape "~/.config/discordcanary"))
-    (readwrite (noescape "~/.config/discordptb"))
-    (readwrite (noescape "~/download"))
-    (readwrite (noescape "~/students"))
-    xwayland
-  ]);
 in
 {
   imports =
@@ -172,7 +150,6 @@ in
     compsize
     dash # TODO: Try is as /bin/sh (environment.binsh)
     ddrescue
-    discord'
     dmidecode
     elinks
     emacs-nox

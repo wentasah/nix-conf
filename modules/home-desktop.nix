@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, jail, ... }:
 # Home manager configuration common to all my desktops. Graphical tools, etc.
 {
   imports = [
@@ -9,6 +9,27 @@
     BROWSER = "firefox";  # For https://alexdav.id/projects/jail-nix/combinators/#open-urls-in-browser
   };
   home.packages = with pkgs; let
+    discord' = jail "discord" pkgs.discord (perm: with perm; [
+      (dbus {
+        talk = [
+          "org.kde.StatusNotifierWatcher"
+        ];
+      })
+
+      open-urls-in-browser
+      (add-pkg-deps [ (pkgs.writeShellApplication { name = "xdg-open"; text = ''"$BROWSER" "$1"''; }) ])
+
+      gpu
+      gui
+      network
+      notifications
+      (readwrite (noescape "~/.config/discord"))
+      (readwrite (noescape "~/.config/discordcanary"))
+      (readwrite (noescape "~/.config/discordptb"))
+      (readwrite (noescape "~/download"))
+      (readwrite (noescape "~/students"))
+      xwayland
+    ]);
     xdot' = xdot.overrideAttrs (old: {
       version = "1.4wsh";
       src = fetchFromGitHub {
@@ -27,6 +48,7 @@
     # ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
     # carla # broken 2025-06-20
     claude-code
+    discord'
     dragon-drop
     drawio
     faust

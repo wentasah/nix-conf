@@ -107,7 +107,10 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
-            ({ pkgs, ... }: { _module.args.jail = inputs.jail-nix.lib.init pkgs; })
+            ({ pkgs, ... }: {
+              _module.args.jail = inputs.jail-nix.lib.init pkgs;
+              home-manager.extraSpecialArgs.jail = inputs.jail-nix.lib.init pkgs;
+            })
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
             nixos-hardware.nixosModules.common-pc-laptop
@@ -132,6 +135,10 @@
         resox = nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            ({ pkgs, ... }: {
+              _module.args.jail = inputs.jail-nix.lib.init pkgs;
+              home-manager.extraSpecialArgs.jail = inputs.jail-nix.lib.init pkgs;
+            })
             ./machines/resox/configuration.nix
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
