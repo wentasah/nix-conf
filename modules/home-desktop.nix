@@ -24,8 +24,6 @@
       network
       notifications
       (readwrite (noescape "~/.config/discord"))
-      (readwrite (noescape "~/.config/discordcanary"))
-      (readwrite (noescape "~/.config/discordptb"))
       (readwrite (noescape "~/download"))
       (readwrite (noescape "~/students"))
       xwayland
