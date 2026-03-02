@@ -115,6 +115,8 @@
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
       "aspell-dict-en-science"
       "brscan4" "brscan4-etc-files" "brother-udev-rule-type1"
+      "claude-code"
+      "copilot-language-server"
       "drawio"
       "mfcl2700dwlpr"
       "saleae-logic"
