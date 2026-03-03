@@ -206,6 +206,7 @@
               home.stateVersion = "22.05";
               nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
                 "aspell-dict-en-science"
+                "copilot-language-server"
               ];
               nixpkgs.overlays = common-overlays "x86_64-linux";
 
