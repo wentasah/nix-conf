@@ -223,7 +223,7 @@
               home.packages = with pkgs; [
                 # Override btop to show GPU statistics
                 (lib.hiPrio (writeShellScriptBin "btop" ''LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 ${btop}/bin/btop "$@"''))
-                matrix-commander
+                matrix-commander-rs
                 webhook
               ];
             }
