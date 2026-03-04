@@ -22,11 +22,11 @@
       device = "/dev/disk/by-uuid/17a40f9b-feba-4116-8c42-fffe1aa1dad5";
       fsType = "btrfs";
     };
-    "/var/lib/docker" = {
-      device = "/dev/disk/by-label/data";
-      fsType = "btrfs";
-      options = [ "subvol=docker" ];
-    };
+    # "/var/lib/docker" = {
+    #   device = "/dev/disk/by-label/data";
+    #   fsType = "btrfs";
+    #   options = [ "subvol=docker" ];
+    # };
     "/home/share" = {
       options = [ "bind" ];
       device = "/mnt/data/share";
