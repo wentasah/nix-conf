@@ -9,11 +9,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "foxglove-studio";
-  version = "2.46.0";
+  version = "2.47.0";
 
   src = fetchurl {
     url = "https://get.foxglove.dev/desktop/v${version}/foxglove-studio-${version}-linux-amd64.deb";
-    hash = "sha256-SWBbmUjj2eCEQGyNaLIfHPsA23H8saEN6/mEDunlwro=";
+    hash = "sha256-cobVG6UMKKmi+4dfMI8SZmt4hSqHNJLvl6+pkDqRdHA=";
   };
 
   nativeBuildInputs = [ dpkg makeWrapper ];
