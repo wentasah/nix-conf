@@ -71,6 +71,7 @@
           consult-flycheck
           consult-lsp
           consult-notmuch
+          copilot
           corfu
           csharp-mode
           dash
