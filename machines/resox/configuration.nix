@@ -323,7 +323,7 @@
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e";
 
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
 
 
   # Enable touchpad support.
