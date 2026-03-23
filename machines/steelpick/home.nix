@@ -158,8 +158,8 @@ in
       wrenv
       #wrwb
       x11docker
-      xf86_input_wacom
       xev
+      xf86_input_wacom
       xhost # for quick way to run GUI apps in chroots/containers
       xkbcomp
       xkill
