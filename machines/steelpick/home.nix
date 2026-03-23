@@ -159,11 +159,11 @@ in
       #wrwb
       x11docker
       xf86_input_wacom
-      xorg.xev
-      xorg.xhost # for quick way to run GUI apps in chroots/containers
-      xorg.xkbcomp
-      xorg.xkill
-      xorg.xorgdocs
+      xev
+      xhost # for quick way to run GUI apps in chroots/containers
+      xkbcomp
+      xkill
+      xorgdocs
       xplr
       xpra
       xrectsel
