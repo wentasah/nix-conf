@@ -17,11 +17,11 @@ pkgs.buildFHSEnv {
         fontconfig
         freetype
         udev
-        xorg.libX11
-        xorg.libXext
-        xorg.libXft
-        xorg.libXmu
-        xorg.libXt
+        libx11
+        libxext
+        libxft
+        libxmu
+        libxt
         libxml2
         zlib
 
