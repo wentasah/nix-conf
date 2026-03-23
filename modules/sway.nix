@@ -77,6 +77,9 @@ in
 
   services.network-manager-applet.enable = true;
 
+  # Silence HM warning. I configure swaylock manually.
+  programs.swaylock.enable = config.programs.swaylock.settings != { };
+
   programs.waybar = {
     enable = true;
     systemd = {
