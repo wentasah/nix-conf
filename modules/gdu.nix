@@ -15,7 +15,6 @@
     Install.WantedBy = [ "default.target" ];
   };
 
-  # TODO: This this work?
   systemd.user.tmpfiles.rules = [ "d %h/srv/%H/gdu 0700 - - 6w" ];
 
   systemd.user.services.gdu-save = {
@@ -27,6 +26,8 @@
         mkdir -p "$dir"
         ${pkgs.gdu}/bin/gdu $HOME -o- | ${pkgs.zstd}/bin/zstd -o "$dir"/gdu-$(date +'%F_%T').json.zst
       '');
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
     };
   };
 

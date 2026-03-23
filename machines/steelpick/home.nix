@@ -262,6 +262,8 @@ in
       Service = {
         ExecStart = "${pkgs.git}/bin/git --git-dir=%h/srv/etc fetch --all";
         Environment = "SSH_ASKPASS= SSH_AUTH_SOCK=/run/user/%U/ssh-agent";
+        CPUSchedulingPolicy = "idle";
+        IOSchedulingClass = "idle";
       };
     };
 
@@ -274,6 +276,8 @@ in
         ExecStart = "%h/bin/fetch-all-overleaf";
         WorkingDirectory = "%h/papers/_in-progress";
         Environment = "SSH_ASKPASS= SSH_AUTH_SOCK=/run/user/%U/ssh-agent";
+        CPUSchedulingPolicy = "idle";
+        IOSchedulingClass = "idle";
       };
     };
 
