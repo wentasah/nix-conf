@@ -570,6 +570,11 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
+  systemd.services.nix-gc.serviceConfig = {
+    CPUSchedulingPolicy = "idle";
+    IOSchedulingClass = "idle";
+  };
+
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
     auto-optimise-store = true;

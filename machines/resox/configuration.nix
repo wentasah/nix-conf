@@ -78,6 +78,11 @@
     RestartSec = "1min";
   };
 
+  systemd.services.nix-gc.serviceConfig = {
+    CPUSchedulingPolicy = "idle";
+    IOSchedulingClass = "idle";
+  };
+
   nix = {
     settings = {
       max-jobs = 16;
