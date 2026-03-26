@@ -197,7 +197,7 @@ in
     unzip
     update-nix-fetchgit
     valgrind
-    vcstool
+    vcs2l
     waypipe
     websocat
     xmlstarlet
