@@ -25,6 +25,7 @@ in
     aspellDicts.en-science
     atop
     attic-client
+    babeltrace2
     bat
     bbe
     bc                          # For linux kernel compilation
