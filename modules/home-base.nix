@@ -427,6 +427,7 @@ in
         {on = "<Down>"; run = "arrow 1";   desc = "Next file";}
         {on = "<Home>"; run = "arrow top"; desc = "Top file";}
         {on = "<End>";  run = "arrow bot"; desc = "Bottom file";}
+        {on = ["C"]; run = "plugin ouch"; desc = "Compress with ouch"; }
       ];
     };
     plugins = {
