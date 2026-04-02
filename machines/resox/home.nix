@@ -117,8 +117,8 @@ in
       mytexlive
       nasm
       nix-index
-      nodePackages.markdownlint-cli
-      nodePackages.typescript-language-server
+      markdownlint-cli
+      typescript-language-server
       notify-while-running
       notmuch
       notmuch.emacs

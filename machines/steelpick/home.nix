@@ -119,10 +119,9 @@ in
       licenseutils
       lsof # TODO: git-annex assistant should depend on this
       man-pages
+      markdownlint-cli
       mytexlive
       nasm
-      nodePackages.markdownlint-cli
-      nodePackages.typescript-language-server
       notify-while-running
       notmuch
       notmuch.emacs
@@ -147,6 +146,7 @@ in
       #stm32cubeide
       tcpreplay
       texpresso
+      typescript-language-server
       unrar
       usbrelay
       usbutils

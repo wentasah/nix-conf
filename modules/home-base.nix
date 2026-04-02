@@ -26,6 +26,7 @@ in
     atop
     attic-client
     babeltrace2
+    bash-language-server
     bat
     bbe
     bc                          # For linux kernel compilation
@@ -135,7 +136,6 @@ in
     nixos-generators
     nixos-shell
     nixpkgs-review
-    nodePackages.bash-language-server
     npins
     nurl
     odt2txt
