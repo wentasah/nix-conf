@@ -63,6 +63,7 @@
     handbrake
     hotspot
     inkscape
+    inlyne
     kdePackages.kdenlive
     kdePackages.okular
     kdiff3
