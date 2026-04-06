@@ -217,6 +217,7 @@
         dtrt-indent
         dts-mode
         easy-hugo
+        eat
         edit-indirect
         edit-server
         eglot
@@ -261,7 +262,7 @@
         json-reformat
         julia-repl
         julia-repl
-        julia-snail
+        # julia-snail # <2026-04-06 Mon> broken at runtime: *Messages*: julia-snail-1.3.3/extensions/debug/debug.elc failed to provide feature ‘debug’
         julia-ts-mode
         just-mode
         kdl-mode
@@ -322,6 +323,7 @@
         plantuml-mode
         poly-markdown
         polymode
+        popup
         projectile
         protobuf-mode
         python-black
