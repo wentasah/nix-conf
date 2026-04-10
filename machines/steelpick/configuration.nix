@@ -442,7 +442,11 @@ in
 #   };
 
   # Make the authoritative version of NOVA available also from the internal repo
-  fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = { options = [ "bind" ]; device = "/home/wsh/vyuka/osy/pages/nova"; };
+  fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = {
+    options = [ "bind" ];
+    device = "/home/wsh/vyuka/osy/pages/nova";
+    fsType = "auto";
+  };
 
   fileSystems."/srv/blender" = {
       device = "//turris.lan/flamenco";
