@@ -58,7 +58,7 @@
     freecad
     ghostty
     gimp
-    (gnuplot_qt.override { withCaca = true; })
+    (gnuplot.override { withCaca = true; withQt = true; })
     gtkterm
     handbrake
     hotspot
