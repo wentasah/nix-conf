@@ -15,6 +15,8 @@ in
     ./emacs.nix
   ];
   home.packages = with pkgs; [
+    abi-compliance-checker
+    abi-dumper
     act
     age
     alejandra
