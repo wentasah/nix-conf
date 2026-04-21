@@ -4,6 +4,7 @@
   imports = [
     ./xkb-wsh-home.nix
     ./audio.nix
+    ./thumbnailers.nix
   ];
   home.sessionVariables = {
     BROWSER = "firefox";  # For https://alexdav.id/projects/jail-nix/combinators/#open-urls-in-browser
