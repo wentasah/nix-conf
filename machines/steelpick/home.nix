@@ -284,6 +284,8 @@ in
     notmuch-dump-tags = {
       Service = {
         ExecStart = "${pkgs.gnumake}/bin/make -C %h/repos/notmuch-tags";
+        CPUSchedulingPolicy = "idle";
+        IOSchedulingClass = "idle";
       };
     };
   };
