@@ -149,7 +149,7 @@ in
     dash # TODO: Try is as /bin/sh (environment.binsh)
     ddrescue
     dmidecode
-    elinks
+    # elinks # broken <2026-04-28 Tue> https://github.com/NixOS/nixpkgs/issues/513546
     emacs-nox
     ethtool
     file
