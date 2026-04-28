@@ -105,6 +105,7 @@ in
       glibcInfo # Not visible in emacs :-(
       gnome-tweaks
       #gnome3.nautilus
+      gqrx
       hdf5
       hugo
       (ikiwiki.override { docutilsSupport = true; gitSupport = true; })
