@@ -107,8 +107,8 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    flake = "/home/wsh/nix/conf";
-    flags = [ "--update-input" "nixpkgs-stable" ];
+    flake = "github:wentasah/nix-conf";
+    flags = [ "--update-input" "nixpkgs-stable" "--no-write-lock-file" ];
     randomizedDelaySec = "30min";
   };
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
