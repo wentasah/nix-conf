@@ -352,6 +352,7 @@
         transpose-frame
         tree-mode
         treemacs
+        treesit-fold
         treesit-grammars.with-all-grammars
         txl
         typescript-mode
