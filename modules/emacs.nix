@@ -292,6 +292,7 @@
         most-used-words
         multiple-cursors
         my-repo-pins
+        nerd-icons-corfu
         ninja-mode
         nix-mode
         nix-update
