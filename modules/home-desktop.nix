@@ -91,6 +91,7 @@
     rustdesk-flutter
     screenkey
     shotcut
+    signal-desktop
     sioyek
     smplayer mpv mplayer
     solvespace
