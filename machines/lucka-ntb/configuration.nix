@@ -85,6 +85,7 @@ in
     lsof
     git
     gnomeExtensions.appindicator
+    gnome-shell-extensions
     libreoffice-fresh
     links2
     mc
