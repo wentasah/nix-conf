@@ -50,6 +50,7 @@ in
     d2
     # daemontools                 # broken <2026-01-04 Sun>
     delta
+    devenv
     dix
     dot-language-server
     doxygen_gui
