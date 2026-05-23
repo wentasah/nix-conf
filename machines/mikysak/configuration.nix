@@ -136,7 +136,7 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    flake = "/etc/nixos";
+    flake = "https://github.com/wentasah/nix-conf";
     flags = [ "--update-input" "nixpkgs-stable-next" ];
     randomizedDelaySec = "30min";
     persistent = true;
