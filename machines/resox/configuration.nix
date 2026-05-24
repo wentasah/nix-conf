@@ -369,10 +369,10 @@
 
   services.envfs.enable = true;
 
-  virtualisation.waydroid = {
-    enable = true;
-    package = pkgs.waydroid-nftables;
-  };
+  # virtualisation.waydroid = {
+  #   enable = true;
+  #   package = pkgs.waydroid-nftables;
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wsh = {
