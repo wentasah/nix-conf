@@ -136,8 +136,8 @@ in
 
   system.autoUpgrade = {
     enable = true;
-    flake = "https://github.com/wentasah/nix-conf";
-    flags = [ "--update-input" "nixpkgs-stable-next" ];
+    flake = "github:wentasah/nix-conf";
+    flags = [ "--update-input" "nixpkgs-stable-next" "--no-write-lock-file" ];
     randomizedDelaySec = "30min";
     persistent = true;
   };
