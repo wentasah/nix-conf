@@ -21,7 +21,7 @@ in
   fileSystems."/home/novaboot-test/src" = {
     options = [ "bind" ];
     device = "/home/wsh/src/novaboot";
-    fsType = "auto";
+    fsType = "none";
   };
   security.sudo = {
     extraConfig = ''

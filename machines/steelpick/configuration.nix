@@ -445,7 +445,7 @@ in
   fileSystems."/home/wsh/vyuka/osy/cviceni/nova/nova" = {
     options = [ "bind" ];
     device = "/home/wsh/vyuka/osy/pages/nova";
-    fsType = "auto";
+    fsType = "none";
   };
 
   fileSystems."/srv/blender" = {

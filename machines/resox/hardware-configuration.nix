@@ -30,10 +30,12 @@
     "/home/share" = {
       options = [ "bind" ];
       device = "/mnt/data/share";
+      fsType = "none";
     };
     "/home/lucka/Stažené" = {
       options = [ "bind" ];
       device = "/mnt/data/lucka/Stažené";
+      fsType = "none";
     };
   };
 
