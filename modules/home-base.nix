@@ -413,8 +413,8 @@ in
         edit = [ { run = "ec \"$@\""; desc = "Edit with ec"; block = true; for = "unix"; } ];
       };
       plugin.prepend_fetchers = [
-        {id = "git"; url = "*"; run = "git";}
-        {id = "git"; url = "*/"; run = "git";}
+        {group = "git"; url = "*"; run = "git";}
+        {group = "git"; url = "*/"; run = "git";}
       ];
     };
     initLua = ../pkgs/yazi/init.lua;
