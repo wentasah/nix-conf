@@ -169,7 +169,12 @@
           modules = [
             ./machines/mikysak/configuration.nix
             {
-              nixpkgs.overlays = [ stable-overlay ];
+              nixpkgs.overlays = [
+                stable-overlay
+                (final: prev: {
+                  krita = prev.callPackage ./pkgs/krita-fix.nix { };
+                })
+              ];
             }
           ];
           specialArgs = { inherit inputs; };
