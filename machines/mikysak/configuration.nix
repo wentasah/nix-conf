@@ -120,6 +120,7 @@ in
   environment.systemPackages = with pkgs; [
     blender
     (emacsWithPackages (epkgs: (with epkgs.melpaPackages; [ nix-mode ])))
+    ffmpeg # for krita animation export
     gimp3
     git
     gnome-firmware
