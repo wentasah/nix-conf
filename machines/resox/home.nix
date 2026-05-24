@@ -110,7 +110,7 @@ in
       libnotify # for notify-send (for mailsync)
       libreoffice-fresh
       libsecret
-      licenseutils
+      #licenseutils
       perf
       lsof # TODO: git-annex assistant should depend on this
       man-pages

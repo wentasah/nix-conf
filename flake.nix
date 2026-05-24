@@ -3,7 +3,7 @@
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-stable-next.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable-next.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
@@ -133,7 +133,7 @@
           ];
         };
 
-        resox = nixpkgs-stable.lib.nixosSystem {
+        resox = inputs.nixpkgs-stable-next.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
@@ -153,8 +153,8 @@
                 (final: prev: {
                   # Packages from unstable
                   inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
-                    vcs2l
                     ;
+                  krita = prev.callPackage ./pkgs/krita-fix.nix { };
                 })
               ];
             }
