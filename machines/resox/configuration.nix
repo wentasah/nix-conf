@@ -367,6 +367,8 @@
 
   services.flatpak.enable = true;
 
+  services.malcontent.enable = true;
+
   services.envfs.enable = true;
 
   # virtualisation.waydroid = {
