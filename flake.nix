@@ -9,6 +9,7 @@
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     findrepo.url = "github:wentasah/findrepo";
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    gh-gfm-preview = { url = "github:thiagokokada/gh-gfm-preview"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-25.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
@@ -64,6 +65,7 @@
           fastdds = final.callPackage ./pkgs/fastdds { };
           flamenco = final.callPackage ./pkgs/flamenco {};
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
+          gh-gfm-preview = inputs.gh-gfm-preview.outputs.packages.${system}.default;
           ros2nix = inputs.ros2nix.outputs.packages.${system}.ros2nix;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });

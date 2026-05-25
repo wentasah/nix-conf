@@ -57,6 +57,7 @@
     firefox
     (flameshot.override { enableWlrSupport = true; })
     freecad
+    gh-gfm-preview
     ghostty
     gimp
     (gnuplot.override { withCaca = true; withQt = true; })
