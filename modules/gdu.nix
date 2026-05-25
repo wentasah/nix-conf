@@ -24,7 +24,7 @@
         set -euo pipefail
         dir=$HOME/srv/$(hostname)/gdu
         mkdir -p "$dir"
-        ${pkgs.gdu}/bin/gdu $HOME -o- | ${pkgs.zstd}/bin/zstd -o "$dir"/gdu-$(date +'%F_%T').json.zst
+        ${pkgs.gdu}/bin/gdu --max-cores 2 $HOME -o- | ${pkgs.zstd}/bin/zstd -o "$dir"/gdu-$(date +'%F_%T').json.zst
       '');
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
