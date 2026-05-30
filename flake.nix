@@ -2,8 +2,7 @@
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:wentasah/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-stable-next.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
@@ -11,7 +10,7 @@
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     gh-gfm-preview = { url = "github:thiagokokada/gh-gfm-preview"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
-    home-manager-stable = { url = "github:nix-community/home-manager/release-25.11"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    home-manager-stable = { url = "github:nix-community/home-manager/release-26.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -135,7 +134,7 @@
           ];
         };
 
-        resox = inputs.nixpkgs-stable-next.lib.nixosSystem {
+        resox = inputs.nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
@@ -166,7 +165,7 @@
           system = "x86_64-linux";
           modules = [ ./machines/lucka-ntb/configuration.nix ];
         };
-        mikysak = inputs.nixpkgs-stable-next.lib.nixosSystem {
+        mikysak = inputs.nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./machines/mikysak/configuration.nix
