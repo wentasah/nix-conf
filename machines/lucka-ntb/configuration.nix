@@ -109,7 +109,11 @@ in
   system.autoUpgrade = {
     enable = true;
     flake = "github:wentasah/nix-conf";
-    flags = [ "--update-input" "nixpkgs-stable" "--no-write-lock-file" ];
+    flags = [
+      "--update-input=nixpkgs-stable"
+      "--no-write-lock-file"
+      "--max-jobs=0" # don't try to rebuild packages that cannot be substituted
+    ];
     randomizedDelaySec = "30min";
   };
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
