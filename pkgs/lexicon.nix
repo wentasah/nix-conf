@@ -26,7 +26,7 @@ pkgs.buildFHSEnv {
         zlib
 
         # for LucGUI (dictionary activation, commented above)
-        xorg.libXrender
+        libxrender
       ]);
     runScript = "${lexicon-wrapper}";
 }
