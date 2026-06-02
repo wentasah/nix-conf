@@ -19,8 +19,6 @@ let
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
   lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
-  wrwb = import ../../pkgs/wrwb.nix { inherit pkgs; };
-  wrenv = import ../../pkgs/wrenv.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
   stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
   licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
@@ -156,8 +154,6 @@ in
       warp
       wireshark
       wol
-      wrenv
-      #wrwb
       x11docker
       xev
       xf86_input_wacom
