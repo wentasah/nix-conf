@@ -14,7 +14,7 @@
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
+    #nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -123,7 +123,7 @@
             inputs.scroll-flake.nixosModules.default
             {
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
-                inputs.nix-xilinx.overlay
+                #inputs.nix-xilinx.overlay
                 (final: prev: {
                   # Packages from stable
                   inherit (nixpkgs-stable.outputs.legacyPackages.x86_64-linux)

@@ -150,7 +150,7 @@ in
       usbrelay
       usbutils
       v4l-utils # for qv4l2
-      vivado # from nix-xilinx overlay
+      #vivado # from nix-xilinx overlay
       warp
       wireshark
       wol
