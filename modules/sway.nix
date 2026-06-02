@@ -84,7 +84,7 @@ in
     enable = true;
     systemd = {
       enable = true;
-      target = "sway-session.target";
+      targets = [ "sway-session.target" ];
     };
   };
   systemd.user.services.waybar.Service = {
