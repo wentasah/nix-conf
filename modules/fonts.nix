@@ -6,6 +6,7 @@
     iosevka
     lato
     libertine # For images consistency with ACM latex template
+    montserrat
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.iosevka
     nerd-fonts.jetbrains-mono
