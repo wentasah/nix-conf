@@ -7,6 +7,9 @@ let
     matplotlib tkinter
     flake8 flake8-bugbear isort
   ]);
+  globalPerlPackages = (pp: with pp; [
+    PerlLanguageServer
+  ]);
   lazydocs = pkgs.callPackage ../pkgs/lazydocs.nix { };
 in
 {
@@ -150,6 +153,7 @@ in
     pdf2svg
     pdfgrep
     pdftk
+    (perl.withPackages globalPerlPackages)
     pkg-config
     polylux2pdfpc
     poppler-utils
