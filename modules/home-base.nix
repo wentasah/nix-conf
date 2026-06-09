@@ -138,6 +138,7 @@ in
     nix-template
     nix-tree
     nix-update
+    nixd
     nixfmt
     nixos-generators
     nixos-shell
