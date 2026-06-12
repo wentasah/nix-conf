@@ -71,6 +71,7 @@ in
     gh
     git-backdate
     git-cliff
+    git-credential-oauth
     git-filter-repo
     git-lfs
     git-machete
