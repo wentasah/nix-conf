@@ -4,6 +4,7 @@
     adwaita-fonts
     emacs-all-the-icons-fonts
     iosevka
+    (iosevka-bin.override { variant = "Aile"; })
     lato
     libertine # For images consistency with ACM latex template
     montserrat
