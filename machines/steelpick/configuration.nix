@@ -577,6 +577,8 @@ in
   systemd.services.nix-gc.serviceConfig = {
     CPUSchedulingPolicy = "idle";
     IOSchedulingClass = "idle";
+    # Prevent garbage collection on battery
+    ConditionACPower = true;
   };
 
   nix.settings = {
