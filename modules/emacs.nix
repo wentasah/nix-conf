@@ -361,7 +361,7 @@
         uncrustify-mode
         undo-tree
         unfill
-        uniline
+        #uniline # broken <2026-06-29 Mon>
         use-package
         vala-mode
         vertico
