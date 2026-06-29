@@ -12,7 +12,6 @@
         ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart --startdelay 60 --notify-start --notify-finish --foreground";
         ExecStop = "${pkgs.git-annex}/bin/git-annex assistant --autostop";
         #LimitCPU = "10m";
-        CPUAccounting = true;
         CPUQuota = "20%";
         Restart = "on-failure";
         RestartSec = "5s";
