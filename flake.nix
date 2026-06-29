@@ -127,6 +127,7 @@
                 (final: prev: {
                   # Packages from stable
                   inherit (nixpkgs-stable.outputs.legacyPackages.x86_64-linux)
+                    cantarell-fonts # TODO: Remove after fixing https://github.com/NixOS/nixpkgs/issues/535887
                     ;
                 })
               ];
