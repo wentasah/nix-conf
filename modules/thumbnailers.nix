@@ -19,6 +19,6 @@
     pkgs.webp-pixbuf-loader
 
     # 3D Model Thumbnails
-    pkgs.f3d
+    #pkgs.f3d # broken vtk <2026-07-19 Sun>
   ];
 }

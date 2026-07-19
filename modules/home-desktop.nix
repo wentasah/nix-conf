@@ -56,7 +56,7 @@
     file-roller
     firefox
     (flameshot.override { enableWlrSupport = true; })
-    freecad
+    #freecad # broken vtk <2026-07-19 Sun>
     gh-gfm-preview
     ghostty
     gimp
