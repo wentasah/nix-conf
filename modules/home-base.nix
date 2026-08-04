@@ -301,9 +301,9 @@ in
       jc    = "journalctl";
       jcu   = "journalctl --user";
       kssh  = "kitty +kitten ssh";
-      l     = "eza -la --group --header --time-style=relative --hyperlink";
-      lg    = "eza -la --group --header --time-style=relative --hyperlink --git";
-      lt    = "eza -la --group --header --time-style=relative --hyperlink --tree";
+      l     = "eza -la --group --header --time-style=relative --hyperlink=auto";
+      lg    = "eza -la --group --header --time-style=relative --hyperlink=auto --git";
+      lt    = "eza -la --group --header --time-style=relative --hyperlink=auto --tree";
       ln    = "nocorrect ln"; # no spelling correction on ln
       lnr   = "nocorrect ln -s --relative";
       ls    = "ls --color=auto";
