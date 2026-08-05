@@ -257,10 +257,6 @@ in
       gtk = true;
     };
   };
-  programs.hyprland = {
-    enable = true;
-    #withUWSM = true;
-  };
 
   programs.scroll = {
     enable = true;

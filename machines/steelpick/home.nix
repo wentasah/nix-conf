@@ -33,7 +33,6 @@ in
     ../../modules/go.nix
     ../../modules/home-base.nix
     ../../modules/home-desktop.nix
-    ../../modules/hyprland.nix
     ../../modules/linux-build.nix
     ../../modules/mail.nix
     ../../modules/msmtp.nix
