@@ -157,7 +157,6 @@
           wgrep
           which-key
           window-purpose
-          yafolding
           yaml-mode
           yasnippet-snippets
           zoom
@@ -267,6 +266,7 @@
         just-mode
         kdl-mode
         keycast
+        kirigami
         kkp
         langtool
         ligature
@@ -313,6 +313,7 @@
         org-super-agenda
         org-tree-slide
         orgalist
+        outline-indent
         ox-gfm
         ox-slack
         paredit
@@ -372,7 +373,6 @@
         wgrep
         which-key
         window-purpose
-        yafolding
         yaml-mode
         yasnippet
         yasnippet-snippets
