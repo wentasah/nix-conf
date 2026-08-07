@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 # Basic home manager configuration common to all my systems. Mostly
 # CLI utilities.
 let
@@ -16,6 +16,7 @@ in
   imports = [
     ./verilog.nix
     ./emacs.nix
+    inputs.direnv-instant.homeModules.direnv-instant
   ];
   home.packages = with pkgs; [
     abi-compliance-checker
@@ -391,7 +392,7 @@ in
 
   programs.dircolors.enable = true;
 
-  programs.direnv.enable = true;
+  programs.direnv-instant.enable = true;
   # https://github.com/direnv/direnv/wiki/Customizing-cache-location#human-readable-directories
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}

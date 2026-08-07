@@ -5,6 +5,7 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    direnv-instant = { url = "github:Mic92/direnv-instant"; inputs.nixpkgs.follows = "nixpkgs"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
     findrepo.url = "github:wentasah/findrepo";
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
@@ -111,7 +112,10 @@
           modules = [
             ({ pkgs, ... }: {
               _module.args.jail = inputs.jail-nix.lib.init pkgs;
-              home-manager.extraSpecialArgs.jail = inputs.jail-nix.lib.init pkgs;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                jail = inputs.jail-nix.lib.init pkgs;
+              };
             })
             ./machines/steelpick/configuration.nix
             nixos-hardware.nixosModules.common-cpu-intel
