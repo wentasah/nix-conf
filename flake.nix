@@ -144,7 +144,10 @@
           modules = [
             ({ pkgs, ... }: {
               _module.args.jail = inputs.jail-nix.lib.init pkgs;
-              home-manager.extraSpecialArgs.jail = inputs.jail-nix.lib.init pkgs;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                jail = inputs.jail-nix.lib.init pkgs;
+              };
             })
             ./machines/resox/configuration.nix
             nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -209,6 +212,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
         in home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
           modules = [
             ./modules/home-base.nix
             ./modules/fonts.nix
