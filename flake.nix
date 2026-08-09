@@ -16,7 +16,7 @@
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
     #nix-xilinx = { url = "gitlab:doronbehar/nix-xilinx"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware"; inputs.nixpkgs.follows = "nixpkgs"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
     ros2nix = { url = "github:wentasah/ros2nix"; inputs.nixpkgs.follows = "nixpkgs"; };
