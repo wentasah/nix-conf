@@ -393,6 +393,8 @@ in
   programs.dircolors.enable = true;
 
   programs.direnv-instant.enable = true;
+  programs.direnv-instant.settings.mux_delay = 1;
+
   # https://github.com/direnv/direnv/wiki/Customizing-cache-location#human-readable-directories
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
