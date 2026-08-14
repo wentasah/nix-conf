@@ -302,9 +302,9 @@ in
       jc    = "journalctl";
       jcu   = "journalctl --user";
       kssh  = "kitty +kitten ssh";
-      l     = "eza -la --group --header --time-style=relative --hyperlink=auto";
-      lg    = "eza -la --group --header --time-style=relative --hyperlink=auto --git";
-      lt    = "eza -la --group --header --time-style=relative --hyperlink=auto --tree";
+      l     = "eza -la --group --header --hyperlink --time-style=relative";
+      lg    = "eza -la --group --header --hyperlink --time-style=relative --git";
+      lt    = "eza -la --group --header --hyperlink --time-style=relative --tree";
       ln    = "nocorrect ln"; # no spelling correction on ln
       lnr   = "nocorrect ln -s --relative";
       ls    = "ls --color=auto";
@@ -393,6 +393,8 @@ in
   programs.dircolors.enable = true;
 
   programs.direnv-instant.enable = true;
+  programs.direnv-instant.settings.mux_delay = 1;
+
   # https://github.com/direnv/direnv/wiki/Customizing-cache-location#human-readable-directories
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
