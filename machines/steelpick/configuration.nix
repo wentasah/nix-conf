@@ -33,6 +33,7 @@ in
         "claude-code"
         "copilot-language-server"
         "discord"
+        "discord-unwrapped"
         "drawio"
         "konica-minolta-bizhub"
         "kyocera-driver"
