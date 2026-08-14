@@ -387,7 +387,9 @@ in
     enable = true;
     defaultOptions = [ "--bind ctrl-k:kill-line --color=dark" ];
     # I keep fzf enabled with atuin, because I use fzf-cd-widget.
-    # Ctrl-R gets correctly overridden by atuin.
+    # Ctrl-R gets correctly overridden by atuin with the following
+    # config.
+    historyWidget.command = "";
   };
 
   programs.dircolors.enable = true;
