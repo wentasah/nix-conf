@@ -386,9 +386,12 @@ in
   programs.fzf = {
     enable = true;
     defaultOptions = [ "--bind ctrl-k:kill-line --color=dark" ];
-    # I keep fzf enabled with atuin, because I use fzf-cd-widget.
-    # Ctrl-R gets correctly overridden by atuin with the following
-    # config.
+  }
+  # I keep fzf enabled with atuin, because I use fzf-cd-widget.
+  # Ctrl-R gets correctly overridden by atuin with the following
+  # config. The historyWidget submodule only exists on nixpkgs
+  # newer than 26.05.
+  // lib.optionalAttrs (lib.versionOlder "26.05" pkgs.lib.trivial.release) {
     historyWidget.command = "";
   };
 
