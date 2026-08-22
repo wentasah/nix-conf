@@ -97,6 +97,7 @@
     smplayer mpv mplayer
     solvespace
     sqlitebrowser
+    star-history
     thunderbird
     video-trimmer
     vlc
