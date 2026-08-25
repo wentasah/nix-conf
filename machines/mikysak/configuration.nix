@@ -141,7 +141,6 @@ in
     flags = [
       "--update-input=nixpkgs-stable"
       "--no-write-lock-file"
-      "--max-jobs=0" # don't try to rebuild packages that cannot be substituted
     ];
     randomizedDelaySec = "30min";
     persistent = true;
