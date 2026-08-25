@@ -324,8 +324,6 @@ let
   };
 
   emacs = pkgs.emacs.override { withPgtk = true; };
-  emacsPackages = pkgs.emacsPackagesFor emacs;
-  emacsWithPackages = (emacsPackages.overrideScope stableOverrides).emacsWithPackages;
 in
 {
   home.file = let
@@ -383,6 +381,6 @@ in
     '';
     # # Not used since switch to straight
     # extraPackages = epkgs: with epkgs; [ edit-server magit forge nix-mode direnv vterm pod-mode ];
-    package = emacsWithPackages myPackages;
+    package = (emacs.pkgs.overrideScope stableOverrides).withPackages myPackages;
   };
 }
