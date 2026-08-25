@@ -60,7 +60,6 @@ let
       my-repo-pins
       nixos-options
       nixpkgs-fmt
-      notmuch
       ol-notmuch
       orderless
       org-appear
@@ -115,6 +114,8 @@ let
       orgalist
       use-package
     ;
+
+    notmuch = pkgs.notmuch.emacs; # Take notmuch from the main packages set
   };
 
   emacs = pkgs.emacs.override { withPgtk = true; };
@@ -380,8 +381,6 @@ in
       zig-mode
       zoom
       zoxide
-    ]) ++ [
-      pkgs.notmuch   # From main packages set
-    ]);
+    ]));
   };
 }
