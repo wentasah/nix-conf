@@ -89,6 +89,7 @@ in
     libreoffice-fresh
     links2
     mc
+    nh
     rhythmbox
     wget
     vim
