@@ -373,6 +373,7 @@ in
   };
   home.packages = with pkgs; [
     parinfer-rust-emacs
+    (pkgs.writeShellScriptBin "emacs-31" ''exec ${(emacs31.pkgs.overrideScope stableOverrides).withPackages myPackages}/bin/emacs "$@"'')
   ];
   programs.emacs = {
     enable = true;
