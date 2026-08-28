@@ -417,6 +417,17 @@
     adminUsers = ["wsh"];
   };
 
+  services.comin = {
+    enable = true;
+    desktop.enable = true;
+    remotes = [{
+      name = "origin";
+      url = "https://github.com/wentasah/nix-conf.git";
+      branches.main.name = "main";
+      poller.period = 3600;
+    }];
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

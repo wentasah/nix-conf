@@ -156,6 +156,7 @@
             home-manager-stable.nixosModules.home-manager
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
+            inputs.comin.nixosModules.comin
             {
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
                 inputs.carla-stable.overlays."0.9.15"
