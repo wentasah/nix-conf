@@ -230,7 +230,6 @@ let
       edit-server
       electric-ospl
       embark-consult
-      envrc
       ethan-wspace
       flycheck-package
       flycheck-rust
