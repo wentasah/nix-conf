@@ -171,6 +171,7 @@
     krita
     libreoffice-fresh
     mc
+    nautilus-image-converter
     nautilus-python
     ncdu
     nethogs

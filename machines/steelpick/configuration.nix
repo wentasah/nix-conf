@@ -160,6 +160,7 @@ in
     iftop
     lsof
     mc
+    nautilus-image-converter
     nautilus-python
     ncdu
     net-tools
