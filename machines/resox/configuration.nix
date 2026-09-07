@@ -68,7 +68,7 @@
   time.timeZone = "Europe/Prague";
 
   system.autoUpgrade = {
-    enable = true;
+    # enable = true;
     flake = "github:wentasah/nix-conf";
     flags = [ "--update-input" "nixpkgs-stable" "--no-write-lock-file" ];
     randomizedDelaySec = "30min";
@@ -424,8 +424,8 @@
     remotes = [{
       name = "origin";
       url = "https://github.com/wentasah/nix-conf.git";
-      branches.main.name = "main";
-      poller.period = 3600;
+      branches.main.name = "stable";
+      poller.period = 600;
     }];
   };
 
