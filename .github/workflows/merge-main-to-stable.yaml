@@ -1,0 +1,32 @@
+name: Merge main into stable
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Merge main into stable
+        run: |
+          git fetch origin main
+          if git show-ref --verify --quiet refs/remotes/origin/stable; then
+            git checkout -b stable origin/stable
+            git merge --no-edit origin/main
+          else
+            git checkout -b stable origin/main
+          fi
+      - name: Push stable
+        run: git push origin stable
