@@ -51,6 +51,7 @@ let
     envrc
     ethan-wspace
     filladapt
+    flycheck-clang-tidy
     flycheck-julia
     flycheck-package
     flycheck-plantuml
