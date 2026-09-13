@@ -71,7 +71,6 @@
           ros2nix = inputs.ros2nix.outputs.packages.${system}.ros2nix;
           # https://github.com/nix-community/home-manager/issues/3361#issuecomment-1324310517
           #nix-zsh-completions = prev.nix-zsh-completions.overrideAttrs (old: {  postPatch = "rm _nix"; });
-          veridian = final.callPackage ./pkgs/veridian { };
           svlangserver = final.callPackage ./pkgs/svlangserver.nix { };
 
           # Add python packages for using in Blender Addons (prepared for 23.11)
