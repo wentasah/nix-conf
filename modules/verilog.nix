@@ -5,6 +5,6 @@
     pkgs.verible
     pkgs.svlangserver
     pkgs.svls
-    pkgs.veridian
+    # pkgs.veridian # broken <2026-09-13 Sun>
   ];
 }
