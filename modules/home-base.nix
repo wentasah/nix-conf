@@ -18,6 +18,7 @@ in
     ./emacs.nix
     inputs.direnv-instant.homeModules.direnv-instant
   ];
+
   home.packages = with pkgs; [
     abi-compliance-checker
     abi-dumper
@@ -103,6 +104,7 @@ in
     lemminx
     (lib.hiPrio outils)   # collides with ts from moreutils
     (lib.hiPrio parallel) # Prefer this over parallel from moreutils
+    liburing              # for documentation
     libwebp
     libxml2 # for xmllint
     live-server
