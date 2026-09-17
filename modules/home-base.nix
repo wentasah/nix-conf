@@ -426,7 +426,12 @@ in
         show_hidden = true;
       };
       opener = {
-        edit = [ { run = "ec \"$@\""; desc = "Edit with ec"; block = true; for = "unix"; } ];
+        edit = [ { run = "ec %s"; desc = "Edit with Emacs Client"; block = true; for = "unix"; } ];
+      };
+      open = {
+        append_rules = [
+	        { url = "*"; use = "edit"; }
+        ];
       };
       plugin.prepend_fetchers = [
         {group = "git"; url = "*"; run = "git";}
