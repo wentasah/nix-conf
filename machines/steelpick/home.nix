@@ -2,20 +2,7 @@
 
 let
   lib = pkgs.lib;
-  texlive = pkgs.texlive.override { python3 = (pkgs.python3.withPackages (ps: [ ps.pygments ])); };
-  mytexlive = texlive.combine {
-    inherit (pkgs.texlive) scheme-full;
-    pkgFilter =
-      pkg:
-      pkg.tlType == "run"
-      || pkg.tlType == "bin"
-      || (
-        pkg.tlType == "doc"
-        &&
-          # Prevent collisions
-          !builtins.elem pkg.pname [ "core" ]
-      );
-  };
+  mytexlive = pkgs.texliveFull.overrideAttrs { withDocs = true; };
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
   lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
