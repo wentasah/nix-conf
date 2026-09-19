@@ -467,11 +467,10 @@
       "locked": {
         "lastModified": 1789286504,
         "narHash": "sha256-NKjLVY4BwtiRg64bItEPpUT5weBWOGxNEgAsFwFEDGw=",
-        "ref": "refs/heads/master",
-        "rev": "e4d2a9e9b454c163f5195f86059c609da17595f3",
-        "revCount": 1073016,
-        "type": "git",
-        "url": "file:///home/sojka/nix/nixpkgs"
+        "owner": "wentasah",
+        "repo": "nixpkgs",
+        "rev": "60e61df1a89ec189fab8238e90279cae93b8acc5",
+        "type": "github"
       },
       "original": {
         "owner": "wentasah",
