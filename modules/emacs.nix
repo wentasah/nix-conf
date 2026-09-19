@@ -45,6 +45,7 @@ let
     edit-server
     eglot
     eglot-jl
+    eglot-x
     electric-ospl
     electric-spacing
     embark-consult
