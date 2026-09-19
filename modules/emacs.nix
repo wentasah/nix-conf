@@ -45,6 +45,7 @@ let
     edit-server
     eglot
     eglot-jl
+    eglot-x
     electric-ospl
     electric-spacing
     embark-consult
@@ -178,6 +179,7 @@ let
     transpose-frame
     tree-mode
     treemacs
+    treesit-auto
     treesit-fold
     treesit-grammars.with-all-grammars
     txl
@@ -245,7 +247,6 @@ let
       json-mode
       json-reformat
       julia-snail
-      julia-ts-mode
       just-mode
       lsp-julia
       lsp-mode
