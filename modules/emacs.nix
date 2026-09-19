@@ -179,6 +179,7 @@ let
     transpose-frame
     tree-mode
     treemacs
+    treesit-auto
     treesit-fold
     treesit-grammars.with-all-grammars
     txl
