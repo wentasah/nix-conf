@@ -246,7 +246,6 @@ let
       json-mode
       json-reformat
       julia-snail
-      julia-ts-mode
       just-mode
       lsp-julia
       lsp-mode
