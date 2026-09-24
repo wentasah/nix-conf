@@ -598,6 +598,7 @@ in
     automatic = true;
     options = "--delete-older-than 4d";
     persistent = true;
+    date = "weekly";
   };
   nix.package = pkgs.nixVersions.latest;
 
