@@ -24,7 +24,7 @@ jobs:
           git fetch origin main
           if git show-ref --verify --quiet refs/remotes/origin/stable; then
             git checkout -b stable origin/stable
-            git merge --no-edit origin/main
+            git merge -Xtheirs --no-edit origin/main
           else
             git checkout -b stable origin/main
           fi
