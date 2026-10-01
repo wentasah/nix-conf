@@ -28,8 +28,6 @@ in
     aspell
     aspellDicts.cs
     aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
     atop
     attic-client
     babeltrace2
