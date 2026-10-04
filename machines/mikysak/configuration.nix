@@ -135,21 +135,6 @@ in
     wget
   ];
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = "github:wentasah/nix-conf";
-    flags = [
-      "--update-input=nixpkgs-stable"
-      "--no-write-lock-file"
-    ];
-    randomizedDelaySec = "30min";
-    persistent = true;
-  };
-  systemd.services.nixos-upgrade.serviceConfig = {
-    Restart = "on-failure";
-    RestartSec = "10min";
-  };
-
   services.fwupd.enable = true;
 
   services.flatpak.enable = true;
@@ -173,6 +158,17 @@ in
   };
 
   services.kmscon.enable = true;
+
+  services.comin = {
+    enable = true;
+    desktop.enable = true;
+    remotes = [{
+      name = "origin";
+      url = "https://github.com/wentasah/nix-conf.git";
+      branches.main.name = "stable";
+      poller.period = 3600;
+    }];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
