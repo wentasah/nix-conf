@@ -163,11 +163,15 @@
         };
         lucka-ntb = nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/lucka-ntb/configuration.nix ];
+          modules = [
+            inputs.comin.nixosModules.comin
+            ./machines/lucka-ntb/configuration.nix
+          ];
         };
         mikysak = inputs.nixpkgs-stable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            inputs.comin.nixosModules.comin
             ./machines/mikysak/configuration.nix
             {
               nixpkgs.overlays = [
