@@ -107,22 +107,6 @@ in
 
   programs.mosh.enable = true;
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = "github:wentasah/nix-conf";
-    flags = [
-      "--update-input=nixpkgs-stable"
-      "--no-write-lock-file"
-    ];
-    randomizedDelaySec = "30min";
-  };
-  systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
-  systemd.services.nixos-upgrade.serviceConfig = {
-    Restart = "on-failure";
-    RestartSec = "10min";
-  };
-
-
   # List services that you want to enable:
 
   services.avahi = {
@@ -162,6 +146,17 @@ in
   # services.xserver.desktopManager.plasma5.enable = true;
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
+
+  services.comin = {
+    enable = true;
+    desktop.enable = true;
+    remotes = [{
+      name = "origin";
+      url = "https://github.com/wentasah/nix-conf.git";
+      branches.main.name = "stable";
+      poller.period = 600;
+    }];
+  };
 
   environment.homeBinInPath = true;
 
