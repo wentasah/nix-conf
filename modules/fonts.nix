@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     adwaita-fonts
     emacs-all-the-icons-fonts
+    inter
     iosevka
     (iosevka-bin.override { variant = "Aile"; })
     lato
@@ -17,6 +18,7 @@
     nerd-fonts.symbols-only
     noto-fonts
     open-sans
+    raleway
     roboto
     roboto-slab
     source-sans
