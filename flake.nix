@@ -63,7 +63,6 @@
         (final: prev: {
           notify-while-running = import notify-while-running { pkgs = final; };
           inherit (nix-autobahn.packages.${system}) nix-autobahn;
-          fastdds = final.callPackage ./pkgs/fastdds { };
           flamenco = final.callPackage ./pkgs/flamenco {};
           foxglove-studio = final.callPackage ./pkgs/foxglove-studio { };
           gh-gfm-preview = inputs.gh-gfm-preview.outputs.packages.${system}.default;
