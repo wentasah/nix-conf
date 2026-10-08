@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     adwaita-fonts
     emacs-all-the-icons-fonts
+    fira
     inter
     iosevka
     (iosevka-bin.override { variant = "Aile"; })
