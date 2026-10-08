@@ -1,14 +1,10 @@
 { config, pkgs, ... }:
-let
-  fastdds = pkgs.fastdds;
-  #fastddsgen = pkgs.callPackage ../pkgs/fastdds/fastddsgen.nix { };
-in
 {
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     fastdds
-    fastdds.fastcdr
-    fastdds.foonathan-memory
-    pkgs.fastddsgen
+    fastcdr
+    foonathan-memory
+    fastddsgen
   ];
 
   # Without this cmake cannot find fastcdr includes

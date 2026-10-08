@@ -150,7 +150,7 @@ in
       xplr
       xpra
       xrectsel
-      zotero
+      # zotero # broken <2026-10-08 Thu> https://github.com/NixOS/nixpkgs/pull/569006
       # zulip # depends on insecure electron_32 (2024-03-09)
       # zulip-term # broken <2025-06-21 Sat>
 
