@@ -245,6 +245,9 @@ in
   };
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openvpn
+  ];
 
   programs.sway = {
     enable = true;
