@@ -17,6 +17,7 @@ let
     clang-format
     color-identifiers-mode
     command-log-mode
+    cond-let
     consult
     consult-dir
     consult-flycheck
@@ -61,6 +62,7 @@ let
     forge
     free-keys
     ggtags
+    ghostel
     git-blamed
     git-link
     github-review
