@@ -425,8 +425,12 @@ in
       };
       opener = {
         edit = [ { run = "ec %s"; desc = "Edit with Emacs Client"; block = true; for = "unix"; } ];
+        exec-or-edit = [ { run = "if [ -x %1 ]; then %1; else ec %1; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
       };
       open = {
+        prepend_rules = [
+          { url = "*.md"; use = [ "exec-or-edit" "edit" ]; }
+        ];
         append_rules = [
 	        { url = "*"; use = "edit"; }
         ];
@@ -472,7 +476,12 @@ in
 
   xdg.configFile = {
     "mc/mc.ext.ini".text = ''
-      ${builtins.readFile "${pkgs.mc}/etc/mc/mc.ext.ini"}
+      ${builtins.replaceStrings [ "[markdown]" ] [ ''
+        [exec-script]
+        Type=script.*executable
+        Open=%f
+
+        [markdown]'' ] (builtins.readFile "${pkgs.mc}/etc/mc/mc.ext.ini")}
       [mcap]
       Open=foxglove-studio %f >/dev/null 2>&1 &
       Shell=.mcap
