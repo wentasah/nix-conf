@@ -167,6 +167,9 @@ in
     (python3.withPackages globalPythonPackages)
     python3Packages.invoke
     python3Packages.python-lsp-server
+    radicle-desktop
+    radicle-node
+    radicle-tui
     rainfrog
     ranger
     redo-apenwarr
@@ -425,7 +428,7 @@ in
       };
       opener = {
         edit = [ { run = "ec %s"; desc = "Edit with Emacs Client"; block = true; for = "unix"; } ];
-        exec-or-edit = [ { run = "if [ -x %1 ]; then %1; else ec %1; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
+        exec-or-edit = [ { run = "if [ -x %s ]; then %s; else ec %s; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
       };
       open = {
         prepend_rules = [
