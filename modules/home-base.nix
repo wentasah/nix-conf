@@ -167,6 +167,9 @@ in
     (python3.withPackages globalPythonPackages)
     python3Packages.invoke
     python3Packages.python-lsp-server
+    radicle-desktop
+    radicle-node
+    radicle-tui
     rainfrog
     ranger
     redo-apenwarr

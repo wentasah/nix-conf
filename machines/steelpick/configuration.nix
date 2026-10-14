@@ -45,6 +45,9 @@ in
         "xkcd-font"
         "zoom" # zoom-us is now just zoom
       ];
+      permittedInsecurePackages = [
+        "radicle-node-1.10.3"
+      ];
     };
     overlays = [ myOverlay ];
   };
