@@ -438,8 +438,3 @@
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-
-
-# Local Variables:
-# compile-command: "nix-conf build"
-# End:
