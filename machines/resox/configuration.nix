@@ -326,11 +326,12 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e";
 
   services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.cosmic.enable = true;
 
 
   # Enable touchpad support.
@@ -438,8 +439,3 @@
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-
-
-# Local Variables:
-# compile-command: "nix-conf build"
-# End:
