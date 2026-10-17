@@ -151,7 +151,13 @@
                 stable-overlay
                 (final: prev: {
                   # Packages from unstable
-                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
+                  inherit (import nixpkgs {
+                    system = "x86_64-linux";
+                    config.allowUnfreePredicate = pkg: builtins.elem (final.lib.getName pkg) [
+                      "claude-code" # to have access to newer models
+                    ];
+                  })
+                    claude-code
                     ;
                   krita = prev.callPackage ./pkgs/krita-fix.nix { };
                 })
@@ -215,10 +221,15 @@
               home.username = "sojka";
               home.homeDirectory = "/home/sojka";
               home.stateVersion = "22.05";
-              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-                "aspell-dict-en-science"
-                "copilot-language-server"
-              ];
+              nixpkgs.config = {
+                allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+                  "aspell-dict-en-science"
+                  "copilot-language-server"
+                ];
+                permittedInsecurePackages = [
+                  "radicle-node-1.10.3"
+                ];
+              };
               nixpkgs.overlays = common-overlays "x86_64-linux";
 
               programs.zsh.envExtra = ''
