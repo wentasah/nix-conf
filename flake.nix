@@ -151,7 +151,13 @@
                 stable-overlay
                 (final: prev: {
                   # Packages from unstable
-                  inherit (nixpkgs.outputs.legacyPackages.x86_64-linux)
+                  inherit (import nixpkgs {
+                    system = "x86_64-linux";
+                    config.allowUnfreePredicate = pkg: builtins.elem (final.lib.getName pkg) [
+                      "claude-code" # to have access to newer models
+                    ];
+                  })
+                    claude-code
                     ;
                   krita = prev.callPackage ./pkgs/krita-fix.nix { };
                 })
