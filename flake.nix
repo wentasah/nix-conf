@@ -254,9 +254,12 @@
       };
 
       checks.x86_64-linux = {
+        lucka-ntb = self.nixosConfigurations.lucka-ntb.config.system.build.toplevel;
+        mikysak = self.nixosConfigurations.mikysak.config.system.build.toplevel;
         resox = self.nixosConfigurations.resox.config.system.build.toplevel;
         ritchie = self.homeConfigurations.ritchie.activationPackage;
         steelpick = self.nixosConfigurations.steelpick.config.system.build.toplevel;
+
         # Ensure that Foxglove Studio sources remain cached
         foxglove-src = self.legacyPackages.x86_64-linux.foxglove-studio.src;
       };
