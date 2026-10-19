@@ -478,19 +478,25 @@ in
   };
 
   xdg.configFile = {
-    "mc/mc.ext.ini".text = ''
-      ${builtins.replaceStrings [ "[markdown]" ] [ ''
+    "mc/mc.ext.ini".source = pkgs.runCommand "mc.ext.ini" {
+      execScript = ''
         [exec-script]
         Type=script.*executable
         Open=%f
 
-        [markdown]'' ] (builtins.readFile "${pkgs.mc}/etc/mc/mc.ext.ini")}
-      [mcap]
-      Open=foxglove-studio %f >/dev/null 2>&1 &
-      Shell=.mcap
-   '';
-    "mc/menu".text = ''
-      ${builtins.readFile "${pkgs.mc}/etc/mc/mc.menu"}
+        [markdown]'';
+      mcap = ''
+        [mcap]
+        Open=foxglove-studio %f >/dev/null 2>&1 &
+        Shell=.mcap
+      '';
+    } ''
+      substitute ${pkgs.mc}/etc/mc/mc.ext.ini $out --replace-fail '[markdown]' "$execScript"
+      printf '\n%s' "$mcap" >> $out
+    '';
+    "mc/menu".source = pkgs.concatText "mc-menu" [
+      "${pkgs.mc}/etc/mc/mc.menu"
+      (pkgs.writeText "mc-menu-extra" ("\n" + ''
       e       Edit with Emacs (X or text)
               ec %f
 
@@ -502,7 +508,8 @@ in
 
       k       KDiff3
               kdiff3 %D/%F %f
-    '';
+    ''))
+    ];
   };
 
   services.home-manager.autoExpire = {
