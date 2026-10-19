@@ -343,7 +343,6 @@ in
   services.printing.enable = true;
   services.printing.drivers = [
     (pkgs.callPackage ./../../pkgs/kyocera-phase5.nix { })
-    (pkgs.callPackage ./../../pkgs/kmbeu { })
   ];
   services.ipp-usb.enable = true; # USB printers
   programs.system-config-printer.enable = true;
