@@ -357,9 +357,9 @@ def add_pr(pr: int, branch: str):
     system(f'git-machete anno --branch="{branch}" "PR #{pr} rebase=no push=no"')
 
 
-def update(host, nix_args):
+def update(host, nix_args, iets: bool):
     if updated(host):
-        build(host, nix_args)
+        build(host, nix_args, iets)
     else:
         print("Nothing to do for update.")
 
@@ -451,7 +451,7 @@ subparsers = parser.add_subparsers(required=True)
 
 parser_update = subparsers.add_parser('update', parents=[parent_parser])
 parser_update.add_argument("nix_args", nargs='*')
-parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args)))
+parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args), args.iets))
 
 parser_ci = subparsers.add_parser('ci', parents=[parent_parser])
 parser_ci.set_defaults(func=lambda args: ci())
