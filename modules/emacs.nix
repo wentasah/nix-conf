@@ -222,7 +222,6 @@ let
       consult-notmuch
       copilot
       corfu
-      csharp-mode
       dash
       diff-hl
       dired-rsync
@@ -301,7 +300,6 @@ let
       visual-fill-column
       web-mode
       wgrep
-      which-key
       window-purpose
       yaml-mode
       yasnippet-snippets
