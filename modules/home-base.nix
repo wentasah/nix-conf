@@ -94,6 +94,7 @@ in
     hydra-check
     hyperfine
     imagemagick
+    inputs.iets.packages.${pkgs.stdenv.hostPlatform.system}.default
     jless
     jo
     jq
