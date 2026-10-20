@@ -213,7 +213,8 @@ def updated(host):
     updated = [
         update_nix_conf(),
         update_clonned_nixpkgs(),
-        update_flake_input("ros2nix")
+        update_flake_input("ros2nix"),
+        update_flake_input("iets"),
     ]
     # Update nixpkgs-stable, but don't trigger rebuild of unstable
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
