@@ -503,10 +503,11 @@
       "locked": {
         "lastModified": 1792502884,
         "narHash": "sha256-S6reXSjweG/LfGPoEAh+h0yGSAop1mp3RWvFdA01vTs=",
-        "owner": "wentasah",
-        "repo": "nixpkgs",
+        "ref": "refs/heads/master",
         "rev": "dc884a3cf4e93ad8d6c28fb690033ee795a1cdc2",
-        "type": "github"
+        "revCount": 1097691,
+        "type": "git",
+        "url": "file:///home/wsh/nix/nixpkgs"
       },
       "original": {
         "owner": "wentasah",
@@ -624,11 +625,11 @@
         "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1791923051,
-        "narHash": "sha256-/RvgfGxli0tRDsJdzPjSh1EqaTnPV72s2gHypDUFe4M=",
+        "lastModified": 1792527266,
+        "narHash": "sha256-6YpA+Zc12AQsxJt09bF4ag3XHk9v0kF/wYxLNeBQvVc=",
         "owner": "wentasah",
         "repo": "ros2nix",
-        "rev": "e51dfb7c4583288c6b61dfdba57a0eeb406162fa",
+        "rev": "bac81152b7b6218df99ce6e62a9926f5564c8b4d",
         "type": "github"
       },
       "original": {
