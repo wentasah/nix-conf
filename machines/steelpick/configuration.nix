@@ -502,6 +502,8 @@ in
   services.displayManager.defaultSession = "sway";
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
+  services.desktopManager.cosmic.enable = true;
 
   # TODO: localsearch needs to be overriden to not block Gtk File Open/Save dialogs.
   # systemctl --user edit localsearch-3.service

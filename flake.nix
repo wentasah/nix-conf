@@ -13,6 +13,7 @@
     gh-gfm-preview = { url = "github:thiagokokada/gh-gfm-preview"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager-stable = { url = "github:nix-community/home-manager/release-26.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    iets = { url = "github:numtide/iets"; inputs.nixpkgs.follows = "nixpkgs"; };
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nix-autobahn = { url = "github:Lassulus/nix-autobahn"; inputs.nixpkgs.follows = "nixpkgs"; };
     nix-index-database = { url = "github:Mic92/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -112,6 +113,7 @@
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             home-manager.nixosModules.home-manager
+            inputs.iets.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             inputs.scroll-flake.nixosModules.default

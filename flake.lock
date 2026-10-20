@@ -43,6 +43,21 @@
         "type": "github"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1791754810,
+        "narHash": "sha256-cN0Mgk+sQtCJcGWs9H4M0CnLRAuC4I8aCwiBTcBJs6E=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "bd63bf1d0a0f6dcacd7549c714a671ee63b0db6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "direnv-instant": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -332,6 +347,27 @@
         "type": "github"
       }
     },
+    "iets": {
+      "inputs": {
+        "crane": "crane",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792498082,
+        "narHash": "sha256-b6Nvp7BPh7RtClSiZxqrZDpokswtiQyKFyVpHK4I6vY=",
+        "owner": "numtide",
+        "repo": "iets",
+        "rev": "629d0b45f749b6ce6cf0d7dcde26debfa133f818",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "iets",
+        "type": "github"
+      }
+    },
     "jail-nix": {
       "locked": {
         "lastModified": 1772137954,
@@ -467,10 +503,11 @@
       "locked": {
         "lastModified": 1791734076,
         "narHash": "sha256-+1YRpda74tWW1SzuUVQCkkNmgS0RQYm5jR1MBl8plUM=",
-        "owner": "wentasah",
-        "repo": "nixpkgs",
-        "rev": "99f7bc6c709948dbe5ddb59a08215733b585707e",
-        "type": "github"
+        "ref": "refs/heads/master",
+        "rev": "228cb3f16eb658f6a7084cfeee0fa300ea25383d",
+        "revCount": 1090335,
+        "type": "git",
+        "url": "file:///home/sojka/nix/nixpkgs"
       },
       "original": {
         "owner": "wentasah",
@@ -560,6 +597,7 @@
         "gh-gfm-preview": "gh-gfm-preview",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
+        "iets": "iets",
         "jail-nix": "jail-nix",
         "nix-autobahn": "nix-autobahn",
         "nix-index-database": "nix-index-database",

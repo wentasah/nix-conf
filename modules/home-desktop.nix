@@ -43,8 +43,8 @@
     appimage-run
     arandr
     audacity
-    blender
-    # ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
+    #blender
+    ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
     # carla # broken 2025-06-20
     claude-code
     copilot-language-server
@@ -81,7 +81,7 @@
     meld
     mission-center
     #musescore # broken <2025-10-23 Thu>
-    # okteta <2026-03-01 Sun>
+    okteta
     pavucontrol
     pdfpc
     pinta

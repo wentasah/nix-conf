@@ -245,7 +245,7 @@ Run one of the following to switch the configuration:
     """)
 
 
-def build(host, nix_args):
+def build(host, nix_args, iets: bool):
     cd("~/nix")
 
     override_input = []
@@ -255,17 +255,29 @@ def build(host, nix_args):
     os.makedirs(f"out/{host}", exist_ok=True)
     nix = 'nom' if os.isatty(sys.stdin.fileno()) else "nix"
 
-    cmd = [
-        nix,
-        "build",
-        *nix_args,
-        "--out-link",
-        expanduser(f"~/nix/out/{host}/flake"),
-        *override_input,
-        expanduser(
-            f"~/nix/conf#nixosConfigurations.{host}.config.system.build.toplevel"
-        ),
-    ]
+    if iets:
+        check_call(["nix", "flake", "lock", expanduser("~/nix/conf")] + override_input)
+        cmd = [
+            "iets",
+            "build",
+            "--out-link",
+            expanduser(f"~/nix/out/{host}/flake"),
+            expanduser(
+                f"~/nix/conf#nixosConfigurations.{host}.config.system.build.toplevel"
+            ),
+        ]
+    else:
+        cmd = [
+            nix,
+            "build",
+            *nix_args,
+            "--out-link",
+            expanduser(f"~/nix/out/{host}/flake"),
+            *override_input,
+            expanduser(
+                f"~/nix/conf#nixosConfigurations.{host}.config.system.build.toplevel"
+            ),
+        ]
     status = run(cmd).returncode
 
     if status != 0:
@@ -432,6 +444,8 @@ parser.add_argument("-q", "--quiet", action='store_true',
 parent_parser = argparse.ArgumentParser(add_help=False)
 parent_parser.add_argument("-l", "--local", action='store_true',
                            help="Disable remote builders")
+parent_parser.add_argument("-i", "--iets", action="store_true",
+                           help="Use iets instead of nix")
 subparsers = parser.add_subparsers(required=True)
 
 parser_update = subparsers.add_parser('update', parents=[parent_parser])
@@ -443,7 +457,7 @@ parser_ci.set_defaults(func=lambda args: ci())
 
 parser_build = subparsers.add_parser('build', parents=[parent_parser])
 parser_build.add_argument("nix_args", nargs='*')
-parser_build.set_defaults(func=lambda args: build(args.host, get_nix_args(args)))
+parser_build.set_defaults(func=lambda args: build(args.host, get_nix_args(args), args.iets))
 
 parser_copy = subparsers.add_parser('copy')
 parser_copy.set_defaults(func=lambda args: copy(args.host))

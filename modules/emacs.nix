@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   myPackages = epkgs: with epkgs; [
-    academic-phrases
     adoc-mode
     all-the-icons
     apache-mode
@@ -86,7 +85,6 @@ let
     jq-mode
     json-mode
     json-reformat
-    julia-repl
     julia-repl
     # julia-snail # <2026-04-06 Mon> broken at runtime: *Messages*: julia-snail-1.3.3/extensions/debug/debug.elc failed to provide feature ‘debug’
     julia-ts-mode
@@ -190,7 +188,7 @@ let
     uncrustify-mode
     undo-tree
     unfill
-    #uniline # broken <2026-06-29 Mon>
+    uniline
     use-package
     vala-mode
     vertico
