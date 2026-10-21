@@ -237,7 +237,8 @@ in
     };
   };
 
-  programs.sysdig.enable = true;
+  # broken <2026-10-21 Wed>
+  # programs.sysdig.enable = true;
 
   programs.firejail = {
     enable = true;
