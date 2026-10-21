@@ -42,7 +42,7 @@
   in [
     appimage-run
     arandr
-    audacity
+    #audacity # broken <2026-10-21 Wed>
     #blender
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
     # carla # broken 2025-06-20
@@ -62,7 +62,7 @@
     gimp
     (gnuplot.override { withCaca = true; withQt = true; })
     gtkterm
-    handbrake
+    # handbrake # broken <2026-10-21 Wed>
     hotspot
     inkscape
     inlyne
