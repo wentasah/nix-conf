@@ -51,7 +51,7 @@ in
     csv2latex
     csvtool
     d2
-    # daemontools                 # broken <2026-01-04 Sun>
+    daemontools
     delta
     devenv
     dix
@@ -80,7 +80,7 @@ in
     gitui
     glab
     glibc.static                # to allow gcc -static
-    # global                    # broken <2026-01-04 Sun>
+    global
     glow
     gnumake
     gnupg

@@ -45,7 +45,7 @@
     #audacity # broken <2026-10-21 Wed>
     #blender
     ((blender.withPackages (p: [ p.pyclothoids p.scenariogeneration ])).overrideAttrs { pname = "blender"; }) # broken - blender currently uses python3.11 and scipy fails to build for it
-    # carla # broken 2025-06-20
+    carla
     claude-code
     copilot-language-server
     discord'
@@ -56,7 +56,7 @@
     file-roller
     firefox
     (flameshot.override { enableWlrSupport = true; })
-    #freecad # broken vtk <2026-07-19 Sun>
+    freecad
     gh-gfm-preview
     ghostty
     gimp
@@ -88,7 +88,7 @@
     pix
     qimgv
     qpwgraph
-    #rquickshare # broken on stable <2026-02-18 Wed>
+    rquickshare
     rustdesk-flutter
     screenkey
     shotcut
