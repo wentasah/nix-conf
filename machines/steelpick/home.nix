@@ -54,7 +54,7 @@ in
       atool
       auto-multiple-choice
       automake
-      #avidemux # broken 2025-01-23
+      avidemux
       bear
       binutils-unwrapped-all-targets
       bison
@@ -62,7 +62,7 @@ in
       can-utils
       clang
       clang-tools
-      #clementine # broken <2025-10-10 Fri>
+      clementine
       clinfo
       cmakeWithGui
       cppreference-doc

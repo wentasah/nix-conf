@@ -6,7 +6,7 @@
 }:
 {
   home.packages = with pkgs; [
-    #adlplug # broken <2025-10-08 Wed>
+    adlplug
     aether-lv2
     ardour
     bs2b-lv2
