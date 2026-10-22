@@ -223,6 +223,8 @@ in
     zsh-completions
     zsh-syntax-highlighting
 
+    cargo-audit
+    cargo-deny
     cargo-edit
     cargo-expand
     # rust-analyzer # already in rustup
