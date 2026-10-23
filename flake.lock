@@ -293,11 +293,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779641808,
-        "narHash": "sha256-5skdk3Jx5Uq0SanrIaRtEdJdX06yABVQNbqUYBQpHWc=",
+        "lastModified": 1784879042,
+        "narHash": "sha256-ih+sMQN8PQvD4xExQC8NNHyi2lAPwn3uLu2acPTMh3c=",
         "owner": "thiagokokada",
         "repo": "gh-gfm-preview",
-        "rev": "8c9ed790b03884133a9bc81dddbd0112492747cb",
+        "rev": "c127e30b4ad4dbc1f63b52bed7a677013e5349c6",
         "type": "github"
       },
       "original": {
