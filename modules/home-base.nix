@@ -470,6 +470,12 @@ in
         ouch
         smart-enter
         ;
+      osc7 = pkgs.fetchFromGitHub {
+        owner = "coder0x6675";
+        repo = "osc7.yazi";
+        rev = "ae73046482b82dd71fc07eb300fe54720e95dc9f";
+        hash = "sha256-+uX/e8pnfiv82kUdLBif8yTd5vKhdG85E2ct/t/tBzk=";
+      };
     };
     shellWrapperName = "y";
   };
