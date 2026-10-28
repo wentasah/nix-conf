@@ -1,6 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 
 {
+  imports = [ "${modulesPath}/profiles/perlless.nix" ];
+
+  # Override perlless - mc still depends on perl
+  system.forbiddenDependenciesRegexes = lib.mkForce [ ];
+
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
   };
@@ -20,7 +25,23 @@
     # explicitly set nix-path, NIX_PATH to nixpkgs from system registry
     settings.nix-path = [ "nixpkgs=flake:nixpkgs" ];
     nixPath = config.nix.settings.nix-path;
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 4d";
+      persistent = true;
+      dates = [ "weekly" ];
+    };
   };
+
+  xdg = {
+    autostart.enable = false;
+    icons.enable = false;
+    mime.enable = false;
+    sounds.enable = false;
+  };
+
+  documentation.nixos.enable = false;
 
   networking.hostName = "homeassistant";
 
@@ -92,6 +113,8 @@
   };
 
   services.openssh.enable = true;
+
+  services.udisks2.enable = false;
 
   users = {
     users.wsh = {
