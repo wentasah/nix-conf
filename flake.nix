@@ -201,8 +201,10 @@
         };
         rpi = nixpkgs-stable.lib.nixosSystem {
           system = "aarch64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             nixos-hardware.nixosModules.raspberry-pi-4
+            inputs.comin.nixosModules.comin
             ./machines/rpi/configuration.nix
             {
               nixpkgs.overlays = [ stable-overlay ];

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, inputs, lib, modulesPath, ... }:
 
 {
   imports = [ "${modulesPath}/profiles/perlless.nix" ];
@@ -115,6 +115,38 @@
   services.openssh.enable = true;
 
   services.udisks2.enable = false;
+
+  services.comin = {
+    enable = true;
+    package = inputs.comin.packages.${pkgs.stdenv.hostPlatform.system}.comin.override { git = pkgs.gitMinimal; };
+    remotes = [{
+      name = "origin";
+      url = "https://github.com/wentasah/nix-conf.git";
+      branches.main = {
+        name = "stable";
+        # Only prepare the new generation; it's activated by the nightly reboot below
+        operation = "boot";
+      };
+      poller.period = 7 * 24 * 3600; # weekly
+    }];
+  };
+
+  # Reboot at night if comin says so
+  systemd.services.reboot-if-updated = {
+    description = "Reboot if comin deployment requires it";
+    serviceConfig.Type = "oneshot";
+    path = [ config.services.comin.package pkgs.jq ];
+    script = ''
+      if [[ "$(comin status --json | jq .need_to_reboot)" = true ]]; then
+        echo "comin requires reboot - rebooting"
+        systemctl reboot
+      fi
+    '';
+  };
+  systemd.timers.reboot-if-updated = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-* 03:30:00";
+  };
 
   users = {
     users.wsh = {
