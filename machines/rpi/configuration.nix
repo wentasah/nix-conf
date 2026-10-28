@@ -124,8 +124,6 @@
       url = "https://github.com/wentasah/nix-conf.git";
       branches.main = {
         name = "stable";
-        # Only prepare the new generation; it's activated by the nightly reboot below
-        operation = "boot";
       };
       poller.period = 7 * 24 * 3600; # weekly
     }];

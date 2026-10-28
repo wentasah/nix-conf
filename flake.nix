@@ -199,7 +199,7 @@
             ./machines/turbot/hardware-configuration.nix
           ];
         };
-        rpi = nixpkgs-stable.lib.nixosSystem {
+        homeassistant = nixpkgs-stable.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { inherit inputs; };
           modules = [
