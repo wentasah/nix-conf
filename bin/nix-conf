@@ -332,6 +332,26 @@ def push():
     system("git push")
 
 
+def update_stable():
+    worktree = expanduser("~/nix/conf-stable")
+    if not os.path.isdir(worktree):
+        cd("~/nix/conf")
+        check_call(["git", "worktree", "add", worktree, "stable"])
+    cd(worktree)
+    exit_if_dirty()
+    system("git fetch --quiet origin stable")
+    system("git reset --keep main")
+    system("nix flake update nixpkgs-stable home-manager-stable --commit-lock-file")
+    # Keep the history of the stable branch, but take the content from main + updated flake.lock
+    check_call(["git", "merge", "--quiet", "-s", "ours", "-m", "Merge previous stable", "origin/stable"])
+    new_tree, old_tree = check_output("git rev-parse HEAD^{tree} origin/stable^{tree}", shell=True).decode().split()
+    if new_tree == old_tree:
+        # Nothing changed - don't create useless merge commits
+        system("git reset --quiet --keep origin/stable")
+        return False
+    return True
+
+
 def add_commits(branch: str, commits: list[str]):
     cd("~/nix/nixpkgs")
     system(f'git checkout -B {branch} nixos-unstable')
@@ -365,7 +385,12 @@ def update(host, nix_args, iets: bool):
 
 
 def ci():
-    if updated("ci") or failed_recently("ci"):
+    was_updated = updated("ci")
+
+    if update_stable():
+        system("git push origin stable")
+
+    if was_updated or failed_recently("ci"):
         cd("~/nix")
 
         shutil.rmtree("out/ci/gcroots.old", ignore_errors=True)
@@ -474,6 +499,9 @@ parser_boot.set_defaults(func=lambda args: switch(args.host, method='boot'))
 
 parser_push = subparsers.add_parser('push')
 parser_push.set_defaults(func=lambda args: push())
+
+parser_stable = subparsers.add_parser('update-stable', help="Update nixpkgs-stable on the stable branch (in ~/nix/conf-stable)")
+parser_stable.set_defaults(func=lambda args: update_stable())
 
 parser_add_pr = subparsers.add_parser('add-pr')
 parser_add_pr.add_argument("pr_num", type=int)
