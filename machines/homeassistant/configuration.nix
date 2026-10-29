@@ -43,7 +43,6 @@
     };
   };
 
-  sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets.attic-token = { };
   sops.templates."attic-netrc".content = ''
     machine attic.iid.ciirc.cvut.cz
