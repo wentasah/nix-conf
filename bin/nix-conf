@@ -341,9 +341,10 @@ def update_stable():
     exit_if_dirty()
     system("git fetch --quiet origin stable")
     system("git reset --keep main")
+    main_subject = check_output(["git", "log", "-1", "--format=%s", "main"]).decode().strip()
     system("nix flake update nixpkgs-stable home-manager-stable --commit-lock-file")
     # Keep the history of the stable branch, but take the content from main + updated flake.lock
-    check_call(["git", "merge", "--quiet", "-s", "ours", "-m", "Merge previous stable", "origin/stable"])
+    check_call(["git", "merge", "--quiet", "-s", "ours", "-m", f"Merge previous stable (main: {main_subject})", "origin/stable"])
     new_tree, old_tree = check_output("git rev-parse HEAD^{tree} origin/stable^{tree}", shell=True).decode().split()
     if new_tree == old_tree:
         # Nothing changed - don't create useless merge commits
