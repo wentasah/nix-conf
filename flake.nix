@@ -275,5 +275,8 @@
         # Ensure that Foxglove Studio sources remain cached
         foxglove-src = self.legacyPackages.x86_64-linux.foxglove-studio.src;
       };
+      checks.aarch64-linux = {
+        homeassistant = self.nixosConfigurations.homeassistant.config.system.build.toplevel;
+      };
     };
 }
