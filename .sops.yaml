@@ -4,4 +4,4 @@ keys:
   - &server_homeassistant age1q6sq8hpvgcsdclp59scsuhjwqxvjesh59nnect2eqxhn20jgmyqqunc5yc
 creation_rules:
   - {path_regex: ^machines/steelpick/secrets.yaml$, key_groups: [{age: [*admin_wsh, *server_steelpick]}]}
-  - {path_regex: ^machines/rpi/secrets.yaml$, key_groups: [{age: [*admin_wsh, *server_homeassistant]}]}
+  - {path_regex: ^machines/homeassistant/secrets.yaml$, key_groups: [{age: [*admin_wsh, *server_homeassistant]}]}

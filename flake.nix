@@ -205,7 +205,7 @@
           modules = [
             nixos-hardware.nixosModules.raspberry-pi-4
             inputs.comin.nixosModules.comin
-            ./machines/rpi/configuration.nix
+            ./machines/homeassistant/configuration.nix
             {
               nixpkgs.overlays = [ stable-overlay ];
             }
