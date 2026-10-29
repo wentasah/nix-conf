@@ -24,6 +24,8 @@
 
     # explicitly set nix-path, NIX_PATH to nixpkgs from system registry
     settings.nix-path = [ "nixpkgs=flake:nixpkgs" ];
+    settings.auto-optimise-store = true;
+
     nixPath = config.nix.settings.nix-path;
 
     gc = {
