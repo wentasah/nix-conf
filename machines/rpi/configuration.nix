@@ -32,7 +32,7 @@
       automatic = true;
       options = "--delete-older-than 4d";
       persistent = true;
-      dates = [ "weekly" ];
+      dates = [ "daily" ];
     };
   };
 
@@ -129,6 +129,11 @@
       };
       poller.period = 7 * 24 * 3600; # weekly
     }];
+    retention = {
+      deployment_boot_entry_capacity = 2;
+      deployment_successful_capacity = 2;
+      deployment_any_capacity = 2;
+    };
   };
 
   # Reboot at night if comin says so
