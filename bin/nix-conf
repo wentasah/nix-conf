@@ -402,7 +402,7 @@ def ci():
 
         cd("~/nix/conf")
         check_call('nix flake update nixpkgs --override-input nixpkgs ~/nix/nixpkgs', shell=True)
-        cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ~/nix/out/ci/gcroots/result"
+        cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ~/nix/out/ci/gcroots/result --systems x86_64-linux,aarch64-linux"
         if not os.isatty(sys.stdin.fileno()):
             cmd = f"set -o pipefail; {cmd} --no-nom 2>&1 | tee ~/nix/out/ci/log"
         else:
