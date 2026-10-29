@@ -1,7 +1,10 @@
 { config, pkgs, inputs, lib, modulesPath, ... }:
 
 {
-  imports = [ "${modulesPath}/profiles/perlless.nix" ];
+  imports = [
+    "${modulesPath}/profiles/perlless.nix"
+    ../../modules/sops-nix.nix
+  ];
 
   # Override perlless - mc still depends on perl
   system.forbiddenDependenciesRegexes = lib.mkForce [ ];
@@ -26,6 +29,10 @@
     settings.nix-path = [ "nixpkgs=flake:nixpkgs" ];
     settings.auto-optimise-store = true;
 
+    settings.substituters = [ "https://attic.iid.ciirc.cvut.cz/wsh" ];
+    settings.trusted-public-keys = [ "wsh:CPGrvs/kLTtwrjnUx/nmrZ+NyPmrlPb/uS5Oll634Tg=" ];
+    settings.netrc-file = config.sops.templates."attic-netrc".path;
+
     nixPath = config.nix.settings.nix-path;
 
     gc = {
@@ -35,6 +42,13 @@
       dates = [ "daily" ];
     };
   };
+
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.secrets.attic-token = { };
+  sops.templates."attic-netrc".content = ''
+    machine attic.iid.ciirc.cvut.cz
+    password ${config.sops.placeholder.attic-token}
+  '';
 
   xdg = {
     autostart.enable = false;
