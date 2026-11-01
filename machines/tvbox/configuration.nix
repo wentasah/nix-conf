@@ -5,7 +5,7 @@
   lib,
   pkgs,
   ...
-} @ args:
+}:
 {
   imports = [
     ./disk-config.nix
@@ -80,11 +80,9 @@
     user = "tv";
   };
 
-  users.users.root.openssh.authorizedKeys.keys =
-  [
-    # change this to your ssh key
+  users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1uS4dwnJJtix6/UYXC4z5NGWIC9UqNSojQnL56zEFd wsh@steelpick (passwd)"
-  ] ++ (args.extraPublicKeys or []); # this is used for unit-testing this module and can be removed if not needed
+  ];
 
   system.stateVersion = "26.05";
 }
