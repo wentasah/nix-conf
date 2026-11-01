@@ -43,7 +43,9 @@
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
+    persistent = true;
   };
+  systemd.timers.nix-gc.timerConfig.WakeSystem = true;
 
   # Enable the COSMIC login manager
   services.displayManager.cosmic-greeter.enable = true;
