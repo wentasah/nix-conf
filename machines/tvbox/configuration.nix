@@ -15,7 +15,12 @@
 
   boot.loader.systemd-boot.enable = true;
   networking.hostName = "tvbox";
+  networking.dhcpcd.enable = false;
+  networking.resolvconf.enable = false;
   services.openssh.enable = true;
+  services.openssh.startWhenNeeded = true; # socket activation; don't delay boot
+  systemd.network.wait-online.timeout = 0; # don't wait for being online
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   i18n.defaultLocale = "cs_CZ.UTF-8";
   time.timeZone = "Europe/Prague";
