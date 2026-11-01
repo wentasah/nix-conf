@@ -1,6 +1,7 @@
 {
   modulesPath,
   inputs,
+  config,
   lib,
   pkgs,
   ...
@@ -46,6 +47,22 @@
     persistent = true;
   };
   systemd.timers.nix-gc.timerConfig.WakeSystem = true;
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:wentasah/nix-conf";
+    flags = [ "--update-input" "nixpkgs" "--no-write-lock-file" ];
+    dates = "03:00";
+    persistent = false; # upgrade only at night
+    allowReboot = true;
+    rebootWindow = { lower = "01:00"; upper = "06:00"; };
+  };
+  systemd.timers.nixos-upgrade.timerConfig.WakeSystem = true;
+  # Prevent suspend while upgrading (the inhibitor is killed with the
+  # service's cgroup when the upgrade finishes)
+  systemd.services.nixos-upgrade.script = lib.mkBefore ''
+    ${config.systemd.package}/bin/systemd-inhibit --what=sleep:idle --why="NixOS upgrade" ${pkgs.coreutils}/bin/sleep infinity &
+  '';
 
   # Enable the COSMIC login manager
   services.displayManager.cosmic-greeter.enable = true;
