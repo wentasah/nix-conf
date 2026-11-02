@@ -29,6 +29,9 @@
       (readwrite (noescape "~/students"))
       xwayland
     ]);
+    firefox' = wrapFirefox firefox-unwrapped {
+      nativeMessagingHosts = [ keepassxc ];
+    };
     xdot' = xdot.overrideAttrs (old: {
       version = "1.6wsh";
       src = fetchFromGitHub {
@@ -54,7 +57,7 @@
     faust
     fido2-manage
     file-roller
-    firefox
+    firefox'
     (flameshot.override { enableWlrSupport = true; })
     freecad
     gh-gfm-preview
