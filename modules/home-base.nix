@@ -79,7 +79,7 @@ in
     gitbatch
     gitui
     glab
-    glibc.static                # to allow gcc -static
+    glibc.static # For offline use in `gcc -static`, but git must be added into shell.nix too.
     global
     glow
     gnumake
