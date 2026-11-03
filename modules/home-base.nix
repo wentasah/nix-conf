@@ -122,6 +122,7 @@ in
     moreutils
     mosh
     mtr
+    multitail
     ncdu
     nh
     nil
