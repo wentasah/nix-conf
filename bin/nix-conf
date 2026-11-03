@@ -261,6 +261,7 @@ def build(host, nix_args, iets: bool):
         cmd = [
             "iets",
             "build",
+            "--impure",
             "--out-link",
             expanduser(f"~/nix/out/{host}/flake"),
             expanduser(
