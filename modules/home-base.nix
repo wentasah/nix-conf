@@ -461,6 +461,7 @@ in
         {on = "<Home>"; run = "arrow top"; desc = "Top file";}
         {on = "<End>";  run = "arrow bot"; desc = "Bottom file";}
         {on = ["C"]; run = "plugin ouch"; desc = "Compress with ouch"; }
+        {on = "<C-o>"; run = "shell 'gio open %s' --orphan"; desc = "Open with default app (like Nautilus)"; }
       ];
     };
     plugins = {
