@@ -432,7 +432,7 @@ in
       };
       opener = {
         edit = [ { run = "ec %s"; desc = "Edit with Emacs Client"; block = true; for = "unix"; } ];
-        exec-or-edit = [ { run = "if [ -x %s ]; then %s; else ec %s; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
+        exec-or-edit = [ { run = "if [ -x %s1 ]; then %s1; else ec %s1; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
       };
       open = {
         prepend_rules = [
