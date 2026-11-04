@@ -1,4 +1,4 @@
-{ stdenv, dpkg, fetchzip, lib, cups, autoPatchelfHook }:
+{ stdenv, dpkg, fetchzip, fetchurl, lib, cups, autoPatchelfHook, patchelf }:
 
 let
   version = "2024-05-21";
@@ -8,6 +8,18 @@ let
     if stdenv.hostPlatform.system == "x86_64-linux" then "amd64"
     else if stdenv.hostPlatform.system == "i686-linux" then "i386"
          else throw "Unsupported system: ${stdenv.hostPlatform.system}";
+  # patchelf 0.19.2 breaks kyofilter_H (segfault in ld.so due to overlapping LOAD
+  # segments making .dynamic read-only). Fixed in 0.19.3, see
+  # https://github.com/NixOS/patchelf/issues/674. Remove once nixpkgs has >= 0.19.3
+  # (https://github.com/NixOS/nixpkgs/pull/582116).
+  patchelf' = if lib.versionAtLeast patchelf.version "0.19.3" then patchelf
+    else patchelf.overrideAttrs (old: rec {
+      version = "0.19.3";
+      src = fetchurl {
+        url = "https://github.com/NixOS/patchelf/releases/download/${version}/patchelf-${version}.tar.bz2";
+        hash = "sha256-INviPp28StdpB4qGetACwEKXoGn/k8lftyJC3VXU3W8=";
+      };
+    });
 in
 stdenv.mkDerivation {
   pname = "kyocera-driver";
@@ -23,6 +35,12 @@ stdenv.mkDerivation {
     cups
     #(python2.withPackages (ps: with ps; [ pypdf2 reportlab ]))
   ];
+
+  # autoPatchelfHook calls `patchelf` from PATH; make sure the fixed one wins
+  # over the one from stdenv.
+  preFixup = ''
+    export PATH=${patchelf'}/bin:$PATH
+  '';
 
   installPhase = ''
     tar xf KyoceraLinuxPackages-${version_}.tar.gz
