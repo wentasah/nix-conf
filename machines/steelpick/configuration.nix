@@ -547,6 +547,7 @@ in
         "adbusers"
         "dialout"
         "docker"
+        "input"
         "jackaudio"
         "lp"
         "lxd"
