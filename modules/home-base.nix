@@ -432,11 +432,14 @@ in
       };
       opener = {
         edit = [ { run = "ec %s"; desc = "Edit with Emacs Client"; block = true; for = "unix"; } ];
-        exec-or-edit = [ { run = "if [ -x %s1 ]; then %s1; else ec %s1; fi"; desc = "Execute if executable, else edit"; block = true; for = "unix"; } ];
+        quiz = [
+          { run = "quiz ask %s1"; block = true; desc = "Ask the question"; }
+          { run = "quiz parse %s1 | less -R"; block = true; desc = "Check the question"; }
+        ];
       };
       open = {
         prepend_rules = [
-          { url = "*.md"; use = [ "exec-or-edit" "edit" ]; }
+          { url = "**/quiz/**/*.md"; use = [ "quiz" "edit" ]; }
         ];
         append_rules = [
 	        { url = "*"; use = "edit"; }
