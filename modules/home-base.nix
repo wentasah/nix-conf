@@ -107,6 +107,7 @@ in
     libwebp
     libxml2 # for xmllint
     live-server
+    lnav
     ltrace
     lurk
     magic-wormhole
@@ -198,6 +199,7 @@ in
     sshuttle
     sta
     systemctl-tui
+    tailspin
     tectonic
     tig
     tinymist # alternative typst LSP
