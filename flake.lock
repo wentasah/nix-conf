@@ -605,6 +605,26 @@
         "type": "github"
       }
     },
+    "quiz": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794167313,
+        "narHash": "sha256-i5DE6vWRS462bIaOIrrt6LwDnS5+ZKQVWUlnR6tnfgE=",
+        "ref": "refs/heads/main",
+        "rev": "ac48a51359bbe006d8a5a2c4972407b6daf3b344",
+        "revCount": 143,
+        "type": "git",
+        "url": "https://gitlab.fel.cvut.cz/sojkam1/quiz"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.fel.cvut.cz/sojkam1/quiz"
+      }
+    },
     "root": {
       "inputs": {
         "carla-stable": "carla-stable",
@@ -626,6 +646,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "notify-while-running": "notify-while-running",
         "novaboot": "novaboot",
+        "quiz": "quiz",
         "ros2nix": "ros2nix",
         "scroll-flake": "scroll-flake",
         "shdw": "shdw",

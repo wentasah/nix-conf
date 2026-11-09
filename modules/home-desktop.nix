@@ -1,4 +1,4 @@
-{ config, pkgs, lib, jail, ... }:
+{ config, pkgs, lib, jail, inputs, ... }:
 # Home manager configuration common to all my desktops. Graphical tools, etc.
 {
   imports = [
@@ -91,6 +91,7 @@
     pix
     qimgv
     qpwgraph
+    inputs.quiz.packages.${pkgs.stdenv.hostPlatform.system}.quiz
     rquickshare
     rustdesk-flutter
     screenkey

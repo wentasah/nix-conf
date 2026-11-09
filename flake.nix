@@ -23,6 +23,7 @@
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; inputs.nixpkgs.follows = "nixpkgs"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
+    quiz = { url = "git+https://gitlab.fel.cvut.cz/sojkam1/quiz"; inputs.nixpkgs.follows = "nixpkgs"; };
     ros2nix = { url = "github:wentasah/ros2nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     scroll-flake = { url = "github:AsahiRocks/scroll-flake"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
