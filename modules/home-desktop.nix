@@ -69,6 +69,7 @@
     hotspot
     inkscape
     inlyne
+    inputs.quiz.packages.${pkgs.stdenv.hostPlatform.system}.quiz
     kdePackages.kdenlive
     kdePackages.okular
     kdiff3
@@ -91,7 +92,6 @@
     pix
     qimgv
     qpwgraph
-    inputs.quiz.packages.${pkgs.stdenv.hostPlatform.system}.quiz
     rquickshare
     rustdesk-flutter
     screenkey
