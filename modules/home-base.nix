@@ -438,10 +438,14 @@ in
           { run = "quiz ask %s1"; block = true; desc = "Ask the question"; }
           { run = "quiz parse %s1 | less -R"; block = true; desc = "Check the question"; }
         ];
+        gio-open = [ { run = "gio open %s"; desc = "Open with default app (like Nautilus)"; orphan = true; } ];
       };
       open = {
         prepend_rules = [
           { url = "**/quiz/**/*.md"; use = [ "quiz" "edit" ]; }
+          { url = "*.csv"; use = [ "gio-open" "edit" ]; }
+          { url = "*.ods"; use = [ "gio-open" "edit" ]; }
+          { url = "*.odt"; use = [ "gio-open" "edit" ]; }
         ];
         append_rules = [
 	        { url = "*"; use = "edit"; }
