@@ -4,6 +4,7 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
+    bootvine = { url = "git+https://codeberg.org/wvhulle/bootvine"; inputs.nixpkgs.follows = "nixpkgs"; };
     carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     comin = { url = "github:nlewo/comin"; inputs.nixpkgs.follows = "nixpkgs"; };
     direnv-instant = { url = "github:Mic92/direnv-instant"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -116,6 +117,7 @@
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             home-manager.nixosModules.home-manager
+            inputs.bootvine.nixosModules.default
             inputs.iets.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
@@ -147,6 +149,7 @@
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
+            inputs.bootvine.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             inputs.comin.nixosModules.comin
