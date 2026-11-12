@@ -85,7 +85,6 @@ in
       flowblade
       foxglove-studio
       gcc
-      (pkgs.callPackage ../../pkgs/genode-toolchain.nix { })
       ghostscript
       glibcInfo # Not visible in emacs :-(
       gnome-tweaks
