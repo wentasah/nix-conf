@@ -63,7 +63,7 @@
     gh-gfm-preview
     ghostty
     gimp
-    (gnuplot.override { withCaca = true; withQt = true; })
+    gnuplot_qt
     gtkterm
     # handbrake # broken <2026-10-21 Wed>
     hotspot
