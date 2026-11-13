@@ -164,6 +164,7 @@ in
     polylux2pdfpc
     poppler-utils
     prek
+    procs
     psmisc                      # killall, fuser, ...
     pv
     pyright
