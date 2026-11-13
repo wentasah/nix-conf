@@ -172,7 +172,7 @@ in
     python3Packages.python-lsp-server
     radicle-desktop
     radicle-node
-    radicle-tui
+    # radicle-tui # broken <2026-11-13 Fri>
     rainfrog
     ranger
     redo-apenwarr
