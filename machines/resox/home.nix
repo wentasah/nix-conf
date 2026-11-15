@@ -153,11 +153,11 @@ in
       x11docker
       x42-plugins
       xf86_input_wacom
-      xorg.xev
-      xorg.xhost # for quick way to run GUI apps in chroots/containers
-      xorg.xkbcomp
-      xorg.xkill
-      xorg.xorgdocs
+      xev
+      xhost # for quick way to run GUI apps in chroots/containers
+      xkbcomp
+      xkill
+      xorg-docs
       xplr
       xpra
       xrectsel
