@@ -559,11 +559,10 @@
       "locked": {
         "lastModified": 1794537146,
         "narHash": "sha256-ZRGjHcIX8vx3AldDvK+8V+DOMcaWRAdMFj5Hawn5J2k=",
-        "ref": "refs/heads/master",
+        "owner": "wentasah",
+        "repo": "nixpkgs",
         "rev": "9790394a83c978d7783e819e5ffb0ff34ec7eda9",
-        "revCount": 1119557,
-        "type": "git",
-        "url": "file:///home/wsh/nix/nixpkgs"
+        "type": "github"
       },
       "original": {
         "owner": "wentasah",
