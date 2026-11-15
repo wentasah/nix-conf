@@ -4,7 +4,7 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-    carla-stable = { url = "github:CTU-IIG/carla-simulator.nix/24.05"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
+    carla-simulator = { url = "github:CTU-IIG/carla-simulator.nix"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     comin = { url = "github:nlewo/comin"; inputs.nixpkgs.follows = "nixpkgs"; };
     direnv-instant = { url = "github:Mic92/direnv-instant"; inputs.nixpkgs.follows = "nixpkgs"; };
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -151,7 +151,7 @@
             inputs.comin.nixosModules.comin
             {
               nixpkgs.overlays = (common-overlays "x86_64-linux") ++ [
-                inputs.carla-stable.overlays."0.9.15"
+                inputs.carla-simulator.overlays."0.9.15"
                 stable-overlay
                 (final: prev: {
                   # Packages from unstable

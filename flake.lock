@@ -1,22 +1,21 @@
 {
   "nodes": {
-    "carla-stable": {
+    "carla-simulator": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-stable"
         ]
       },
       "locked": {
-        "lastModified": 1716700916,
-        "narHash": "sha256-WrxKtXco6XxOd5r2Vx8Imsfuby61LLf2tb1BRxdACGM=",
+        "lastModified": 1794779067,
+        "narHash": "sha256-EnTL11YeKgI4CJ8VxjTgIBNzHODkNJ3xsOQ7/TMvY/I=",
         "owner": "CTU-IIG",
         "repo": "carla-simulator.nix",
-        "rev": "c1efd0415c49dcdecb6f619df91743aa649e1468",
+        "rev": "408b5dc34e61757f9079e0d691b348893e68ff4e",
         "type": "github"
       },
       "original": {
         "owner": "CTU-IIG",
-        "ref": "24.05",
         "repo": "carla-simulator.nix",
         "type": "github"
       }
@@ -607,7 +606,7 @@
     },
     "root": {
       "inputs": {
-        "carla-stable": "carla-stable",
+        "carla-simulator": "carla-simulator",
         "comin": "comin",
         "direnv-instant": "direnv-instant",
         "disko": "disko",
