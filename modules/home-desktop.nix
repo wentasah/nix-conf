@@ -78,7 +78,7 @@
     kitty
     kooha
     krita
-    libreoffice-fresh libreoffice-fresh.unwrapped.jdk
+    libreoffice libreoffice.unwrapped.jdk
     libtracefs # package maintained by me - let's have its documentation etc.
     libtracefs.devman
     meld
