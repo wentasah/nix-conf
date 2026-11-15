@@ -79,6 +79,8 @@ in
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  services.bootvine.enable = true;
+
   networking.hostName = "steelpick"; # Define your hostname.
   networking.domain = "2x.cz";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

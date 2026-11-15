@@ -4,6 +4,7 @@
     nixpkgs.url = "github:wentasah/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
+    bootvine = { url = "git+https://codeberg.org/wvhulle/bootvine"; inputs.nixpkgs.follows = "nixpkgs"; };
     carla-simulator = { url = "github:CTU-IIG/carla-simulator.nix"; inputs.nixpkgs.follows = "nixpkgs-stable"; };
     comin = { url = "github:nlewo/comin"; inputs.nixpkgs.follows = "nixpkgs"; };
     direnv-instant = { url = "github:Mic92/direnv-instant"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -23,6 +24,7 @@
     nixos-hardware = { url = "github:NixOS/nixos-hardware"; inputs.nixpkgs.follows = "nixpkgs"; };
     notify-while-running = { url = "github:wentasah/notify-while-running"; flake = false; };
     novaboot = { url = "github:wentasah/novaboot/nfs"; inputs.nixpkgs.follows = "nixpkgs"; };
+    quiz = { url = "git+https://gitlab.fel.cvut.cz/sojkam1/quiz"; inputs.nixpkgs.follows = "nixpkgs"; };
     ros2nix = { url = "github:wentasah/ros2nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     scroll-flake = { url = "github:AsahiRocks/scroll-flake"; inputs.nixpkgs.follows = "nixpkgs"; };
     shdw = { url = "github:wentasah/shdw"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -115,6 +117,7 @@
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             home-manager.nixosModules.home-manager
+            inputs.bootvine.nixosModules.default
             inputs.iets.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
@@ -146,6 +149,7 @@
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
+            inputs.bootvine.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             inputs.comin.nixosModules.comin

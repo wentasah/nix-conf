@@ -1,4 +1,4 @@
-{ config, pkgs, lib, jail, ... }:
+{ config, pkgs, lib, jail, inputs, ... }:
 # Home manager configuration common to all my desktops. Graphical tools, etc.
 {
   imports = [
@@ -63,12 +63,13 @@
     gh-gfm-preview
     ghostty
     gimp
-    (gnuplot.override { withCaca = true; withQt = true; })
+    gnuplot_qt
     gtkterm
     # handbrake # broken <2026-10-21 Wed>
     hotspot
     inkscape
     inlyne
+    inputs.quiz.packages.${pkgs.stdenv.hostPlatform.system}.quiz
     kdePackages.kdenlive
     kdePackages.okular
     kdiff3

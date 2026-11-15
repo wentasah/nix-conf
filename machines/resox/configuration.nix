@@ -40,6 +40,8 @@
 
   boot.binfmt.emulatedSystems = [ "armv7l-linux" "aarch64-linux" ];
 
+  services.bootvine.enable = true;
+
   networking.hostName = "resox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
