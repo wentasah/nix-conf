@@ -165,6 +165,7 @@
                     ];
                   })
                     claude-code
+                    dix
                     ;
                   krita = prev.callPackage ./pkgs/krita-fix.nix { };
                 })
