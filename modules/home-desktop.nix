@@ -111,6 +111,8 @@
     xdotool
     xournalpp
     yubioath-flutter
+    zulip
+    #zulip-term # broken <2025-06-21 Sat>
   ];
 
   home.pointerCursor = {
