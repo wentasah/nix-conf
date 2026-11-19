@@ -162,8 +162,6 @@ in
       xpra
       xrectsel
       zotero
-      #zulip # depends on insecure electron_32 (2024-03-09)
-      #zulip-term #broken
 
       # Emacs versions from emacs-overlay
       #     (pkgs.writeShellScriptBin "emacs-unstable" ''exec ${emacs-unstable}/bin/emacs "$@"'')
