@@ -7,6 +7,7 @@
 let
   myOverlay = self: super: {
   };
+  fast-nix-gc = config.services.fast-nix-gc.package;
 in
 {
   imports =
@@ -158,6 +159,7 @@ in
     elinks
     emacs-nox
     ethtool
+    fast-nix-gc
     file
     gitFull
     gnumake
