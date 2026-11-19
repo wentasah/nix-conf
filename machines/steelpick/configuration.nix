@@ -7,6 +7,7 @@
 let
   myOverlay = self: super: {
   };
+  fast-nix-gc = config.services.fast-nix-gc.package;
 in
 {
   imports =
@@ -158,6 +159,7 @@ in
     elinks
     emacs-nox
     ethtool
+    fast-nix-gc
     file
     gitFull
     gnumake
@@ -581,12 +583,12 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
-  systemd.services.nix-gc.serviceConfig = {
+  systemd.services.fast-nix-gc.serviceConfig = {
     CPUSchedulingPolicy = "idle";
     IOSchedulingClass = "idle";
-    # Prevent garbage collection on battery
-    ConditionACPower = true;
   };
+  # Prevent garbage collection on battery
+  systemd.services.fast-nix-gc.unitConfig.ConditionACPower = true;
 
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
@@ -603,9 +605,10 @@ in
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
   nix.distributedBuilds = true;
-  nix.gc = {
+  services.fast-nix-gc = {
+    enable = true;
     automatic = true;
-    options = "--delete-older-than 4d";
+    deleteOlderThan = "4d";
     persistent = true;
     dates = [ "weekly" ];
   };
