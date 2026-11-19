@@ -11,6 +11,7 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     emacs-overlay = { url = "github:nix-community/emacs-overlay"; inputs.nixpkgs.follows = "nixpkgs"; inputs.nixpkgs-stable.follows = "nixpkgs-stable"; };
+    fast-nix-gc = { url = "github:Mic92/fast-nix-gc"; inputs.nixpkgs.follows = "nixpkgs"; };
     findrepo.url = "github:wentasah/findrepo";
     flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
     gh-gfm-preview = { url = "github:thiagokokada/gh-gfm-preview"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -117,6 +118,7 @@
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             home-manager.nixosModules.home-manager
+            inputs.fast-nix-gc.nixosModules.default
             inputs.iets.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index

@@ -581,7 +581,7 @@ in
 
   users.groups = { wsh = { gid = 1000; }; };
 
-  systemd.services.nix-gc.serviceConfig = {
+  systemd.services.fast-nix-gc.serviceConfig = {
     CPUSchedulingPolicy = "idle";
     IOSchedulingClass = "idle";
     # Prevent garbage collection on battery
@@ -603,9 +603,10 @@ in
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
   nix.distributedBuilds = true;
-  nix.gc = {
+  services.fast-nix-gc = {
+    enable = true;
     automatic = true;
-    options = "--delete-older-than 4d";
+    deleteOlderThan = "4d";
     persistent = true;
     dates = [ "weekly" ];
   };
