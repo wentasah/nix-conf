@@ -584,9 +584,9 @@ in
   systemd.services.fast-nix-gc.serviceConfig = {
     CPUSchedulingPolicy = "idle";
     IOSchedulingClass = "idle";
-    # Prevent garbage collection on battery
-    ConditionACPower = true;
   };
+  # Prevent garbage collection on battery
+  systemd.services.fast-nix-gc.unitConfig.ConditionACPower = true;
 
   nix.settings = {
     trusted-users = [ "root" "@wheel" ];
