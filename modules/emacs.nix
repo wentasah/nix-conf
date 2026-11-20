@@ -60,7 +60,6 @@ let
     flyspell-correct
     forge
     free-keys
-    ggtags
     ghostel
     git-blamed
     git-link
@@ -108,7 +107,6 @@ let
     markdown-mode
     markdown-toc
     markdown-ts-mode
-    mastodon
     md-readme
     memory-usage
     meson-mode
@@ -167,14 +165,12 @@ let
     simple-httpd
     smartparens
     smartrep
-    smog
     spdx
     strace-mode
     string-edit-at-point
     symbol-overlay
     systemd
     tabbar
-    tommyh-theme
     transpose-frame
     tree-mode
     treemacs
@@ -237,7 +233,6 @@ let
       flyspell-correct
       forge
       free-keys
-      ggtags
       gptel
       haskell-mode
       hl-sentence
@@ -256,7 +251,6 @@ let
       magit-todos
       marginalia
       markdown-mode
-      mastodon
       meson-mode
       modus-themes
       most-used-words
