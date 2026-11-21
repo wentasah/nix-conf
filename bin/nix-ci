@@ -18,6 +18,7 @@
 #   nix-ci push stable|unstable
 
 set -euo pipefail
+set -x
 
 NIXPKGS_DIR=$HOME/nix/nixpkgs  # hardcoded in nix-conf merge
 STABLE_INPUTS=(nixpkgs-stable home-manager-stable)
