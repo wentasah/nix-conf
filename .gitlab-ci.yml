@@ -1,0 +1,99 @@
+# CI pipeline for nix-conf, run locally on the CI host by opal:
+#
+#   opal run --no-tui --max-parallel-jobs 4
+#
+# First, nixpkgs-update updates my nixpkgs fork (wentasah/master) by
+# `nix-conf merge` of my topic branches onto new nixos-unstable.
+# Then two independent chains run:
+#   - update stable inputs   -> build all hosts -> push to origin/stable
+#   - update unstable inputs -> build all hosts -> push to origin/unstable
+# Pushing happens only if all builds in the chain succeed.
+#
+# See bin/nix-ci for the implementation of the individual steps. Jobs
+# run in docker containers using the host's Nix store and daemon (see
+# .opal/config.toml and .opal/bootstrap.sh).
+
+stages:
+  - nixpkgs
+  - update
+  - build
+  - push
+
+default:
+  image: docker.io/library/alpine:3.20  # only provides /bin/sh; tools come from /nix
+
+variables:
+  ATTIC_CACHE: wsh  # leave empty to not push build results to attic
+
+.update:
+  stage: update
+  script:
+    - bin/nix-ci update "$BRANCH"
+  artifacts:
+    paths:
+      - ci-artifacts/
+    reports:
+      dotenv: ci-artifacts/ci.env
+
+# Keep this list in sync with `checks` in flake.nix
+.build:
+  stage: build
+  parallel:
+    matrix:
+      - ATTR:
+          - x86_64-linux.foxglove-src
+          - x86_64-linux.lucka-ntb
+          - x86_64-linux.mikysak
+          - x86_64-linux.resox
+          - x86_64-linux.ritchie
+          - x86_64-linux.steelpick
+          - aarch64-linux.homeassistant
+  script:
+    - bin/nix-ci build "$ATTR"
+
+.push:
+  stage: push
+  script:
+    - bin/nix-ci push "$BRANCH"
+
+# Update my nixpkgs fork (works in ~/nix/nixpkgs on the CI host)
+nixpkgs-update:
+  stage: nixpkgs
+  script:
+    - bin/nix-ci nixpkgs-update
+
+# Stable chain
+
+update-stable:
+  extends: .update
+  needs: []
+  variables:
+    BRANCH: stable
+
+build-stable:
+  extends: .build
+  needs: [update-stable]
+
+push-stable:
+  extends: .push
+  needs: [update-stable, build-stable]
+  variables:
+    BRANCH: stable
+
+# Unstable chain
+
+update-unstable:
+  extends: .update
+  needs: [nixpkgs-update]  # nixpkgs input follows wentasah/master
+  variables:
+    BRANCH: unstable
+
+build-unstable:
+  extends: .build
+  needs: [update-unstable]
+
+push-unstable:
+  extends: .push
+  needs: [update-unstable, build-unstable]
+  variables:
+    BRANCH: unstable

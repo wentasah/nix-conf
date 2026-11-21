@@ -1,0 +1,5 @@
+.opal/tools
+.opal/mounts/
+.opal/empty/
+.opal/bootstrap.env
+.opal/env/
