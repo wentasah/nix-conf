@@ -277,6 +277,7 @@
         resox = self.nixosConfigurations.resox.config.system.build.toplevel;
         ritchie = self.homeConfigurations.ritchie.activationPackage;
         steelpick = self.nixosConfigurations.steelpick.config.system.build.toplevel;
+        tvbox = self.nixosConfigurations.tvbox.config.system.build.toplevel;
 
         # Ensure that Foxglove Studio sources remain cached
         foxglove-src = self.legacyPackages.x86_64-linux.foxglove-studio.src;

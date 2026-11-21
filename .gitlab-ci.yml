@@ -47,6 +47,7 @@ variables:
           - x86_64-linux.resox
           - x86_64-linux.ritchie
           - x86_64-linux.steelpick
+          - x86_64-linux.tvbox
           - aarch64-linux.homeassistant
   script:
     - bin/nix-ci build "$ATTR"
