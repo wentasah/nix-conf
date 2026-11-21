@@ -29,7 +29,7 @@ export GIT_COMMITTER_NAME=nix-conf GIT_COMMITTER_EMAIL=nix-conf@localhost
 
 die() { echo "error: $*" >&2; exit 1; }
 
-check_branch() {
+assert_valid_branch() {
     case "$1" in
         stable|unstable) ;;
         *) die "unknown branch '$1'" ;;
@@ -68,7 +68,7 @@ cmd_nixpkgs_update() {
 
 cmd_update() {
     local branch=$1 inputs
-    check_branch "$branch"
+    assert_valid_branch "$branch"
     # Build exactly what is committed (opal snapshots include dirty changes)
     git reset --quiet --hard HEAD
 
@@ -122,7 +122,7 @@ cmd_build() {
 
 cmd_push() {
     local branch=$1 old commit
-    check_branch "$branch"
+    assert_valid_branch "$branch"
     if [[ ${NIX_CI_UPDATED:-} != 1 ]]; then
         echo "Nothing updated - not pushing $branch"
         return
