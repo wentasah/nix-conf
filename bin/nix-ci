@@ -8,13 +8,13 @@
 #
 # Then, two independent chains run:
 #
-#   stable:   update stable inputs   -> build all checks -> push to origin/stable
-#   unstable: update unstable inputs -> build all checks -> push to origin/unstable
+#   stable:   update stable inputs   -> build stable checks   -> push to origin/stable
+#   unstable: update all inputs      -> build unstable checks -> push to origin/unstable
 #
 # Usage:
 #   nix-ci nixpkgs-update
 #   nix-ci update stable|unstable   # writes ci-artifacts/{flake.lock,ci.env}
-#   nix-ci build ATTR               # e.g. x86_64-linux.steelpick
+#   nix-ci build CHECK              # e.g. steelpick (from checks.<system>.steelpick)
 #   nix-ci push stable|unstable
 
 set -euo pipefail
@@ -74,16 +74,11 @@ cmd_update() {
 
     if [[ $branch == stable ]]; then
         inputs=("${STABLE_INPUTS[@]}")
+        echo "Updating inputs: ${inputs[*]}"
     else
-        mapfile -t inputs < <(nix eval --raw --impure --expr '
-          builtins.concatStringsSep "\n" (builtins.attrNames
-            (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.root.inputs)')
-        for s in "${STABLE_INPUTS[@]}"; do
-            inputs=("${inputs[@]/#$s}")
-        done
-        mapfile -t inputs < <(printf '%s\n' "${inputs[@]}" | grep .)
+        inputs=()  # all inputs
+        echo "Updating all inputs"
     fi
-    echo "Updating inputs: ${inputs[*]}"
     nix flake update "${inputs[@]}"
 
     # Something to do only if the result differs from what is already
@@ -108,12 +103,17 @@ use_updated_lock() {
 }
 
 cmd_build() {
-    local attr=$1 out
+    local name=$1 attr out
     if [[ ${NIX_CI_UPDATED:-} != 1 ]]; then
-        echo "Nothing updated - skipping build of $attr"
+        echo "Nothing updated - skipping build of $name"
         return
     fi
     use_updated_lock
+    # Find the system of the check, e.g. resox -> x86_64-linux.resox
+    attr=$(nix eval --json .#checks --apply 'builtins.mapAttrs (_: builtins.attrNames)' |
+               jq -r --arg n "$name" 'to_entries[] | select(.value | index($n)) | "\(.key).\($n)"')
+    [[ -n $attr ]] || die "check '$name' not found"
+    [[ $attr != *$'\n'* ]] || die "check '$name' exists for multiple systems: "$attr
     out=$(nix build -L --no-link --print-out-paths ".#checks.$attr")
     if [[ -n ${ATTIC_CACHE:-} ]]; then
         attic push "$ATTIC_CACHE" $out
