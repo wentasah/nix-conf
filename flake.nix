@@ -1,7 +1,7 @@
 {
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:wentasah/nixpkgs/master";
+    nixpkgs.url = "github:wentasah/nixpkgs/ci";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     bootvine = { url = "git+https://codeberg.org/wvhulle/bootvine"; inputs.nixpkgs.follows = "nixpkgs"; };
