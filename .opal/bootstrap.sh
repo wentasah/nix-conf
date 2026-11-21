@@ -52,7 +52,7 @@ link nix-config  "${XDG_CONFIG_HOME:-$HOME/.config}/nix"
 # Use explicit ssh options: the home directory from /etc/passwd isn't
 # available in the container.
 ssh_cmd="ssh -o UserKnownHostsFile=/opal/home/.ssh/known_hosts"
-for key in id_ed25519 id_ecdsa id_rsa; do
+for key in wsh-nix-bot id_ed25519 id_ecdsa id_rsa; do
     if [[ -f $HOME/.ssh/$key ]]; then ssh_cmd+=" -i /opal/home/.ssh/$key"; fi
 done
 
