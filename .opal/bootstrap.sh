@@ -30,7 +30,7 @@ nix build --out-link tools --impure --expr "
   let pkgs = (builtins.getFlake \"git+file://$repo\").inputs.nixpkgs.legacyPackages.\${builtins.currentSystem};
   in pkgs.buildEnv {
     name = \"nix-ci-tools\";
-    paths = with pkgs; [ attic-client bashInteractive cacert coreutils findutils gitMinimal gnugrep gnused openssh python3 ];
+    paths = with pkgs; [ attic-client bashInteractive cacert coreutils findutils gitMinimal gnugrep gnused jq openssh python3 ];
   }"
 tools=$(readlink -f tools)
 host_nix_bin=$(dirname "$(readlink -f "$(command -v nix)")")

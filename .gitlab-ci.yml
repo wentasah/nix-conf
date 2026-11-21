@@ -5,8 +5,8 @@
 # First, nixpkgs-update updates my nixpkgs fork (wentasah/master) by
 # `nix-conf merge` of my topic branches onto new nixos-unstable.
 # Then two independent chains run:
-#   - update stable inputs   -> build all hosts -> push to origin/stable
-#   - update unstable inputs -> build all hosts -> push to origin/unstable
+#   - update stable inputs   -> build stable hosts   -> push to origin/stable
+#   - update unstable inputs -> build unstable hosts -> push to origin/unstable
 # Pushing happens only if all builds in the chain succeed.
 #
 # See bin/nix-ci for the implementation of the individual steps. Jobs
@@ -35,22 +35,12 @@ variables:
     reports:
       dotenv: ci-artifacts/ci.env
 
-# Keep this list in sync with `checks` in flake.nix
+# The CHECK lists in build-stable and build-unstable together should
+# cover `checks` in flake.nix.
 .build:
   stage: build
-  parallel:
-    matrix:
-      - ATTR:
-          - x86_64-linux.foxglove-src
-          - x86_64-linux.lucka-ntb
-          - x86_64-linux.mikysak
-          - x86_64-linux.resox
-          - x86_64-linux.ritchie
-          - x86_64-linux.steelpick
-          - x86_64-linux.tvbox
-          - aarch64-linux.homeassistant
   script:
-    - bin/nix-ci build "$ATTR"
+    - bin/nix-ci build "$CHECK"
 
 .push:
   stage: push
@@ -71,13 +61,21 @@ update-stable:
   variables:
     BRANCH: stable
 
-build-stable:
+bld-st:
   extends: .build
   needs: [update-stable]
+  parallel:
+    matrix:
+      - CHECK:
+          - foxglove-src
+          - lucka-ntb
+          - mikysak
+          - resox
+          - homeassistant
 
 push-stable:
   extends: .push
-  needs: [update-stable, build-stable]
+  needs: [update-stable, bld-st]
   variables:
     BRANCH: stable
 
@@ -89,12 +87,18 @@ update-unstable:
   variables:
     BRANCH: unstable
 
-build-unstable:
+bld-un:
   extends: .build
   needs: [update-unstable]
+  parallel:
+    matrix:
+      - CHECK:
+          - ritchie
+          - steelpick
+          - tvbox
 
 push-unstable:
   extends: .push
-  needs: [update-unstable, build-unstable]
+  needs: [update-unstable, bld-un]
   variables:
     BRANCH: unstable
