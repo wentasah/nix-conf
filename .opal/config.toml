@@ -64,6 +64,11 @@ container = "/opal/gcroots"  # nix-ci build: results of the previous run
 read_only = false
 
 [[bootstrap.mounts]]
+host = "mounts/matrix"
+container = "/opal/home/.local/share/matrix-commander-rs"  # credentials for nix-ci push notifications
+read_only = false  # matrix-commander-rs updates its store there
+
+[[bootstrap.mounts]]
 host = "mounts/nix-config"
 container = "/opal/home/.config/nix"
 read_only = true

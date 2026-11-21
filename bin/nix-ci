@@ -24,6 +24,7 @@ set -x
 NIXPKGS_DIR=$HOME/nix/nixpkgs  # hardcoded in nix-conf merge
 STABLE_INPUTS=(nixpkgs-stable home-manager-stable)
 ART=ci-artifacts
+NOTIFY_CHECKS=(steelpick)  # send diffs of these to Matrix after push
 
 export GIT_AUTHOR_NAME=nix-conf GIT_AUTHOR_EMAIL=nix-conf@localhost
 export GIT_COMMITTER_NAME=nix-conf GIT_COMMITTER_EMAIL=nix-conf@localhost
@@ -164,6 +165,23 @@ cmd_push() {
     commit=$(git rev-parse HEAD)
 
     git push origin "$commit:refs/heads/$branch"
+    notify_matrix "$branch" "$subject"
+}
+
+# Send diffs of NOTIFY_CHECKS (artifacts of the build jobs) to Matrix
+notify_matrix() {
+    local branch=$1 subject=$2 name f msg=""
+    for name in "${NOTIFY_CHECKS[@]}"; do
+        f=$ART/$name.diff
+        [[ -s $f ]] || continue
+        msg+=$'\n\n'"$name:"$'\n\n'"$(sed 's/^/    /' "$f")"
+    done
+    [[ -n $msg ]] || return 0
+    local header="nix-conf CI update of $branch completed ($subject)"
+    # The full message can fail with M_TOO_LARGE - try a shorter one
+    matrix-commander-rs --markdown -m "$header$msg" ||
+        matrix-commander-rs --markdown -m "$header (diff omitted - probably too long)" ||
+        echo "warning: Matrix notification failed" >&2
 }
 
 case "${1:-}" in
