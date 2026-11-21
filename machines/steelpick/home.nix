@@ -67,7 +67,7 @@ in
       cmakeWithGui
       cppreference-doc
       #cura # currently broken (related: https://github.com/NixOS/nixpkgs/issues/186570)
-      #cutter # broken <2026-04-28 Tue> https://github.com/NixOS/nixpkgs/issues/514250
+      cutter
       devhelp
       difftastic
       distrobox
