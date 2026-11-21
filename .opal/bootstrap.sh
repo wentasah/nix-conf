@@ -21,6 +21,11 @@ nix build --out-link tools --impure --expr "
 tools=$(readlink -f tools)
 host_nix_bin=$(dirname "$(readlink -f "$(command -v nix)")")
 
+# HOME of the jobs (/opal/home), owned by the host user and persistent
+# across runs (e.g. ~/.cache/nix). Pre-create the mount points of the
+# nested mounts below, otherwise docker would create them as root.
+mkdir -p home/.ssh home/.config/attic home/.config/nix home/nix/nixpkgs
+
 mkdir -p mounts empty
 link() {  # link NAME HOST_PATH - fall back to an empty directory
     if [[ -e $2 ]]; then ln -sfn "$2" "mounts/$1"; else ln -sfn ../empty "mounts/$1"; fi
@@ -40,8 +45,6 @@ done
 cat > bootstrap.env <<EOT
 PATH=$tools/bin:$host_nix_bin:/usr/bin:/bin
 HOME=/opal/home
-XDG_CACHE_HOME=/tmp/cache
-XDG_STATE_HOME=/tmp/state
 NIX_REMOTE=daemon
 NIX_SSL_CERT_FILE=$tools/etc/ssl/certs/ca-bundle.crt
 SSL_CERT_FILE=$tools/etc/ssl/certs/ca-bundle.crt

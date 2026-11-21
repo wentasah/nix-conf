@@ -33,7 +33,15 @@ host = "/etc/group"
 container = "/etc/group"
 read_only = true
 
-# The following are symlinks created by bootstrap.sh; HOME=/opal/home
+# HOME of the jobs: a directory owned by the host user, created by
+# bootstrap.sh (otherwise docker would create /opal/home as root)
+[[bootstrap.mounts]]
+host = "home"
+container = "/opal/home"
+read_only = false
+
+# The following are symlinks created by bootstrap.sh, mounted over
+# directories in the above HOME
 
 [[bootstrap.mounts]]
 host = "mounts/nixpkgs"
