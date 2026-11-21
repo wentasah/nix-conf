@@ -10,6 +10,20 @@
 
 set -euo pipefail
 cd "$(dirname "$0")"
+
+# opal runs this via `sh -lc`, whose login profile may reset PATH (e.g.
+# Debian's /etc/profile), so look for nix in the usual locations too.
+if ! command -v nix > /dev/null; then
+    for dir in "$HOME/.nix-profile/bin" "${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile/bin" \
+               "/etc/profiles/per-user/$USER/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin; do
+        if [[ -x $dir/nix ]]; then
+            PATH=$dir:$PATH
+            break
+        fi
+    done
+fi
+command -v nix > /dev/null || { echo "bootstrap.sh: nix not found (PATH=$PATH)" >&2; exit 127; }
+
 repo=$(git rev-parse --show-toplevel)
 
 nix build --out-link tools --impure --expr "
