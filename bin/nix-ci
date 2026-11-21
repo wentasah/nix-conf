@@ -15,6 +15,7 @@
 #   nix-ci nixpkgs-update
 #   nix-ci update stable|unstable   # writes ci-artifacts/{flake.lock,ci.env}
 #   nix-ci build CHECK              # e.g. steelpick (from checks.<system>.steelpick)
+#                                   # writes ci-artifacts/CHECK.diff (vs. previous run)
 #   nix-ci push stable|unstable
 
 set -euo pipefail
@@ -23,6 +24,7 @@ set -x
 NIXPKGS_DIR=$HOME/nix/nixpkgs  # hardcoded in nix-conf merge
 STABLE_INPUTS=(nixpkgs-stable home-manager-stable)
 ART=ci-artifacts
+NOTIFY_CHECKS=(steelpick)  # send diffs of these to Matrix after push
 
 export GIT_AUTHOR_NAME=nix-conf GIT_AUTHOR_EMAIL=nix-conf@localhost
 export GIT_COMMITTER_NAME=nix-conf GIT_COMMITTER_EMAIL=nix-conf@localhost
@@ -118,6 +120,22 @@ cmd_build() {
     if [[ -n ${ATTIC_CACHE:-} ]]; then
         attic push "$ATTIC_CACHE" $out
     fi
+    if [[ -n ${NIX_CI_GCROOTS:-} ]]; then
+        diff_and_root "$name" "$out"
+    fi
+}
+
+# Show `dix diff` between the result of the previous run (GC root
+# $NIX_CI_GCROOTS/$1) and $2, then make $2 the new GC root
+diff_and_root() {
+    local name=$1 out=$2 root=$NIX_CI_GCROOTS/$1
+    if [[ -L $root ]]; then
+        mkdir -p "$ART"
+        dix --color=never diff "$(readlink "$root")" "$out" | tee "$ART/$name.diff"
+    else
+        echo "No previous result of $name - no diff"
+    fi
+    ln -sfn "$out" "$root"
 }
 
 cmd_push() {
@@ -147,6 +165,23 @@ cmd_push() {
     commit=$(git rev-parse HEAD)
 
     git push origin "$commit:refs/heads/$branch"
+    notify_matrix "$branch" "$subject"
+}
+
+# Send diffs of NOTIFY_CHECKS (artifacts of the build jobs) to Matrix
+notify_matrix() {
+    local branch=$1 subject=$2 name f msg=""
+    for name in "${NOTIFY_CHECKS[@]}"; do
+        f=$ART/$name.diff
+        [[ -s $f ]] || continue
+        msg+=$'\n\n'"$name:"$'\n\n'"$(sed 's/^/    /' "$f")"
+    done
+    [[ -n $msg ]] || return 0
+    local header="nix-conf CI update of $branch completed ($subject)"
+    # The full message can fail with M_TOO_LARGE - try a shorter one
+    matrix-commander-rs --markdown -m "$header$msg" ||
+        matrix-commander-rs --markdown -m "$header (diff omitted - probably too long)" ||
+        echo "warning: Matrix notification failed" >&2
 }
 
 case "${1:-}" in
