@@ -35,12 +35,12 @@ variables:
     reports:
       dotenv: ci-artifacts/ci.env
 
-# The ATTR lists in build-stable and build-unstable together should
+# The CHECK lists in build-stable and build-unstable together should
 # cover `checks` in flake.nix.
 .build:
   stage: build
   script:
-    - bin/nix-ci build "$ATTR"
+    - bin/nix-ci build "$CHECK"
 
 .push:
   stage: push
@@ -66,12 +66,12 @@ build-stable:
   needs: [update-stable]
   parallel:
     matrix:
-      - ATTR:
-          - x86_64-linux.foxglove-src
-          - x86_64-linux.lucka-ntb
-          - x86_64-linux.mikysak
-          - x86_64-linux.resox
-          - aarch64-linux.homeassistant
+      - CHECK:
+          - foxglove-src
+          - lucka-ntb
+          - mikysak
+          - resox
+          - homeassistant
 
 push-stable:
   extends: .push
@@ -92,10 +92,10 @@ build-unstable:
   needs: [update-unstable]
   parallel:
     matrix:
-      - ATTR:
-          - x86_64-linux.ritchie
-          - x86_64-linux.steelpick
-          - x86_64-linux.tvbox
+      - CHECK:
+          - ritchie
+          - steelpick
+          - tvbox
 
 push-unstable:
   extends: .push
