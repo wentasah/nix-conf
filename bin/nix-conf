@@ -345,7 +345,7 @@ def update_stable():
     system("git merge --ff-only origin/stable")
     system("nix flake update nixpkgs-stable home-manager-stable --commit-lock-file")
     main_subject = check_output(["git", "log", "-1", "--format=%s", "origin/main"]).decode().strip()
-    check_call(["git", "merge", "origin/main", "-Xtheirs", "-m", f"Merge main: {main_subject})"])
+    check_call(["git", "merge", "origin/main", "-Xtheirs", "-m", f"Merge main: {main_subject}"])
     # Keep the history of the stable branch, but take the content from main + updated flake.lock
     new_tree, old_tree = check_output("git rev-parse HEAD^{tree} origin/stable^{tree}", shell=True).decode().split()
     if new_tree == old_tree:
