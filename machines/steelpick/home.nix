@@ -123,6 +123,8 @@ in
       python3Packages.notebook
       qemu
       radare2
+      radicle-desktop
+      radicle-node
       saleae-logic-2
       #slack
       ssh-to-age

@@ -1,7 +1,7 @@
 {
   inputs = {
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:wentasah/nixpkgs/master";
+    nixpkgs.url = "github:wentasah/nixpkgs/ci";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     bootvine = { url = "git+https://codeberg.org/wvhulle/bootvine"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -277,6 +277,7 @@
         resox = self.nixosConfigurations.resox.config.system.build.toplevel;
         ritchie = self.homeConfigurations.ritchie.activationPackage;
         steelpick = self.nixosConfigurations.steelpick.config.system.build.toplevel;
+        tvbox = self.nixosConfigurations.tvbox.config.system.build.toplevel;
 
         # Ensure that Foxglove Studio sources remain cached
         foxglove-src = self.legacyPackages.x86_64-linux.foxglove-studio.src;

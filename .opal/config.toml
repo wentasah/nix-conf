@@ -1,0 +1,64 @@
+# Opal configuration for running .gitlab-ci.yml on the CI host.
+#
+# Jobs run in docker containers, but use the host's Nix store and
+# daemon (/nix is mounted), so builds are shared between jobs and with
+# the host. Tools and environment are prepared by bootstrap.sh.
+
+[engine]
+default = "docker"
+map_host_user = true  # run as the host user (needed for ~/nix/nixpkgs and the Nix daemon)
+
+[bootstrap]
+command = ".opal/bootstrap.sh"
+env_file = "bootstrap.env"
+
+[[bootstrap.mounts]]
+host = "/nix"
+container = "/nix"
+read_only = true  # store is read-only anyway; the daemon socket still works
+
+[[bootstrap.mounts]]
+host = "/etc/nix"
+container = "/etc/nix"
+read_only = true
+
+# Make the host user known in the container (needed by ssh)
+[[bootstrap.mounts]]
+host = "/etc/passwd"
+container = "/etc/passwd"
+read_only = true
+
+[[bootstrap.mounts]]
+host = "/etc/group"
+container = "/etc/group"
+read_only = true
+
+# HOME of the jobs: a directory owned by the host user, created by
+# bootstrap.sh (otherwise docker would create /opal/home as root)
+[[bootstrap.mounts]]
+host = "home"
+container = "/opal/home"
+read_only = false
+
+# The following are symlinks created by bootstrap.sh, mounted over
+# directories in the above HOME
+
+[[bootstrap.mounts]]
+host = "mounts/nixpkgs"
+container = "/opal/home/nix/nixpkgs"  # nixpkgs-update job (nix-conf merge)
+read_only = false
+
+[[bootstrap.mounts]]
+host = "mounts/ssh"
+container = "/opal/home/.ssh"
+read_only = true
+
+[[bootstrap.mounts]]
+host = "mounts/attic"
+container = "/opal/home/.config/attic"
+read_only = true
+
+[[bootstrap.mounts]]
+host = "mounts/nix-config"
+container = "/opal/home/.config/nix"
+read_only = true
