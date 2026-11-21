@@ -30,7 +30,7 @@ nix build --out-link tools --impure --expr "
   let pkgs = (builtins.getFlake \"git+file://$repo\").inputs.nixpkgs.legacyPackages.\${builtins.currentSystem};
   in pkgs.buildEnv {
     name = \"nix-ci-tools\";
-    paths = with pkgs; [ attic-client bashInteractive cacert coreutils findutils gitMinimal gnugrep gnused jq openssh python3 ];
+    paths = with pkgs; [ attic-client bashInteractive cacert coreutils dix findutils gitMinimal gnugrep gnused jq openssh python3 ];
   }"
 tools=$(readlink -f tools)
 host_nix_bin=$(dirname "$(readlink -f "$(command -v nix)")")
@@ -49,6 +49,13 @@ link ssh         "$HOME/.ssh"
 link attic       "${XDG_CONFIG_HOME:-$HOME/.config}/attic"
 link nix-config  "${XDG_CONFIG_HOME:-$HOME/.config}/nix"
 
+# GC roots of build results (direct symlinks to the store, so they
+# work regardless of where the directory is mounted). Used to diff
+# build results against the previous run.
+gcroots=/nix/var/nix/gcroots/per-user/$USER/nix-ci
+mkdir -p "$gcroots" || echo "bootstrap.sh: warning: cannot create $gcroots" >&2
+link gcroots     "$gcroots"
+
 # Use explicit ssh options: the home directory from /etc/passwd isn't
 # available in the container.
 ssh_cmd="ssh -o UserKnownHostsFile=/opal/home/.ssh/known_hosts"
@@ -64,4 +71,5 @@ NIX_SSL_CERT_FILE=$tools/etc/ssl/certs/ca-bundle.crt
 SSL_CERT_FILE=$tools/etc/ssl/certs/ca-bundle.crt
 GIT_SSL_CAINFO=$tools/etc/ssl/certs/ca-bundle.crt
 GIT_SSH_COMMAND=$ssh_cmd
+NIX_CI_GCROOTS=/opal/gcroots
 EOT

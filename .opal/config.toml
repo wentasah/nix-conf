@@ -59,6 +59,11 @@ container = "/opal/home/.config/attic"
 read_only = true
 
 [[bootstrap.mounts]]
+host = "mounts/gcroots"
+container = "/opal/gcroots"  # nix-ci build: results of the previous run
+read_only = false
+
+[[bootstrap.mounts]]
 host = "mounts/nix-config"
 container = "/opal/home/.config/nix"
 read_only = true

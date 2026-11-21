@@ -15,6 +15,7 @@
 #   nix-ci nixpkgs-update
 #   nix-ci update stable|unstable   # writes ci-artifacts/{flake.lock,ci.env}
 #   nix-ci build CHECK              # e.g. steelpick (from checks.<system>.steelpick)
+#                                   # writes ci-artifacts/CHECK.diff (vs. previous run)
 #   nix-ci push stable|unstable
 
 set -euo pipefail
@@ -118,6 +119,22 @@ cmd_build() {
     if [[ -n ${ATTIC_CACHE:-} ]]; then
         attic push "$ATTIC_CACHE" $out
     fi
+    if [[ -n ${NIX_CI_GCROOTS:-} ]]; then
+        diff_and_root "$name" "$out"
+    fi
+}
+
+# Show `dix diff` between the result of the previous run (GC root
+# $NIX_CI_GCROOTS/$1) and $2, then make $2 the new GC root
+diff_and_root() {
+    local name=$1 out=$2 root=$NIX_CI_GCROOTS/$1
+    if [[ -L $root ]]; then
+        mkdir -p "$ART"
+        dix --color=never diff "$(readlink "$root")" "$out" | tee "$ART/$name.diff"
+    else
+        echo "No previous result of $name - no diff"
+    fi
+    ln -sfn "$out" "$root"
 }
 
 cmd_push() {
