@@ -41,6 +41,9 @@ variables:
   stage: build
   script:
     - bin/nix-ci build "$CHECK"
+  artifacts:
+    paths:
+      - ci-artifacts/*.diff
 
 .push:
   stage: push
