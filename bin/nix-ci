@@ -29,7 +29,7 @@ export GIT_COMMITTER_NAME=nix-conf GIT_COMMITTER_EMAIL=nix-conf@localhost
 
 die() { echo "error: $*" >&2; exit 1; }
 
-check_branch() {
+assert_valid_branch() {
     case "$1" in
         stable|unstable) ;;
         *) die "unknown branch '$1'" ;;
@@ -68,7 +68,7 @@ cmd_nixpkgs_update() {
 
 cmd_update() {
     local branch=$1 inputs
-    check_branch "$branch"
+    assert_valid_branch "$branch"
     # Build exactly what is committed (opal snapshots include dirty changes)
     git reset --quiet --hard HEAD
 
@@ -122,27 +122,30 @@ cmd_build() {
 
 cmd_push() {
     local branch=$1 old commit
-    check_branch "$branch"
+    assert_valid_branch "$branch"
     if [[ ${NIX_CI_UPDATED:-} != 1 ]]; then
         echo "Nothing updated - not pushing $branch"
         return
     fi
     git reset --quiet --hard HEAD
-    use_updated_lock
-    local subject
-    subject=$(git log -1 --format=%s HEAD)
-    if git diff --quiet HEAD -- flake.lock; then
-        commit=$(git rev-parse HEAD)
-    else
-        git commit --quiet -m "flake.lock: Update $branch inputs" -- flake.lock
-        commit=$(git rev-parse HEAD)
+    local main subject
+    main=$(git rev-parse HEAD)
+    subject=$(git log -1 --format=%s "$main")
+
+    # Keep the branch history: merge main into $branch, preferring
+    # main's side on conflicts
+    old=$(fetch_branch "$branch")
+    if [[ -n $old ]]; then
+        git checkout --quiet --detach "$old"
+        git merge --quiet --no-edit -Xtheirs -m "Merge main: $subject" "$main"
     fi
 
-    old=$(fetch_branch "$branch")
-    if [[ -n $old ]] && ! git merge-base --is-ancestor "$old" "$commit"; then
-        # Keep the branch history: merge commit with the content of $commit
-        commit=$(git commit-tree -p "$old" -p "$commit" -m "Merge main: $subject" "$commit^{tree}")
+    use_updated_lock
+    if ! git diff --quiet HEAD -- flake.lock; then
+        git commit --quiet -m "flake.lock: Update $branch inputs ($subject)" -- flake.lock
     fi
+    commit=$(git rev-parse HEAD)
+
     git push origin "$commit:refs/heads/$branch"
 }
 
