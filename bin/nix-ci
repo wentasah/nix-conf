@@ -8,8 +8,8 @@
 #
 # Then, two independent chains run:
 #
-#   stable:   update stable inputs   -> build all checks -> push to origin/stable
-#   unstable: update unstable inputs -> build all checks -> push to origin/unstable
+#   stable:   update stable inputs   -> build stable checks   -> push to origin/stable
+#   unstable: update all inputs      -> build unstable checks -> push to origin/unstable
 #
 # Usage:
 #   nix-ci nixpkgs-update
@@ -74,16 +74,11 @@ cmd_update() {
 
     if [[ $branch == stable ]]; then
         inputs=("${STABLE_INPUTS[@]}")
+        echo "Updating inputs: ${inputs[*]}"
     else
-        mapfile -t inputs < <(nix eval --raw --impure --expr '
-          builtins.concatStringsSep "\n" (builtins.attrNames
-            (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.root.inputs)')
-        for s in "${STABLE_INPUTS[@]}"; do
-            inputs=("${inputs[@]/#$s}")
-        done
-        mapfile -t inputs < <(printf '%s\n' "${inputs[@]}" | grep .)
+        inputs=()  # all inputs
+        echo "Updating all inputs"
     fi
-    echo "Updating inputs: ${inputs[*]}"
     nix flake update "${inputs[@]}"
 
     # Something to do only if the result differs from what is already
