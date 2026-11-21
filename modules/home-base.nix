@@ -171,8 +171,6 @@ in
     (python3.withPackages globalPythonPackages)
     python3Packages.invoke
     python3Packages.python-lsp-server
-    radicle-desktop
-    radicle-node
     # radicle-tui # broken <2026-11-13 Fri>
     rainfrog
     ranger
