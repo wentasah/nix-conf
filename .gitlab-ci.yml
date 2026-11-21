@@ -61,7 +61,7 @@ update-stable:
   variables:
     BRANCH: stable
 
-build-stable:
+bld-st:
   extends: .build
   needs: [update-stable]
   parallel:
@@ -87,7 +87,7 @@ update-unstable:
   variables:
     BRANCH: unstable
 
-build-unstable:
+bld-un:
   extends: .build
   needs: [update-unstable]
   parallel:
