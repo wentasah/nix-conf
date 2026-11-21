@@ -15,7 +15,7 @@
 #   nix-ci nixpkgs-update
 #   nix-ci update stable|unstable   # writes ci-artifacts/{flake.lock,ci.env}
 #   nix-ci build CHECK              # e.g. steelpick (from checks.<system>.steelpick)
-#                                   # writes ci-artifacts/CHECK.diff (vs. previous run)
+#                                   # writes ci-artifacts/CHECK.{out,diff} (diff vs. previous run)
 #   nix-ci push stable|unstable
 
 set -euo pipefail
@@ -120,6 +120,7 @@ cmd_build() {
     if [[ -n ${ATTIC_CACHE:-} ]]; then
         attic push "$ATTIC_CACHE" $out
     fi
+    echo "$out" > "$ART/$name.out"  # for record_pushed
     if [[ -n ${NIX_CI_GCROOTS:-} ]]; then
         diff_and_root "$name" "$out"
     fi
@@ -165,7 +166,24 @@ cmd_push() {
     commit=$(git rev-parse HEAD)
 
     git push origin "$commit:refs/heads/$branch"
+    record_pushed "$branch" "$commit"
     notify_matrix "$branch" "$subject"
+}
+
+# Record what was pushed to $1: GC roots of the build results
+# (ci-artifacts/*.out) in $NIX_CI_GCROOTS/$1/CHECK and the pushed
+# commit in $NIX_CI_GCROOTS/$1/commit. Used by `nix-conf copy`.
+record_pushed() {
+    local branch=$1 commit=$2 dir f name
+    [[ -n ${NIX_CI_GCROOTS:-} ]] || return 0
+    dir=$NIX_CI_GCROOTS/$branch
+    mkdir -p "$dir"
+    for f in "$ART"/*.out; do
+        [[ -f $f ]] || continue
+        name=$(basename "$f" .out)
+        ln -sfn "$(cat "$f")" "$dir/$name"
+    done
+    echo "$commit" > "$dir/commit"
 }
 
 # Send diffs of NOTIFY_CHECKS (artifacts of the build jobs) to Matrix

@@ -10,6 +10,7 @@
 # Example: nix-conf build --log-format raw
 
 import argparse
+import json
 import os
 import shutil
 import socket
@@ -428,17 +429,79 @@ def ci():
         notify_ci_update("x86_64-linux.steelpick")
 
 
+CI_HOST = "ritchie"
+CI_GCROOTS = "/nix/var/nix/gcroots/per-user/$USER/nix-ci"  # expanded on CI_HOST
+
+
 def copy(host):
-    update_clonned_nixpkgs()
-    system(f"rsync ritchie:nix/out/ci/flake.lock ~/nix/conf")
-    O = check_output(f'ssh ritchie readlink nix/out/ci/gcroots/result-x86_64-linux.{host}', shell=True).decode().strip()
-    #system(f'nix copy -j16 -L --from ssh://ritchie "{O}"')
-    system(f'nom build "{O}"')  # Copy packages from my binary cache
+    """Copy the configuration of host built by the opal CI (bin/nix-ci)
+
+    The CI host records the result of each pushed build as a GC root
+    in CI_GCROOTS/BRANCH/CHECK and the pushed commit in
+    CI_GCROOTS/BRANCH/commit. The result is fetched from my binary
+    cache (or CI_HOST), flake.lock is taken from the pushed commit
+    (from origin) and ~/nix/nixpkgs is set to the nixpkgs revision
+    used by the CI.
+    """
+    for branch in ["unstable", "stable"]:
+        res = run(["ssh", CI_HOST, f'd="{CI_GCROOTS}/{branch}"; readlink -e "$d/{host}" && cat "$d/commit"'],
+                  capture_output=True, text=True)
+        if res.returncode == 0:
+            out, commit = res.stdout.split()
+            break
+        else:
+            warn(f"No CI build of {host} found on {CI_HOST}")
+        sys.exit(1)
+    print(f"CI build of {host} from {branch} branch ({commit}): {out}")
+
+    # flake.lock from the pushed commit
+    cd("~/nix/conf")
+    if run(["git", "cat-file", "-e", f"{commit}^{{commit}}"], stderr=subprocess.DEVNULL).returncode != 0:
+        check_call(["git", "fetch", "--quiet", "origin", branch])
+    lock = check_output(["git", "show", f"{commit}:flake.lock"])
+    with open("flake.lock", "wb") as f:
+        f.write(lock)
+
+    # ~/nix/nixpkgs at the revision used by the CI (for local builds
+    # with --override-input nixpkgs)
+    if branch == "unstable":
+        copy_nixpkgs(json.loads(lock))
+
+    # Copy packages from my binary cache, or from the CI host
+    nom = "nom" if os.isatty(sys.stdin.fileno()) else "nix"
+    if run([nom, "build", "--no-link", out]).returncode != 0:
+        check_call(["nix", "copy", "-L", "--from", f"ssh-ng://{CI_HOST}", out])
     dest = expanduser(f'~/nix/out/{host}/flake')
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
     try: os.remove(dest)
     except FileNotFoundError: pass
-    os.symlink(O, dest)
-    print_switch_instructions(host, [])  # TODO override
+    os.symlink(out, dest)
+    print_switch_instructions(host, [])
+
+
+def copy_nixpkgs(lock):
+    """Set ~/nix/nixpkgs to the nixpkgs revision in flake.lock
+
+    nixos-unstable is set to the upstream commit the CI merged my
+    topic branches onto (first parent of the locked commit) and the
+    topic branches are merged into master again.
+    """
+    rev = lock["nodes"][lock["nodes"]["root"]["inputs"]["nixpkgs"]]["locked"]["rev"]
+    cd("~/nix/nixpkgs")
+    exit_if_dirty()
+    if run(["git", "cat-file", "-e", f"{rev}^{{commit}}"], stderr=subprocess.DEVNULL).returncode != 0:
+        check_call(["git", "fetch", "--quiet", "wentasah"])
+    nixos_unstable = check_output(["git", "rev-parse", f"{rev}^1"]).decode().strip()
+    if check_output(["git", "rev-parse", "nixos-unstable"]).decode().strip() == nixos_unstable:
+        print("nixos-unstable is up to date")
+        return
+    if run(["git", "merge-base", "--is-ancestor", nixos_unstable, "nixos-unstable"]).returncode == 0:
+        warn(f"Local nixos-unstable is newer than {nixos_unstable} used by the CI - not changing ~/nix/nixpkgs")
+        return
+    check_call(["git", "update-ref", "refs/heads/nixos-unstable", nixos_unstable])
+    merge_nixpkgs_topics_into_master()
+    if check_output(["git", "rev-parse", "HEAD^{tree}"]) != check_output(["git", "rev-parse", f"{rev}^{{tree}}"]):
+        warn(f"~/nix/nixpkgs master differs from {rev} used by the CI (different topic branches?)")
 
 
 def get_nix_args(args):
