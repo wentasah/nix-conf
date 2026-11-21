@@ -75,7 +75,7 @@ bld-st:
 
 push-stable:
   extends: .push
-  needs: [update-stable, build-stable]
+  needs: [update-stable, bld-st]
   variables:
     BRANCH: stable
 
@@ -99,6 +99,6 @@ bld-un:
 
 push-unstable:
   extends: .push
-  needs: [update-unstable, build-unstable]
+  needs: [update-unstable, bld-un]
   variables:
     BRANCH: unstable
