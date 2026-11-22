@@ -5,7 +5,6 @@ let
     all-the-icons
     apache-mode
     auctex-latexmk
-    # auto-header # disappeared from emacs-overlay <2025-08-01 Fri>
     auto-highlight-symbol
     bats-mode
     bitbake
@@ -106,11 +105,9 @@ let
     marginalia
     markdown-mode
     markdown-toc
-    markdown-ts-mode
     md-readme
     memory-usage
     meson-mode
-    mo-git-blame
     modus-themes
     most-used-words
     multiple-cursors
@@ -179,6 +176,7 @@ let
     treesit-grammars.with-all-grammars
     txl
     typescript-mode
+    typo
     typst-preview
     udev-mode
     uncrustify-mode
@@ -207,7 +205,6 @@ let
   # version, either from MelpaStable or Elpa.
   stableOverrides = self: super: {
     inherit (self.melpaStablePackages)
-      all-the-icons
       auto-highlight-symbol
       chatgpt-shell
       color-identifiers-mode
@@ -273,7 +270,6 @@ let
       php-mode
       plantuml-mode
       poly-markdown
-      polymode
       projectile
       protobuf-mode
       python-black
@@ -302,7 +298,6 @@ let
     ;
 
     inherit (self.elpaPackages)
-      auto-header
       cape
       dts-mode
       eglot
