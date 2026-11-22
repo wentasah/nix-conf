@@ -189,17 +189,20 @@ record_pushed() {
 
 # Send diffs of NOTIFY_CHECKS (artifacts of the build jobs) to Matrix
 notify_matrix() {
-    local branch=$1 subject=$2 name f msg=""
+    local branch=$1 subject=$2 name f msg="" files=()
     for name in "${NOTIFY_CHECKS[@]}"; do
         f=$BUILD_ART/$name.diff
         [[ -s $f ]] || continue
         msg+=$'\n\n'"$name:"$'\n\n'"$(sed 's/^/    /' "$f")"
+        files+=("$f")
     done
     [[ -n $msg ]] || return 0
     local header="nix-conf CI update of $branch completed ($subject)"
-    # The full message can fail with M_TOO_LARGE - try a shorter one
+    # The full message can fail with M_TOO_LARGE - send the diffs as
+    # files instead, or at least a message without them
     matrix-commander-rs --markdown -m "$header$msg" ||
-        matrix-commander-rs --markdown -m "$header (diff omitted - probably too long)" ||
+        matrix-commander-rs -m "$header (diff attached)" --file "${files[@]}" ||
+        matrix-commander-rs -m "$header (diff omitted - probably too long)" ||
         echo "warning: Matrix notification failed" >&2
 }
 
