@@ -271,7 +271,6 @@ let
       php-mode
       plantuml-mode
       poly-markdown
-      polymode
       projectile
       protobuf-mode
       python-black
