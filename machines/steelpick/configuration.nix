@@ -595,6 +595,7 @@ in
     deleteOlderThan = "4d";
     persistent = true;
     dates = [ "weekly" ];
+    randomizedDelaySec = "1h";
   };
   nix.package = pkgs.nixVersions.latest;
 
