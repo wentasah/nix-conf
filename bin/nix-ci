@@ -25,7 +25,7 @@ NIXPKGS_DIR=$HOME/nix/nixpkgs  # hardcoded in nix-conf merge
 STABLE_INPUTS=(nixpkgs-stable home-manager-stable)
 UPDATE_ART=ci-update  # artifacts of the update jobs
 BUILD_ART=ci-build    # artifacts of the build jobs (opal mounts $UPDATE_ART read-only there)
-NOTIFY_CHECKS=(steelpick)  # send diffs of these to Matrix after push
+NOTIFY_CHECKS=(steelpick)  # send diffs (after push) and build failures of these to Matrix
 
 export GIT_AUTHOR_NAME=nix-conf GIT_AUTHOR_EMAIL=nix-conf@localhost
 export GIT_COMMITTER_NAME=nix-conf GIT_COMMITTER_EMAIL=nix-conf@localhost
@@ -117,12 +117,18 @@ cmd_build() {
                jq -r --arg n "$name" 'to_entries[] | select(.value | index($n)) | "\(.key).\($n)"')
     [[ -n $attr ]] || die "check '$name' not found"
     [[ $attr != *$'\n'* ]] || die "check '$name' exists for multiple systems: "$attr
-    out=$(nix build -L --no-link --print-out-paths ".#checks.$attr")
+    mkdir -p "$BUILD_ART"
+    # Log goes to the job log and $name.log (for notify_build_failure)
+    if ! nix build -L --no-link --print-out-paths ".#checks.$attr" 2>&1 > "$BUILD_ART/$name.out" |
+            tee "$BUILD_ART/$name.log"; then
+        rm -f "$BUILD_ART/$name.out"
+        notify_build_failure "$name" "$BUILD_ART/$name.log"
+        die "build of $name failed"
+    fi
+    out=$(cat "$BUILD_ART/$name.out")  # also for record_pushed
     if [[ -n ${ATTIC_CACHE:-} ]]; then
         attic push "$ATTIC_CACHE" $out
     fi
-    mkdir -p "$BUILD_ART"
-    echo "$out" > "$BUILD_ART/$name.out"  # for record_pushed
     if [[ -n ${NIX_CI_GCROOTS:-} ]]; then
         diff_and_root "$name" "$out"
     fi
@@ -168,7 +174,7 @@ cmd_push() {
 
     git push origin "$commit:refs/heads/$branch"
     record_pushed "$branch" "$commit"
-    notify_matrix "$branch" "$subject"
+    notify_success_diff "$branch" "$subject"
 }
 
 # Record what was pushed to $1: GC roots of the build results
@@ -187,23 +193,45 @@ record_pushed() {
     echo "$commit" > "$dir/commit"
 }
 
+# Send message $1 (header) + $2 (markdown body) to Matrix. If it is too
+# large (M_TOO_LARGE), send files $3... instead, or at least the header.
+matrix_send() {
+    local header=$1 body=$2; shift 2
+    matrix-commander-rs --markdown -m "$header$body" ||
+        { [[ $# -gt 0 ]] && matrix-commander-rs -m "$header (details attached)" --file "$@"; } ||
+        matrix-commander-rs -m "$header (details omitted - probably too long)" ||
+        echo "warning: Matrix notification failed" >&2
+}
+
+# Indent text in file $1 to make it a markdown code block
+md_code() { sed 's/^/    /' "$1"; }
+
 # Send diffs of NOTIFY_CHECKS (artifacts of the build jobs) to Matrix
-notify_matrix() {
+notify_success_diff() {
     local branch=$1 subject=$2 name f msg="" files=()
     for name in "${NOTIFY_CHECKS[@]}"; do
         f=$BUILD_ART/$name.diff
         [[ -s $f ]] || continue
-        msg+=$'\n\n'"$name:"$'\n\n'"$(sed 's/^/    /' "$f")"
+        msg+=$'\n\n'"$name:"$'\n\n'"$(md_code "$f")"
         files+=("$f")
     done
     [[ -n $msg ]] || return 0
-    local header="nix-conf CI update of $branch completed ($subject)"
-    # The full message can fail with M_TOO_LARGE - send the diffs as
-    # files instead, or at least a message without them
-    matrix-commander-rs --markdown -m "$header$msg" ||
-        matrix-commander-rs -m "$header (diff attached)" --file "${files[@]}" ||
-        matrix-commander-rs -m "$header (diff omitted - probably too long)" ||
-        echo "warning: Matrix notification failed" >&2
+    matrix_send "nix-conf CI update of $branch completed ($subject)" "$msg" "${files[@]}"
+}
+
+# Send failure of build of $1 (if in NOTIFY_CHECKS) with the errors
+# from log $2 to Matrix
+notify_build_failure() {
+    local name=$1 log=$2 errors
+    [[ " ${NOTIFY_CHECKS[*]} " == *" $name "* ]] || return 0
+    errors=$(mktemp)
+    # From the first error to the end (nix prints the failed builder's
+    # last log lines after the error), at most 50 lines
+    sed -n '/^error:/,$p' "$log" | tail -n 50 > "$errors"
+    [[ -s $errors ]] || tail -n 20 "$log" > "$errors"
+    matrix_send "nix-conf CI: build of $name failed ($(git log -1 --format=%s HEAD))" \
+                $'\n\n'"$(md_code "$errors")" "$log"
+    rm -f "$errors"
 }
 
 case "${1:-}" in
