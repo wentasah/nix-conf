@@ -227,6 +227,7 @@ in
     zsh-syntax-highlighting
 
     cargo-audit
+    cargo-binstall
     cargo-deny
     cargo-edit
     cargo-expand
