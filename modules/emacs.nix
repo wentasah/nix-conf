@@ -179,6 +179,7 @@ let
     treesit-grammars.with-all-grammars
     txl
     typescript-mode
+    typo
     typst-preview
     udev-mode
     uncrustify-mode
