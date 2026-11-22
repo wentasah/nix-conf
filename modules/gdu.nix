@@ -11,6 +11,7 @@
     Timer = {
       Persistent = true;
       OnCalendar = "weekly";
+      RandomizedDelaySec = "1h";
     };
     Install.WantedBy = [ "default.target" ];
   };
