@@ -31,9 +31,9 @@ variables:
     - bin/nix-ci update "$BRANCH"
   artifacts:
     paths:
-      - ci-artifacts/
+      - ci-update/
     reports:
-      dotenv: ci-artifacts/ci.env
+      dotenv: ci-update/ci.env
 
 # The CHECK lists in build-stable and build-unstable together should
 # cover `checks` in flake.nix.
@@ -43,7 +43,7 @@ variables:
     - bin/nix-ci build "$CHECK"
   artifacts:
     paths:
-      - ci-artifacts/*.diff
+      - ci-build/  # CHECK.out, CHECK.diff (merged from all build jobs for push)
 
 .push:
   stage: push
