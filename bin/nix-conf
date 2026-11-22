@@ -1,27 +1,23 @@
 #!/usr/bin/env python
 
-# Script to rebuild my system(s) when something changes. I'm running
-# this from a cron job on a server.
+# Tool to maintain my NixOS configurations locally: update inputs and
+# my nixpkgs fork, build, switch, copy results of the CI (bin/nix-ci).
 #
-# Usage: nix-conf [update|build] [nix build options]
-#
-# With no sub-command, update is implied.
+# Usage: nix-conf COMMAND [options]
 #
 # Example: nix-conf build --log-format raw
 
 import argparse
 import json
 import os
-import shutil
 import socket
 import subprocess
 import sys
 from collections.abc import Callable
 from shlex import quote
-from subprocess import STDOUT, CalledProcessError, check_output
+from subprocess import STDOUT, check_output
 from typing import IO, Any, List
 from os.path import expanduser
-from pathlib import Path
 
 verbose = True
 
@@ -187,29 +183,6 @@ def update_flake_input(flake_input: str):
     return False
 
 
-class FailedBuildCounter:
-    def __init__(self, host):
-        self.filename = expanduser(f'~/nix/out/{host}/flake.failed.cnt')
-
-    def reset(self):
-        # Reset failed build counter
-        try:
-            os.remove(self.filename)
-        except FileNotFoundError:
-            pass
-
-    def get(self):
-        try:
-            return int(open(self.filename).readline())
-        except (FileNotFoundError, ValueError):
-            return 0
-
-    def increase(self):
-        cnt = self.get()
-        with open(self.filename, 'w') as f:
-            print(cnt + 1, file=f)
-
-
 def updated(host):
     updated = [
         update_nix_conf(),
@@ -221,7 +194,6 @@ def updated(host):
     # stuff (i.e. result=0). `nix flake check` will then rebuild stable
     update_flake_input("nixpkgs-stable")
     if any(updated):
-        FailedBuildCounter(host).reset()
         # Update selected overlays only if something else is updated
         update_flake_input("emacs-overlay")
         update_flake_input("home-manager")
@@ -229,11 +201,6 @@ def updated(host):
         update_flake_input("nix-index-database")
 
     return any(updated)
-
-
-def failed_recently(host):
-    cnt = FailedBuildCounter(host).get()
-    return cnt > 0 and cnt <= 2
 
 
 def print_switch_instructions(host, override_input: List[str]):
@@ -289,36 +256,6 @@ def build(host, nix_args, iets: bool):
 
     if check_output("hostname").decode().strip() == host:
         print_switch_instructions(host, override_input)
-
-def publish_ci_update():
-        cd("~/nix/nixpkgs")
-        if run(["git", "diff", "--quiet", "wentasah/ci"]).returncode == 0:
-            return False
-
-        system("git push --force wentasah HEAD:ci")
-        old_commit = check_output("git rev-parse history", shell=True).decode().strip()
-        new_commit = check_output(f'git commit-tree -p {old_commit} -p HEAD "HEAD^{{tree}}" -m "update history branch"', shell=True).decode().strip()
-        system(f'git update-ref refs/heads/history "{new_commit}" "{old_commit}"')
-        system("git push wentasah history")
-        return True
-
-
-def notify_ci_update(attr):
-        cd("~/nix/out/ci")
-        if not os.path.exists(f'gcroots.old/result-{attr}'):
-            warn(f"warning: {os.getcwd()}/gcroots.old/result-{attr} does not exist - not checking for changes")
-            return
-        if os.readlink(f'gcroots.old/result-{attr}') != os.readlink(f'gcroots/result-{attr}'):
-            diff = check_output(f"dix diff gcroots.old/result-{attr} gcroots/result-{attr}", shell=True).decode().splitlines()
-            diff_md = "\n".join(["    " + line for line in diff])
-            try:
-                check_call(["matrix-commander-rs", "--markdown", "-m", f"nix-conf CI update completed\n\n{diff_md}"])
-            except CalledProcessError:
-                # The above can fail with:
-                # ERROR: matrix-commander: E150: room_send failed with error 'RoomSendError: M_TOO_LARGE event too large'.
-                # Try sending a shorter message
-                check_call(["matrix-commander-rs", "--markdown", "-m", f"nix-conf CI update completed (diff omitted - probably too long)"])
-
 
 def switch(host, method='switch'):
     O = f'/home/{os.getenv("SUDO_USER", os.getenv("USER"))}/nix/out/{host}/flake'
@@ -386,47 +323,6 @@ def update(host, nix_args, iets: bool):
         build(host, nix_args, iets)
     else:
         print("Nothing to do for update.")
-
-
-def ci():
-    was_updated = updated("ci")
-
-    if update_stable():
-        system("git push origin stable")
-
-    if was_updated or failed_recently("ci"):
-        cd("~/nix")
-
-        shutil.rmtree("out/ci/gcroots.old", ignore_errors=True)
-        try:
-            shutil.copytree("out/ci/gcroots", "out/ci/gcroots.old", symlinks=True)
-        except (FileNotFoundError, shutil.SameFileError):
-            pass
-
-        cd("~/nix/conf")
-        check_call('nix flake update nixpkgs --override-input nixpkgs ~/nix/nixpkgs', shell=True)
-        cmd = "nix-fast-build -j4 --no-nom --attic-cache wsh --out-link ~/nix/out/ci/gcroots/result --systems x86_64-linux,aarch64-linux"
-        if not os.isatty(sys.stdin.fileno()):
-            cmd = f"set -o pipefail; {cmd} --no-nom 2>&1 | tee ~/nix/out/ci/log"
-        else:
-            Path('../out/ci/log').touch() # ensure path exists
-
-        status = run(cmd, shell=True).returncode
-
-        if status == 0:
-            shutil.copy("flake.lock", f'../out/ci/flake.lock')
-            open(f'../out/ci/error', 'w') # truncate
-            FailedBuildCounter("ci").reset()
-        else:
-            # Be careful to not delete the error file to not break hardlinks to it from icinga
-            system("grep -E '(^error:|ERROR:nix_fast_build)' ../out/ci/log > ../out/ci/error")
-            FailedBuildCounter("ci").increase()
-            sys.exit(status)
-    else:
-        print("Nothing to do for update.")
-
-    if publish_ci_update():
-        notify_ci_update("x86_64-linux.steelpick")
 
 
 CI_HOST = "ritchie"
@@ -543,9 +439,6 @@ subparsers = parser.add_subparsers(required=True)
 parser_update = subparsers.add_parser('update', parents=[parent_parser])
 parser_update.add_argument("nix_args", nargs='*')
 parser_update.set_defaults(func=lambda args: update(args.host, get_nix_args(args), args.iets))
-
-parser_ci = subparsers.add_parser('ci', parents=[parent_parser])
-parser_ci.set_defaults(func=lambda args: ci())
 
 parser_build = subparsers.add_parser('build', parents=[parent_parser])
 parser_build.add_argument("nix_args", nargs='*')
