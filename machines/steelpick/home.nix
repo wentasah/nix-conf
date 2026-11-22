@@ -8,7 +8,6 @@ let
   lexicon = import ../../pkgs/lexicon.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
   stm32cubeide = import ../../pkgs/stm32cubeide { inherit pkgs; };
-  licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
 in
@@ -101,7 +100,6 @@ in
       libev # to have the man page ready
       libnotify # for notify-send (for mailsync)
       libsecret
-      licenseutils
       lsof # TODO: git-annex assistant should depend on this
       man-pages
       markdownlint-cli
