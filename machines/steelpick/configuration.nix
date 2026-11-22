@@ -328,11 +328,9 @@ in
     ln -s ${pkgs.findutils}/bin/file $out/file
   '';
 
-  services.avahi = {
-    publish = {
-      enable = true;
-      addresses = true; # Enable finding this computer via <hostname>.local
-    };
+  services.avahi.settings.publish = {
+    disable-publishing = false;
+    publish-addresses = true; # Enable finding this computer via <hostname>.local
   };
 
   services.syncthing = {
@@ -461,20 +459,6 @@ in
         # this line prevents hanging on network split
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in ["${automount_opts},mfsymlinks,uid=wsh,gid=wsh,forceuid,forcegid,file_mode=0600,dir_mode=0700,credentials=/etc/nixos/smb-flamenco.secret"];
-  };
-
-  systemd.nspawn.ros-melodic = {
-    enable = false;
-    execConfig = {
-      ResolvConf = "bind-host";
-    };
-    filesConfig = {
-      Bind = "/home/wsh";
-      BindReadOnly = "/tmp/.X11-unix";
-    };
-    networkConfig = {
-      VirtualEthernet = false; # Use host networking
-    };
   };
 
   services.gnome.gcr-ssh-agent.enable = false; # collides with ssh-agent
