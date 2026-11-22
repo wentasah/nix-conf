@@ -108,7 +108,6 @@ let
     md-readme
     memory-usage
     meson-mode
-    mo-git-blame
     modus-themes
     most-used-words
     multiple-cursors
