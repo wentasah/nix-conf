@@ -19,7 +19,6 @@ let
   #carla = pkgs.callPackage ../../pkgs/carla { };
   julia = pkgs.julia-stable-bin; # import ../../pkgs/julia-bin.nix { inherit pkgs; };
   pod-mode = import ../../pkgs/pod-mode.nix { inherit pkgs; };
-  licenseutils = import ../../pkgs/licenseutils { inherit pkgs; };
   #kernelshark = import ../../pkgs/kernelshark { inherit pkgs; };
   julia-wrapper = pkgs.callPackage ../../pkgs/julia-wrapper { inherit julia; };
 in
@@ -110,7 +109,6 @@ in
       libnotify # for notify-send (for mailsync)
       libreoffice-fresh
       libsecret
-      #licenseutils
       perf
       lsof # TODO: git-annex assistant should depend on this
       man-pages
@@ -182,7 +180,7 @@ in
       buildPackages.gcc
       (setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
     ])
-    ++ (with pkgsCross.mingwW64; [
+    ++ (with pkgsCross.mingw-msvcrt-x86_64; [
       buildPackages.gcc
       #(setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
     ])
