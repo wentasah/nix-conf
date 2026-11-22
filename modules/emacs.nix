@@ -106,7 +106,6 @@ let
     marginalia
     markdown-mode
     markdown-toc
-    markdown-ts-mode
     md-readme
     memory-usage
     meson-mode
