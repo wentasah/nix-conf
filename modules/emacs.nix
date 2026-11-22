@@ -5,7 +5,6 @@ let
     all-the-icons
     apache-mode
     auctex-latexmk
-    # auto-header # disappeared from emacs-overlay <2025-08-01 Fri>
     auto-highlight-symbol
     bats-mode
     bitbake
@@ -301,7 +300,6 @@ let
     ;
 
     inherit (self.elpaPackages)
-      auto-header
       cape
       dts-mode
       eglot
