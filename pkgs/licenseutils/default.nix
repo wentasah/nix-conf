@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     curl
     libpng
     glib
-    sourceHighlight
+    source-highlight
     bashInteractive
     boost
   ];

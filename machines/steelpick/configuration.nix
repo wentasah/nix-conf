@@ -328,11 +328,9 @@ in
     ln -s ${pkgs.findutils}/bin/file $out/file
   '';
 
-  services.avahi = {
-    publish = {
-      enable = true;
-      addresses = true; # Enable finding this computer via <hostname>.local
-    };
+  services.avahi.settings.publish = {
+    disable-publishing = false;
+    publish-addresses = true; # Enable finding this computer via <hostname>.local
   };
 
   services.syncthing = {
@@ -465,14 +463,14 @@ in
 
   systemd.nspawn.ros-melodic = {
     enable = false;
-    execConfig = {
+    settings.Exec = {
       ResolvConf = "bind-host";
     };
-    filesConfig = {
+    settings.Files = {
       Bind = "/home/wsh";
       BindReadOnly = "/tmp/.X11-unix";
     };
-    networkConfig = {
+    settings.Network = {
       VirtualEthernet = false; # Use host networking
     };
   };

@@ -173,7 +173,7 @@ in
       buildPackages.gcc
       (lib.setPrio 22 buildPackages.bintools-unwrapped) # armv7l-unknown-linux-gnueabihf-objdump etc.
     ])
-    ++ (with pkgsCross.mingwW64; [
+    ++ (with pkgsCross.mingw-msvcrt-x86_64; [
       buildPackages.gcc
       #(lib.setPrio 20 buildPackages.bintools-unwrapped) # aarch64-unknown-linux-gnu-objdump etc.
     ])
