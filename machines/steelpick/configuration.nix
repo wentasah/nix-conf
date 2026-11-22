@@ -461,20 +461,6 @@ in
       in ["${automount_opts},mfsymlinks,uid=wsh,gid=wsh,forceuid,forcegid,file_mode=0600,dir_mode=0700,credentials=/etc/nixos/smb-flamenco.secret"];
   };
 
-  systemd.nspawn.ros-melodic = {
-    enable = false;
-    settings.Exec = {
-      ResolvConf = "bind-host";
-    };
-    settings.Files = {
-      Bind = "/home/wsh";
-      BindReadOnly = "/tmp/.X11-unix";
-    };
-    settings.Network = {
-      VirtualEthernet = false; # Use host networking
-    };
-  };
-
   services.gnome.gcr-ssh-agent.enable = false; # collides with ssh-agent
 
   services.logind.settings.Login = {
