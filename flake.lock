@@ -53,11 +53,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795253528,
-        "narHash": "sha256-TvzBvAV7KVWsvTCQjRg1oY/lhDbuN9YXLDctGGhXPdU=",
+        "lastModified": 1795358991,
+        "narHash": "sha256-mvuhV7fo4Du31x5Y9ixgNGmVMAZivYMuUIqOrpPYkN4=",
         "owner": "nlewo",
         "repo": "comin",
-        "rev": "4cc0f6a9764a0ac73ec248d1475a1372c19b4773",
+        "rev": "ccce0c589213bc646016c7f6ebfc0e5ca77a2ca7",
         "type": "github"
       },
       "original": {
@@ -105,11 +105,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1795071863,
-        "narHash": "sha256-VsFJnHhqZG2ffsmgXEK/66Hxog3x8WJCmQhpUL73pmU=",
+        "lastModified": 1795352180,
+        "narHash": "sha256-dn3Stv2qtbb6D5FzZXmxYRVQkNQphjug60mzs96kTvM=",
         "owner": "Mic92",
         "repo": "direnv-instant",
-        "rev": "785a1a3064f8bb11a77fedcdfac8d33ba65fc126",
+        "rev": "991706214dfef2a04d915a95f061e58769e5fb05",
         "type": "github"
       },
       "original": {
@@ -148,11 +148,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795326484,
-        "narHash": "sha256-5T7dPL28JFC/R+QTTF1hH1aartvjxu/9p8Er4M284ro=",
+        "lastModified": 1795366431,
+        "narHash": "sha256-LMWQ1ubXzh7GRuqvOjZw0BeI7reVi7fFbOUxP/75Yxk=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "064f50de960fc5f3cf676f574fa0ba7c0df326e9",
+        "rev": "364d2ec5e703b8cfb3abee2870d2fc3775a3ac47",
         "type": "github"
       },
       "original": {
@@ -414,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795340038,
-        "narHash": "sha256-RtgZbV+4BDtJqMImbiPJri3fmVDbCbrz/B0cuPQUJQY=",
+        "lastModified": 1795366757,
+        "narHash": "sha256-Tp4Kh4R7ID1f2mMCDlb2PiFQ/DZZsnXB2u2juWN+TT4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "03885bcd0b477bdecebebc57b213b0f8f0826d51",
+        "rev": "3b8140d21fa0a70b1b38c2ed29853dfe686234a6",
         "type": "github"
       },
       "original": {
@@ -456,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795324765,
-        "narHash": "sha256-VCPNAPbTyUPQ0Yp+cBYZp166ssjOHu+E+MnCqMYi230=",
+        "lastModified": 1795366264,
+        "narHash": "sha256-DRyQh6rOMB+mUGjGdreCZBYhp6ClWIwlhJhsnYN87KI=",
         "owner": "numtide",
         "repo": "iets",
-        "rev": "323c33c5352a5d86db1e4d82477aa85121cf4109",
+        "rev": "aad8323c57fc6925667b44f0e49190d5d022e3d5",
         "type": "github"
       },
       "original": {
@@ -729,11 +729,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794167313,
-        "narHash": "sha256-i5DE6vWRS462bIaOIrrt6LwDnS5+ZKQVWUlnR6tnfgE=",
+        "lastModified": 1795376802,
+        "narHash": "sha256-tbie3wSrEpwQCJxnTO4AyvQj1iFK8/OO1cUk/+ud6RQ=",
         "ref": "refs/heads/main",
-        "rev": "ac48a51359bbe006d8a5a2c4972407b6daf3b344",
-        "revCount": 143,
+        "rev": "0ea8812ba8e64f293298466182db0f3851d05ed6",
+        "revCount": 163,
         "type": "git",
         "url": "https://gitlab.fel.cvut.cz/sojkam1/quiz"
       },
@@ -1036,11 +1036,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791885023,
-        "narHash": "sha256-C3alQ2MEt0zVrUSho5NUDo3jmhbff72++bfwoqT9Omo=",
+        "lastModified": 1793626980,
+        "narHash": "sha256-WSBJcYjPRxGetDNxVzKnRPs1TQasQQlAC25W/S4W6YE=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "0d6d739a833ba9a9c93034862e4a7b061a062a1c",
+        "rev": "e6aebd817ff50ba20e9160c6904209c57389efc8",
         "type": "github"
       },
       "original": {
