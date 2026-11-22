@@ -7,6 +7,8 @@
 # Then two independent chains run:
 #   - update stable inputs   -> build stable hosts   -> push to origin/stable
 #   - update unstable inputs -> build unstable hosts -> push to origin/unstable
+#     (only if my nixpkgs fork or main changed, or to retry after a
+#     failure of one of the last two unstable chains)
 # Pushing happens only if all builds in the chain succeed.
 #
 # See bin/nix-ci for the implementation of the individual steps. Jobs
@@ -55,6 +57,11 @@ nixpkgs-update:
   stage: nixpkgs
   script:
     - bin/nix-ci nixpkgs-update
+  artifacts:
+    paths:
+      - ci-nixpkgs/
+    reports:
+      dotenv: ci-nixpkgs/ci.env  # NIX_CI_NIXPKGS_UPDATED for update-unstable
 
 # Stable chain
 
