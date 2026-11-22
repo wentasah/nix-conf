@@ -207,7 +207,6 @@ let
   # version, either from MelpaStable or Elpa.
   stableOverrides = self: super: {
     inherit (self.melpaStablePackages)
-      all-the-icons
       auto-highlight-symbol
       chatgpt-shell
       color-identifiers-mode
