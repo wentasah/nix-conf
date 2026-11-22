@@ -148,11 +148,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795366431,
-        "narHash": "sha256-LMWQ1ubXzh7GRuqvOjZw0BeI7reVi7fFbOUxP/75Yxk=",
+        "lastModified": 1795385993,
+        "narHash": "sha256-bI9Ix7czN2vs+5xkQ50cIn0l0aKbh1zBSOXS5PgZm0I=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "364d2ec5e703b8cfb3abee2870d2fc3775a3ac47",
+        "rev": "d7794fa5037bc502c6cc42f5f7e3f9a330d43480",
         "type": "github"
       },
       "original": {
@@ -785,11 +785,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1794486812,
-        "narHash": "sha256-AOLksykSSQsgjyKNsI1qWFynP/lQfjtP7Bi8B1OXPmU=",
+        "lastModified": 1795379398,
+        "narHash": "sha256-Hs9nOfjTdwXzAX6jeMx7o/yqNScVfkmYHG5KP4VLoX4=",
         "owner": "wentasah",
         "repo": "ros2nix",
-        "rev": "b9164a9ded84490e2953aa98cc4d47707ed17d9e",
+        "rev": "716bfa51297334dd1fcc0554ed9e75960820ff72",
         "type": "github"
       },
       "original": {
@@ -801,11 +801,11 @@
     "rosdistro": {
       "flake": false,
       "locked": {
-        "lastModified": 1794419411,
-        "narHash": "sha256-xuU4SZwoyiVr7+hWMkUjMg4Hn87HABAOtKexLtELlfM=",
+        "lastModified": 1795358786,
+        "narHash": "sha256-DNVvLwHQ13AG8z+QSxsTkQQyeafxX2IGcOp4ntl4LPU=",
         "owner": "ros",
         "repo": "rosdistro",
-        "rev": "b6710f94d8144d7f1bd4b43fa75a065bd179832f",
+        "rev": "9c92b201f74fee4b7599accb6586c9c1be4a9f5e",
         "type": "github"
       },
       "original": {
