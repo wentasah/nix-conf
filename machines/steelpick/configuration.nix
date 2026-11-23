@@ -487,7 +487,14 @@ in
 
   #services.xserver.displayManager.lightdm.enable = true;
   services.displayManager.defaultSession = "sway";
-  services.displayManager.gdm.enable = true;
+  #services.displayManager.gdm.enable = true;
+  programs.regreet = {
+    enable = true;
+    cageArgs = [ "-s" "-d" "-m" "last" ];
+    settings.GTK = {
+      application_prefer_dark_theme = true;
+    };
+  };
   services.desktopManager.gnome.enable = true;
   #services.displayManager.cosmic-greeter.enable = true;
   services.desktopManager.cosmic.enable = true;

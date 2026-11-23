@@ -440,10 +440,12 @@ in
           { run = "quiz parse %s1 | less -R"; block = true; desc = "Check the question"; }
         ];
         gio-open = [ { run = "gio open %s"; desc = "Open with default app (like Nautilus)"; orphan = true; } ];
+        gfm-preview = [ { run = "${pkgs.gh-gfm-preview}/bin/gh-gfm-preview %s1"; block = true; desc = "Preview with gh-gfm-preview (Ctrl-C to stop)"; for = "unix"; } ];
       };
       open = {
         prepend_rules = [
           { url = "**/quiz/**/*.md"; use = [ "quiz" "edit" ]; }
+          { url = "*.md"; use = [ "edit" "gfm-preview" ]; }
           { url = "*.csv"; use = [ "gio-open" "edit" ]; }
           { url = "*.ods"; use = [ "gio-open" "edit" ]; }
           { url = "*.odt"; use = [ "gio-open" "edit" ]; }
