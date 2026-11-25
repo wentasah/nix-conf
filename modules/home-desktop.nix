@@ -90,6 +90,7 @@
     pdfpc
     pinta
     pix
+    ptyxis
     qimgv
     qpwgraph
     rquickshare
