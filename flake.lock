@@ -53,11 +53,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1795358991,
-        "narHash": "sha256-mvuhV7fo4Du31x5Y9ixgNGmVMAZivYMuUIqOrpPYkN4=",
+        "lastModified": 1795590152,
+        "narHash": "sha256-amzKlFpPnTSE4b4oU9RQIUL6pB6p8sDiR13ca9bIHFk=",
         "owner": "nlewo",
         "repo": "comin",
-        "rev": "ccce0c589213bc646016c7f6ebfc0e5ca77a2ca7",
+        "rev": "dfd3392af1ad22b8b9f1f5a06449c0525a17bc07",
         "type": "github"
       },
       "original": {
@@ -148,11 +148,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795466773,
-        "narHash": "sha256-kz8sZPfAhP04BlFyrS9VuTXRRkzamuZFMvJaGpKII9U=",
+        "lastModified": 1795568719,
+        "narHash": "sha256-enVQeACbpT9XULMkqwyxy0nISwnVQiMDndlSlr2UJzw=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "1171f4af598e984b16494fadf4f8858180241a60",
+        "rev": "26651a40f3bd2ab4cf0d709a291b995b98826e73",
         "type": "github"
       },
       "original": {
@@ -414,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795366757,
-        "narHash": "sha256-Tp4Kh4R7ID1f2mMCDlb2PiFQ/DZZsnXB2u2juWN+TT4=",
+        "lastModified": 1795618997,
+        "narHash": "sha256-d9Osol//t6hqeo1xlspsYMbhTJK507h6t0EmPyF5Db0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3b8140d21fa0a70b1b38c2ed29853dfe686234a6",
+        "rev": "6a13737c0ed27c7c285f59e3be423ed972aa605f",
         "type": "github"
       },
       "original": {
@@ -456,11 +456,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795472727,
-        "narHash": "sha256-myDwaJlGeXl7Ri9d4nv8HDog4wYcnxCLS0tAp3ZEn+I=",
+        "lastModified": 1795609586,
+        "narHash": "sha256-/b0wU08PoQcl5ZadY2GiOB/nOtwNc44OjkrnO37Fk6w=",
         "owner": "numtide",
         "repo": "iets",
-        "rev": "6abb19370aa9a3e3d35bf37e8093418dcaa98e50",
+        "rev": "dcc7c54d873b379501e54eefcb5d1b87d00cdfdc",
         "type": "github"
       },
       "original": {
@@ -591,11 +591,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795018746,
-        "narHash": "sha256-glQAHvZGgBVjzGIWgIZYSf3X10gvtO2LPR4rtyP/Soc=",
+        "lastModified": 1795549782,
+        "narHash": "sha256-0mlYwyAv7lUDD6HBgPMqBXjMcIfIZBsLryNnkspeIGs=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "33475966110df258f52d05ec4d4cd6394637cbb9",
+        "rev": "97a30ee0974b815496bec7b136af6b945bd65aef",
         "type": "github"
       },
       "original": {
@@ -729,11 +729,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795376802,
-        "narHash": "sha256-tbie3wSrEpwQCJxnTO4AyvQj1iFK8/OO1cUk/+ud6RQ=",
+        "lastModified": 1795562463,
+        "narHash": "sha256-Jz0R5PIiv2CIOkxykkynWxKlF+OTbGJj3AQmg2R26b8=",
         "ref": "refs/heads/main",
-        "rev": "0ea8812ba8e64f293298466182db0f3851d05ed6",
-        "revCount": 163,
+        "rev": "04d28fd1600a39258dcb2c25285ad978ee5e2fd4",
+        "revCount": 171,
         "type": "git",
         "url": "https://gitlab.fel.cvut.cz/sojkam1/quiz"
       },
