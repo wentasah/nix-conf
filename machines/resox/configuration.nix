@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  fast-nix-gc = config.services.fast-nix-gc.package;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -55,6 +57,15 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  services.fast-nix-gc = {
+    enable = true;
+    automatic = true;
+    deleteOlderThan = "4d";
+    persistent = true;
+    dates = [ "weekly" ];
+    randomizedDelaySec = "1h";
+  };
+
   networking.wireguard.enable = true;
 
   # Select internationalisation properties.
@@ -80,7 +91,7 @@
     RestartSec = "1min";
   };
 
-  systemd.services.nix-gc.serviceConfig = {
+  systemd.services.fast-nix-gc.serviceConfig = {
     CPUSchedulingPolicy = "idle";
     IOSchedulingClass = "idle";
   };
@@ -157,6 +168,7 @@
     compsize
     ddrescue
     emacs-nox
+    fast-nix-gc
     file
     firefox
     foxglove-studio
