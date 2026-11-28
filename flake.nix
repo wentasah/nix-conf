@@ -151,6 +151,7 @@
             nixos-hardware.nixosModules.common-gpu-amd
             home-manager-stable.nixosModules.home-manager
             inputs.bootvine.nixosModules.default
+            inputs.fast-nix-gc.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             inputs.nix-index-database.nixosModules.nix-index
             inputs.comin.nixosModules.comin
